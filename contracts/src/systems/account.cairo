@@ -37,6 +37,8 @@ mod account {
     use zklash::constants::WORLD;
     use zklash::store::{Store, StoreImpl};
     use zklash::models::player::{Player, PlayerImpl, PlayerAssert};
+    use zklash::models::team::{Team, TeamImpl, TeamAssert};
+    use zklash::models::shop::{Shop, ShopImpl, ShopAssert};
 
     // Local imports
 
@@ -90,7 +92,13 @@ mod account {
 
             // [Effect] Spawn a new team
             let seed: felt252 = get_block_number().into();
-            let team = player.spawn(seed);
+            let mut team = player.spawn_team(seed);
+
+            // [Effect] Spawn a new shop
+            let shop = team.spawn_shop();
+
+            // [Effect] Store the shop
+            store.set_shop(shop);
 
             // [Effect] Store the team
             store.set_team(team);

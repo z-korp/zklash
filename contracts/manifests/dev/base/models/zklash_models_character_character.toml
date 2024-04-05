@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x49b2ccd04d6f1ae29730d366766fdd11b6312f9fc8254a4fdfb165ad549a4c5"
-original_class_hash = "0x49b2ccd04d6f1ae29730d366766fdd11b6312f9fc8254a4fdfb165ad549a4c5"
+class_hash = "0x6ace9a5de5e7da268c719990ddb72809962723be23a0746361d87c409fd6327"
+original_class_hash = "0x6ace9a5de5e7da268c719990ddb72809962723be23a0746361d87c409fd6327"
 abi = "manifests/dev/abis/base/models/zklash_models_character_character.json"
 name = "zklash::models::character::character"
 
@@ -16,11 +16,16 @@ key = true
 
 [[members]]
 name = "id"
-type = "u16"
+type = "u8"
 key = true
 
 [[members]]
 name = "role"
+type = "u8"
+key = false
+
+[[members]]
+name = "item"
 type = "u8"
 key = false
 

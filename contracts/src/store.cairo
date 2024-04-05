@@ -35,8 +35,36 @@ impl StoreImpl of StoreTrait {
     }
 
     #[inline(always)]
+    fn character(
+        self: Store, player_id: ContractAddress, team_id: u32, character_id: u8
+    ) -> Character {
+        get!(self.world, (player_id, team_id, character_id), (Character))
+    }
+
+    fn characters(
+        self: Store, player_id: ContractAddress, team_id: u32, ref character_ids: Array<u8>
+    ) -> Array<Character> {
+        let mut characters: Array<Character> = array![];
+        loop {
+            match character_ids.pop_front() {
+                Option::Some(character_id) => {
+                    let character = self.character(player_id, team_id, character_id);
+                    characters.append(character);
+                },
+                Option::None => { break; }
+            }
+        };
+        characters
+    }
+
+    #[inline(always)]
     fn player(self: Store, player_id: ContractAddress) -> Player {
         get!(self.world, player_id, (Player))
+    }
+
+    #[inline(always)]
+    fn shop(self: Store, player_id: ContractAddress, team_id: u32) -> Shop {
+        get!(self.world, (player_id, team_id), (Shop))
     }
 
     #[inline(always)]
@@ -45,8 +73,18 @@ impl StoreImpl of StoreTrait {
     }
 
     #[inline(always)]
+    fn set_character(self: Store, character: Character) {
+        set!(self.world, (character))
+    }
+
+    #[inline(always)]
     fn set_player(self: Store, player: Player) {
         set!(self.world, (player))
+    }
+
+    #[inline(always)]
+    fn set_shop(self: Store, shop: Shop) {
+        set!(self.world, (shop))
     }
 
     #[inline(always)]

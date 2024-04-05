@@ -31,7 +31,8 @@ impl PlayerImpl of PlayerTrait {
         Player { id, name, nonce: 0, }
     }
 
-    fn spawn(ref self: Player, seed: felt252) -> Team {
+    #[inline(always)]
+    fn spawn_team(ref self: Player, seed: felt252) -> Team {
         // [Return] Team
         let team = TeamTrait::new(self.id, self.nonce, seed);
         self.nonce += 1;

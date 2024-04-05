@@ -7,7 +7,13 @@ use starknet::ContractAddress;
 use dojo::world::IWorldDispatcher;
 
 #[starknet::interface]
-trait IMarket<TContractState> {}
+trait IMarket<TContractState> {
+    fn equip(
+        self: @TContractState, world: IWorldDispatcher, team_id: u32, character_id: u8, index: u8,
+    );
+    fn hire(self: @TContractState, world: IWorldDispatcher, team_id: u32, index: u8,);
+    fn reroll(self: @TContractState, world: IWorldDispatcher, team_id: u32,);
+}
 
 #[starknet::contract]
 mod market {
@@ -30,9 +36,12 @@ mod market {
 
     // Internal imports
 
-    use zklash::constants::WORLD;
+    use zklash::constants::{WORLD, DEFAULT_SHOP_REROLL_COST};
     use zklash::store::{Store, StoreImpl};
     use zklash::models::player::{Player, PlayerImpl, PlayerAssert};
+    use zklash::models::team::{Team, TeamImpl, TeamAssert};
+    use zklash::models::shop::{Shop, ShopImpl, ShopAssert};
+    use zklash::models::character::{Character, CharacterImpl, CharacterAssert};
 
     // Local imports
 
@@ -60,5 +69,102 @@ mod market {
     }
 
     #[abi(embed_v0)]
-    impl MarketImpl of IMarket<ContractState> {}
+    impl MarketImpl of IMarket<ContractState> {
+        fn equip(
+            self: @ContractState,
+            world: IWorldDispatcher,
+            team_id: u32,
+            character_id: u8,
+            index: u8,
+        ) {
+            // [Setup] Datastore
+            let store: Store = StoreImpl::new(world);
+
+            // [Check] Player exists
+            let caller = get_caller_address();
+            let player = store.player(caller.into());
+            player.assert_exists();
+
+            // [Check] Team exists
+            let mut team = store.team(player.id, team_id);
+            team.assert_exists();
+
+            // [Check] Shop exists
+            let mut shop = store.shop(player.id, team_id);
+            shop.assert_exists();
+
+            // [Check] Character exists
+            let mut character = store.character(player.id, team_id, character_id);
+            character.assert_exists();
+
+            // [Effect] Purchase item
+            team.equip(ref shop, ref character, index);
+
+            // [Effect] Update character
+            store.set_character(character);
+
+            // [Effect] Update shop
+            store.set_shop(shop);
+
+            // [Effect] Update team
+            store.set_team(team);
+        }
+
+        fn hire(self: @ContractState, world: IWorldDispatcher, team_id: u32, index: u8,) {
+            // [Setup] Datastore
+            let store: Store = StoreImpl::new(world);
+
+            // [Check] Player exists
+            let caller = get_caller_address();
+            let player = store.player(caller.into());
+            player.assert_exists();
+
+            // [Check] Team exists
+            let mut team = store.team(player.id, team_id);
+            team.assert_exists();
+
+            // [Check] Shop exists
+            let mut shop = store.shop(player.id, team_id);
+            shop.assert_exists();
+
+            // [Effect] Purchase item
+            let character = team.hire(ref shop, index);
+
+            // [Effect] Update character
+            store.set_character(character);
+
+            // [Effect] Update shop
+            store.set_shop(shop);
+
+            // [Effect] Update team
+            store.set_team(team);
+        }
+
+        fn reroll(self: @ContractState, world: IWorldDispatcher, team_id: u32,) {
+            // [Setup] Datastore
+            let store: Store = StoreImpl::new(world);
+
+            // [Check] Player exists
+            let caller = get_caller_address();
+            let player = store.player(caller.into());
+            player.assert_exists();
+
+            // [Check] Team exists
+            let mut team = store.team(player.id, team_id);
+            team.assert_exists();
+
+            // [Check] Shop exists
+            let mut shop = store.shop(player.id, team_id);
+            shop.assert_exists();
+
+            // [Effect] Reroll shop
+            team.reroll(ref shop);
+
+            // [Effect] Update shop
+            store.set_shop(shop);
+
+            // [Effect] Update team
+            store.set_team(team);
+        }
+    }
 }

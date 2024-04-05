@@ -1,0 +1,195 @@
+[world]
+kind = "Contract"
+class_hash = "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd"
+original_class_hash = "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd"
+abi = "abis/deployments/dojo_world_world.json"
+address = "0x11aa9b474f093e27b773aaec3c0bae571140e825d27ac433698d3584c8d4af9"
+transaction_hash = "0x5be0af36841d33273a0466f5a92bf2f5ddaf15daf07cf0c12c419547b90f21"
+block_number = 3
+seed = "zklash"
+name = "dojo::world::world"
+
+[base]
+kind = "Class"
+class_hash = "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76"
+original_class_hash = "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76"
+name = "dojo::base::base"
+
+[[contracts]]
+kind = "DojoContract"
+address = "0x6b3db511167c6c2291697a02e7ed9a162f115ac6a6c114bf99afa6547b3f90c"
+class_hash = "0x4ac2f223c084c8fb87c5c182d7ade4aec4a48f1c175e745c59a623ef8ba85d1"
+original_class_hash = "0x4ac2f223c084c8fb87c5c182d7ade4aec4a48f1c175e745c59a623ef8ba85d1"
+base_class_hash = "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76"
+abi = "abis/deployments/contracts/zklash_systems_account_account.json"
+reads = []
+writes = []
+computed = []
+name = "zklash::systems::account::account"
+
+[[contracts]]
+kind = "DojoContract"
+address = "0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1"
+class_hash = "0x4419d09da4d092107f6131e5530d52f4747e16ffebab91a8405dcc69d539b49"
+original_class_hash = "0x4419d09da4d092107f6131e5530d52f4747e16ffebab91a8405dcc69d539b49"
+base_class_hash = "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76"
+abi = "abis/deployments/contracts/zklash_systems_battle_battle.json"
+reads = []
+writes = []
+computed = []
+name = "zklash::systems::battle::battle"
+
+[[contracts]]
+kind = "DojoContract"
+address = "0x53fb59cc9aab03983033de799d10c9a0d3e4475e19224a661cefeacb0577871"
+class_hash = "0x226ccc8e7be115849da23500f08158b70ea6a2a1f9690ee3f54c91cbe28b75f"
+original_class_hash = "0x226ccc8e7be115849da23500f08158b70ea6a2a1f9690ee3f54c91cbe28b75f"
+base_class_hash = "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76"
+abi = "abis/deployments/contracts/zklash_systems_market_market.json"
+reads = []
+writes = []
+computed = []
+name = "zklash::systems::market::market"
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x49b2ccd04d6f1ae29730d366766fdd11b6312f9fc8254a4fdfb165ad549a4c5"
+original_class_hash = "0x49b2ccd04d6f1ae29730d366766fdd11b6312f9fc8254a4fdfb165ad549a4c5"
+abi = "abis/deployments/models/zklash_models_character_character.json"
+name = "zklash::models::character::character"
+
+[[models.members]]
+name = "player_id"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "team_id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "id"
+type = "u16"
+key = true
+
+[[models.members]]
+name = "role"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "xp"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "level"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "health"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "attack"
+type = "u8"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x40f2ffd1e8202a55d9cc7065b212759a78702701a64dff17fd68659ffcdc6f5"
+original_class_hash = "0x40f2ffd1e8202a55d9cc7065b212759a78702701a64dff17fd68659ffcdc6f5"
+abi = "abis/deployments/models/zklash_models_player_player.json"
+name = "zklash::models::player::player"
+
+[[models.members]]
+name = "id"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "name"
+type = "felt252"
+key = false
+
+[[models.members]]
+name = "nonce"
+type = "u32"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x402542ff3ac180624ba48936fe13d0c0bffbedb7e009c1c6abaa55468e6de46"
+original_class_hash = "0x402542ff3ac180624ba48936fe13d0c0bffbedb7e009c1c6abaa55468e6de46"
+abi = "abis/deployments/models/zklash_models_shop_shop.json"
+name = "zklash::models::shop::shop"
+
+[[models.members]]
+name = "player_id"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "team_id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "cost"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "roles"
+type = "u128"
+key = false
+
+[[models.members]]
+name = "items"
+type = "u128"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x7e6bf1e60f46c9ee8b0de2acc5d4a536bfe3c936eeb644b333ad0304d0c7814"
+original_class_hash = "0x7e6bf1e60f46c9ee8b0de2acc5d4a536bfe3c936eeb644b333ad0304d0c7814"
+abi = "abis/deployments/models/zklash_models_team_team.json"
+name = "zklash::models::team::team"
+
+[[models.members]]
+name = "player_id"
+type = "ContractAddress"
+key = true
+
+[[models.members]]
+name = "id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "seed"
+type = "felt252"
+key = false
+
+[[models.members]]
+name = "gold"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "health"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "level"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "characters"
+type = "u64"
+key = false

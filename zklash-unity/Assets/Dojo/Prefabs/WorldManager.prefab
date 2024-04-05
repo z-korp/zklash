@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3269270482660702203}
   - component: {fileID: 1648136030876143075}
   - component: {fileID: 4477060482053654553}
+  - component: {fileID: 2921955955469925862}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -45,11 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85bbcaeafdf5e41c6a2f48ff65820b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toriiUrl: 
-  rpcUrl: 
-  relayUrl: 
-  relayWebrtcUrl: 
-  worldAddress: 
   synchronizationMaster: {fileID: 4477060482053654553}
   dojoConfig: {fileID: 11400000, guid: 1d6a5fa48aab79f0084b213f6fc768c5, type: 2}
 --- !u!114 &4477060482053654553
@@ -72,3 +68,15 @@ MonoBehaviour:
   OnEntitySpawned:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2921955955469925862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4900589733936057544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174e097800e9b41f7b8292cc264f90c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

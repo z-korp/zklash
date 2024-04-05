@@ -27,6 +27,23 @@ public class GameManager : MonoBehaviour
     public JsonRpcClient provider;
     public Account masterAccount;
 
+    public static GameManager Instance { get; private set; }
+
+    
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public static string StringToHexString(string input)
     {
         string hexOutput = "";
@@ -40,6 +57,8 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        Debug.Log("---------------------------------");
+        Debug.Log("GameManager Start");
         provider = new JsonRpcClient(dojoConfig.rpcUrl);
         var signer = new SigningKey(gameManagerData.masterPrivateKey);
         masterAccount = new Account(provider, signer, new FieldElement(gameManagerData.masterAddress));
@@ -60,13 +79,19 @@ public class GameManager : MonoBehaviour
 
     private void InitEntity(GameObject entity)
     {
+        /*Game gameComponent = entity.GetComponent<Game>();
+        if (gameComponent != null)
+        {
+            // This entity is of type Tile, perform actions with its index
+            Debug.Log($"Game entity spawned with id: {gameComponent.game_id}");
+        }*/
     }
 
-    public async void TriggerCreatePlayAsync()
+    public async void TriggerCreatePlayAsync(string name)
     {
         var burner = await burnerManager.DeployBurner(new SigningKey());
-        var name = StringToHexString("name");
-        var txHash = await accountSystem.Create(burner, dojoConfig.worldAddress, name);
+        var nameHex = StringToHexString(name);
+        var txHash = await accountSystem.Create(burner, dojoConfig.worldAddress, nameHex);
         // Do something with txHash, like logging it
         Debug.Log($"Transaction Hash: {txHash.Hex()}");
     }

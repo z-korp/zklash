@@ -7,7 +7,9 @@ use starknet::ContractAddress;
 use dojo::world::IWorldDispatcher;
 
 #[starknet::interface]
-trait IBattle<TContractState> {}
+trait IBattle<TContractState> {
+    fn start(self: @TContractState, world: IWorldDispatcher, team_id: u32, order: u128,);
+}
 
 #[starknet::contract]
 mod battle {
@@ -32,7 +34,11 @@ mod battle {
 
     use zklash::constants::WORLD;
     use zklash::store::{Store, StoreImpl};
+    use zklash::helpers::packer::Packer;
     use zklash::models::player::{Player, PlayerImpl, PlayerAssert};
+    use zklash::models::team::{Team, TeamImpl, TeamAssert};
+    use zklash::models::shop::{Shop, ShopImpl, ShopAssert};
+    use zklash::models::character::{Character, CharacterImpl, CharacterAssert};
 
     // Local imports
 
@@ -60,5 +66,34 @@ mod battle {
     }
 
     #[abi(embed_v0)]
-    impl BattleImpl of IBattle<ContractState> {}
+    impl BattleImpl of IBattle<ContractState> {
+        fn start(self: @ContractState, world: IWorldDispatcher, team_id: u32, order: u128,) {
+            // [Setup] Datastore
+            let store: Store = StoreImpl::new(world);
+
+            // [Check] Player exists
+            let caller = get_caller_address();
+            let player = store.player(caller.into());
+            player.assert_exists();
+
+            // [Check] Team exists
+            let mut team = store.team(player.id, team_id);
+            team.assert_exists();
+
+            // [Check] Characters exist
+            let mut character_ids = Packer::unpack(order);
+            loop {
+                match character_ids.pop_front() {
+                    Option::Some(character_id) => {
+                        let character = store.character(player.id, team.id, character_id);
+                        character.assert_exists();
+                    },
+                    Option::None => { break; },
+                }
+            };
+
+            // [Effect] Update team characters
+            team.characters = order;
+        }
+    }
 }

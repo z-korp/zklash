@@ -14,10 +14,10 @@ use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 
 // Models imports
 
-use zklash::models::character::{Character};
-use zklash::models::player::{Player};
-use zklash::models::shop::{Shop};
-use zklash::models::team::{Team};
+use zklash::models::character::Character;
+use zklash::models::player::Player;
+use zklash::models::shop::Shop;
+use zklash::models::team::Team;
 
 
 /// Store struct.
@@ -40,7 +40,17 @@ impl StoreImpl of StoreTrait {
     }
 
     #[inline(always)]
+    fn team(self: Store, player_id: ContractAddress, team_id: u32) -> Team {
+        get!(self.world, (player_id, team_id), (Team))
+    }
+
+    #[inline(always)]
     fn set_player(self: Store, player: Player) {
         set!(self.world, (player))
+    }
+
+    #[inline(always)]
+    fn set_team(self: Store, team: Team) {
+        set!(self.world, (team))
     }
 }

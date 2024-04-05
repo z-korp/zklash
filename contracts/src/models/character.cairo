@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 
-#[derive(Model, Drop, Serde)]
+#[derive(Model, Copy, Drop, Serde)]
 struct Character {
     #[key]
     player_id: ContractAddress,

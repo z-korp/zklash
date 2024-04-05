@@ -9,18 +9,20 @@ use dojo::world::IWorldDispatcher;
 #[starknet::interface]
 trait IAccount<TContractState> {
     fn create(self: @TContractState, world: IWorldDispatcher, name: felt252,);
+    fn spawn(self: @TContractState, world: IWorldDispatcher,);
 }
 
 #[starknet::contract]
 mod account {
     // Core imports
 
+    use zklash::models::player::PlayerTrait;
     use core::debug::PrintTrait;
 
     // Starknet imports
 
     use starknet::ContractAddress;
-    use starknet::info::{get_caller_address, get_block_timestamp};
+    use starknet::info::{get_caller_address, get_block_timestamp, get_block_number};
 
     // Dojo imports
 
@@ -61,8 +63,6 @@ mod account {
         }
     }
 
-
-    // impl: implement functions specified in trait
     #[abi(embed_v0)]
     impl AccountImpl of IAccount<ContractState> {
         fn create(self: @ContractState, world: IWorldDispatcher, name: felt252,) {
@@ -76,6 +76,26 @@ mod account {
 
             // [Effect] Create a new player
             let player = PlayerImpl::new(caller, name);
+            store.set_player(player);
+        }
+
+        fn spawn(self: @ContractState, world: IWorldDispatcher) {
+            // [Setup] Datastore
+            let store: Store = StoreImpl::new(world);
+
+            // [Check] Player exists
+            let caller = get_caller_address();
+            let mut player = store.player(caller.into());
+            player.assert_exists();
+
+            // [Effect] Spawn a new team
+            let seed: felt252 = get_block_number().into();
+            let team = player.spawn(seed);
+
+            // [Effect] Store the team
+            store.set_team(team);
+
+            // [Effect] Update the player
             store.set_player(player);
         }
     }

@@ -677,8 +677,8 @@
     {
       "kind": "DojoContract",
       "address": "0x6b3db511167c6c2291697a02e7ed9a162f115ac6a6c114bf99afa6547b3f90c",
-      "class_hash": "0x4ac2f223c084c8fb87c5c182d7ade4aec4a48f1c175e745c59a623ef8ba85d1",
-      "original_class_hash": "0x4ac2f223c084c8fb87c5c182d7ade4aec4a48f1c175e745c59a623ef8ba85d1",
+      "class_hash": "0x2f88eb9fd59e029963bbd7d2a2c63be4f44a53716f20dbd69217898377a20ae",
+      "original_class_hash": "0x2f88eb9fd59e029963bbd7d2a2c63be4f44a53716f20dbd69217898377a20ae",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -789,8 +789,8 @@
     {
       "kind": "DojoContract",
       "address": "0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1",
-      "class_hash": "0x4419d09da4d092107f6131e5530d52f4747e16ffebab91a8405dcc69d539b49",
-      "original_class_hash": "0x4419d09da4d092107f6131e5530d52f4747e16ffebab91a8405dcc69d539b49",
+      "class_hash": "0x1dd35bb2cc8bea23134b34e6a9883fda7502927088844101e85c7f806fec187",
+      "original_class_hash": "0x1dd35bb2cc8bea23134b34e6a9883fda7502927088844101e85c7f806fec187",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -855,7 +855,28 @@
         {
           "type": "interface",
           "name": "zklash::systems::battle::IBattle",
-          "items": []
+          "items": [
+            {
+              "type": "function",
+              "name": "start",
+              "inputs": [
+                {
+                  "name": "world",
+                  "type": "dojo::world::IWorldDispatcher"
+                },
+                {
+                  "name": "team_id",
+                  "type": "core::integer::u32"
+                },
+                {
+                  "name": "order",
+                  "type": "core::integer::u128"
+                }
+              ],
+              "outputs": [],
+              "state_mutability": "view"
+            }
+          ]
         },
         {
           "type": "event",
@@ -872,8 +893,8 @@
     {
       "kind": "DojoContract",
       "address": "0x53fb59cc9aab03983033de799d10c9a0d3e4475e19224a661cefeacb0577871",
-      "class_hash": "0x226ccc8e7be115849da23500f08158b70ea6a2a1f9690ee3f54c91cbe28b75f",
-      "original_class_hash": "0x226ccc8e7be115849da23500f08158b70ea6a2a1f9690ee3f54c91cbe28b75f",
+      "class_hash": "0x3b14d705cc3086a9e6e28eaa3a07995c7b23cb8a2fbb6db8266edb12ef3b73e",
+      "original_class_hash": "0x3b14d705cc3086a9e6e28eaa3a07995c7b23cb8a2fbb6db8266edb12ef3b73e",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -938,7 +959,68 @@
         {
           "type": "interface",
           "name": "zklash::systems::market::IMarket",
-          "items": []
+          "items": [
+            {
+              "type": "function",
+              "name": "equip",
+              "inputs": [
+                {
+                  "name": "world",
+                  "type": "dojo::world::IWorldDispatcher"
+                },
+                {
+                  "name": "team_id",
+                  "type": "core::integer::u32"
+                },
+                {
+                  "name": "character_id",
+                  "type": "core::integer::u8"
+                },
+                {
+                  "name": "index",
+                  "type": "core::integer::u8"
+                }
+              ],
+              "outputs": [],
+              "state_mutability": "view"
+            },
+            {
+              "type": "function",
+              "name": "hire",
+              "inputs": [
+                {
+                  "name": "world",
+                  "type": "dojo::world::IWorldDispatcher"
+                },
+                {
+                  "name": "team_id",
+                  "type": "core::integer::u32"
+                },
+                {
+                  "name": "index",
+                  "type": "core::integer::u8"
+                }
+              ],
+              "outputs": [],
+              "state_mutability": "view"
+            },
+            {
+              "type": "function",
+              "name": "reroll",
+              "inputs": [
+                {
+                  "name": "world",
+                  "type": "dojo::world::IWorldDispatcher"
+                },
+                {
+                  "name": "team_id",
+                  "type": "core::integer::u32"
+                }
+              ],
+              "outputs": [],
+              "state_mutability": "view"
+            }
+          ]
         },
         {
           "type": "event",
@@ -969,11 +1051,16 @@
         },
         {
           "name": "id",
-          "type": "u16",
+          "type": "u8",
           "key": true
         },
         {
           "name": "role",
+          "type": "u8",
+          "key": false
+        },
+        {
+          "name": "item",
           "type": "u8",
           "key": false
         },
@@ -998,8 +1085,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x49b2ccd04d6f1ae29730d366766fdd11b6312f9fc8254a4fdfb165ad549a4c5",
-      "original_class_hash": "0x49b2ccd04d6f1ae29730d366766fdd11b6312f9fc8254a4fdfb165ad549a4c5",
+      "class_hash": "0x6ace9a5de5e7da268c719990ddb72809962723be23a0746361d87c409fd6327",
+      "original_class_hash": "0x6ace9a5de5e7da268c719990ddb72809962723be23a0746361d87c409fd6327",
       "abi": [
         {
           "type": "impl",
@@ -1188,10 +1275,14 @@
             },
             {
               "name": "id",
-              "type": "core::integer::u16"
+              "type": "core::integer::u8"
             },
             {
               "name": "role",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "item",
               "type": "core::integer::u8"
             },
             {
@@ -1493,7 +1584,27 @@
           "key": true
         },
         {
-          "name": "cost",
+          "name": "purchase_cost",
+          "type": "u8",
+          "key": false
+        },
+        {
+          "name": "reroll_cost",
+          "type": "u8",
+          "key": false
+        },
+        {
+          "name": "item_count",
+          "type": "u8",
+          "key": false
+        },
+        {
+          "name": "items",
+          "type": "u128",
+          "key": false
+        },
+        {
+          "name": "role_count",
           "type": "u8",
           "key": false
         },
@@ -1501,15 +1612,10 @@
           "name": "roles",
           "type": "u128",
           "key": false
-        },
-        {
-          "name": "items",
-          "type": "u128",
-          "key": false
         }
       ],
-      "class_hash": "0x402542ff3ac180624ba48936fe13d0c0bffbedb7e009c1c6abaa55468e6de46",
-      "original_class_hash": "0x402542ff3ac180624ba48936fe13d0c0bffbedb7e009c1c6abaa55468e6de46",
+      "class_hash": "0x6c514e7b43ca8d2af756a989b2c5cd28a3ba8a46cf73188e895b6c0f96c665d",
+      "original_class_hash": "0x6c514e7b43ca8d2af756a989b2c5cd28a3ba8a46cf73188e895b6c0f96c665d",
       "abi": [
         {
           "type": "impl",
@@ -1697,15 +1803,27 @@
               "type": "core::integer::u32"
             },
             {
-              "name": "cost",
+              "name": "purchase_cost",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "reroll_cost",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "item_count",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "items",
+              "type": "core::integer::u128"
+            },
+            {
+              "name": "role_count",
               "type": "core::integer::u8"
             },
             {
               "name": "roles",
-              "type": "core::integer::u128"
-            },
-            {
-              "name": "items",
               "type": "core::integer::u128"
             }
           ]
@@ -1756,6 +1874,11 @@
           "key": false
         },
         {
+          "name": "nonce",
+          "type": "felt252",
+          "key": false
+        },
+        {
           "name": "gold",
           "type": "u32",
           "key": false
@@ -1771,13 +1894,23 @@
           "key": false
         },
         {
+          "name": "character_count",
+          "type": "u8",
+          "key": false
+        },
+        {
           "name": "characters",
-          "type": "u64",
+          "type": "u128",
+          "key": false
+        },
+        {
+          "name": "battle_id",
+          "type": "u8",
           "key": false
         }
       ],
-      "class_hash": "0x7e6bf1e60f46c9ee8b0de2acc5d4a536bfe3c936eeb644b333ad0304d0c7814",
-      "original_class_hash": "0x7e6bf1e60f46c9ee8b0de2acc5d4a536bfe3c936eeb644b333ad0304d0c7814",
+      "class_hash": "0x2a403ac90a3cfc8092d4e3f5a845194996a998f00c71d95bb31f623b8c6c93f",
+      "original_class_hash": "0x2a403ac90a3cfc8092d4e3f5a845194996a998f00c71d95bb31f623b8c6c93f",
       "abi": [
         {
           "type": "impl",
@@ -1969,6 +2102,10 @@
               "type": "core::felt252"
             },
             {
+              "name": "nonce",
+              "type": "core::felt252"
+            },
+            {
               "name": "gold",
               "type": "core::integer::u32"
             },
@@ -1981,8 +2118,16 @@
               "type": "core::integer::u8"
             },
             {
+              "name": "character_count",
+              "type": "core::integer::u8"
+            },
+            {
               "name": "characters",
-              "type": "core::integer::u64"
+              "type": "core::integer::u128"
+            },
+            {
+              "name": "battle_id",
+              "type": "core::integer::u8"
             }
           ]
         },

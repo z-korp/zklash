@@ -29,6 +29,7 @@ public class Draggable : MonoBehaviour
             Debug.Log("Dragging");
             Vector2 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             transform.Translate(MousePos);
+
         }
     }
 

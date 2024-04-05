@@ -12,6 +12,7 @@ mod types {
 }
 
 mod helpers {
+    mod array;
     mod packer;
     mod fighter;
     mod math;

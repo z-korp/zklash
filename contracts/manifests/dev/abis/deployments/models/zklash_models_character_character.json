@@ -186,10 +186,14 @@
       },
       {
         "name": "id",
-        "type": "core::integer::u16"
+        "type": "core::integer::u8"
       },
       {
         "name": "role",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "item",
         "type": "core::integer::u8"
       },
       {

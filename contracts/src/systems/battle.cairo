@@ -16,7 +16,6 @@ mod battle {
     // Core imports
 
     use core::array::ArrayTrait;
-    use zklash::store::StoreTrait;
     use core::debug::PrintTrait;
 
     // Starknet imports

@@ -1,6 +1,6 @@
-use zklash::store::StoreTrait;
 // Core imports
 
+use core::debug::PrintTrait;
 use core::poseidon::hades_permutation;
 
 // Starknet imports

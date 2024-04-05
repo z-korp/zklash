@@ -37,29 +37,6 @@ impl Packer of PackerTrait {
         (Packer::pack(result), removed)
     }
 
-    fn add(mut packed: u128, value: u8, index: u8) -> u128 {
-        let mut result: Array<u8> = array![];
-        let mut idx = 0;
-        let mut added = false;
-        loop {
-            if packed == 0 {
-                break;
-            }
-            let current: u8 = (packed % TWO_POW_8).try_into().unwrap();
-            if idx == index {
-                result.append(value);
-                added = true;
-            }
-            result.append(current);
-            idx += 1;
-            packed /= TWO_POW_8;
-        };
-        if !added {
-            result.append(value);
-        }
-        Packer::pack(result)
-    }
-
     fn pack(mut unpacked: Array<u8>) -> u128 {
         let mut result: u128 = 0;
         loop {

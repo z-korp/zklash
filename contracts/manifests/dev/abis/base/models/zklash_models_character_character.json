@@ -173,6 +173,20 @@
     "interface_name": "zklash::models::character::Icharacter"
   },
   {
+    "type": "enum",
+    "name": "core::bool",
+    "variants": [
+      {
+        "name": "False",
+        "type": "()"
+      },
+      {
+        "name": "True",
+        "type": "()"
+      }
+    ]
+  },
+  {
     "type": "struct",
     "name": "zklash::models::character::Character",
     "members": [
@@ -198,7 +212,7 @@
       },
       {
         "name": "xp",
-        "type": "core::integer::u32"
+        "type": "core::integer::u8"
       },
       {
         "name": "level",
@@ -211,6 +225,14 @@
       {
         "name": "attack",
         "type": "core::integer::u8"
+      },
+      {
+        "name": "absorb",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "stun",
+        "type": "core::bool"
       }
     ]
   },

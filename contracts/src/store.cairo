@@ -41,22 +41,6 @@ impl StoreImpl of StoreTrait {
         get!(self.world, (player_id, team_id, character_id), (Character))
     }
 
-    fn characters(
-        self: Store, player_id: ContractAddress, team_id: u32, ref character_ids: Array<u8>
-    ) -> Array<Character> {
-        let mut characters: Array<Character> = array![];
-        loop {
-            match character_ids.pop_front() {
-                Option::Some(character_id) => {
-                    let character = self.character(player_id, team_id, character_id);
-                    characters.append(character);
-                },
-                Option::None => { break; }
-            }
-        };
-        characters
-    }
-
     #[inline(always)]
     fn player(self: Store, player_id: ContractAddress) -> Player {
         get!(self.world, player_id, (Player))

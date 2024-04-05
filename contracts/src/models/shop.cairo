@@ -79,10 +79,7 @@ impl ShopImpl of ShopTrait {
         // [Effect] Remove the role at index from the shop
         let (roles, role) = Packer::remove(self.roles, index);
         self.roles = roles;
-        // [Return] The purchased role
-        let role: Role = role.into();
-        role.assert_is_valid();
-        role
+        role.into()
     }
 
     fn items(self: Shop) -> Array<Item> {

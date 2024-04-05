@@ -10,6 +10,7 @@ use zklash::roles::pawn::{RoleImpl as PawnImpl};
 use zklash::roles::torchoblin::{RoleImpl as TorchoblinImpl};
 use zklash::roles::dynamoblin::{RoleImpl as DynamoblinImpl};
 use zklash::roles::bomboblin::{RoleImpl as BomboblinImpl};
+use zklash::types::item::Item;
 
 // Constants
 

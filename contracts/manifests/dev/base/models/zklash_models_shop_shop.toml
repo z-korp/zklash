@@ -1,0 +1,30 @@
+kind = "DojoModel"
+class_hash = "0x402542ff3ac180624ba48936fe13d0c0bffbedb7e009c1c6abaa55468e6de46"
+original_class_hash = "0x402542ff3ac180624ba48936fe13d0c0bffbedb7e009c1c6abaa55468e6de46"
+abi = "manifests/dev/abis/base/models/zklash_models_shop_shop.json"
+name = "zklash::models::shop::shop"
+
+[[members]]
+name = "player_id"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "team_id"
+type = "u32"
+key = true
+
+[[members]]
+name = "cost"
+type = "u8"
+key = false
+
+[[members]]
+name = "roles"
+type = "u128"
+key = false
+
+[[members]]
+name = "items"
+type = "u128"
+key = false

@@ -1,12 +1,18 @@
+// Starknet imports
+
 use starknet::ContractAddress;
 
+// Internal imports
+
+use zklash::models::team::{Team, TeamTrait};
+
 mod errors {
-    const PLAYER_NOT_EXIST: felt252 = 'Player: Does not exist';
-    const PLAYER_ALREADY_EXIST: felt252 = 'Player: Already exist';
-    const PLAYER_INVALID_NAME: felt252 = 'Player: Invalid name';
+    const PLAYER_NOT_EXIST: felt252 = 'Player: does not exist';
+    const PLAYER_ALREADY_EXIST: felt252 = 'Player: already exist';
+    const PLAYER_INVALID_NAME: felt252 = 'Player: invalid name';
 }
 
-#[derive(Model, Drop, Serde)]
+#[derive(Model, Copy, Drop, Serde)]
 struct Player {
     #[key]
     id: ContractAddress,
@@ -23,6 +29,13 @@ impl PlayerImpl of PlayerTrait {
 
         // [Return] Player
         Player { id, name, nonce: 0, }
+    }
+
+    fn spawn(ref self: Player, seed: felt252) -> Team {
+        // [Return] Team
+        let team = TeamTrait::new(self.id, self.nonce, seed);
+        self.nonce += 1;
+        team
     }
 }
 

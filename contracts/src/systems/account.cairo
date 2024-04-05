@@ -91,8 +91,8 @@ mod account {
             player.assert_exists();
 
             // [Effect] Spawn a new team
-            let seed: felt252 = get_block_number().into();
-            let mut team = player.spawn_team(seed);
+            let salt: felt252 = get_block_number().into();
+            let mut team = player.spawn_team(salt);
 
             // [Effect] Spawn a new shop
             let shop = team.spawn_shop();

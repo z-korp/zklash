@@ -17,7 +17,7 @@ struct Player {
     #[key]
     id: ContractAddress,
     name: felt252,
-    nonce: u32,
+    team_count: u32,
 }
 
 #[generate_trait]
@@ -28,14 +28,20 @@ impl PlayerImpl of PlayerTrait {
         assert(name != 0, errors::PLAYER_INVALID_NAME);
 
         // [Return] Player
-        Player { id, name, nonce: 0, }
+        Player { id, name, team_count: 0, }
     }
 
     #[inline(always)]
-    fn spawn_team(ref self: Player, seed: felt252) -> Team {
+    fn team_id(self: Player) -> u32 {
+        // [Return] Team id
+        self.team_count
+    }
+
+    #[inline(always)]
+    fn spawn_team(ref self: Player, salt: felt252) -> Team {
         // [Return] Team
-        let team = TeamTrait::new(self.id, self.nonce, seed);
-        self.nonce += 1;
+        self.team_count += 1;
+        let team = TeamTrait::new(self.id, self.team_count, salt);
         team
     }
 }
@@ -56,7 +62,7 @@ impl PlayerAssert of AssertTrait {
 impl ZeroablePlayerImpl of core::Zeroable<Player> {
     #[inline(always)]
     fn zero() -> Player {
-        Player { id: Zeroable::zero(), name: 0, nonce: 0, }
+        Player { id: Zeroable::zero(), name: 0, team_count: 0, }
     }
 
     #[inline(always)]

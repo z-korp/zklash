@@ -48,9 +48,9 @@ mod errors {
 #[generate_trait]
 impl TeamImpl of TeamTrait {
     #[inline(always)]
-    fn new(player_id: ContractAddress, id: u32, seed: felt252) -> Team {
+    fn new(player_id: ContractAddress, id: u32, salt: felt252) -> Team {
         // [Check] Seed is valid
-        assert(seed != 0, errors::TEAM_INVALID_SEED);
+        let (seed, _, _) = hades_permutation(id.into(), salt, 0);
         // [Return] Team
         Team {
             player_id,
@@ -103,8 +103,8 @@ impl TeamImpl of TeamTrait {
         self.gold -= shop.purchase_cost.into();
         // [Effect] Hire Character
         let role: Role = shop.purchase_role(index);
-        let character_id = self.character_count;
         self.character_count += 1;
+        let character_id = self.character_count;
         let character: Character = CharacterTrait::new(self.player_id, self.id, character_id, role);
         character
     }

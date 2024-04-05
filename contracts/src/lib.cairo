@@ -54,3 +54,11 @@ mod systems {
     mod battle;
     mod market;
 }
+
+#[cfg(test)]
+mod tests {
+    mod setup;
+    mod account;
+    mod battle;
+    mod market;
+}

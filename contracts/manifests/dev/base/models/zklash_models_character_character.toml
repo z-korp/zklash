@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x6ace9a5de5e7da268c719990ddb72809962723be23a0746361d87c409fd6327"
-original_class_hash = "0x6ace9a5de5e7da268c719990ddb72809962723be23a0746361d87c409fd6327"
+class_hash = "0x48fc28d0c3558d6f74bdcf6a7589b22bcebe305c8051c3d02c0bfc71882aeff"
+original_class_hash = "0x48fc28d0c3558d6f74bdcf6a7589b22bcebe305c8051c3d02c0bfc71882aeff"
 abi = "manifests/dev/abis/base/models/zklash_models_character_character.json"
 name = "zklash::models::character::character"
 
@@ -31,7 +31,7 @@ key = false
 
 [[members]]
 name = "xp"
-type = "u32"
+type = "u8"
 key = false
 
 [[members]]
@@ -47,4 +47,14 @@ key = false
 [[members]]
 name = "attack"
 type = "u8"
+key = false
+
+[[members]]
+name = "absorb"
+type = "u8"
+key = false
+
+[[members]]
+name = "stun"
+type = "bool"
 key = false

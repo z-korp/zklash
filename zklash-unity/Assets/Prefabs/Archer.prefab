@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4569523674553832488}
   - component: {fileID: 7255474210259257150}
   - component: {fileID: 948755911264901216}
+  - component: {fileID: 2761097008875629303}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -97,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 7526038476407582817}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 51326c84b54c04f219d7ef72174913d2, type: 2}
+  m_Controller: {fileID: 9100000, guid: df7214626f0b0a84987ac92a553df396, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -144,7 +145,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.96875, y: 1.171875}
+    oldSize: {x: 3, y: 3}
     newSize: {x: 3, y: 3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -163,5 +164,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a9a0cc452dc94fb683f714408cc1779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2761097008875629303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc46230a9917c324881d27b0a5e2bff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

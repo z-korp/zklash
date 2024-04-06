@@ -15,6 +15,7 @@ trait IBattle<TContractState> {
 mod battle {
     // Core imports
 
+    use core::array::ArrayTrait;
     use core::debug::PrintTrait;
 
     // Starknet imports
@@ -35,6 +36,7 @@ mod battle {
     use zklash::constants::WORLD;
     use zklash::store::{Store, StoreImpl};
     use zklash::helpers::packer::Packer;
+    use zklash::helpers::array::ArrayTraitExt;
     use zklash::models::player::{Player, PlayerImpl, PlayerAssert};
     use zklash::models::team::{Team, TeamImpl, TeamAssert};
     use zklash::models::shop::{Shop, ShopImpl, ShopAssert};
@@ -43,6 +45,12 @@ mod battle {
     // Local imports
 
     use super::IBattle;
+
+    // Errors
+
+    mod errors {
+        const CHARACTER_DUPLICATE: felt252 = 'Battle: character duplicate';
+    }
 
     // Storage
 
@@ -69,7 +77,7 @@ mod battle {
     impl BattleImpl of IBattle<ContractState> {
         fn start(self: @ContractState, world: IWorldDispatcher, team_id: u32, order: u128,) {
             // [Setup] Datastore
-            let store: Store = StoreImpl::new(world);
+            let mut store: Store = StoreImpl::new(world);
 
             // [Check] Player exists
             let caller = get_caller_address();
@@ -81,19 +89,25 @@ mod battle {
             team.assert_exists();
 
             // [Check] Characters exist
+            let mut characters: Array<Character> = array![];
             let mut character_ids = Packer::unpack(order);
             loop {
                 match character_ids.pop_front() {
                     Option::Some(character_id) => {
                         let character = store.character(player.id, team.id, character_id);
                         character.assert_exists();
+                        assert(!characters.contains(character), errors::CHARACTER_DUPLICATE);
+                        characters.append(character);
                     },
                     Option::None => { break; },
                 }
             };
 
-            // [Effect] Update team characters
-            team.characters = order;
+            // [Effect] Update team characters and fight
+            team.fight(ref characters);
+
+            // [Effect] Update team
+            store.set_team(team);
         }
     }
 }

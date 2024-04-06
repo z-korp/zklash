@@ -5,13 +5,17 @@ mod events;
 mod types {
     mod dice;
     mod item;
+    mod phase;
     mod role;
+    mod size;
     mod wave;
 }
 
 mod helpers {
+    mod array;
     mod packer;
     mod fighter;
+    mod math;
 }
 
 mod roles {
@@ -22,6 +26,14 @@ mod roles {
     mod torchoblin;
     mod dynamoblin;
     mod bomboblin;
+}
+
+mod items {
+    mod interface;
+    mod mushroom;
+    mod rock;
+    mod bush;
+    mod pumpkin;
 }
 
 mod waves {
@@ -38,6 +50,14 @@ mod models {
 }
 
 mod systems {
+    mod account;
+    mod battle;
+    mod market;
+}
+
+#[cfg(test)]
+mod tests {
+    mod setup;
     mod account;
     mod battle;
     mod market;

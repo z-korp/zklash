@@ -1,6 +1,6 @@
-use zklash::store::StoreTrait;
 // Core imports
 
+use core::debug::PrintTrait;
 use core::poseidon::hades_permutation;
 
 // Starknet imports
@@ -32,7 +32,6 @@ struct Team {
     health: u32,
     level: u8,
     character_count: u8,
-    characters: u128,
     battle_id: u8,
 }
 
@@ -43,14 +42,15 @@ mod errors {
     const TEAM_IS_EMPTY: felt252 = 'Team: is empty';
     const TEAM_NOT_AFFORDABLE: felt252 = 'Team: not affordable';
     const TEAM_IS_DEFEATED: felt252 = 'Team: is defeated';
+    const TEAM_XP_INVALID_ROLE: felt252 = 'Team: invalid role for xp';
 }
 
 #[generate_trait]
 impl TeamImpl of TeamTrait {
     #[inline(always)]
-    fn new(player_id: ContractAddress, id: u32, seed: felt252) -> Team {
+    fn new(player_id: ContractAddress, id: u32, salt: felt252) -> Team {
         // [Check] Seed is valid
-        assert(seed != 0, errors::TEAM_INVALID_SEED);
+        let (seed, _, _) = hades_permutation(id.into(), salt, 0);
         // [Return] Team
         Team {
             player_id,
@@ -61,7 +61,6 @@ impl TeamImpl of TeamTrait {
             health: constants::DEFAULT_HEALTH,
             level: constants::DEFAULT_LEVEL,
             character_count: 0,
-            characters: 0,
             battle_id: 0,
         }
     }
@@ -78,12 +77,6 @@ impl TeamImpl of TeamTrait {
     fn seed(self: Team) -> felt252 {
         let (seed, _, _) = hades_permutation(self.seed, self.nonce, 0);
         seed
-    }
-
-    #[inline(always)]
-    fn characters(self: Team, ref store: Store) -> Array<Character> {
-        let mut character_ids: Array<u8> = Packer::unpack(self.characters);
-        store.characters(self.player_id, self.id, ref character_ids)
     }
 
     #[inline(always)]
@@ -110,10 +103,37 @@ impl TeamImpl of TeamTrait {
         self.gold -= shop.purchase_cost.into();
         // [Effect] Hire Character
         let role: Role = shop.purchase_role(index);
-        let character_id = self.character_count;
         self.character_count += 1;
+        let character_id = self.character_count;
         let character: Character = CharacterTrait::new(self.player_id, self.id, character_id, role);
         character
+    }
+
+    #[inline(always)]
+    fn xp(ref self: Team, ref shop: Shop, ref character: Character, index: u8) {
+        // [Check] Not defeated
+        self.assert_not_defeated();
+        // [Check] Affordable
+        self.assert_is_affordable(shop.purchase_cost);
+        // [Effect] Update Gold
+        self.gold -= shop.purchase_cost.into();
+        // [Check] Roles match
+        let role: Role = character.role.into();
+        let purchased_role: Role = shop.purchase_role(index);
+        assert(role == purchased_role, errors::TEAM_XP_INVALID_ROLE);
+        // [Effect] Update Character
+        character.xp();
+    }
+
+    #[inline(always)]
+    fn sell(ref self: Team, ref character: Character) {
+        // [Check] Not defeated
+        self.assert_not_defeated();
+        // [Effect] Update Gold
+        self.gold += character.level.into();
+        // [Effect] Update Character
+        character.nullify();
+    // [Effect] Update Characters
     }
 
     #[inline(always)]
@@ -130,14 +150,21 @@ impl TeamImpl of TeamTrait {
     }
 
     #[inline(always)]
-    fn fight(ref self: Team, ref store: Store) {
+    fn fight(ref self: Team, ref chars: Array<Character>) {
         // [Check] Not defeated
         self.assert_not_defeated();
+        // [Check] Not empty
+        assert(chars.len() != 0, errors::TEAM_IS_EMPTY);
         // [Compute] Generate foes according to level
         let wave: Wave = self.level.into();
         let mut foes: Array<Character> = wave.characters();
-        let mut chars: Array<Character> = self.characters(ref store);
-        Fighter::fight(ref chars, ref foes);
+        // [Effect] Fight and manage the win status
+        if Fighter::fight(ref chars, ref foes) {
+            self.level += 1;
+        } else {
+            self.health -= 1;
+        }
+        self.gold = constants::DEFAULT_GOLD;
     }
 }
 
@@ -151,11 +178,6 @@ impl TeamAssert of AssertTrait {
     #[inline(always)]
     fn assert_not_exists(self: Team) {
         assert(self.is_zero(), errors::TEAM_ALREADY_EXIST);
-    }
-
-    #[inline(always)]
-    fn assert_not_empty(self: Team) {
-        assert(self.characters != 0, errors::TEAM_IS_EMPTY);
     }
 
     #[inline(always)]
@@ -181,7 +203,6 @@ impl ZeroableTeamImpl of core::Zeroable<Team> {
             health: 0,
             level: 0,
             character_count: 0,
-            characters: 0,
             battle_id: 0,
         }
     }

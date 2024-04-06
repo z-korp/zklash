@@ -10,10 +10,11 @@ use zklash::roles::pawn::{RoleImpl as PawnImpl};
 use zklash::roles::torchoblin::{RoleImpl as TorchoblinImpl};
 use zklash::roles::dynamoblin::{RoleImpl as DynamoblinImpl};
 use zklash::roles::bomboblin::{RoleImpl as BomboblinImpl};
+use zklash::types::item::Item;
 
 // Constants
 
-const ROLE_COUNT: u8 = 6;
+const ROLE_COUNT: u8 = 3;
 const NONE: felt252 = 0;
 const KNIGHT: felt252 = 'KNIGHT';
 const BOWMAN: felt252 = 'BOWMAN';

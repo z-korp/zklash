@@ -12,6 +12,10 @@ trait IMarket<TContractState> {
         self: @TContractState, world: IWorldDispatcher, team_id: u32, character_id: u8, index: u8,
     );
     fn hire(self: @TContractState, world: IWorldDispatcher, team_id: u32, index: u8,);
+    fn xp(
+        self: @TContractState, world: IWorldDispatcher, team_id: u32, character_id: u8, index: u8,
+    );
+    fn sell(self: @TContractState, world: IWorldDispatcher, team_id: u32, character_id: u8);
     fn reroll(self: @TContractState, world: IWorldDispatcher, team_id: u32,);
 }
 
@@ -135,6 +139,73 @@ mod market {
 
             // [Effect] Update shop
             store.set_shop(shop);
+
+            // [Effect] Update team
+            store.set_team(team);
+        }
+
+        fn xp(
+            self: @ContractState,
+            world: IWorldDispatcher,
+            team_id: u32,
+            character_id: u8,
+            index: u8,
+        ) {
+            // [Setup] Datastore
+            let store: Store = StoreImpl::new(world);
+
+            // [Check] Player exists
+            let caller = get_caller_address();
+            let player = store.player(caller.into());
+            player.assert_exists();
+
+            // [Check] Team exists
+            let mut team = store.team(player.id, team_id);
+            team.assert_exists();
+
+            // [Check] Shop exists
+            let mut shop = store.shop(player.id, team_id);
+            shop.assert_exists();
+
+            // [Check] Character exists
+            let mut character = store.character(player.id, team_id, character_id);
+            character.assert_exists();
+
+            // [Effect] Purchase item
+            team.xp(ref shop, ref character, index);
+
+            // [Effect] Update character
+            store.set_character(character);
+
+            // [Effect] Update shop
+            store.set_shop(shop);
+
+            // [Effect] Update team
+            store.set_team(team);
+        }
+
+        fn sell(self: @ContractState, world: IWorldDispatcher, team_id: u32, character_id: u8,) {
+            // [Setup] Datastore
+            let store: Store = StoreImpl::new(world);
+
+            // [Check] Player exists
+            let caller = get_caller_address();
+            let player = store.player(caller.into());
+            player.assert_exists();
+
+            // [Check] Team exists
+            let mut team = store.team(player.id, team_id);
+            team.assert_exists();
+
+            // [Check] Character exists
+            let mut character = store.character(player.id, team_id, character_id);
+            character.assert_exists();
+
+            // [Effect] Sell character
+            team.sell(ref character);
+
+            // [Effect] Update character
+            store.set_character(character);
 
             // [Effect] Update team
             store.set_team(team);

@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x2a403ac90a3cfc8092d4e3f5a845194996a998f00c71d95bb31f623b8c6c93f"
-original_class_hash = "0x2a403ac90a3cfc8092d4e3f5a845194996a998f00c71d95bb31f623b8c6c93f"
+class_hash = "0x52e1ae973db9c7a87e705aec61e089eff17d803e07cc5152dc40c2fbf6a71db"
+original_class_hash = "0x52e1ae973db9c7a87e705aec61e089eff17d803e07cc5152dc40c2fbf6a71db"
 abi = "manifests/dev/abis/base/models/zklash_models_team_team.json"
 name = "zklash::models::team::team"
 
@@ -42,11 +42,6 @@ key = false
 [[members]]
 name = "character_count"
 type = "u8"
-key = false
-
-[[members]]
-name = "characters"
-type = "u128"
 key = false
 
 [[members]]

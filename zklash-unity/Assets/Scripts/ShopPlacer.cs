@@ -10,9 +10,9 @@ public class ItemPlacer : MonoBehaviour
     public GameObject[] unitPrefabs; // Préfabs pour les trois premiers éléments
     public GameObject[] objectPrefabs; // Préfabs pour les deux derniers éléments
 
-    float columnTileYOffset = 0.75f; 
+    float columnTileYOffset = 0.75f;
 
-    private int unitCount = 0;
+    private uint unitCount = 0;
 
     private bool hasPlacedItems = false; // Flag to track if items have been placed
 
@@ -53,11 +53,11 @@ public class ItemPlacer : MonoBehaviour
         // Convert List<uint> to uint[]
         return decimals.ToArray();
     }
- 
+
     public void PlaceItemsAboveColumns()
     {
         var shopEntity = PlayerData.Instance.shopEntity;
-        if(shopEntity == null)
+        if (shopEntity == null)
         {
             Debug.LogError("Shop entity not found");
             return;
@@ -73,13 +73,15 @@ public class ItemPlacer : MonoBehaviour
         for (int x = 0; x < tilemap.cellBounds.size.x; x++)
         {
             bool isPlaced = false;
+
             for (int y = tilemap.cellBounds.size.y - 1; y >= 0 && !isPlaced; y--)
             {
                 int tileIndex = x + y * tilemap.cellBounds.size.x;
 
-                 if (allTiles[tileIndex] != null)
+                if (allTiles[tileIndex] != null)
                 {
                     GameObject prefabToPlace;
+                    uint index;
                     // Utilisez le compteur pour déterminer quel tableau de préfabs utiliser
                     if (unitCount < 3)
                     {
@@ -90,6 +92,7 @@ public class ItemPlacer : MonoBehaviour
                             Debug.LogError($"Prefab not found for role: {name}");
                             return;
                         }
+                        index = unitCount;
                         unitCount++; // Incrémentez le compteur d'unités placées
                     }
                     else
@@ -101,18 +104,19 @@ public class ItemPlacer : MonoBehaviour
                             Debug.LogError($"Prefab not found for item: {name}");
                             return;
                         }
+                        index = 0;
                     }
-                   
+
                     Vector3Int cellPosition = new Vector3Int(tilemap.cellBounds.xMin + x, tilemap.cellBounds.yMin + y, 0);
                     Vector3 cellCenterWorld = tilemap.GetCellCenterWorld(cellPosition);
                     Vector3 placePosition = cellCenterWorld + new Vector3(0, tilemap.cellSize.y - columnTileYOffset, 0);
-                    
+
                     GameObject instance = Instantiate(prefabToPlace, placePosition, Quaternion.identity);
-                    /*EntitySync script = instance.GetComponent<EntitySync>();
-                    if (script != null) {
-                        script.entity = myValue; // Setting a property
-                        script.MyMethod(myArgument); // Calling a method with an argument
-                    }*/
+                    ElementData data = instance.GetComponent<ElementData>();
+                    if (data != null)
+                    {
+                        data.indexFromShop = index;
+                    }
                     break; // Arrêtez la recherche de tuiles une fois que vous avez instancié un objet
                 }
             }

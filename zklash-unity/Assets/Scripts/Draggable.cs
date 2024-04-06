@@ -33,7 +33,6 @@ public class Draggable : MonoBehaviour
         drag = true;
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
-
     }
 
     private void OnMouseUp()
@@ -52,11 +51,13 @@ public class Draggable : MonoBehaviour
 
                 if (isFromShop)
                 {
-                    ContractActions.instance.TriggerHire(0);
+                    ElementData data = gameObject.GetComponent<ElementData>();
+                    // Call the TriggerHire method from ContractActions
+                    ContractActions.instance.TriggerHire(data.indexFromShop);
                     isFromShop = false;
                 }
 
-                VillageData.Instance.FillSpot(zoneId, gameObject.name);
+                VillageData.Instance.FillSpot(zoneId, null);
             }
             else
             {

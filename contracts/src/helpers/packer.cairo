@@ -12,6 +12,7 @@ impl Packer<
     +PartialEq<T>,
     +Zeroable<T>,
     +Rem<T>,
+    +Mul<T>,
     +AddEq<T>,
     +MulEq<T>,
     +DivEq<T>,
@@ -47,6 +48,7 @@ impl Packer<
             if idx != index {
                 result.append(value);
             } else {
+                result.append(0);
                 removed_value = value;
                 removed = true;
             }
@@ -61,12 +63,13 @@ impl Packer<
 
     fn pack(mut unpacked: Array<u8>) -> T {
         let mut result: T = Zeroable::zero();
-        let modulo: T = 256_u16.into();
+        let mut modulo: T = 256_u16.into();
+        let mut offset: T = 1_u16.into();
         loop {
             match unpacked.pop_front() {
                 Option::Some(value) => {
-                    result *= modulo;
-                    result += value.into();
+                    result += offset.into() * value.into();
+                    offset *= modulo;
                 },
                 Option::None => { break; }
             }

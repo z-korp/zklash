@@ -30,9 +30,14 @@ public class Draggable : MonoBehaviour
     {
         if (drag)
         {
+            GetComponent<SpriteRenderer>().sortingOrder = 1000;
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             rb.MovePosition(mousePos);
             // UpdateArrows();
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sortingOrder = 999;
         }
     }
 

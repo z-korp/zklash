@@ -29,8 +29,6 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
-    
-
     void Awake()
     {
         if (Instance == null)
@@ -70,21 +68,67 @@ public class GameManager : MonoBehaviour
         {
             InitEntity(entity);
         }
+
+        //worldManager.synchronizationMaster.OnSynchronized.AddListener(InitEntity2);
     }
 
-    async void Update()
+    void Update()
     {
         
     }
 
+    private void InitEntity2(List<GameObject> entities)
+    {
+        Debug.Log($"---------------------------------");
+        foreach (var entity in entities)
+        {
+            
+            Debug.Log($"Entity spawned with id: {entity.name}");
+            
+        }
+        Debug.Log($"---------------------------------");
+    }
+
     private void InitEntity(GameObject entity)
     {
-        /*Game gameComponent = entity.GetComponent<Game>();
-        if (gameComponent != null)
+        Account currentBurner = burnerManager.CurrentBurner;
+        if (currentBurner == null)
+        {
+            Debug.Log("No current burner");
+            return;
+        }
+
+        Player playerComponent = entity.GetComponent<Player>();
+        if (playerComponent != null)
         {
             // This entity is of type Tile, perform actions with its index
-            Debug.Log($"Game entity spawned with id: {gameComponent.game_id}");
-        }*/
+
+            Debug.Log($"---------------------------------");
+            Debug.Log($"currentBurner: {currentBurner.Address.Hex()}");
+            Debug.Log($"Player entity spawned with id: {playerComponent.id.Hex()}");
+            if(currentBurner.Address.Hex() == playerComponent.id.Hex())
+            {
+                Debug.Log(">>>>>>>>>>>> Current player information stored.");
+            }
+            else
+            {
+                Debug.Log(">>>>>>>>>>>> Current player information not stored.");
+            }
+            Debug.Log($"---------------------------------");
+        }
+
+        Shop shopComponent = entity.GetComponent<Shop>();
+        if (shopComponent != null)
+        {
+            if(shopComponent.player_id === currentBurner.Address.Hex())
+            {
+                Debug.Log(">>>>>>>>>>>> Current shop information stored.");
+            }
+            else
+            {
+                Debug.Log(">>>>>>>>>>>> Current shop information not stored.");
+            }
+        }
     }
 
     public async void TriggerCreatePlayAsync(string name)
@@ -93,6 +137,9 @@ public class GameManager : MonoBehaviour
         var nameHex = StringToHexString(name);
         var txHash = await accountSystem.Create(burner, dojoConfig.worldAddress, nameHex);
         // Do something with txHash, like logging it
-        Debug.Log($"Transaction Hash: {txHash.Hex()}");
+        Debug.Log($"[Create] Transaction Hash: {txHash.Hex()}");
+
+        txHash = await accountSystem.Spawn(burner, dojoConfig.worldAddress);
+        Debug.Log($"[Spawn] Transaction Hash: {txHash.Hex()}");
     }
 }

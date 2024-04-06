@@ -10,7 +10,7 @@ use zklash::waves::wave_02::{WaveImpl as Wave02Impl};
 
 // Constants
 
-const NONE: felt252 = 0;
+const NONE: felt252 = 'NONE';
 const WAVE_01: felt252 = 'WAVE_01';
 const WAVE_02: felt252 = 'WAVE_02';
 

@@ -1,18 +1,17 @@
 // Core imports
 
+use core::debug::PrintTrait;
 use core::zeroable::Zeroable;
 use core::array::ArrayTrait;
 
 // Internal imports
 
 use zklash::models::character::{Character, CharacterTrait, Buff};
-use zklash::types::role::RoleTrait;
-use zklash::types::item::{Item, ItemTrait};
 use zklash::types::phase::Phase;
 
 #[generate_trait]
 impl Fighter of FighterTrait {
-    fn fight(ref team1: Array<Character>, ref team2: Array<Character>) -> bool {
+    fn start(ref team1: Array<Character>, ref team2: Array<Character>) -> bool {
         // [Compute] Start the battle
         Fighter::battle(
             ref team1,
@@ -38,10 +37,8 @@ impl Fighter of FighterTrait {
                 Option::Some(char) => char,
                 Option::None => { return false; },
             };
-            // [Effect] Apply talent effects on dispatch
-            char1.talent(Phase::OnDispatch);
-            // [Effect] Apply item effects on dispatch
-            char1.usage(Phase::OnDispatch);
+            // [Effect] Apply effects on dispatch
+            Fighter::apply_effects(ref char1, Phase::OnDispatch);
             // [Effect] Apply floating buff
             char1.buff(next_buff1);
         };
@@ -52,11 +49,8 @@ impl Fighter of FighterTrait {
                 Option::Some(char) => char,
                 Option::None => { return true; },
             };
-            // [Effect] Apply talent effects on dispatch
-            char2.talent(Phase::OnDispatch);
-            // [Effect] Apply item effects on dispatch
-            char2.usage(Phase::OnDispatch);
-            // [Effect] Apply floating buff
+            // [Effect] Apply effects on dispatch
+            Fighter::apply_effects(ref char2, Phase::OnDispatch);
             char2.buff(next_buff2);
         };
 
@@ -69,44 +63,20 @@ impl Fighter of FighterTrait {
 
     fn duel(ref char1: Character, ref char2: Character) -> (Buff, Buff) {
         // [Effect] Apply talent and item buff for char1
-        let (talent_damage1, talent_stun1, _) = char1.talent(Phase::OnFight);
-        let item_damage1 = char1.usage(Phase::OnFight);
-
-        // [Effect] Apply talent and item buff for char2
-        let (talent_damage2, talent_stun2, _) = char2.talent(Phase::OnFight);
-        let item_damage2 = char2.usage(Phase::OnFight);
+        let (damage1, stun1, _) = Fighter::apply_effects(ref char1, Phase::OnFight);
+        let (damage2, stun2, _) = Fighter::apply_effects(ref char2, Phase::OnFight);
 
         // [Effect] Apply stun effects
-        char1.stun(talent_stun2);
-        char2.stun(talent_stun1);
+        char1.stun(stun2);
+        char2.stun(stun1);
 
         // [Compute] Receive damage from opponents
-        char1.take_damage(char2.attack() + talent_damage2 + item_damage2);
-        char2.take_damage(char1.attack() + talent_damage1 + item_damage1);
+        char1.take_damage(char2.attack() + damage2);
+        char2.take_damage(char1.attack() + damage1);
 
-        // [Compute] On Death effects for char1
-        let next_buff1: Buff = if char1.is_dead() {
-            // [Effect] Apply talent and item buff for char1
-            let (talent_damage1, talent_stun1, next_buff1) = char1.talent(Phase::OnDeath);
-            let item_damage1 = char1.usage(Phase::OnDeath);
-            char2.stun(talent_stun1);
-            char2.take_damage(talent_damage1 + item_damage1);
-            next_buff1
-        } else {
-            Zeroable::zero()
-        };
-
-        // [Compute] On Death effects for char2
-        let next_buff2: Buff = if char2.is_dead() {
-            // [Effect] Apply talent and item buff for char2
-            let (talent_damage2, talent_stun2, next_buff2) = char2.talent(Phase::OnDeath);
-            let item_damage2 = char2.usage(Phase::OnDeath);
-            char1.stun(talent_stun2);
-            char1.take_damage(talent_damage2 + item_damage2);
-            next_buff2
-        } else {
-            Zeroable::zero()
-        };
+        // [Compute] Post mortem effects
+        let next_buff2: Buff = Fighter::post_mortem(ref char2, ref char1);
+        let next_buff1: Buff = Fighter::post_mortem(ref char1, ref char2);
 
         // [Compute] Stop duel is one of the fighter is dead
         if char1.is_dead() || char2.is_dead() {
@@ -115,17 +85,94 @@ impl Fighter of FighterTrait {
         Fighter::duel(ref char1, ref char2)
     }
 
-    fn hit(health: u8, damage: u8, absorb: u8) -> u8 {
-        if health < damage {
-            return health;
+    #[inline(always)]
+    fn post_mortem(ref char: Character, ref foe: Character) -> Buff {
+        // [Compute] On Death effects for char
+        if char.is_dead() {
+            // [Effect] Apply talent and item buff on death
+            let (damage, stun, next_buff) = Fighter::apply_effects(ref char, Phase::OnDeath);
+            foe.stun(stun);
+            foe.take_damage(damage);
+            next_buff
+        } else {
+            Zeroable::zero()
         }
-        damage
+    }
+
+    #[inline(always)]
+    fn apply_effects(ref char: Character, phase: Phase) -> (u8, u8, Buff) {
+        // [Effect] Apply talent and item buff for char
+        let (talent_damage, stun, next_buff) = char.talent(phase);
+        let item_damage = char.usage(phase);
+        (talent_damage + item_damage, stun, next_buff)
     }
 }
 
-fn min(a: u8, b: u8) -> u8 {
-    if a < b {
-        return a;
+#[cfg(test)]
+mod tests {
+    // Core imports
+
+    use core::debug::PrintTrait;
+    use core::zeroable::Zeroable;
+    use core::traits::Default;
+
+    // Internal imports
+
+    use zklash::types::role::{Role, RoleTrait};
+    use zklash::types::item::{Item, ItemTrait};
+
+    // Local imports
+
+    use super::{Fighter, Character, CharacterTrait, Phase};
+
+    #[test]
+    fn test_fighter_pumpkin_small() {
+        let mut characters: Array<Character> = array![
+            CharacterTrait::from(Role::Pawn, 1, Item::PumpkinSmall),
+        ];
+        let mut foes: Array<Character> = array![
+            CharacterTrait::from(Role::Bomboblin, 1, Item::None),
+            CharacterTrait::from(Role::Bomboblin, 1, Item::None),
+        ];
+        let win = Fighter::start(ref characters, ref foes);
+        assert(!win, 'Fighter: invalid win status');
     }
-    b
+
+    #[test]
+    fn test_fighter_pumpkin_medium() {
+        let mut characters: Array<Character> = array![
+            CharacterTrait::from(Role::Pawn, 1, Item::PumpkinMedium),
+        ];
+        let mut foes: Array<Character> = array![
+            CharacterTrait::from(Role::Bomboblin, 1, Item::None),
+            CharacterTrait::from(Role::Bomboblin, 1, Item::None),
+        ];
+        let win = Fighter::start(ref characters, ref foes);
+        assert(win, 'Fighter: invalid win status');
+    }
+
+    #[test]
+    fn test_fighter_mushroom_large() {
+        let mut characters: Array<Character> = array![
+            CharacterTrait::from(Role::Pawn, 1, Item::MushroomSmall),
+        ];
+        let mut foes: Array<Character> = array![
+            CharacterTrait::from(Role::Bomboblin, 1, Item::None),
+        ];
+        let win = Fighter::start(ref characters, ref foes);
+        assert(!win, 'Fighter: invalid win status');
+    }
+
+    #[test]
+    fn test_fighter_pawn_talent() {
+        let mut characters: Array<Character> = array![
+            CharacterTrait::from(Role::Pawn, 2, Item::None),
+            CharacterTrait::from(Role::Knight, 1, Item::None),
+        ];
+        let mut foes: Array<Character> = array![
+            CharacterTrait::from(Role::Torchoblin, 1, Item::None),
+        ];
+        let win = Fighter::start(ref characters, ref foes);
+        assert(win, 'Fighter: invalid win status');
+    }
 }

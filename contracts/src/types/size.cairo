@@ -4,7 +4,7 @@ use core::debug::PrintTrait;
 
 // Constants
 
-const NONE: felt252 = 0;
+const NONE: felt252 = 'NONE';
 const SMALL: felt252 = 'SMALL';
 const MEDIUM: felt252 = 'MEDIUM';
 const LARGE: felt252 = 'LARGE';

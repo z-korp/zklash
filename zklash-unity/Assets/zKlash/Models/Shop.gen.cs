@@ -8,7 +8,8 @@ using System.Numerics;
 
 
 // Model definition for `zklash::models::shop::Shop` model
-public class Shop : ModelInstance {
+public class Shop : ModelInstance
+{
     [ModelField("player_id")]
     public FieldElement player_id;
 
@@ -34,18 +35,19 @@ public class Shop : ModelInstance {
     public uint roles;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         Debug.Log($"Shop started -> player_id: {player_id}");
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
     }
 
     public override void OnUpdate(Model model)
     {
-        Debug.Log($"Shop updated: {model}");
+        //Debug.Log($"Shop updated: {model}");
         base.OnUpdate(model);
     }
 }
-        

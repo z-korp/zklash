@@ -7,7 +7,8 @@ using Dojo.Torii;
 
 
 // Model definition for `zklash::models::player::Player` model
-public class Player : ModelInstance {
+public class Player : ModelInstance
+{
     [ModelField("id")]
     public FieldElement id;
 
@@ -18,17 +19,18 @@ public class Player : ModelInstance {
     public uint team_count;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
     }
 
     public override void OnUpdate(Model model)
     {
-        Debug.Log($"Player updated: {model}");
+        //Debug.Log($"Player updated: {model}");
         base.OnUpdate(model);
     }
 }
-        

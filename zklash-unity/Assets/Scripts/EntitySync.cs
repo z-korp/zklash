@@ -5,15 +5,10 @@ using System;
 
 public class EntitySync : MonoBehaviour
 {
-  public string entity;
+    public string entity;
 
-  void Update()
-  {
-    if (string.IsNullOrEmpty(entity))
+    void Update()
     {
-      entity = Guid.NewGuid().ToString();
+        
     }
-  }
-
-
 }

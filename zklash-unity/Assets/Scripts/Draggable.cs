@@ -37,20 +37,33 @@ public class Draggable : MonoBehaviour
         drag = false;
         if (currentDroppableZone != null && currentDroppableZone.CanBeDropped())
         {
-            Debug.Log("Objet déposé dans la zone droppable.");
-            if (isFromShop)
-            {
-                ContractActions.instance.TriggerHire(0);
-                isFromShop = false;
-            }
+            string zoneName = currentDroppableZone.gameObject.name;
+            string idString = zoneName.Split('_')[1]; // Split the name by '_' and take the second part
+            int zoneId = int.Parse(idString); // Convert the ID part to an integer
 
+            if (VillageData.Instance.Spots.Count > zoneId && VillageData.Instance.Spots[zoneId].IsAvailable)
+            {
+                Debug.Log($"Objet déposé dans la zone droppable: {currentDroppableZone.gameObject.name}.");
+
+                if (isFromShop)
+                {
+                    ContractActions.instance.TriggerHire(0);
+                    isFromShop = false;
+                }
+
+                VillageData.Instance.FillSpot(zoneId, gameObject.name);
+            }
+            else
+            {
+                rb.MovePosition(initPos);
+                Debug.Log("Object not dropped. Zone not available.");
+            }
         }
         else
         {
             rb.MovePosition(initPos);
-            Debug.Log("Objet non déposé.");
+            Debug.Log("Object not dropped.");
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

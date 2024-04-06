@@ -7,7 +7,7 @@ using UnityEngine;
 using dojo_bindings;
 
 // System definitions for `zklash::systems::market::market` contract
-public class Market : MonoBehaviour {
+public class MarketSystem : MonoBehaviour {
     // The address of this contract
     public string contractAddress;
 

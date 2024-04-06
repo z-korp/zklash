@@ -43,7 +43,7 @@ public class ItemPlacer : MonoBehaviour
                    
                     Vector3Int cellPosition = new Vector3Int(tilemap.cellBounds.xMin + x, tilemap.cellBounds.yMin + y, 0);
                     Vector3 cellCenterWorld = tilemap.GetCellCenterWorld(cellPosition);
-                    Vector3 placePosition = cellCenterWorld + new Vector3(0, tilemap.cellSize.y * columnTileYOffset, 0);
+                    Vector3 placePosition = cellCenterWorld + new Vector3(0, tilemap.cellSize.y - columnTileYOffset, 0);
                     
                     Instantiate(prefabToPlace, placePosition, Quaternion.identity);
                     break; // Arrêtez la recherche de tuiles une fois que vous avez instancié un objet

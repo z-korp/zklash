@@ -134,37 +134,67 @@ mod battle {
             // [Emit] Events
             loop {
                 match fighters.pop_front() {
-                    Option::Some(event) => { emit!(world, (event,)); },
+                    Option::Some(event) => {
+                        let mut event = event;
+                        event.player_id = player.id.into();
+                        event.team_id = team.id;
+                        emit!(world, (event,));
+                    },
                     Option::None => { break; },
                 }
             };
             loop {
                 match hits.pop_front() {
-                    Option::Some(event) => { emit!(world, (event,)); },
+                    Option::Some(event) => {
+                        let mut event = event;
+                        event.player_id = player.id.into();
+                        event.team_id = team.id;
+                        emit!(world, (event,));
+                    },
                     Option::None => { break; },
                 }
             };
             loop {
                 match stuns.pop_front() {
-                    Option::Some(event) => { emit!(world, (event,)); },
+                    Option::Some(event) => {
+                        let mut event = event;
+                        event.player_id = player.id.into();
+                        event.team_id = team.id;
+                        emit!(world, (event,));
+                    },
                     Option::None => { break; },
                 }
             };
             loop {
                 match absorbs.pop_front() {
-                    Option::Some(event) => { emit!(world, (event,)); },
+                    Option::Some(event) => {
+                        let mut event = event;
+                        event.player_id = player.id.into();
+                        event.team_id = team.id;
+                        emit!(world, (event,));
+                    },
                     Option::None => { break; },
                 }
             };
             loop {
                 match usages.pop_front() {
-                    Option::Some(event) => { emit!(world, (event,)); },
+                    Option::Some(event) => {
+                        let mut event = event;
+                        event.player_id = player.id.into();
+                        event.team_id = team.id;
+                        emit!(world, (event,));
+                    },
                     Option::None => { break; },
                 }
             };
             loop {
                 match talents.pop_front() {
-                    Option::Some(event) => { emit!(world, (event,)); },
+                    Option::Some(event) => {
+                        let mut event = event;
+                        event.player_id = player.id.into();
+                        event.team_id = team.id;
+                        emit!(world, (event,));
+                    },
                     Option::None => { break; },
                 }
             };

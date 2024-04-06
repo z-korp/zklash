@@ -33,7 +33,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6248809800828125854}
+  - {fileID: 4276173671572713823}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6299402786898010029
@@ -157,7 +157,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.058400393}
   serializedVersion: 2
   m_Radius: 0.43546224
---- !u!1001 &841842805793011314
+--- !u!1001 &7372091023048934835
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -191,7 +191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6707804836854084844, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 404.6024
+      value: 379.7363
       objectReference: {fileID: 0}
     - target: {fileID: 6707804836854084844, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
       propertyPath: m_SizeDelta.y
@@ -227,11 +227,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6707804836854084844, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.002
+      value: 0.005
       objectReference: {fileID: 0}
     - target: {fileID: 6707804836854084844, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.186
+      value: -0.211
       objectReference: {fileID: 0}
     - target: {fileID: 6707804836854084844, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -254,8 +254,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
---- !u!224 &6248809800828125854 stripped
+--- !u!224 &4276173671572713823 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6707804836854084844, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
-  m_PrefabInstance: {fileID: 841842805793011314}
+  m_PrefabInstance: {fileID: 7372091023048934835}
   m_PrefabAsset: {fileID: 0}

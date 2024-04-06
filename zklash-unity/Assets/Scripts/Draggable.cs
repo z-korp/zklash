@@ -1,15 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 
 public class Draggable : MonoBehaviour
 {
     bool drag;
 
+    private Rigidbody2D rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
     private void OnMouseDown()
     {
         Debug.Log("Mouse down");
@@ -27,8 +28,10 @@ public class Draggable : MonoBehaviour
         if (drag)
         {
             Debug.Log("Dragging");
-            Vector2 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            transform.Translate(MousePos);
+            //Vector2 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            //transform.Translate(MousePos);
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            rb.MovePosition(mousePos);
 
         }
     }

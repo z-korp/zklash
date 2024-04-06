@@ -35,7 +35,7 @@ public class Draggable : MonoBehaviour
         if (currentDroppableZone != null && currentDroppableZone.CanBeDropped())
         {
             Debug.Log("Objet déposé dans la zone droppable.");
-            BattleActions.instance.TriggerHire(0);
+            ContractActions.instance.TriggerHire(0);
         }
         else
         {

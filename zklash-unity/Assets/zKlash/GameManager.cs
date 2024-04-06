@@ -29,10 +29,6 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
-    public string playerEntity;
-    public string shopEntity;
-    public string teamEntity;
-
     void Awake()
     {
         if (Instance == null)
@@ -83,7 +79,7 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void InitEntity2(List<GameObject> entities)
+    /*private void InitEntity2(List<GameObject> entities)
     {
         Debug.Log($"---------------------------------");
         foreach (var entity in entities)
@@ -92,7 +88,7 @@ public class GameManager : MonoBehaviour
             //InitEntity(entity);
         }
         Debug.Log($"---------------------------------");
-    }
+    }*/
 
     private void InitEntity(GameObject entity)
     {
@@ -102,7 +98,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("No current burner");
             return;
         }
-        
+
         Debug.Log($"---------------------------------");
         Debug.Log($"currentBurner: {currentBurner.Address.Hex()}");
         Debug.Log($"Entity spawned with id: {entity.name}");
@@ -114,8 +110,8 @@ public class GameManager : MonoBehaviour
             if(currentBurner.Address.Hex() == playerComponent.id.Hex())
             {
                 Debug.Log(">>>>>>>>>>>> Current player information stored.");
-                Debug.Log($"Player entity spawned with id: {playerEntity}");
-                playerEntity = entity.name;
+                Debug.Log($"Player entity spawned with id: {entity.name}");
+                PlayerData.Instance.playerEntity = entity.name;
             }
         }
 
@@ -126,9 +122,21 @@ public class GameManager : MonoBehaviour
             if(shopComponent.player_id.Hex() == currentBurner.Address.Hex())
             {
                 Debug.Log(">>>>>>>>>>>> Current shop information stored.");
-                shopEntity = entity.name;
-                teamEntity = entity.name;
+                PlayerData.Instance.shopEntity = entity.name;
+                PlayerData.Instance.teamEntity = entity.name;
             }
+        }
+
+        Character characterComponent = entity.GetComponent<Character>();
+        if (characterComponent != null)
+        {
+            Debug.Log($"-> Character entity spawned");
+            if(characterComponent.player_id.Hex() == currentBurner.Address.Hex())
+            {
+                Debug.Log(">>>>>>>>>>>> Current character information stored.");
+                PlayerData.Instance.characterEntities.Add(entity.name);
+            }
+            //PlayerData.Instance.teamEntity = entity.name;
         }
 
         Debug.Log($"---------------------------------");

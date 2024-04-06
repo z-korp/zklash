@@ -173,20 +173,6 @@
     "interface_name": "zklash::models::character::Icharacter"
   },
   {
-    "type": "enum",
-    "name": "core::bool",
-    "variants": [
-      {
-        "name": "False",
-        "type": "()"
-      },
-      {
-        "name": "True",
-        "type": "()"
-      }
-    ]
-  },
-  {
     "type": "struct",
     "name": "zklash::models::character::Character",
     "members": [
@@ -232,7 +218,7 @@
       },
       {
         "name": "stun",
-        "type": "core::bool"
+        "type": "core::integer::u8"
       }
     ]
   },

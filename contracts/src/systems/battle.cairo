@@ -35,7 +35,7 @@ mod battle {
 
     use zklash::constants::WORLD;
     use zklash::store::{Store, StoreImpl};
-    use zklash::events::{Fighter, Hit, Stun};
+    use zklash::events::{Fighter, Hit, Stun, Absorb, Usage, Talent};
     use zklash::helpers::packer::Packer;
     use zklash::helpers::array::ArrayTraitExt;
     use zklash::models::player::{Player, PlayerImpl, PlayerAssert};
@@ -66,6 +66,9 @@ mod battle {
         Fighter: Fighter,
         Hit: Hit,
         Stun: Stun,
+        Absorb: Absorb,
+        Usage: Usage,
+        Talent: Talent,
     }
 
     // Implementations
@@ -119,7 +122,8 @@ mod battle {
             };
 
             // [Effect] Update team characters and fight
-            let (mut fighters, mut hits, mut stuns) = team.fight(ref shop, ref characters);
+            let (mut fighters, mut hits, mut stuns, mut absorbs, mut usages, mut talents) = team
+                .fight(ref shop, ref characters);
 
             // [Effect] Update shop
             store.set_shop(shop);
@@ -130,35 +134,37 @@ mod battle {
             // [Emit] Events
             loop {
                 match fighters.pop_front() {
-                    Option::Some(fighter) => {
-                        let mut event = fighter;
-                        event.battle_id = team.battle_id;
-                        emit!(world, (event,));
-                    },
+                    Option::Some(event) => { emit!(world, (event,)); },
                     Option::None => { break; },
                 }
             };
             loop {
                 match hits.pop_front() {
-                    Option::Some(hit) => {
-                        let mut event = hit;
-                        event.player_id = player.id.into();
-                        event.team_id = team.id;
-                        event.battle_id = team.battle_id;
-                        emit!(world, (event,));
-                    },
+                    Option::Some(event) => { emit!(world, (event,)); },
                     Option::None => { break; },
                 }
             };
             loop {
                 match stuns.pop_front() {
-                    Option::Some(stun) => {
-                        let mut event = stun;
-                        event.player_id = player.id.into();
-                        event.team_id = team.id;
-                        event.battle_id = team.battle_id;
-                        emit!(world, (event,));
-                    },
+                    Option::Some(event) => { emit!(world, (event,)); },
+                    Option::None => { break; },
+                }
+            };
+            loop {
+                match absorbs.pop_front() {
+                    Option::Some(event) => { emit!(world, (event,)); },
+                    Option::None => { break; },
+                }
+            };
+            loop {
+                match usages.pop_front() {
+                    Option::Some(event) => { emit!(world, (event,)); },
+                    Option::None => { break; },
+                }
+            };
+            loop {
+                match talents.pop_front() {
+                    Option::Some(event) => { emit!(world, (event,)); },
                     Option::None => { break; },
                 }
             };

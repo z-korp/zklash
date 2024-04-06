@@ -6,7 +6,8 @@ using Dojo.Starknet;
 using Dojo.Torii;
 
 // Model definition for `zklash::models::character::Character` model
-public class Character : ModelInstance {
+public class Character : ModelInstance
+{
     [ModelField("player_id")]
     public FieldElement player_id;
 
@@ -41,17 +42,18 @@ public class Character : ModelInstance {
     public bool stun;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
     }
-    
+
     public override void OnUpdate(Model model)
     {
-        Debug.Log($"Player updated: {model}");
+        //Debug.Log($"Player updated: {model}");
         base.OnUpdate(model);
     }
 }
-        

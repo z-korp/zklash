@@ -107,7 +107,12 @@ public class ItemPlacer : MonoBehaviour
                     Vector3 cellCenterWorld = tilemap.GetCellCenterWorld(cellPosition);
                     Vector3 placePosition = cellCenterWorld + new Vector3(0, tilemap.cellSize.y - columnTileYOffset, 0);
                     
-                    Instantiate(prefabToPlace, placePosition, Quaternion.identity);
+                    GameObject instance = Instantiate(prefabToPlace, placePosition, Quaternion.identity);
+                    /*EntitySync script = instance.GetComponent<EntitySync>();
+                    if (script != null) {
+                        script.entity = myValue; // Setting a property
+                        script.MyMethod(myArgument); // Calling a method with an argument
+                    }*/
                     break; // Arrêtez la recherche de tuiles une fois que vous avez instancié un objet
                 }
             }

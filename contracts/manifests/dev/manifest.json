@@ -789,8 +789,8 @@
     {
       "kind": "DojoContract",
       "address": "0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1",
-      "class_hash": "0x6dee2103c2e14e11f3c6a92ab58c443ed562c77ce0d5fc57b4b1bad6037254b",
-      "original_class_hash": "0x6dee2103c2e14e11f3c6a92ab58c443ed562c77ce0d5fc57b4b1bad6037254b",
+      "class_hash": "0x5c4ccdbe148bdf12ca152aa1c8eda12c0d50659e7b15b7156c097a05a43a3c8",
+      "original_class_hash": "0x5c4ccdbe148bdf12ca152aa1c8eda12c0d50659e7b15b7156c097a05a43a3c8",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -880,9 +880,372 @@
         },
         {
           "type": "event",
+          "name": "zklash::events::Fighter",
+          "kind": "struct",
+          "members": [
+            {
+              "name": "player_id",
+              "type": "core::felt252",
+              "kind": "key"
+            },
+            {
+              "name": "team_id",
+              "type": "core::integer::u32",
+              "kind": "key"
+            },
+            {
+              "name": "battle_id",
+              "type": "core::integer::u8",
+              "kind": "key"
+            },
+            {
+              "name": "character_id",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "index",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "role",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "item",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "xp",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "level",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "health",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "attack",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "absorb",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "stun",
+              "type": "core::integer::u8",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "type": "event",
+          "name": "zklash::events::Hit",
+          "kind": "struct",
+          "members": [
+            {
+              "name": "player_id",
+              "type": "core::felt252",
+              "kind": "key"
+            },
+            {
+              "name": "team_id",
+              "type": "core::integer::u32",
+              "kind": "key"
+            },
+            {
+              "name": "battle_id",
+              "type": "core::integer::u8",
+              "kind": "key"
+            },
+            {
+              "name": "tick",
+              "type": "core::integer::u32",
+              "kind": "data"
+            },
+            {
+              "name": "from_character_id",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "to_character_id",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "damage",
+              "type": "core::integer::u8",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "type": "event",
+          "name": "zklash::events::Stun",
+          "kind": "struct",
+          "members": [
+            {
+              "name": "player_id",
+              "type": "core::felt252",
+              "kind": "key"
+            },
+            {
+              "name": "team_id",
+              "type": "core::integer::u32",
+              "kind": "key"
+            },
+            {
+              "name": "battle_id",
+              "type": "core::integer::u8",
+              "kind": "key"
+            },
+            {
+              "name": "tick",
+              "type": "core::integer::u32",
+              "kind": "data"
+            },
+            {
+              "name": "from_character_id",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "to_character_id",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "value",
+              "type": "core::integer::u8",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "type": "event",
+          "name": "zklash::events::Absorb",
+          "kind": "struct",
+          "members": [
+            {
+              "name": "player_id",
+              "type": "core::felt252",
+              "kind": "key"
+            },
+            {
+              "name": "team_id",
+              "type": "core::integer::u32",
+              "kind": "key"
+            },
+            {
+              "name": "battle_id",
+              "type": "core::integer::u8",
+              "kind": "key"
+            },
+            {
+              "name": "tick",
+              "type": "core::integer::u32",
+              "kind": "data"
+            },
+            {
+              "name": "character_id",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "value",
+              "type": "core::integer::u8",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "type": "event",
+          "name": "zklash::events::Usage",
+          "kind": "struct",
+          "members": [
+            {
+              "name": "player_id",
+              "type": "core::felt252",
+              "kind": "key"
+            },
+            {
+              "name": "team_id",
+              "type": "core::integer::u32",
+              "kind": "key"
+            },
+            {
+              "name": "battle_id",
+              "type": "core::integer::u8",
+              "kind": "key"
+            },
+            {
+              "name": "tick",
+              "type": "core::integer::u32",
+              "kind": "data"
+            },
+            {
+              "name": "character_id",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "item",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "new_item",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "health",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "attack",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "absorb",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "damage",
+              "type": "core::integer::u8",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "type": "event",
+          "name": "zklash::events::Talent",
+          "kind": "struct",
+          "members": [
+            {
+              "name": "player_id",
+              "type": "core::felt252",
+              "kind": "key"
+            },
+            {
+              "name": "team_id",
+              "type": "core::integer::u32",
+              "kind": "key"
+            },
+            {
+              "name": "battle_id",
+              "type": "core::integer::u8",
+              "kind": "key"
+            },
+            {
+              "name": "tick",
+              "type": "core::integer::u32",
+              "kind": "data"
+            },
+            {
+              "name": "character_id",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "role",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "health",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "attack",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "absorb",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "damage",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "stun",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "next_health",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "next_attack",
+              "type": "core::integer::u8",
+              "kind": "data"
+            },
+            {
+              "name": "next_absorb",
+              "type": "core::integer::u8",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "type": "event",
           "name": "zklash::systems::battle::battle::Event",
           "kind": "enum",
-          "variants": []
+          "variants": [
+            {
+              "name": "Fighter",
+              "type": "zklash::events::Fighter",
+              "kind": "nested"
+            },
+            {
+              "name": "Hit",
+              "type": "zklash::events::Hit",
+              "kind": "nested"
+            },
+            {
+              "name": "Stun",
+              "type": "zklash::events::Stun",
+              "kind": "nested"
+            },
+            {
+              "name": "Absorb",
+              "type": "zklash::events::Absorb",
+              "kind": "nested"
+            },
+            {
+              "name": "Usage",
+              "type": "zklash::events::Usage",
+              "kind": "nested"
+            },
+            {
+              "name": "Talent",
+              "type": "zklash::events::Talent",
+              "kind": "nested"
+            }
+          ]
         }
       ],
       "reads": [],
@@ -893,8 +1256,8 @@
     {
       "kind": "DojoContract",
       "address": "0x53fb59cc9aab03983033de799d10c9a0d3e4475e19224a661cefeacb0577871",
-      "class_hash": "0x658093ea6e68296b83e3e992089ec139dd4cc74fd9c7ee29aeb683af2d94de1",
-      "original_class_hash": "0x658093ea6e68296b83e3e992089ec139dd4cc74fd9c7ee29aeb683af2d94de1",
+      "class_hash": "0x2f828a7abc84f7d6b63d24842858ce4ef4d5f82f87381a56e9cfc9495a32c68",
+      "original_class_hash": "0x2f828a7abc84f7d6b63d24842858ce4ef4d5f82f87381a56e9cfc9495a32c68",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -1030,6 +1393,30 @@
             },
             {
               "type": "function",
+              "name": "merge",
+              "inputs": [
+                {
+                  "name": "world",
+                  "type": "dojo::world::IWorldDispatcher"
+                },
+                {
+                  "name": "team_id",
+                  "type": "core::integer::u32"
+                },
+                {
+                  "name": "from_id",
+                  "type": "core::integer::u8"
+                },
+                {
+                  "name": "to_id",
+                  "type": "core::integer::u8"
+                }
+              ],
+              "outputs": [],
+              "state_mutability": "view"
+            },
+            {
+              "type": "function",
               "name": "sell",
               "inputs": [
                 {
@@ -1135,12 +1522,12 @@
         },
         {
           "name": "stun",
-          "type": "bool",
+          "type": "u8",
           "key": false
         }
       ],
-      "class_hash": "0x48fc28d0c3558d6f74bdcf6a7589b22bcebe305c8051c3d02c0bfc71882aeff",
-      "original_class_hash": "0x48fc28d0c3558d6f74bdcf6a7589b22bcebe305c8051c3d02c0bfc71882aeff",
+      "class_hash": "0x1bc45d3bbfe3c82fbc8801b44b25af1375457617d7fec1654798883d587fb3",
+      "original_class_hash": "0x1bc45d3bbfe3c82fbc8801b44b25af1375457617d7fec1654798883d587fb3",
       "abi": [
         {
           "type": "impl",
@@ -1316,20 +1703,6 @@
           "interface_name": "zklash::models::character::Icharacter"
         },
         {
-          "type": "enum",
-          "name": "core::bool",
-          "variants": [
-            {
-              "name": "False",
-              "type": "()"
-            },
-            {
-              "name": "True",
-              "type": "()"
-            }
-          ]
-        },
-        {
           "type": "struct",
           "name": "zklash::models::character::Character",
           "members": [
@@ -1375,7 +1748,7 @@
             },
             {
               "name": "stun",
-              "type": "core::bool"
+              "type": "core::integer::u8"
             }
           ]
         },

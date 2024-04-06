@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x48fc28d0c3558d6f74bdcf6a7589b22bcebe305c8051c3d02c0bfc71882aeff"
-original_class_hash = "0x48fc28d0c3558d6f74bdcf6a7589b22bcebe305c8051c3d02c0bfc71882aeff"
+class_hash = "0x1bc45d3bbfe3c82fbc8801b44b25af1375457617d7fec1654798883d587fb3"
+original_class_hash = "0x1bc45d3bbfe3c82fbc8801b44b25af1375457617d7fec1654798883d587fb3"
 abi = "manifests/dev/abis/base/models/zklash_models_character_character.json"
 name = "zklash::models::character::character"
 
@@ -56,5 +56,5 @@ key = false
 
 [[members]]
 name = "stun"
-type = "bool"
+type = "u8"
 key = false

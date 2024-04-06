@@ -30,8 +30,8 @@ name = "zklash::systems::account::account"
 [[contracts]]
 kind = "DojoContract"
 address = "0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1"
-class_hash = "0x6dee2103c2e14e11f3c6a92ab58c443ed562c77ce0d5fc57b4b1bad6037254b"
-original_class_hash = "0x6dee2103c2e14e11f3c6a92ab58c443ed562c77ce0d5fc57b4b1bad6037254b"
+class_hash = "0x5c4ccdbe148bdf12ca152aa1c8eda12c0d50659e7b15b7156c097a05a43a3c8"
+original_class_hash = "0x5c4ccdbe148bdf12ca152aa1c8eda12c0d50659e7b15b7156c097a05a43a3c8"
 base_class_hash = "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76"
 abi = "abis/deployments/contracts/zklash_systems_battle_battle.json"
 reads = []
@@ -42,8 +42,8 @@ name = "zklash::systems::battle::battle"
 [[contracts]]
 kind = "DojoContract"
 address = "0x53fb59cc9aab03983033de799d10c9a0d3e4475e19224a661cefeacb0577871"
-class_hash = "0x658093ea6e68296b83e3e992089ec139dd4cc74fd9c7ee29aeb683af2d94de1"
-original_class_hash = "0x658093ea6e68296b83e3e992089ec139dd4cc74fd9c7ee29aeb683af2d94de1"
+class_hash = "0x2f828a7abc84f7d6b63d24842858ce4ef4d5f82f87381a56e9cfc9495a32c68"
+original_class_hash = "0x2f828a7abc84f7d6b63d24842858ce4ef4d5f82f87381a56e9cfc9495a32c68"
 base_class_hash = "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76"
 abi = "abis/deployments/contracts/zklash_systems_market_market.json"
 reads = []
@@ -53,8 +53,8 @@ name = "zklash::systems::market::market"
 
 [[models]]
 kind = "DojoModel"
-class_hash = "0x48fc28d0c3558d6f74bdcf6a7589b22bcebe305c8051c3d02c0bfc71882aeff"
-original_class_hash = "0x48fc28d0c3558d6f74bdcf6a7589b22bcebe305c8051c3d02c0bfc71882aeff"
+class_hash = "0x1bc45d3bbfe3c82fbc8801b44b25af1375457617d7fec1654798883d587fb3"
+original_class_hash = "0x1bc45d3bbfe3c82fbc8801b44b25af1375457617d7fec1654798883d587fb3"
 abi = "abis/deployments/models/zklash_models_character_character.json"
 name = "zklash::models::character::character"
 
@@ -110,7 +110,7 @@ key = false
 
 [[models.members]]
 name = "stun"
-type = "bool"
+type = "u8"
 key = false
 
 [[models]]

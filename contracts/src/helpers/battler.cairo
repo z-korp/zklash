@@ -6,7 +6,7 @@ use core::array::ArrayTrait;
 
 // Internal imports
 
-use zklash::events::{Fighter, Hit, HitTrait};
+use zklash::events::{Fighter, Hit, HitTrait, Stun, StunTrait};
 use zklash::models::character::{Character, CharacterTrait, Buff};
 use zklash::types::phase::Phase;
 
@@ -14,12 +14,13 @@ use zklash::types::phase::Phase;
 impl Battler of BattlerTrait {
     fn start(
         ref team1: Array<Character>, ref team2: Array<Character>
-    ) -> (bool, Array<Fighter>, Array<Hit>,) {
+    ) -> (bool, Array<Fighter>, Array<Hit>, Array<Stun>,) {
         // [Compute] Start the battle
         let mut fighters: Array<Fighter> = array![];
         Battler::setup(team1.span(), ref fighters);
         Battler::setup(team2.span(), ref fighters);
         let mut hits: Array<Hit> = array![];
+        let mut stuns: Array<Stun> = array![];
         let mut tick: u32 = 0;
         let win = Battler::battle(
             ref team1,
@@ -30,8 +31,9 @@ impl Battler of BattlerTrait {
             Zeroable::zero(),
             ref tick,
             ref hits,
+            ref stuns,
         );
-        (win, fighters, hits)
+        (win, fighters, hits, stuns)
     }
 
     fn setup(mut team: Span<Character>, ref events: Array<Fighter>) {
@@ -57,6 +59,7 @@ impl Battler of BattlerTrait {
         next_buff2: Buff,
         ref tick: u32,
         ref hits: Array<Hit>,
+        ref stuns: Array<Stun>,
     ) -> bool {
         // [Compute] If fighter is dead then get the next fighter if available
         if char1.is_dead() {
@@ -83,22 +86,30 @@ impl Battler of BattlerTrait {
 
         // [Compute] Fight until one of the fighter is dead
         tick += 1;
-        let (buff1, buff2) = Battler::duel(ref char1, ref char2, ref tick, ref hits);
+        let (buff1, buff2) = Battler::duel(ref char1, ref char2, ref tick, ref hits, ref stuns);
 
         // [Compute] Continue the battle
-        Battler::battle(ref team1, ref team2, char1, char2, buff1, buff2, ref tick, ref hits)
+        Battler::battle(
+            ref team1, ref team2, char1, char2, buff1, buff2, ref tick, ref hits, ref stuns
+        )
     }
 
     fn duel(
-        ref char1: Character, ref char2: Character, ref tick: u32, ref hits: Array<Hit>,
+        ref char1: Character,
+        ref char2: Character,
+        ref tick: u32,
+        ref hits: Array<Hit>,
+        ref stuns: Array<Stun>,
     ) -> (Buff, Buff) {
         // [Effect] Apply talent and item buff for char1
         let (damage1, stun1, _) = Battler::apply_effects(ref char1, Phase::OnFight);
         let (damage2, stun2, _) = Battler::apply_effects(ref char2, Phase::OnFight);
 
         // [Effect] Apply stun effects
-        char1.stun(stun2);
-        char2.stun(stun1);
+        let stun = char1.stun(stun2);
+        stuns.append(StunTrait::new(tick, char1.id, char2.id, stun));
+        let stun = char2.stun(stun1);
+        stuns.append(StunTrait::new(tick, char2.id, char1.id, stun));
 
         // [Compute] Receive damage from opponents
         let damage = char1.take_damage(char2.attack() + damage2);
@@ -115,7 +126,7 @@ impl Battler of BattlerTrait {
             return (next_buff1, next_buff2);
         }
         tick += 1;
-        Battler::duel(ref char1, ref char2, ref tick, ref hits)
+        Battler::duel(ref char1, ref char2, ref tick, ref hits, ref stuns)
     }
 
     #[inline(always)]
@@ -167,7 +178,7 @@ mod tests {
             CharacterTrait::from(Role::Bomboblin, 1, Item::None),
             CharacterTrait::from(Role::Bomboblin, 1, Item::None),
         ];
-        let (win, _, _) = Battler::start(ref characters, ref foes);
+        let (win, _, _, _) = Battler::start(ref characters, ref foes);
         assert(!win, 'Battler: invalid win status');
     }
 
@@ -180,7 +191,7 @@ mod tests {
             CharacterTrait::from(Role::Bomboblin, 1, Item::None),
             CharacterTrait::from(Role::Bomboblin, 1, Item::None),
         ];
-        let (win, _, _) = Battler::start(ref characters, ref foes);
+        let (win, _, _, _) = Battler::start(ref characters, ref foes);
         assert(win, 'Battler: invalid win status');
     }
 
@@ -192,7 +203,7 @@ mod tests {
         let mut foes: Array<Character> = array![
             CharacterTrait::from(Role::Bomboblin, 1, Item::None),
         ];
-        let (win, _, _) = Battler::start(ref characters, ref foes);
+        let (win, _, _, _) = Battler::start(ref characters, ref foes);
         assert(!win, 'Battler: invalid win status');
     }
 
@@ -205,7 +216,7 @@ mod tests {
         let mut foes: Array<Character> = array![
             CharacterTrait::from(Role::Torchoblin, 1, Item::None),
         ];
-        let (win, _, _) = Battler::start(ref characters, ref foes);
+        let (win, _, _, _) = Battler::start(ref characters, ref foes);
         assert(win, 'Battler: invalid win status');
     }
 }

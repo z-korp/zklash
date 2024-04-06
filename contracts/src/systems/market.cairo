@@ -15,6 +15,7 @@ trait IMarket<TContractState> {
     fn xp(
         self: @TContractState, world: IWorldDispatcher, team_id: u32, character_id: u8, index: u8,
     );
+    fn merge(self: @TContractState, world: IWorldDispatcher, team_id: u32, from_id: u8, to_id: u8,);
     fn sell(self: @TContractState, world: IWorldDispatcher, team_id: u32, character_id: u8);
     fn reroll(self: @TContractState, world: IWorldDispatcher, team_id: u32,);
 }
@@ -182,6 +183,37 @@ mod market {
 
             // [Effect] Update team
             store.set_team(team);
+        }
+
+        fn merge(
+            self: @ContractState, world: IWorldDispatcher, team_id: u32, from_id: u8, to_id: u8,
+        ) {
+            // [Setup] Datastore
+            let store: Store = StoreImpl::new(world);
+
+            // [Check] Player exists
+            let caller = get_caller_address();
+            let player = store.player(caller.into());
+            player.assert_exists();
+
+            // [Check] Team exists
+            let team = store.team(player.id, team_id);
+            team.assert_exists();
+
+            // [Check] From Character exists
+            let mut from = store.character(player.id, team_id, from_id);
+            from.assert_exists();
+
+            // [Check] To Character exists
+            let mut to = store.character(player.id, team_id, to_id);
+            to.assert_exists();
+
+            // [Effect] Purchase item
+            from.merge(ref to);
+
+            // [Effect] Update characters
+            store.set_character(from);
+            store.set_character(to);
         }
 
         fn sell(self: @ContractState, world: IWorldDispatcher, team_id: u32, character_id: u8,) {

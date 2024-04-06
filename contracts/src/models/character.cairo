@@ -199,9 +199,10 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn stun(ref self: Character, stun: u8) {
+    fn stun(ref self: Character, stun: u8) -> u8 {
         // [Effect] Apply stun
-        self.stun += stun
+        self.stun += stun;
+        stun
     }
 
     #[inline(always)]
@@ -224,6 +225,12 @@ impl CharacterImpl of CharacterTrait {
     #[inline(always)]
     fn nullify(ref self: Character) {
         self.role = Role::None.into();
+    }
+
+    #[inline(always)]
+    fn merge(ref self: Character, ref to: Character) {
+        to.xp();
+        self.nullify();
     }
 
     #[inline(always)]

@@ -49,3 +49,33 @@ impl HitImpl of HitTrait {
         }
     }
 }
+
+#[derive(Drop, starknet::Event)]
+struct Stun {
+    #[key]
+    player_id: felt252,
+    #[key]
+    team_id: u32,
+    #[key]
+    battle_id: u8,
+    tick: u32,
+    from_character_id: u8,
+    to_character_id: u8,
+    value: u8,
+}
+
+#[generate_trait]
+impl StunImpl of StunTrait {
+    #[inline(always)]
+    fn new(tick: u32, from: u8, to: u8, value: u8) -> Stun {
+        Stun {
+            player_id: 0,
+            team_id: 0,
+            battle_id: 0,
+            tick: tick,
+            from_character_id: from,
+            to_character_id: to,
+            value,
+        }
+    }
+}

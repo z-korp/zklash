@@ -6,11 +6,24 @@ using Dojo.Starknet;
 
 public class BattleActions : MonoBehaviour
 {
+    public static BattleActions instance;
+
     [SerializeField] WorldManagerData dojoConfig;
 
     [SerializeField] MarketSystem marketSystem;
 
     private GameManager gameManager;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("More than one instance of BattleActions");
+            return;
+        }
+
+        instance = this;
+    }
 
     void Start()
     {
@@ -25,7 +38,7 @@ public class BattleActions : MonoBehaviour
       }
     }
 
-    public async void TriggerHire()
+    public async void TriggerHire(uint index)
     {
         Debug.Log("TriggerHire");
         Debug.Log("GameManager: " + gameManager);
@@ -38,7 +51,7 @@ public class BattleActions : MonoBehaviour
 
         Debug.Log($"Current Burner: {currentBurner.Address.Hex()}");
         Debug.Log($"dojoConfig: {dojoConfig.worldAddress}");
-        var txHash = await marketSystem.Hire(currentBurner, dojoConfig.worldAddress, player.team_count, 0);
+        var txHash = await marketSystem.Hire(currentBurner, dojoConfig.worldAddress, player.team_count, index);
         Debug.Log($"[Hire] Transaction Hash: {txHash.Hex()}");
     } 
 }

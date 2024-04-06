@@ -10,7 +10,7 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::constants;
-use zklash::events::Fighter;
+use zklash::events::{Fighter, Usage, UsageTrait, Talent, TalentTrait};
 use zklash::helpers::math::Math;
 use zklash::types::item::{Item, ItemTrait};
 use zklash::types::role::{Role, RoleTrait};
@@ -75,11 +75,11 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn from(role: Role, level: u8, item: Item) -> Character {
+    fn from(id: u8, role: Role, level: u8, item: Item) -> Character {
         Character {
             player_id: Zeroable::zero(),
             team_id: 0,
-            id: 0,
+            id,
             role: role.into(),
             item: item.into(),
             xp: 0,
@@ -150,7 +150,9 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn talent(ref self: Character, phase: Phase) -> (u8, u8, Buff) {
+    fn talent(
+        ref self: Character, phase: Phase, battle_id: u8, tick: u32
+    ) -> (u8, u8, Buff, Talent) {
         // [Effect] Update the item's effect
         let role: Role = self.role.into();
         let buff = Buff {
@@ -161,16 +163,29 @@ impl CharacterImpl of CharacterTrait {
         self.buff(buff);
         let damage = role.damage(phase, self.level);
         let stun = role.stun(phase, self.level);
-        let buff = Buff {
+        let next_buff = Buff {
             health: role.next_health(phase, self.level),
             attack: role.next_attack(phase, self.level),
             absorb: role.next_absorb(phase, self.level),
         };
-        (damage, stun, buff)
+        let talent = TalentTrait::new(
+            battle_id,
+            tick,
+            self,
+            buff.health,
+            buff.attack,
+            buff.absorb,
+            damage,
+            stun,
+            next_buff.health,
+            next_buff.attack,
+            next_buff.absorb,
+        );
+        (damage, stun, next_buff, talent)
     }
 
     #[inline(always)]
-    fn usage(ref self: Character, phase: Phase) -> u8 {
+    fn usage(ref self: Character, phase: Phase, battle_id: u8, tick: u32) -> (u8, Usage) {
         // [Effect] Update the item's effect
         let item: Item = self.item.into();
         let buff = Buff {
@@ -179,7 +194,19 @@ impl CharacterImpl of CharacterTrait {
         self.buff(buff);
         self.item = item.usage(phase).into();
         // [Effect] Return the item damage
-        item.damage(phase)
+        let damage = item.damage(phase);
+        let usage = UsageTrait::new(
+            battle_id,
+            tick,
+            self,
+            item.into(),
+            self.item,
+            buff.health,
+            buff.attack,
+            buff.absorb,
+            damage,
+        );
+        (damage, usage)
     }
 
     #[inline(always)]

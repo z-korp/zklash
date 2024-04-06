@@ -9,10 +9,14 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::constants;
-use zklash::helpers::packer::{Packer, TWO_POW_8};
+use zklash::helpers::packer::Packer;
 use zklash::types::dice::{Dice, DiceTrait};
 use zklash::types::item::{Item, ITEM_COUNT};
 use zklash::types::role::{Role, ROLE_COUNT, RoleAssert};
+
+// Constants
+
+const TWO_POW_8: u32 = 256;
 
 #[derive(Model, Copy, Drop, Serde)]
 struct Shop {

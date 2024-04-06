@@ -14,8 +14,8 @@ public class Player : ModelInstance {
     [ModelField("name")]
     public FieldElement name;
 
-    [ModelField("nonce")]
-    public uint nonce;
+    [ModelField("team_count")]
+    public uint team_count;
 
     // Start is called before the first frame update
     void Start() {

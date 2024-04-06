@@ -15,14 +15,23 @@ public class Shop : ModelInstance {
     [ModelField("team_id")]
     public uint team_id;
 
-    [ModelField("cost")]
-    public byte cost;
+    [ModelField("purchase_cost")]
+    public byte purchase_cost;
 
-    [ModelField("roles")]
-    public BigInteger roles;
+    [ModelField("reroll_cost")]
+    public byte reroll_cost;
+
+    [ModelField("item_count")]
+    public byte item_count;
 
     [ModelField("items")]
-    public BigInteger items;
+    public uint items;
+
+    [ModelField("role_count")]
+    public byte role_count;
+
+    [ModelField("roles")]
+    public uint roles;
 
     // Start is called before the first frame update
     void Start() {
@@ -35,7 +44,7 @@ public class Shop : ModelInstance {
 
     public override void OnUpdate(Model model)
     {
-        Debug.Log($"Player updated: {model}");
+        Debug.Log($"Shop updated: {model}");
         base.OnUpdate(model);
     }
 }

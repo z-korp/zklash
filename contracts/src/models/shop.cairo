@@ -9,14 +9,10 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::constants;
-use zklash::helpers::packer::Packer;
+use zklash::helpers::packer::{Packer, TWO_POW_8};
 use zklash::types::dice::{Dice, DiceTrait};
 use zklash::types::item::{Item, ITEM_COUNT};
 use zklash::types::role::{Role, ROLE_COUNT, RoleAssert};
-
-// Constants
-
-const TWO_POW_8: u128 = 256;
 
 #[derive(Model, Copy, Drop, Serde)]
 struct Shop {
@@ -27,9 +23,9 @@ struct Shop {
     purchase_cost: u8,
     reroll_cost: u8,
     item_count: u8,
-    items: u128,
+    items: u32,
     role_count: u8,
-    roles: u128,
+    roles: u32,
 }
 
 mod errors {
@@ -117,8 +113,8 @@ impl ShopImpl of ShopTrait {
 
 #[generate_trait]
 impl InternalImpl of InternalTrait {
-    fn gen(ref dice: Dice, mut count: u8) -> u128 {
-        let mut result: u128 = 0;
+    fn gen(ref dice: Dice, mut count: u8) -> u32 {
+        let mut result: u32 = 0;
         loop {
             if count == 0 {
                 break result;

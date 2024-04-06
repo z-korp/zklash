@@ -2,12 +2,11 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [System.Serializable] // Makes the struct visible in the Unity Inspector, allowing for easier debugging and setup
-public struct ShopSpot
+public class ShopSpot
 {
-    public bool IsAvailable; // Indicates if the spot is currently available
-    public string EntityContained; // Holds an identifier for the entity contained in the spot, if any
+    public bool IsAvailable;
+    public string EntityContained;
 
-    // Constructor for initializing a ShopSpot
     public ShopSpot(bool isAvailable, string entityContained = null)
     {
         IsAvailable = isAvailable;
@@ -60,6 +59,19 @@ public class VillageData : MonoBehaviour
             for (int i = 0; i < 4; i++) // Assuming 4 spots
             {
                 Spots.Add(new ShopSpot(true)); // Initially, all spots are available
+            }
+        }
+    }
+
+    public void UpdateFirstAvailableSpot(string entityName)
+    {
+        foreach (var spot in Spots)
+        {
+            if (!spot.IsAvailable && string.IsNullOrEmpty(spot.EntityContained))
+            {
+                spot.EntityContained = entityName; // Assign the entity to this spot
+                Debug.Log($"Spot updated with entity: {entityName}");
+                return; // Exit the method after updating the first matching spot
             }
         }
     }

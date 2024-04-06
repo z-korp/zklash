@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public WorldManager worldManager;
 
     [SerializeField] WorldManagerData dojoConfig;
-    [SerializeField] GameManagerData gameManagerData; 
+    [SerializeField] GameManagerData gameManagerData;
 
     public BurnerManager burnerManager;
     private Dictionary<FieldElement, string> spawnedAccounts = new();
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         return hexOutput;
     }
 
-    
+
     async void Start()
     {
         Debug.Log("---------------------------------");
@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     /*private void InitEntity2(List<GameObject> entities)
@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         if (playerComponent != null)
         {
             Debug.Log($"-> Player entity spawned");
-            if(currentBurner.Address.Hex() == playerComponent.id.Hex())
+            if (currentBurner.Address.Hex() == playerComponent.id.Hex())
             {
                 Debug.Log(">>>>>>>>>>>> Current player information stored.");
                 Debug.Log($"Player entity spawned with id: {entity.name}");
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         if (shopComponent != null)
         {
             Debug.Log($"-> Shop entity spawned");
-            if(shopComponent.player_id.Hex() == currentBurner.Address.Hex())
+            if (shopComponent.player_id.Hex() == currentBurner.Address.Hex())
             {
                 Debug.Log(">>>>>>>>>>>> Current shop information stored.");
                 PlayerData.Instance.shopEntity = entity.name;
@@ -131,10 +131,11 @@ public class GameManager : MonoBehaviour
         if (characterComponent != null)
         {
             Debug.Log($"-> Character entity spawned");
-            if(characterComponent.player_id.Hex() == currentBurner.Address.Hex())
+            if (characterComponent.player_id.Hex() == currentBurner.Address.Hex())
             {
                 Debug.Log(">>>>>>>>>>>> Current character information stored.");
                 PlayerData.Instance.characterEntities.Add(entity.name);
+                VillageData.Instance.UpdateFirstAvailableSpot(entity.name);
             }
             //PlayerData.Instance.teamEntity = entity.name;
         }
@@ -150,7 +151,7 @@ public class GameManager : MonoBehaviour
         var txHash = await accountSystem.Create(currentBurner, dojoConfig.worldAddress, nameHex);
         // Do something with txHash, like logging it
         Debug.Log($"[Create] Transaction Hash: {txHash.Hex()}");
-        
+
 
         txHash = await accountSystem.Spawn(currentBurner, dojoConfig.worldAddress);
         Debug.Log($"[Spawn] Transaction Hash: {txHash.Hex()}");

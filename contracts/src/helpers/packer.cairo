@@ -47,6 +47,7 @@ impl Packer<
             if idx != index {
                 result.append(value);
             } else {
+                result.append(0);
                 removed_value = value;
                 removed = true;
             }

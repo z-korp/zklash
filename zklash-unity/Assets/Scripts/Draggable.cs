@@ -30,9 +30,14 @@ public class Draggable : MonoBehaviour
     {
         if (drag)
         {
+            GetComponent<SpriteRenderer>().sortingOrder = 1000;
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             rb.MovePosition(mousePos);
             // UpdateArrows();
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sortingOrder = 999;
         }
     }
 
@@ -62,11 +67,13 @@ public class Draggable : MonoBehaviour
 
                 if (isFromShop)
                 {
-                    ContractActions.instance.TriggerHire(0);
+                    ElementData data = gameObject.GetComponent<ElementData>();
+                    // Call the TriggerHire method from ContractActions
+                    ContractActions.instance.TriggerHire(data.indexFromShop);
                     isFromShop = false;
                 }
 
-                VillageData.Instance.FillSpot(zoneId, gameObject.name);
+                VillageData.Instance.FillSpot(zoneId, null);
             }
             else
             {
@@ -112,7 +119,7 @@ public class Draggable : MonoBehaviour
 
     private void CreateIndicators()
     {
-         foreach (Transform target in targets)
+        foreach (Transform target in targets)
         {
             GameObject indicator = Instantiate(indicatorPrefab, target.position, Quaternion.identity);
             indicators.Add(indicator);
@@ -150,7 +157,7 @@ public class Draggable : MonoBehaviour
         }
     }
 
-     private void DestroyIndicators()
+    private void DestroyIndicators()
     {
         foreach (GameObject indicator in indicators)
         {

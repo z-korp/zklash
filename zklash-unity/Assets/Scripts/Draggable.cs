@@ -20,7 +20,6 @@ public class Draggable : MonoBehaviour
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             rb.MovePosition(mousePos);
-
         }
     }
 
@@ -36,13 +35,13 @@ public class Draggable : MonoBehaviour
         if (currentDroppableZone != null && currentDroppableZone.CanBeDropped())
         {
             Debug.Log("Objet déposé dans la zone droppable.");
+            BattleActions.instance.TriggerHire(0);
         }
         else
         {
             rb.MovePosition(initPos);
             Debug.Log("Objet non déposé.");
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

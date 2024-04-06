@@ -14,7 +14,7 @@ public class MarketSystem : MonoBehaviour {
     
     // Call the `equip` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> Equip(Account account, string world, uint team_id, byte character_id, byte index) {
+    public async Task<FieldElement> Equip(Account account, string world, uint team_id, uint character_id, uint index) {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
                 to = contractAddress,
@@ -33,7 +33,7 @@ public class MarketSystem : MonoBehaviour {
     
     // Call the `hire` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> Hire(Account account, string world, uint team_id, byte index) {
+    public async Task<FieldElement> Hire(Account account, string world, uint team_id, uint index) {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
                 to = contractAddress,

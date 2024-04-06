@@ -1,6 +1,26 @@
 //! Events definition.
 
 #[derive(Drop, starknet::Event)]
+struct Fighter {
+    #[key]
+    player_id: felt252,
+    #[key]
+    team_id: u32,
+    #[key]
+    battle_id: u8,
+    character_id: u8,
+    index: u8,
+    role: u8,
+    item: u8,
+    xp: u8,
+    level: u8,
+    health: u8,
+    attack: u8,
+    absorb: u8,
+    stun: u8,
+}
+
+#[derive(Drop, starknet::Event)]
 struct Hit {
     #[key]
     player_id: felt252,

@@ -117,7 +117,7 @@ mod battle {
             };
 
             // [Effect] Update team characters and fight
-            let (mut hits,) = team.fight(ref shop, ref characters);
+            let (mut fighters, mut hits) = team.fight(ref shop, ref characters);
 
             // [Effect] Update shop
             store.set_shop(shop);
@@ -126,6 +126,16 @@ mod battle {
             store.set_team(team);
 
             // [Emit] Events
+            loop {
+                match fighters.pop_front() {
+                    Option::Some(fighter) => {
+                        let mut event = fighter;
+                        event.battle_id = team.battle_id;
+                        emit!(world, (event,));
+                    },
+                    Option::None => { break; },
+                }
+            };
             loop {
                 match hits.pop_front() {
                     Option::Some(hit) => {
@@ -137,7 +147,7 @@ mod battle {
                     },
                     Option::None => { break; },
                 }
-            }
+            };
         }
     }
 }

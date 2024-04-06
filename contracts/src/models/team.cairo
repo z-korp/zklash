@@ -10,10 +10,10 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::constants;
-use zklash::events::{Hit};
+use zklash::events::{Fighter, Hit};
 use zklash::store::{Store, StoreImpl};
 use zklash::helpers::packer::Packer;
-use zklash::helpers::fighter::Fighter;
+use zklash::helpers::battler::Battler;
 use zklash::models::shop::{Shop, ShopTrait};
 use zklash::models::character::{Character, CharacterTrait};
 use zklash::types::item::Item;
@@ -150,7 +150,9 @@ impl TeamImpl of TeamTrait {
     }
 
     #[inline(always)]
-    fn fight(ref self: Team, ref shop: Shop, ref chars: Array<Character>) -> (Array<Hit>,) {
+    fn fight(
+        ref self: Team, ref shop: Shop, ref chars: Array<Character>
+    ) -> (Array<Fighter>, Array<Hit>,) {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Not empty
@@ -159,16 +161,20 @@ impl TeamImpl of TeamTrait {
         let wave: Wave = self.level.into();
         let mut foes: Array<Character> = wave.characters();
         // [Effect] Fight and manage the win status
-        let (win, hits) = Fighter::start(ref chars, ref foes);
+        let (win, fighters, hits) = Battler::start(ref chars, ref foes);
         if win {
             self.level += 1;
         } else {
             self.health -= 1;
         }
+        // [Effect] Reset gold
+        self.gold = constants::DEFAULT_GOLD;
+        // [Effect] Reroll Shop
         shop.shuffle(self.seed());
         self.nonce += 1;
-        self.gold = constants::DEFAULT_GOLD;
-        (hits,)
+        // [Effect] Increase battle id
+        self.battle_id += 1;
+        (fighters, hits,)
     }
 }
 

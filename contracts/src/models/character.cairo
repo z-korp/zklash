@@ -10,6 +10,7 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::constants;
+use zklash::events::Fighter;
 use zklash::helpers::math::Math;
 use zklash::types::item::{Item, ItemTrait};
 use zklash::types::role::{Role, RoleTrait};
@@ -223,6 +224,25 @@ impl CharacterImpl of CharacterTrait {
     #[inline(always)]
     fn nullify(ref self: Character) {
         self.role = Role::None.into();
+    }
+
+    #[inline(always)]
+    fn to_fighter(self: Character, battle_id: u8, index: u8) -> Fighter {
+        Fighter {
+            player_id: self.player_id.into(),
+            team_id: self.team_id,
+            battle_id,
+            character_id: self.id,
+            index,
+            role: self.role,
+            item: self.item,
+            xp: self.xp,
+            level: self.level,
+            health: self.health,
+            attack: self.attack,
+            absorb: self.absorb,
+            stun: self.stun,
+        }
     }
 }
 

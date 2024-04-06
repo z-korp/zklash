@@ -1,39 +1,49 @@
-// Constants
-
-const TWO_POW_8: u32 = 256;
-
-// Errors
-
 mod errors {
     const PACKER_INDEX_OUT_OF_BOUNDS: felt252 = 'Packer: index out of bounds';
 }
 
 #[generate_trait]
-impl Packer of PackerTrait {
-    fn unpack(mut packed: u32) -> Array<u8> {
+impl Packer<
+    T,
+    +Into<u8, T>,
+    +Into<u16, T>,
+    +TryInto<T, u8>,
+    +NumericLiteral<T>,
+    +PartialEq<T>,
+    +Zeroable<T>,
+    +Rem<T>,
+    +AddEq<T>,
+    +MulEq<T>,
+    +DivEq<T>,
+    +Drop<T>,
+    +Copy<T>
+> of PackerTrait<T> {
+    fn unpack(mut packed: T) -> Array<u8> {
         let mut result: Array<u8> = array![];
+        let modulo: T = 256_u16.into();
         loop {
-            if packed == 0 {
+            if packed.is_zero() {
                 break;
             }
-            let value: u8 = (packed % TWO_POW_8).try_into().unwrap();
+            let value: u8 = (packed % modulo).try_into().unwrap();
             result.append(value);
-            packed /= TWO_POW_8;
+            packed /= modulo;
         };
         result
     }
 
-    fn remove(mut packed: u32, index: u8) -> (u32, u8) {
+    fn remove(mut packed: T, index: u8) -> (T, u8) {
         // [Compute] Loop over the packed value and remove the value at the given index
         let mut removed = false;
         let mut removed_value: u8 = 0;
         let mut result: Array<u8> = array![];
         let mut idx = 0;
+        let modulo: T = 256_u16.into();
         loop {
-            if packed == 0 {
+            if packed.is_zero() {
                 break;
             }
-            let value: u8 = (packed % TWO_POW_8).try_into().unwrap();
+            let value: u8 = (packed % modulo).try_into().unwrap();
             if idx != index {
                 result.append(value);
             } else {
@@ -41,7 +51,7 @@ impl Packer of PackerTrait {
                 removed = true;
             }
             idx += 1;
-            packed /= TWO_POW_8;
+            packed /= modulo;
         };
         // [Check] Index not out of bounds
         assert(removed, errors::PACKER_INDEX_OUT_OF_BOUNDS);
@@ -49,12 +59,13 @@ impl Packer of PackerTrait {
         (Packer::pack(result), removed_value)
     }
 
-    fn pack(mut unpacked: Array<u8>) -> u32 {
-        let mut result: u32 = 0;
+    fn pack(mut unpacked: Array<u8>) -> T {
+        let mut result: T = Zeroable::zero();
+        let modulo: T = 256_u16.into();
         loop {
             match unpacked.pop_front() {
                 Option::Some(value) => {
-                    result *= TWO_POW_8;
+                    result *= modulo;
                     result += value.into();
                 },
                 Option::None => { break; }

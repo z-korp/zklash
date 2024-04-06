@@ -10,9 +10,10 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::constants;
+use zklash::events::{Fighter, Hit};
 use zklash::store::{Store, StoreImpl};
 use zklash::helpers::packer::Packer;
-use zklash::helpers::fighter::Fighter;
+use zklash::helpers::battler::Battler;
 use zklash::models::shop::{Shop, ShopTrait};
 use zklash::models::character::{Character, CharacterTrait};
 use zklash::types::item::Item;
@@ -149,7 +150,9 @@ impl TeamImpl of TeamTrait {
     }
 
     #[inline(always)]
-    fn fight(ref self: Team, ref shop: Shop, ref chars: Array<Character>) {
+    fn fight(
+        ref self: Team, ref shop: Shop, ref chars: Array<Character>
+    ) -> (Array<Fighter>, Array<Hit>,) {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Not empty
@@ -158,14 +161,20 @@ impl TeamImpl of TeamTrait {
         let wave: Wave = self.level.into();
         let mut foes: Array<Character> = wave.characters();
         // [Effect] Fight and manage the win status
-        if Fighter::fight(ref chars, ref foes) {
+        let (win, fighters, hits) = Battler::start(ref chars, ref foes);
+        if win {
             self.level += 1;
         } else {
             self.health -= 1;
         }
+        // [Effect] Reset gold
+        self.gold = constants::DEFAULT_GOLD;
+        // [Effect] Reroll Shop
         shop.shuffle(self.seed());
         self.nonce += 1;
-        self.gold = constants::DEFAULT_GOLD;
+        // [Effect] Increase battle id
+        self.battle_id += 1;
+        (fighters, hits,)
     }
 }
 
@@ -216,46 +225,5 @@ impl ZeroableTeam of core::Zeroable<Team> {
     #[inline(always)]
     fn is_non_zero(self: Team) -> bool {
         !self.is_zero()
-    }
-}
-
-impl DefaultTeam of core::traits::Default<Team> {
-    #[inline(always)]
-    fn default() -> Team {
-        Team {
-            player_id: Zeroable::zero(),
-            id: 0,
-            seed: 0,
-            nonce: 0,
-            gold: constants::DEFAULT_GOLD,
-            health: constants::DEFAULT_HEALTH,
-            level: constants::DEFAULT_LEVEL,
-            character_count: 0,
-            battle_id: 0,
-        }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    // Core imports
-
-    use core::debug::PrintTrait;
-    use core::zeroable::Zeroable;
-    use core::traits::Default;
-
-    // Local imports
-
-    use super::{Team, TeamTrait, Character, CharacterTrait, Item, Role, Shop, ShopTrait};
-
-    #[test]
-    fn test_team_01() {
-        let mut team: Team = Default::default();
-        let mut characters: Array<Character> = array![
-            CharacterTrait::from(Role::Knight, 1, Item::None),
-            CharacterTrait::from(Role::Bowman, 1, Item::None),
-        ];
-        let mut shop: Shop = Zeroable::zero();
-        team.fight(ref shop, ref characters);
     }
 }

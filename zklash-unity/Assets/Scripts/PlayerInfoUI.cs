@@ -4,22 +4,19 @@ using TMPro;
 
 public class PlayerInfoUI : MonoBehaviour
 {
-    // Références aux éléments UI Text pour les valeurs du joueur
     public TextMeshProUGUI txtLife;
     public TextMeshProUGUI txtGold;
     public TextMeshProUGUI txtTrophy;
 
-    // Variables pour stocker les valeurs du joueur
     private uint playerLives;
     private uint playerGold;
     private uint playerTrophies;
 
     void Start()
     {
-        // Initialiser les valeurs du joueur
-        playerLives = 5; // Mettez ici la valeur initiale de la vie
-        playerGold = 26; // Mettez ici la valeur initiale de l'or
-        playerTrophies = 0; // Mettez ici la valeur initiale des trophées
+        playerLives = 0;
+        playerGold = 0;
+        playerTrophies = 0;
     }
 
     void Update()
@@ -28,7 +25,7 @@ public class PlayerInfoUI : MonoBehaviour
         {
             var teamEntity = GameManager.Instance.teamEntity;
             var team = GameManager.Instance.worldManager.Entity(teamEntity).GetComponent<Team>();
-            UpdatePlayerStats(team.gold, team.health, team.level);
+            UpdatePlayerStats(team.health, team.gold, team.level);
         }
     }
 
@@ -48,9 +45,6 @@ public class PlayerInfoUI : MonoBehaviour
         txtLife.text = playerLives.ToString();
         txtGold.text = playerGold.ToString();
         txtTrophy.text = playerTrophies.ToString();
-
-        Debug.Log("PlayerInfoUI: UpdateUI called");
-        Debug.Log("PlayerInfoUI:  txtGold.text  = " +  txtGold.text );
     }
 
     // Exemples de méthodes pour modifier les valeurs, à appeler depuis d'autres scripts ou événements
@@ -71,6 +65,4 @@ public class PlayerInfoUI : MonoBehaviour
         playerTrophies += amount;
         UpdateUI();
     }
-
-    // Ajoutez d'autres méthodes selon les besoins de votre jeu pour gérer la perte de vies, dépenses d'or, etc.
 }

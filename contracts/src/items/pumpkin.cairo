@@ -39,11 +39,19 @@ impl ItemImpl of ItemTrait {
 
     #[inline(always)]
     fn usage(phase: Phase, size: Size) -> Item {
-        match size {
-            Size::Small => Item::None,
-            Size::Medium => Item::PumpkinSmall,
-            Size::Large => Item::PumpkinMedium,
-            _ => Item::None,
+        match phase {
+            Phase::OnDeath => match size {
+                Size::Small => Item::None,
+                Size::Medium => Item::PumpkinSmall,
+                Size::Large => Item::PumpkinMedium,
+                _ => Item::None,
+            },
+            _ => match size {
+                Size::Small => Item::PumpkinSmall,
+                Size::Medium => Item::PumpkinMedium,
+                Size::Large => Item::PumpkinLarge,
+                _ => Item::None,
+            },
         }
     }
 }

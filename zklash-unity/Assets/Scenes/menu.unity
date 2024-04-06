@@ -203,6 +203,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4900589733936057544, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
       insertIndex: -1
       addedObject: {fileID: 904947545}
+    - targetCorrespondingSourceObject: {fileID: 4900589733936057544, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 904947555}
+    - targetCorrespondingSourceObject: {fileID: 4900589733936057544, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 904947554}
   m_SourcePrefab: {fileID: 100100000, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
 --- !u!1 &904947544 stripped
 GameObject:
@@ -249,6 +255,35 @@ MonoBehaviour:
   dojoConfig: {fileID: 11400000, guid: 1d6a5fa48aab79f0084b213f6fc768c5, type: 2}
   gameManagerData: {fileID: 11400000, guid: ed201d0c8168640928f9835a4194c3a1, type: 2}
   accountSystem: {fileID: 904947545}
+  playerEntity: 
+  shopEntity: 
+  teamEntity: 
+--- !u!114 &904947554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904947544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef932abc54f77425b9c404e29d3500f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contractAddress: 0x53fb59cc9aab03983033de799d10c9a0d3e4475e19224a661cefeacb0577871
+--- !u!114 &904947555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904947544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39578118dd2dc4b9d96c74aefbe677c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contractAddress: 0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1
 --- !u!1001 &1127760568
 PrefabInstance:
   m_ObjectHideFlags: 0

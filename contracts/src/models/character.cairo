@@ -29,7 +29,14 @@ struct Character {
     health: u8,
     attack: u8,
     absorb: u8,
-    stun: bool,
+    stun: u8,
+}
+
+#[derive(Copy, Drop)]
+struct Buff {
+    health: u8,
+    attack: u8,
+    absorb: u8,
 }
 
 // Constants
@@ -49,6 +56,7 @@ mod errors {
 impl CharacterImpl of CharacterTrait {
     #[inline(always)]
     fn new(player_id: ContractAddress, team_id: u32, id: u8, role: Role) -> Character {
+        let level: u8 = 1;
         Character {
             player_id,
             team_id,
@@ -56,37 +64,75 @@ impl CharacterImpl of CharacterTrait {
             role: role.into(),
             item: Item::None.into(),
             xp: 0,
-            level: 1,
-            health: role.health(),
-            attack: role.attack(),
-            absorb: 0,
-            stun: false,
+            level,
+            health: role.health(Phase::OnHire, level),
+            attack: role.attack(Phase::OnHire, level),
+            absorb: role.absorb(Phase::OnHire, level),
+            stun: 0,
         }
     }
 
-    fn from(role: Role, level: u8) -> Character {
+    #[inline(always)]
+    fn from(role: Role, level: u8, item: Item) -> Character {
         Character {
             player_id: Zeroable::zero(),
             team_id: 0,
             id: 0,
             role: role.into(),
-            item: Item::None.into(),
+            item: item.into(),
             xp: 0,
             level,
-            health: role.health(),
-            attack: role.attack(),
-            absorb: 0,
-            stun: false,
+            health: role.health(Phase::OnHire, level),
+            attack: role.attack(Phase::OnHire, level),
+            absorb: role.absorb(Phase::OnHire, level),
+            stun: 0,
         }
+    }
+
+    #[inline(always)]
+    fn health(ref self: Character) -> u8 {
+        self.health
+    }
+
+    #[inline(always)]
+    fn attack(ref self: Character) -> u8 {
+        if self.stun > 0 {
+            self.stun -= 1;
+            return 0;
+        }
+        self.attack
+    }
+
+    #[inline(always)]
+    fn absorb(ref self: Character) -> u8 {
+        self.absorb
     }
 
     #[inline(always)]
     fn equip(ref self: Character, item: Item) {
         // [Effect] Remove the previous item's effect
-        self.debuff(Phase::OnEquip);
+        self.unequip();
         // [Effect] Equip and apply the new item's effect
+        let buff = Buff {
+            health: item.health(Phase::OnEquip),
+            attack: item.attack(Phase::OnEquip),
+            absorb: item.absorb(Phase::OnEquip),
+        };
+        self.buff(buff);
         self.item = item.into();
-        self.buff(Phase::OnEquip);
+    }
+
+    #[inline(always)]
+    fn unequip(ref self: Character) {
+        // [Effect] Update the item's effect
+        let item: Item = self.item.into();
+        let buff = Buff {
+            health: item.health(Phase::OnEquip),
+            attack: item.attack(Phase::OnEquip),
+            absorb: item.absorb(Phase::OnEquip),
+        };
+        self.debuff(buff);
+        self.item = Item::None.into();
     }
 
     #[inline(always)]
@@ -102,24 +148,57 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn buff(ref self: Character, phase: Phase) -> u8 {
+    fn talent(ref self: Character, phase: Phase) -> (u8, u8, Buff) {
+        // [Effect] Update the item's effect
+        let role: Role = self.role.into();
+        let buff = Buff {
+            health: role.health(phase, self.level),
+            attack: role.attack(phase, self.level),
+            absorb: role.absorb(phase, self.level),
+        };
+        self.buff(buff);
+        let damage = role.damage(phase, self.level);
+        let stun = role.stun(phase, self.level);
+        let next_health = role.health(phase, self.level);
+        let next_attack = role.attack(phase, self.level);
+        let next_absorb = role.absorb(phase, self.level);
+        let buff = Buff { health: next_health, attack: next_attack, absorb: next_absorb, };
+        (damage, stun, buff)
+    }
+
+    #[inline(always)]
+    fn usage(ref self: Character, phase: Phase) -> u8 {
         // [Effect] Update the item's effect
         let item: Item = self.item.into();
-        self.health += item.health(phase);
-        self.attack += item.attack(phase);
-        self.absorb += item.absorb(phase);
+        let buff = Buff {
+            health: item.health(phase), attack: item.attack(phase), absorb: item.absorb(phase),
+        };
+        self.buff(buff);
         self.item = item.usage(phase).into();
+        // [Effect] Return the item damage
         item.damage(phase)
     }
 
     #[inline(always)]
-    fn debuff(ref self: Character, phase: Phase) {
-        // [Effect] Update the item's effect
-        let item: Item = self.item.into();
-        self.health -= item.health(phase);
-        self.attack -= item.attack(phase);
-        self.absorb -= item.absorb(phase);
-        self.item = item.usage(phase).into();
+    fn buff(ref self: Character, buff: Buff) {
+        // [Effect] Apply buff
+        self.health += buff.health;
+        self.attack += buff.attack;
+        self.absorb += buff.absorb;
+    }
+
+    #[inline(always)]
+    fn debuff(ref self: Character, buff: Buff) {
+        // [Effect] Apply debuff
+        self.health -= buff.health;
+        self.attack -= buff.attack;
+        self.absorb -= buff.absorb;
+    }
+
+    #[inline(always)]
+    fn stun(ref self: Character, stun: u8) {
+        // [Effect] Apply stun
+        self.stun += stun
     }
 
     #[inline(always)]
@@ -157,7 +236,7 @@ impl ZeroableCharacter of core::Zeroable<Character> {
             health: 0,
             attack: 0,
             absorb: 0,
-            stun: false,
+            stun: 0,
         }
     }
 
@@ -168,6 +247,23 @@ impl ZeroableCharacter of core::Zeroable<Character> {
 
     #[inline(always)]
     fn is_non_zero(self: Character) -> bool {
+        !self.is_zero()
+    }
+}
+
+impl ZeroableBuff of core::Zeroable<Buff> {
+    #[inline(always)]
+    fn zero() -> Buff {
+        Buff { health: 0, attack: 0, absorb: 0, }
+    }
+
+    #[inline(always)]
+    fn is_zero(self: Buff) -> bool {
+        self.health == 0 && self.attack == 0 && self.absorb == 0
+    }
+
+    #[inline(always)]
+    fn is_non_zero(self: Buff) -> bool {
         !self.is_zero()
     }
 }

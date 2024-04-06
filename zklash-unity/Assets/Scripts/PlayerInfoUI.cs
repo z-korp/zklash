@@ -16,6 +16,10 @@ public class PlayerInfoUI : MonoBehaviour
 
     void Start()
     {
+        // Initialiser les valeurs du joueur
+        playerLives = 5; // Mettez ici la valeur initiale de la vie
+        playerGold = 26; // Mettez ici la valeur initiale de l'or
+        playerTrophies = 0; // Mettez ici la valeur initiale des trophées
     }
 
     void Update()
@@ -44,7 +48,9 @@ public class PlayerInfoUI : MonoBehaviour
         txtLife.text = playerLives.ToString();
         txtGold.text = playerGold.ToString();
         txtTrophy.text = playerTrophies.ToString();
-        //Debug.Log($"Lives: {playerLives}, Gold: {playerGold}, Trophies: {playerTrophies}");
+
+        Debug.Log("PlayerInfoUI: UpdateUI called");
+        Debug.Log("PlayerInfoUI:  txtGold.text  = " +  txtGold.text );
     }
 
     // Exemples de méthodes pour modifier les valeurs, à appeler depuis d'autres scripts ou événements

@@ -133,7 +133,6 @@ impl TeamImpl of TeamTrait {
         self.gold += character.level.into();
         // [Effect] Update Character
         character.nullify();
-    // [Effect] Update Characters
     }
 
     #[inline(always)]
@@ -150,7 +149,7 @@ impl TeamImpl of TeamTrait {
     }
 
     #[inline(always)]
-    fn fight(ref self: Team, ref chars: Array<Character>) {
+    fn fight(ref self: Team, ref shop: Shop, ref chars: Array<Character>) {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Not empty
@@ -164,6 +163,8 @@ impl TeamImpl of TeamTrait {
         } else {
             self.health -= 1;
         }
+        shop.shuffle(self.seed());
+        self.nonce += 1;
         self.gold = constants::DEFAULT_GOLD;
     }
 }
@@ -191,7 +192,7 @@ impl TeamAssert of AssertTrait {
     }
 }
 
-impl ZeroableTeamImpl of core::Zeroable<Team> {
+impl ZeroableTeam of core::Zeroable<Team> {
     #[inline(always)]
     fn zero() -> Team {
         Team {
@@ -215,5 +216,46 @@ impl ZeroableTeamImpl of core::Zeroable<Team> {
     #[inline(always)]
     fn is_non_zero(self: Team) -> bool {
         !self.is_zero()
+    }
+}
+
+impl DefaultTeam of core::traits::Default<Team> {
+    #[inline(always)]
+    fn default() -> Team {
+        Team {
+            player_id: Zeroable::zero(),
+            id: 0,
+            seed: 0,
+            nonce: 0,
+            gold: constants::DEFAULT_GOLD,
+            health: constants::DEFAULT_HEALTH,
+            level: constants::DEFAULT_LEVEL,
+            character_count: 0,
+            battle_id: 0,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    // Core imports
+
+    use core::debug::PrintTrait;
+    use core::zeroable::Zeroable;
+    use core::traits::Default;
+
+    // Local imports
+
+    use super::{Team, TeamTrait, Character, CharacterTrait, Item, Role, Shop, ShopTrait};
+
+    #[test]
+    fn test_team_01() {
+        let mut team: Team = Default::default();
+        let mut characters: Array<Character> = array![
+            CharacterTrait::from(Role::Knight, 1, Item::None),
+            CharacterTrait::from(Role::Bowman, 1, Item::None),
+        ];
+        let mut shop: Shop = Zeroable::zero();
+        team.fight(ref shop, ref characters);
     }
 }

@@ -6,8 +6,11 @@ public class Draggable : MonoBehaviour
     bool drag;
     public Vector3 initPos = Vector3.zero;
 
+    public bool isFromShop = true;
+
     private Rigidbody2D rb;
     private DroppableZone currentDroppableZone;
+
 
     private void Awake()
     {
@@ -35,13 +38,19 @@ public class Draggable : MonoBehaviour
         if (currentDroppableZone != null && currentDroppableZone.CanBeDropped())
         {
             Debug.Log("Objet déposé dans la zone droppable.");
-            ContractActions.instance.TriggerHire(0);
+            if (isFromShop)
+            {
+                ContractActions.instance.TriggerHire(0);
+                isFromShop = false;
+            }
+
         }
         else
         {
             rb.MovePosition(initPos);
             Debug.Log("Objet non déposé.");
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

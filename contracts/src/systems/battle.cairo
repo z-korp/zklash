@@ -8,7 +8,7 @@ use dojo::world::IWorldDispatcher;
 
 #[starknet::interface]
 trait IBattle<TContractState> {
-    fn start(self: @TContractState, world: IWorldDispatcher, team_id: u32, order: u128,);
+    fn start(self: @TContractState, world: IWorldDispatcher, team_id: u32, order: u32,);
 }
 
 #[starknet::contract]
@@ -75,7 +75,7 @@ mod battle {
 
     #[abi(embed_v0)]
     impl BattleImpl of IBattle<ContractState> {
-        fn start(self: @ContractState, world: IWorldDispatcher, team_id: u32, order: u128,) {
+        fn start(self: @ContractState, world: IWorldDispatcher, team_id: u32, order: u32,) {
             // [Setup] Datastore
             let mut store: Store = StoreImpl::new(world);
 

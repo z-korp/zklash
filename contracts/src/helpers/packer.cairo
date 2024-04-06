@@ -1,6 +1,6 @@
 // Constants
 
-const TWO_POW_8: u128 = 256;
+const TWO_POW_8: u32 = 256;
 
 // Errors
 
@@ -10,7 +10,7 @@ mod errors {
 
 #[generate_trait]
 impl Packer of PackerTrait {
-    fn unpack(mut packed: u128) -> Array<u8> {
+    fn unpack(mut packed: u32) -> Array<u8> {
         let mut result: Array<u8> = array![];
         loop {
             if packed == 0 {
@@ -23,7 +23,7 @@ impl Packer of PackerTrait {
         result
     }
 
-    fn remove(mut packed: u128, index: u8) -> (u128, u8) {
+    fn remove(mut packed: u32, index: u8) -> (u32, u8) {
         // [Compute] Loop over the packed value and remove the value at the given index
         let mut removed = false;
         let mut removed_value: u8 = 0;
@@ -49,8 +49,8 @@ impl Packer of PackerTrait {
         (Packer::pack(result), removed_value)
     }
 
-    fn pack(mut unpacked: Array<u8>) -> u128 {
-        let mut result: u128 = 0;
+    fn pack(mut unpacked: Array<u8>) -> u32 {
+        let mut result: u32 = 0;
         loop {
             match unpacked.pop_front() {
                 Option::Some(value) => {

@@ -7,7 +7,8 @@ public class DroppableZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        Draggable draggable = collision.gameObject.GetComponent<Draggable>();
+        if (draggable != null)
         {
             Debug.Log("Player entered droppable zone");
             isDroppable = true;

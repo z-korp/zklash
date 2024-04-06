@@ -24,10 +24,14 @@ public class PlayerInfoUI : MonoBehaviour
         if (GameManager.Instance != null)
         {
             var teamEntity = PlayerData.Instance.teamEntity;
-            if(teamEntity != null)
+            if (teamEntity != null)
             {
                 var team = GameManager.Instance.worldManager.Entity(teamEntity).GetComponent<Team>();
-                UpdatePlayerStats(team.health, team.gold, team.level);
+                if (team != null)
+                {
+                    UpdatePlayerStats(team.health, team.gold, team.level);
+                }
+
             }
         }
     }

@@ -169,6 +169,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initPos: {x: 0, y: 0, z: 0}
+  isFromShop: 1
+  animator: {fileID: 4569523674553832488}
 --- !u!114 &2761097008875629303
 MonoBehaviour:
   m_ObjectHideFlags: 0

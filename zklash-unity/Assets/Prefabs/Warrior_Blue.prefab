@@ -173,6 +173,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initPos: {x: 0, y: 0, z: 0}
+  isFromShop: 1
+  animator: {fileID: 4569523674553832488}
 --- !u!50 &5389027940959983678
 Rigidbody2D:
   serializedVersion: 4
@@ -218,7 +220,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2882689615724375510, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6707804836854084844, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
       propertyPath: m_Pivot.x

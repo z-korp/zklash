@@ -11,6 +11,8 @@ public class Draggable : MonoBehaviour
     private Rigidbody2D rb;
     private DroppableZone currentDroppableZone;
 
+    public Animator animator;
+
 
     private void Awake()
     {
@@ -29,12 +31,15 @@ public class Draggable : MonoBehaviour
     private void OnMouseDown()
     {
         drag = true;
+        animator.SetBool("IsWalking", true);
         initPos = transform.position;
+
     }
 
     private void OnMouseUp()
     {
         drag = false;
+        animator.SetBool("IsWalking", false);
         if (currentDroppableZone != null && currentDroppableZone.CanBeDropped())
         {
             Debug.Log("Objet déposé dans la zone droppable.");

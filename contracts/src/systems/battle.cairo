@@ -88,6 +88,10 @@ mod battle {
             let mut team = store.team(player.id, team_id);
             team.assert_exists();
 
+            // [Check] Shop exists
+            let mut shop = store.shop(player.id, team_id);
+            shop.assert_exists();
+
             // [Check] Characters exist
             let mut characters: Array<Character> = array![];
             let mut character_ids = Packer::unpack(order);
@@ -104,7 +108,10 @@ mod battle {
             };
 
             // [Effect] Update team characters and fight
-            team.fight(ref characters);
+            team.fight(ref shop, ref characters);
+
+            // [Effect] Update shop
+            store.set_shop(shop);
 
             // [Effect] Update team
             store.set_team(team);

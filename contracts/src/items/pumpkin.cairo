@@ -13,8 +13,8 @@ impl ItemImpl of ItemTrait {
             Phase::OnDeath => {
                 match size {
                     Size::Small => 1,
-                    Size::Medium => 2,
-                    Size::Large => 3,
+                    Size::Medium => 1,
+                    Size::Large => 1,
                     _ => 0,
                 }
             },

@@ -11,6 +11,7 @@ use zklash::roles::torchoblin::{RoleImpl as TorchoblinImpl};
 use zklash::roles::dynamoblin::{RoleImpl as DynamoblinImpl};
 use zklash::roles::bomboblin::{RoleImpl as BomboblinImpl};
 use zklash::types::item::Item;
+use zklash::types::phase::Phase;
 
 // Constants
 
@@ -41,28 +42,106 @@ enum Role {
 #[generate_trait]
 impl RoleImpl of RoleTrait {
     #[inline(always)]
-    fn health(self: Role) -> u8 {
+    fn health(self: Role, phase: Phase, level: u8) -> u8 {
         match self {
             Role::None => 0,
-            Role::Knight => KnightImpl::health(),
-            Role::Bowman => BowmanImpl::health(),
-            Role::Pawn => PawnImpl::health(),
-            Role::Torchoblin => TorchoblinImpl::health(),
-            Role::Dynamoblin => DynamoblinImpl::health(),
-            Role::Bomboblin => BomboblinImpl::health(),
+            Role::Knight => KnightImpl::health(phase, level),
+            Role::Bowman => BowmanImpl::health(phase, level),
+            Role::Pawn => PawnImpl::health(phase, level),
+            Role::Torchoblin => TorchoblinImpl::health(phase, level),
+            Role::Dynamoblin => DynamoblinImpl::health(phase, level),
+            Role::Bomboblin => BomboblinImpl::health(phase, level),
         }
     }
 
     #[inline(always)]
-    fn attack(self: Role) -> u8 {
+    fn attack(self: Role, phase: Phase, level: u8) -> u8 {
         match self {
             Role::None => 0,
-            Role::Knight => KnightImpl::attack(),
-            Role::Bowman => BowmanImpl::attack(),
-            Role::Pawn => PawnImpl::attack(),
-            Role::Torchoblin => TorchoblinImpl::attack(),
-            Role::Dynamoblin => DynamoblinImpl::attack(),
-            Role::Bomboblin => BomboblinImpl::attack(),
+            Role::Knight => KnightImpl::attack(phase, level),
+            Role::Bowman => BowmanImpl::attack(phase, level),
+            Role::Pawn => PawnImpl::attack(phase, level),
+            Role::Torchoblin => TorchoblinImpl::attack(phase, level),
+            Role::Dynamoblin => DynamoblinImpl::attack(phase, level),
+            Role::Bomboblin => BomboblinImpl::attack(phase, level),
+        }
+    }
+
+    #[inline(always)]
+    fn absorb(self: Role, phase: Phase, level: u8) -> u8 {
+        match self {
+            Role::None => 0,
+            Role::Knight => KnightImpl::absorb(phase, level),
+            Role::Bowman => BowmanImpl::absorb(phase, level),
+            Role::Pawn => PawnImpl::absorb(phase, level),
+            Role::Torchoblin => TorchoblinImpl::absorb(phase, level),
+            Role::Dynamoblin => DynamoblinImpl::absorb(phase, level),
+            Role::Bomboblin => BomboblinImpl::absorb(phase, level),
+        }
+    }
+
+    #[inline(always)]
+    fn damage(self: Role, phase: Phase, level: u8) -> u8 {
+        match self {
+            Role::None => 0,
+            Role::Knight => KnightImpl::damage(phase, level),
+            Role::Bowman => BowmanImpl::damage(phase, level),
+            Role::Pawn => PawnImpl::damage(phase, level),
+            Role::Torchoblin => TorchoblinImpl::damage(phase, level),
+            Role::Dynamoblin => DynamoblinImpl::damage(phase, level),
+            Role::Bomboblin => BomboblinImpl::damage(phase, level),
+        }
+    }
+
+    #[inline(always)]
+    fn stun(self: Role, phase: Phase, level: u8) -> u8 {
+        match self {
+            Role::None => 0,
+            Role::Knight => KnightImpl::stun(phase, level),
+            Role::Bowman => BowmanImpl::stun(phase, level),
+            Role::Pawn => PawnImpl::stun(phase, level),
+            Role::Torchoblin => TorchoblinImpl::stun(phase, level),
+            Role::Dynamoblin => DynamoblinImpl::stun(phase, level),
+            Role::Bomboblin => BomboblinImpl::stun(phase, level),
+        }
+    }
+
+    #[inline(always)]
+    fn next_health(self: Role, phase: Phase, level: u8) -> u8 {
+        match self {
+            Role::None => 0,
+            Role::Knight => KnightImpl::next_health(phase, level),
+            Role::Bowman => BowmanImpl::next_health(phase, level),
+            Role::Pawn => PawnImpl::next_health(phase, level),
+            Role::Torchoblin => TorchoblinImpl::next_health(phase, level),
+            Role::Dynamoblin => DynamoblinImpl::next_health(phase, level),
+            Role::Bomboblin => BomboblinImpl::next_health(phase, level),
+        }
+    }
+
+    #[inline(always)]
+    fn next_attack(self: Role, phase: Phase, level: u8) -> u8 {
+        match self {
+            Role::None => 0,
+            Role::Knight => KnightImpl::next_attack(phase, level),
+            Role::Bowman => BowmanImpl::next_attack(phase, level),
+            Role::Pawn => PawnImpl::next_attack(phase, level),
+            Role::Torchoblin => TorchoblinImpl::next_attack(phase, level),
+            Role::Dynamoblin => DynamoblinImpl::next_attack(phase, level),
+            Role::Bomboblin => BomboblinImpl::next_attack(phase, level),
+        }
+    }
+
+    #[inline(always)]
+    fn next_absorb(self: Role, phase: Phase, level: u8) -> u8 {
+        match self {
+            Role::None => 0,
+            Role::Knight => KnightImpl::next_absorb(phase, level),
+            Role::Bowman => BowmanImpl::next_absorb(phase, level),
+            Role::Pawn => PawnImpl::next_absorb(phase, level),
+            Role::Torchoblin => TorchoblinImpl::next_absorb(phase, level),
+            Role::Dynamoblin => DynamoblinImpl::next_absorb(phase, level),
+            Role::Bomboblin => BomboblinImpl::next_absorb(phase, level),
         }
     }
 }

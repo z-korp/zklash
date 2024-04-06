@@ -5,6 +5,7 @@ use core::debug::PrintTrait;
 // Constants
 
 const NONE: felt252 = 0;
+const ON_HIRE: felt252 = 'ON_HIRE';
 const ON_EQUIP: felt252 = 'ON_EQUIP';
 const ON_DISPATCH: felt252 = 'ON_DISPATCH';
 const ON_DAMAGE: felt252 = 'ON_DAMAGE';
@@ -17,6 +18,7 @@ mod errors {
 #[derive(Copy, Drop, Serde, PartialEq, Introspection)]
 enum Phase {
     None,
+    OnHire,
     OnEquip,
     OnDispatch,
     OnFight,
@@ -36,6 +38,7 @@ impl PhaseIntoFelt252 of core::Into<Phase, felt252> {
     fn into(self: Phase) -> felt252 {
         match self {
             Phase::None => NONE,
+            Phase::OnHire => ON_HIRE,
             Phase::OnEquip => ON_EQUIP,
             Phase::OnDispatch => ON_DISPATCH,
             Phase::OnFight => ON_DAMAGE,
@@ -49,10 +52,11 @@ impl PhaseIntoU8 of core::Into<Phase, u8> {
     fn into(self: Phase) -> u8 {
         match self {
             Phase::None => 0,
-            Phase::OnEquip => 1,
-            Phase::OnDispatch => 2,
-            Phase::OnFight => 3,
-            Phase::OnDeath => 4,
+            Phase::OnHire => 1,
+            Phase::OnEquip => 2,
+            Phase::OnDispatch => 3,
+            Phase::OnFight => 4,
+            Phase::OnDeath => 5,
         }
     }
 }
@@ -60,7 +64,9 @@ impl PhaseIntoU8 of core::Into<Phase, u8> {
 impl Felt252IntoPhase of core::Into<felt252, Phase> {
     #[inline(always)]
     fn into(self: felt252) -> Phase {
-        if self == ON_EQUIP {
+        if self == ON_HIRE {
+            Phase::OnHire
+        } else if self == ON_EQUIP {
             Phase::OnEquip
         } else if self == ON_DISPATCH {
             Phase::OnDispatch
@@ -78,12 +84,14 @@ impl U8IntoPhase of core::Into<u8, Phase> {
     #[inline(always)]
     fn into(self: u8) -> Phase {
         if self == 1 {
-            Phase::OnEquip
+            Phase::OnHire
         } else if self == 2 {
-            Phase::OnDispatch
+            Phase::OnEquip
         } else if self == 3 {
-            Phase::OnFight
+            Phase::OnDispatch
         } else if self == 4 {
+            Phase::OnFight
+        } else if self == 5 {
             Phase::OnDeath
         } else {
             Phase::None

@@ -15,7 +15,7 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] WorldManager worldManager;
+    public WorldManager worldManager;
 
     [SerializeField] WorldManagerData dojoConfig;
     [SerializeField] GameManagerData gameManagerData; 
@@ -29,7 +29,9 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
-    
+    public string playerEntity;
+    public string shopEntity;
+    public string teamEntity;
 
     void Awake()
     {
@@ -55,7 +57,7 @@ public class GameManager : MonoBehaviour
     }
 
     
-    void Start()
+    async void Start()
     {
         Debug.Log("---------------------------------");
         Debug.Log("GameManager Start");
@@ -65,34 +67,84 @@ public class GameManager : MonoBehaviour
 
         burnerManager = new BurnerManager(provider, masterAccount);
 
+        var burner = await burnerManager.DeployBurner(new SigningKey());
+
         worldManager.synchronizationMaster.OnEntitySpawned.AddListener(InitEntity);
         foreach (var entity in worldManager.Entities())
         {
             InitEntity(entity);
         }
+
+        //worldManager.synchronizationMaster.OnSynchronized.AddListener(InitEntity2);
     }
 
-    async void Update()
+    void Update()
     {
         
     }
 
+    private void InitEntity2(List<GameObject> entities)
+    {
+        Debug.Log($"---------------------------------");
+        foreach (var entity in entities)
+        {
+            Debug.Log($"Entity spawned with id: {entity.name}");
+            //InitEntity(entity);
+        }
+        Debug.Log($"---------------------------------");
+    }
+
     private void InitEntity(GameObject entity)
     {
-        /*Game gameComponent = entity.GetComponent<Game>();
-        if (gameComponent != null)
+        Account currentBurner = burnerManager.CurrentBurner;
+        if (currentBurner == null)
         {
-            // This entity is of type Tile, perform actions with its index
-            Debug.Log($"Game entity spawned with id: {gameComponent.game_id}");
-        }*/
+            Debug.Log("No current burner");
+            return;
+        }
+        
+        Debug.Log($"---------------------------------");
+        Debug.Log($"currentBurner: {currentBurner.Address.Hex()}");
+        Debug.Log($"Entity spawned with id: {entity.name}");
+
+        Player playerComponent = entity.GetComponent<Player>();
+        if (playerComponent != null)
+        {
+            Debug.Log($"-> Player entity spawned");
+            if(currentBurner.Address.Hex() == playerComponent.id.Hex())
+            {
+                Debug.Log(">>>>>>>>>>>> Current player information stored.");
+                Debug.Log($"Player entity spawned with id: {playerEntity}");
+                playerEntity = entity.name;
+            }
+        }
+
+        Shop shopComponent = entity.GetComponent<Shop>();
+        if (shopComponent != null)
+        {
+            Debug.Log($"-> Shop entity spawned");
+            if(shopComponent.player_id.Hex() == currentBurner.Address.Hex())
+            {
+                Debug.Log(">>>>>>>>>>>> Current shop information stored.");
+                shopEntity = entity.name;
+                teamEntity = entity.name;
+            }
+        }
+
+        Debug.Log($"---------------------------------");
     }
 
     public async void TriggerCreatePlayAsync(string name)
     {
-        var burner = await burnerManager.DeployBurner(new SigningKey());
+        Debug.Log("TriggerCreatePlayAsync");
+        Account currentBurner = burnerManager.CurrentBurner;
         var nameHex = StringToHexString(name);
-        var txHash = await accountSystem.Create(burner, dojoConfig.worldAddress, nameHex);
+        var txHash = await accountSystem.Create(currentBurner, dojoConfig.worldAddress, nameHex);
         // Do something with txHash, like logging it
-        Debug.Log($"Transaction Hash: {txHash.Hex()}");
+        Debug.Log($"[Create] Transaction Hash: {txHash.Hex()}");
+        
+
+        txHash = await accountSystem.Spawn(currentBurner, dojoConfig.worldAddress);
+        Debug.Log($"[Spawn] Transaction Hash: {txHash.Hex()}");
     }
 }

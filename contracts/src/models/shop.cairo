@@ -1,3 +1,7 @@
+// Core imports
+
+use core::debug::PrintTrait;
+
 // Starknet imports
 
 use starknet::ContractAddress;
@@ -5,13 +9,14 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::constants;
+use zklash::helpers::packer::Packer;
 use zklash::types::dice::{Dice, DiceTrait};
 use zklash::types::item::{Item, ITEM_COUNT};
-use zklash::types::role::{Role, ROLE_COUNT};
+use zklash::types::role::{Role, ROLE_COUNT, RoleAssert};
 
 // Constants
 
-const TWO_POW_8: u128 = 256;
+const TWO_POW_8: u32 = 256;
 
 #[derive(Model, Copy, Drop, Serde)]
 struct Shop {
@@ -22,9 +27,9 @@ struct Shop {
     purchase_cost: u8,
     reroll_cost: u8,
     item_count: u8,
-    items: u128,
+    items: u32,
     role_count: u8,
-    roles: u128,
+    roles: u32,
 }
 
 mod errors {
@@ -63,7 +68,7 @@ impl ShopImpl of ShopTrait {
     #[inline(always)]
     fn purchase_item(ref self: Shop, index: u8) -> Item {
         // [Effect] Remove the item at index from the shop
-        let (items, item) = InternalTrait::remove(self.items, index);
+        let (items, item) = Packer::remove(self.items, index);
         self.items = items;
         // [Return] The purchased item
         item.into()
@@ -72,16 +77,15 @@ impl ShopImpl of ShopTrait {
     #[inline(always)]
     fn purchase_role(ref self: Shop, index: u8) -> Role {
         // [Effect] Remove the role at index from the shop
-        let (roles, role) = InternalTrait::remove(self.roles, index);
+        let (roles, role) = Packer::remove(self.roles, index);
         self.roles = roles;
-        // [Return] The purchased role
         role.into()
     }
 
     fn items(self: Shop) -> Array<Item> {
         // [View] Get the items in the shop
         let mut items: Array<Item> = array![];
-        let mut unpacked: Array<u8> = InternalTrait::unpack(self.items);
+        let mut unpacked: Array<u8> = Packer::unpack(self.items);
         loop {
             match unpacked.pop_front() {
                 Option::Some(index) => {
@@ -97,7 +101,7 @@ impl ShopImpl of ShopTrait {
     fn roles(self: Shop) -> Array<Role> {
         // [View] Get the items in the shop
         let mut roles: Array<Role> = array![];
-        let mut unpacked: Array<u8> = InternalTrait::unpack(self.roles);
+        let mut unpacked: Array<u8> = Packer::unpack(self.roles);
         loop {
             match unpacked.pop_front() {
                 Option::Some(index) => {
@@ -113,8 +117,8 @@ impl ShopImpl of ShopTrait {
 
 #[generate_trait]
 impl InternalImpl of InternalTrait {
-    fn gen(ref dice: Dice, mut count: u8) -> u128 {
-        let mut result: u128 = 0;
+    fn gen(ref dice: Dice, mut count: u8) -> u32 {
+        let mut result: u32 = 0;
         loop {
             if count == 0 {
                 break result;
@@ -123,53 +127,6 @@ impl InternalImpl of InternalTrait {
             result *= TWO_POW_8;
             result += dice.roll().into();
         }
-    }
-
-    fn unpack(mut packed: u128) -> Array<u8> {
-        let mut result: Array<u8> = array![];
-        loop {
-            if packed == 0 {
-                break;
-            }
-            let value: u8 = (packed % TWO_POW_8).try_into().unwrap();
-            result.append(value);
-            packed /= TWO_POW_8;
-        };
-        result
-    }
-
-    fn remove(mut packed: u128, index: u8) -> (u128, u8) {
-        let mut removed: u8 = 0;
-        let mut result: Array<u8> = array![];
-        let mut idx = 0;
-        loop {
-            if packed == 0 {
-                break;
-            }
-            let value: u8 = (packed % TWO_POW_8).try_into().unwrap();
-            if idx != index {
-                result.append(value);
-            } else {
-                removed = value;
-            }
-            idx += 1;
-            packed /= TWO_POW_8;
-        };
-        (InternalTrait::pack(result), removed)
-    }
-
-    fn pack(mut unpacked: Array<u8>) -> u128 {
-        let mut result: u128 = 0;
-        loop {
-            match unpacked.pop_front() {
-                Option::Some(value) => {
-                    result *= TWO_POW_8;
-                    result += value.into();
-                },
-                Option::None => { break; }
-            }
-        };
-        result
     }
 }
 

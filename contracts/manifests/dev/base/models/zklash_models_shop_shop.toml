@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x6c514e7b43ca8d2af756a989b2c5cd28a3ba8a46cf73188e895b6c0f96c665d"
-original_class_hash = "0x6c514e7b43ca8d2af756a989b2c5cd28a3ba8a46cf73188e895b6c0f96c665d"
+class_hash = "0x16670cac95fa5c929e489fd538ba6e05baad53a27fac3a8dfe286e7a59ded55"
+original_class_hash = "0x16670cac95fa5c929e489fd538ba6e05baad53a27fac3a8dfe286e7a59ded55"
 abi = "manifests/dev/abis/base/models/zklash_models_shop_shop.json"
 name = "zklash::models::shop::shop"
 
@@ -31,7 +31,7 @@ key = false
 
 [[members]]
 name = "items"
-type = "u128"
+type = "u32"
 key = false
 
 [[members]]
@@ -41,5 +41,5 @@ key = false
 
 [[members]]
 name = "roles"
-type = "u128"
+type = "u32"
 key = false

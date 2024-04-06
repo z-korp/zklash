@@ -677,8 +677,8 @@
     {
       "kind": "DojoContract",
       "address": "0x6b3db511167c6c2291697a02e7ed9a162f115ac6a6c114bf99afa6547b3f90c",
-      "class_hash": "0x2f88eb9fd59e029963bbd7d2a2c63be4f44a53716f20dbd69217898377a20ae",
-      "original_class_hash": "0x2f88eb9fd59e029963bbd7d2a2c63be4f44a53716f20dbd69217898377a20ae",
+      "class_hash": "0x70482c1bba6ddb2c2ae6ebed3e73e4faab01c96d91d8d262eb94ab5ff3a198c",
+      "original_class_hash": "0x70482c1bba6ddb2c2ae6ebed3e73e4faab01c96d91d8d262eb94ab5ff3a198c",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -789,8 +789,8 @@
     {
       "kind": "DojoContract",
       "address": "0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1",
-      "class_hash": "0x1dd35bb2cc8bea23134b34e6a9883fda7502927088844101e85c7f806fec187",
-      "original_class_hash": "0x1dd35bb2cc8bea23134b34e6a9883fda7502927088844101e85c7f806fec187",
+      "class_hash": "0x6dee2103c2e14e11f3c6a92ab58c443ed562c77ce0d5fc57b4b1bad6037254b",
+      "original_class_hash": "0x6dee2103c2e14e11f3c6a92ab58c443ed562c77ce0d5fc57b4b1bad6037254b",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -870,7 +870,7 @@
                 },
                 {
                   "name": "order",
-                  "type": "core::integer::u128"
+                  "type": "core::integer::u32"
                 }
               ],
               "outputs": [],
@@ -893,8 +893,8 @@
     {
       "kind": "DojoContract",
       "address": "0x53fb59cc9aab03983033de799d10c9a0d3e4475e19224a661cefeacb0577871",
-      "class_hash": "0x3b14d705cc3086a9e6e28eaa3a07995c7b23cb8a2fbb6db8266edb12ef3b73e",
-      "original_class_hash": "0x3b14d705cc3086a9e6e28eaa3a07995c7b23cb8a2fbb6db8266edb12ef3b73e",
+      "class_hash": "0x658093ea6e68296b83e3e992089ec139dd4cc74fd9c7ee29aeb683af2d94de1",
+      "original_class_hash": "0x658093ea6e68296b83e3e992089ec139dd4cc74fd9c7ee29aeb683af2d94de1",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -1006,6 +1006,50 @@
             },
             {
               "type": "function",
+              "name": "xp",
+              "inputs": [
+                {
+                  "name": "world",
+                  "type": "dojo::world::IWorldDispatcher"
+                },
+                {
+                  "name": "team_id",
+                  "type": "core::integer::u32"
+                },
+                {
+                  "name": "character_id",
+                  "type": "core::integer::u8"
+                },
+                {
+                  "name": "index",
+                  "type": "core::integer::u8"
+                }
+              ],
+              "outputs": [],
+              "state_mutability": "view"
+            },
+            {
+              "type": "function",
+              "name": "sell",
+              "inputs": [
+                {
+                  "name": "world",
+                  "type": "dojo::world::IWorldDispatcher"
+                },
+                {
+                  "name": "team_id",
+                  "type": "core::integer::u32"
+                },
+                {
+                  "name": "character_id",
+                  "type": "core::integer::u8"
+                }
+              ],
+              "outputs": [],
+              "state_mutability": "view"
+            },
+            {
+              "type": "function",
               "name": "reroll",
               "inputs": [
                 {
@@ -1066,7 +1110,7 @@
         },
         {
           "name": "xp",
-          "type": "u32",
+          "type": "u8",
           "key": false
         },
         {
@@ -1083,10 +1127,20 @@
           "name": "attack",
           "type": "u8",
           "key": false
+        },
+        {
+          "name": "absorb",
+          "type": "u8",
+          "key": false
+        },
+        {
+          "name": "stun",
+          "type": "bool",
+          "key": false
         }
       ],
-      "class_hash": "0x6ace9a5de5e7da268c719990ddb72809962723be23a0746361d87c409fd6327",
-      "original_class_hash": "0x6ace9a5de5e7da268c719990ddb72809962723be23a0746361d87c409fd6327",
+      "class_hash": "0x48fc28d0c3558d6f74bdcf6a7589b22bcebe305c8051c3d02c0bfc71882aeff",
+      "original_class_hash": "0x48fc28d0c3558d6f74bdcf6a7589b22bcebe305c8051c3d02c0bfc71882aeff",
       "abi": [
         {
           "type": "impl",
@@ -1262,6 +1316,20 @@
           "interface_name": "zklash::models::character::Icharacter"
         },
         {
+          "type": "enum",
+          "name": "core::bool",
+          "variants": [
+            {
+              "name": "False",
+              "type": "()"
+            },
+            {
+              "name": "True",
+              "type": "()"
+            }
+          ]
+        },
+        {
           "type": "struct",
           "name": "zklash::models::character::Character",
           "members": [
@@ -1287,7 +1355,7 @@
             },
             {
               "name": "xp",
-              "type": "core::integer::u32"
+              "type": "core::integer::u8"
             },
             {
               "name": "level",
@@ -1300,6 +1368,14 @@
             {
               "name": "attack",
               "type": "core::integer::u8"
+            },
+            {
+              "name": "absorb",
+              "type": "core::integer::u8"
+            },
+            {
+              "name": "stun",
+              "type": "core::bool"
             }
           ]
         },
@@ -1344,13 +1420,13 @@
           "key": false
         },
         {
-          "name": "nonce",
+          "name": "team_count",
           "type": "u32",
           "key": false
         }
       ],
-      "class_hash": "0x40f2ffd1e8202a55d9cc7065b212759a78702701a64dff17fd68659ffcdc6f5",
-      "original_class_hash": "0x40f2ffd1e8202a55d9cc7065b212759a78702701a64dff17fd68659ffcdc6f5",
+      "class_hash": "0x22b755bbed6cbd4279862602b16e83153cdb896aaac1ee3dce2c11eaa76190a",
+      "original_class_hash": "0x22b755bbed6cbd4279862602b16e83153cdb896aaac1ee3dce2c11eaa76190a",
       "abi": [
         {
           "type": "impl",
@@ -1538,7 +1614,7 @@
               "type": "core::felt252"
             },
             {
-              "name": "nonce",
+              "name": "team_count",
               "type": "core::integer::u32"
             }
           ]
@@ -1600,7 +1676,7 @@
         },
         {
           "name": "items",
-          "type": "u128",
+          "type": "u32",
           "key": false
         },
         {
@@ -1610,12 +1686,12 @@
         },
         {
           "name": "roles",
-          "type": "u128",
+          "type": "u32",
           "key": false
         }
       ],
-      "class_hash": "0x6c514e7b43ca8d2af756a989b2c5cd28a3ba8a46cf73188e895b6c0f96c665d",
-      "original_class_hash": "0x6c514e7b43ca8d2af756a989b2c5cd28a3ba8a46cf73188e895b6c0f96c665d",
+      "class_hash": "0x16670cac95fa5c929e489fd538ba6e05baad53a27fac3a8dfe286e7a59ded55",
+      "original_class_hash": "0x16670cac95fa5c929e489fd538ba6e05baad53a27fac3a8dfe286e7a59ded55",
       "abi": [
         {
           "type": "impl",
@@ -1816,7 +1892,7 @@
             },
             {
               "name": "items",
-              "type": "core::integer::u128"
+              "type": "core::integer::u32"
             },
             {
               "name": "role_count",
@@ -1824,7 +1900,7 @@
             },
             {
               "name": "roles",
-              "type": "core::integer::u128"
+              "type": "core::integer::u32"
             }
           ]
         },
@@ -1899,18 +1975,13 @@
           "key": false
         },
         {
-          "name": "characters",
-          "type": "u128",
-          "key": false
-        },
-        {
           "name": "battle_id",
           "type": "u8",
           "key": false
         }
       ],
-      "class_hash": "0x2a403ac90a3cfc8092d4e3f5a845194996a998f00c71d95bb31f623b8c6c93f",
-      "original_class_hash": "0x2a403ac90a3cfc8092d4e3f5a845194996a998f00c71d95bb31f623b8c6c93f",
+      "class_hash": "0x52e1ae973db9c7a87e705aec61e089eff17d803e07cc5152dc40c2fbf6a71db",
+      "original_class_hash": "0x52e1ae973db9c7a87e705aec61e089eff17d803e07cc5152dc40c2fbf6a71db",
       "abi": [
         {
           "type": "impl",
@@ -2120,10 +2191,6 @@
             {
               "name": "character_count",
               "type": "core::integer::u8"
-            },
-            {
-              "name": "characters",
-              "type": "core::integer::u128"
             },
             {
               "name": "battle_id",

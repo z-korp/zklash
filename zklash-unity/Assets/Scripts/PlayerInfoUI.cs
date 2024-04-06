@@ -5,28 +5,31 @@ using TMPro;
 public class PlayerInfoUI : MonoBehaviour
 {
     // Références aux éléments UI Text pour les valeurs du joueur
-     public TextMeshProUGUI txtLife;
+    public TextMeshProUGUI txtLife;
     public TextMeshProUGUI txtGold;
     public TextMeshProUGUI txtTrophy;
 
     // Variables pour stocker les valeurs du joueur
-    private int playerLives;
-    private int playerGold;
-    private int playerTrophies;
+    private uint playerLives;
+    private uint playerGold;
+    private uint playerTrophies;
 
     void Start()
     {
-        // Initialiser les valeurs du joueur
-        playerLives = 5; // Mettez ici la valeur initiale de la vie
-        playerGold = 30; // Mettez ici la valeur initiale de l'or
-        playerTrophies = 0; // Mettez ici la valeur initiale des trophées
+    }
 
-        // Mettre à jour l'affichage UI
-        UpdateUI();
+    void Update()
+    {
+        if (GameManager.Instance != null)
+        {
+            var teamEntity = GameManager.Instance.teamEntity;
+            var team = GameManager.Instance.worldManager.Entity(teamEntity).GetComponent<Team>();
+            UpdatePlayerStats(team.gold, team.health, team.level);
+        }
     }
 
     // Méthode pour mettre à jour les valeurs du joueur et l'interface utilisateur
-    public void UpdatePlayerStats(int lives, int gold, int trophies)
+    public void UpdatePlayerStats(uint lives, uint gold, uint trophies)
     {
         playerLives = lives;
         playerGold = gold;
@@ -41,22 +44,23 @@ public class PlayerInfoUI : MonoBehaviour
         txtLife.text = playerLives.ToString();
         txtGold.text = playerGold.ToString();
         txtTrophy.text = playerTrophies.ToString();
+        //Debug.Log($"Lives: {playerLives}, Gold: {playerGold}, Trophies: {playerTrophies}");
     }
 
     // Exemples de méthodes pour modifier les valeurs, à appeler depuis d'autres scripts ou événements
-    public void AddLife(int amount)
+    public void AddLife(uint amount)
     {
         playerLives += amount;
         UpdateUI();
     }
 
-    public void AddGold(int amount)
+    public void AddGold(uint amount)
     {
         playerGold += amount;
         UpdateUI();
     }
 
-    public void AddTrophy(int amount)
+    public void AddTrophy(uint amount)
     {
         playerTrophies += amount;
         UpdateUI();

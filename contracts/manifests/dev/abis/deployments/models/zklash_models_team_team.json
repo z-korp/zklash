@@ -209,10 +209,6 @@
         "type": "core::integer::u8"
       },
       {
-        "name": "characters",
-        "type": "core::integer::u128"
-      },
-      {
         "name": "battle_id",
         "type": "core::integer::u8"
       }

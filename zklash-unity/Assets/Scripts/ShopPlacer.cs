@@ -14,6 +14,22 @@ public enum Role {
     Bomboblin,
 }
 
+public enum Item {
+    None,
+    MushroomSmall,
+    MushroomMedium,
+    MushroomLarge,
+    RockSmall,
+    RockMedium,
+    RockLarge,
+    BushSmall,
+    BushMedium,
+    BushLarge,
+    PumpkinSmall,
+    PumpkinMedium,
+    PumpkinLarge,
+}
+
 public class ItemPlacer : MonoBehaviour
 {
     
@@ -21,6 +37,7 @@ public class ItemPlacer : MonoBehaviour
     public GameObject[] unitPrefabs; // Préfabs pour les trois premiers éléments
     public GameObject[] objectPrefabs; // Préfabs pour les deux derniers éléments
     private Dictionary<Role, string> nameToRoleMap;
+    private Dictionary<Item, string> nameToItemMap;
     float columnTileYOffset = 0.75f; 
 
     private int unitCount = 0;
@@ -30,6 +47,7 @@ public class ItemPlacer : MonoBehaviour
     void Awake()
     {
         InitializeNameToRoleMap();
+        InitializeNameToItemMap();
     }
 
     void Update()
@@ -52,6 +70,25 @@ public class ItemPlacer : MonoBehaviour
             { Role.Torchoblin, "TorchoblinPrefab" },
             { Role.Dynamoblin, "Dynamite" },
             { Role.Bomboblin, "Bomboblin" },
+        };
+    }
+
+    void InitializeNameToItemMap()
+    {
+        nameToItemMap = new Dictionary<Item, string>
+        {
+            { Item.BushSmall, "Bush1" },
+            { Item.BushMedium, "Bush2" },
+            { Item.BushLarge, "Bush3" },
+            { Item.MushroomSmall, "Mushroom1" },
+            { Item.MushroomMedium, "Mushroom2" },
+            { Item.MushroomLarge, "Mushroom3" },
+            { Item.PumpkinSmall, "Pumpkin1" },
+            { Item.PumpkinMedium, "Pumpkin2" },
+            { Item.PumpkinLarge, "Pumpkin3" },
+            { Item.RockSmall, "Rock1" },
+            { Item.RockMedium, "Rock2" },
+            { Item.RockLarge, "Rock3" },
         };
     }
 
@@ -94,6 +131,8 @@ public class ItemPlacer : MonoBehaviour
         var shop = GameManager.Instance.worldManager.Entity(shopEntity).GetComponent<Shop>();
         var roles = SplitRoles(shop.roles);
         Debug.Log($"Roles: {roles[0]}, {roles[1]}, {roles[2]}");
+        var item = shop.items;
+        Debug.Log($"Items: {item}");
 
         TileBase[] allTiles = tilemap.GetTilesBlock(tilemap.cellBounds);
 
@@ -112,11 +151,22 @@ public class ItemPlacer : MonoBehaviour
                     {
                         var name = (Role)roles[unitCount];
                         prefabToPlace = FindPrefabByName(unitPrefabs, nameToRoleMap[name]);
+                        if (prefabToPlace == null)
+                        {
+                            Debug.LogError($"Prefab not found for role: {name}");
+                            return;
+                        }
                         unitCount++; // Incrémentez le compteur d'unités placées
                     }
                     else
                     {
-                        prefabToPlace = objectPrefabs[0];
+                        var name = (Item)item;
+                        prefabToPlace = FindPrefabByName(objectPrefabs, nameToItemMap[name]);
+                        if (prefabToPlace == null)
+                        {
+                            Debug.LogError($"Prefab not found for item: {name}");
+                            return;
+                        }
                     }
                    
                     Vector3Int cellPosition = new Vector3Int(tilemap.cellBounds.xMin + x, tilemap.cellBounds.yMin + y, 0);

@@ -4,51 +4,17 @@ using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using System;
 
-public enum Role {
-    None,
-    Knight,
-    Bowman,
-    Pawn,
-    Torchoblin,
-    Dynamoblin,
-    Bomboblin,
-}
-
-public enum Item {
-    None,
-    MushroomSmall,
-    MushroomMedium,
-    MushroomLarge,
-    RockSmall,
-    RockMedium,
-    RockLarge,
-    BushSmall,
-    BushMedium,
-    BushLarge,
-    PumpkinSmall,
-    PumpkinMedium,
-    PumpkinLarge,
-}
-
 public class ItemPlacer : MonoBehaviour
 {
-    
     public Tilemap tilemap;
     public GameObject[] unitPrefabs; // Préfabs pour les trois premiers éléments
     public GameObject[] objectPrefabs; // Préfabs pour les deux derniers éléments
-    private Dictionary<Role, string> nameToRoleMap;
-    private Dictionary<Item, string> nameToItemMap;
+
     float columnTileYOffset = 0.75f; 
 
     private int unitCount = 0;
 
     private bool hasPlacedItems = false; // Flag to track if items have been placed
-
-    void Awake()
-    {
-        InitializeNameToRoleMap();
-        InitializeNameToItemMap();
-    }
 
     void Update()
     {
@@ -58,38 +24,6 @@ public class ItemPlacer : MonoBehaviour
             PlaceItemsAboveColumns();
             hasPlacedItems = true; // Ensure this block only runs once
         }
-    }
-
-    void InitializeNameToRoleMap()
-    {
-        nameToRoleMap = new Dictionary<Role, string>
-        {
-            { Role.Knight, "Warrior_Blue" },
-            { Role.Bowman, "Archer" },
-            { Role.Pawn, "Pawn" },
-            { Role.Torchoblin, "TorchoblinPrefab" },
-            { Role.Dynamoblin, "Dynamite" },
-            { Role.Bomboblin, "Bomboblin" },
-        };
-    }
-
-    void InitializeNameToItemMap()
-    {
-        nameToItemMap = new Dictionary<Item, string>
-        {
-            { Item.BushSmall, "Bush1" },
-            { Item.BushMedium, "Bush2" },
-            { Item.BushLarge, "Bush3" },
-            { Item.MushroomSmall, "Mushroom1" },
-            { Item.MushroomMedium, "Mushroom2" },
-            { Item.MushroomLarge, "Mushroom3" },
-            { Item.PumpkinSmall, "Pumpkin1" },
-            { Item.PumpkinMedium, "Pumpkin2" },
-            { Item.PumpkinLarge, "Pumpkin3" },
-            { Item.RockSmall, "Rock1" },
-            { Item.RockMedium, "Rock2" },
-            { Item.RockLarge, "Rock3" },
-        };
     }
 
     private GameObject FindPrefabByName(GameObject[] prefabs, string prefabName)
@@ -150,7 +84,7 @@ public class ItemPlacer : MonoBehaviour
                     if (unitCount < 3)
                     {
                         var name = (Role)roles[unitCount];
-                        prefabToPlace = FindPrefabByName(unitPrefabs, nameToRoleMap[name]);
+                        prefabToPlace = PrefabUtils.FindPrefabByName(unitPrefabs, PrefabMappings.NameToRoleMap[name]);
                         if (prefabToPlace == null)
                         {
                             Debug.LogError($"Prefab not found for role: {name}");
@@ -161,7 +95,7 @@ public class ItemPlacer : MonoBehaviour
                     else
                     {
                         var name = (Item)item;
-                        prefabToPlace = FindPrefabByName(objectPrefabs, nameToItemMap[name]);
+                        prefabToPlace = PrefabUtils.FindPrefabByName(objectPrefabs, PrefabMappings.NameToItemMap[name]);
                         if (prefabToPlace == null)
                         {
                             Debug.LogError($"Prefab not found for item: {name}");

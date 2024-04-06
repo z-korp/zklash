@@ -39,6 +39,14 @@ impl ItemImpl of ItemTrait {
 
     #[inline(always)]
     fn usage(phase: Phase, size: Size) -> Item {
-        Item::None
+        match phase {
+            Phase::OnFight => Item::None,
+            _ => match size {
+                Size::Small => Item::RockSmall,
+                Size::Medium => Item::RockMedium,
+                Size::Large => Item::RockLarge,
+                _ => Item::None,
+            },
+        }
     }
 }

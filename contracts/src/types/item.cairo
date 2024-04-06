@@ -14,7 +14,7 @@ use zklash::types::size::Size;
 // Constants
 
 const ITEM_COUNT: u8 = 11;
-const NONE: felt252 = 0;
+const NONE: felt252 = 'NONE';
 const MUSHROOM_SMALL: felt252 = 'MUSHROOM_SMALL';
 const MUSHROOM_MEDIUM: felt252 = 'MUSHROOM_MEDIUM';
 const MUSHROOM_LARGE: felt252 = 'MUSHROOM_LARGE';
@@ -26,6 +26,7 @@ const BUSH_MEDIUM: felt252 = 'BUSH_MEDIUM';
 const BUSH_LARGE: felt252 = 'BUSH_LARGE';
 const PUMPKIN_SMALL: felt252 = 'PUMPKIN_SMALL';
 const PUMPKIN_MEDIUM: felt252 = 'PUMPKIN_MEDIUM';
+const PUMPKIN_LARGE: felt252 = 'PUMPKIN_LARGE';
 
 mod errors {
     const ITEM_NOT_VALID: felt252 = 'Item: not valid';
@@ -45,6 +46,7 @@ enum Item {
     BushLarge,
     PumpkinSmall,
     PumpkinMedium,
+    PumpkinLarge,
 }
 
 #[generate_trait]
@@ -64,6 +66,7 @@ impl ItemImpl of ItemTrait {
             Item::BushLarge => BushImpl::health(phase, Size::Large),
             Item::PumpkinSmall => PumpkinImpl::health(phase, Size::Small),
             Item::PumpkinMedium => PumpkinImpl::health(phase, Size::Medium),
+            Item::PumpkinLarge => PumpkinImpl::health(phase, Size::Large),
         }
     }
 
@@ -82,6 +85,7 @@ impl ItemImpl of ItemTrait {
             Item::BushLarge => BushImpl::attack(phase, Size::Large),
             Item::PumpkinSmall => PumpkinImpl::attack(phase, Size::Small),
             Item::PumpkinMedium => PumpkinImpl::attack(phase, Size::Medium),
+            Item::PumpkinLarge => PumpkinImpl::attack(phase, Size::Large),
         }
     }
 
@@ -100,6 +104,7 @@ impl ItemImpl of ItemTrait {
             Item::BushLarge => BushImpl::damage(phase, Size::Large),
             Item::PumpkinSmall => PumpkinImpl::damage(phase, Size::Small),
             Item::PumpkinMedium => PumpkinImpl::damage(phase, Size::Medium),
+            Item::PumpkinLarge => PumpkinImpl::damage(phase, Size::Large),
         }
     }
 
@@ -118,6 +123,7 @@ impl ItemImpl of ItemTrait {
             Item::BushLarge => BushImpl::absorb(phase, Size::Large),
             Item::PumpkinSmall => PumpkinImpl::absorb(phase, Size::Small),
             Item::PumpkinMedium => PumpkinImpl::absorb(phase, Size::Medium),
+            Item::PumpkinLarge => PumpkinImpl::absorb(phase, Size::Large),
         }
     }
 
@@ -136,6 +142,7 @@ impl ItemImpl of ItemTrait {
             Item::BushLarge => BushImpl::usage(phase, Size::Large),
             Item::PumpkinSmall => PumpkinImpl::usage(phase, Size::Small),
             Item::PumpkinMedium => PumpkinImpl::usage(phase, Size::Medium),
+            Item::PumpkinLarge => PumpkinImpl::usage(phase, Size::Large),
         }
     }
 }
@@ -164,6 +171,7 @@ impl ItemIntoFelt252 of core::Into<Item, felt252> {
             Item::BushLarge => BUSH_LARGE,
             Item::PumpkinSmall => PUMPKIN_SMALL,
             Item::PumpkinMedium => PUMPKIN_MEDIUM,
+            Item::PumpkinLarge => PUMPKIN_LARGE,
         }
     }
 }
@@ -184,6 +192,7 @@ impl ItemIntoU8 of core::Into<Item, u8> {
             Item::BushLarge => 9,
             Item::PumpkinSmall => 10,
             Item::PumpkinMedium => 11,
+            Item::PumpkinLarge => 12,
         }
     }
 }
@@ -244,6 +253,8 @@ impl U8IntoItem of core::Into<u8, Item> {
             Item::PumpkinSmall
         } else if self == 11 {
             Item::PumpkinMedium
+        } else if self == 12 {
+            Item::PumpkinLarge
         } else {
             Item::None
         }

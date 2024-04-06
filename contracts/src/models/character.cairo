@@ -1,5 +1,6 @@
 // Core imports
 
+use core::debug::PrintTrait;
 use core::poseidon::hades_permutation;
 
 // Starknet imports
@@ -159,10 +160,11 @@ impl CharacterImpl of CharacterTrait {
         self.buff(buff);
         let damage = role.damage(phase, self.level);
         let stun = role.stun(phase, self.level);
-        let next_health = role.health(phase, self.level);
-        let next_attack = role.attack(phase, self.level);
-        let next_absorb = role.absorb(phase, self.level);
-        let buff = Buff { health: next_health, attack: next_attack, absorb: next_absorb, };
+        let buff = Buff {
+            health: role.next_health(phase, self.level),
+            attack: role.next_attack(phase, self.level),
+            absorb: role.next_absorb(phase, self.level),
+        };
         (damage, stun, buff)
     }
 
@@ -202,13 +204,15 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn take_damage(ref self: Character, mut damage: u8) {
+    fn take_damage(ref self: Character, mut damage: u8) -> u8 {
         // [Effect] Apply the damage to the character
         if damage > 0 {
             damage -= Math::min(damage, self.absorb);
             self.absorb = 0;
         }
-        self.health -= Math::min(damage, self.health);
+        damage = Math::min(damage, self.health);
+        self.health -= damage;
+        damage
     }
 
     #[inline(always)]

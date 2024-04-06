@@ -35,6 +35,7 @@ mod battle {
 
     use zklash::constants::WORLD;
     use zklash::store::{Store, StoreImpl};
+    use zklash::events::{Hit};
     use zklash::helpers::packer::Packer;
     use zklash::helpers::array::ArrayTraitExt;
     use zklash::models::player::{Player, PlayerImpl, PlayerAssert};
@@ -56,6 +57,14 @@ mod battle {
 
     #[storage]
     struct Storage {}
+
+    // Events
+
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event {
+        Hit: Hit,
+    }
 
     // Implementations
 
@@ -108,13 +117,27 @@ mod battle {
             };
 
             // [Effect] Update team characters and fight
-            team.fight(ref shop, ref characters);
+            let (mut hits,) = team.fight(ref shop, ref characters);
 
             // [Effect] Update shop
             store.set_shop(shop);
 
             // [Effect] Update team
             store.set_team(team);
+
+            // [Emit] Events
+            loop {
+                match hits.pop_front() {
+                    Option::Some(hit) => {
+                        let mut event = hit;
+                        event.player_id = player.id.into();
+                        event.team_id = team.id;
+                        event.battle_id = team.battle_id;
+                        emit!(world, (event,));
+                    },
+                    Option::None => { break; },
+                }
+            }
         }
     }
 }

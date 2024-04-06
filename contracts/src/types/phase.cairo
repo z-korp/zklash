@@ -4,7 +4,7 @@ use core::debug::PrintTrait;
 
 // Constants
 
-const NONE: felt252 = 0;
+const NONE: felt252 = 'NONE';
 const ON_HIRE: felt252 = 'ON_HIRE';
 const ON_EQUIP: felt252 = 'ON_EQUIP';
 const ON_DISPATCH: felt252 = 'ON_DISPATCH';

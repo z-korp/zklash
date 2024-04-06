@@ -10,7 +10,7 @@ public class ItemPlacer : MonoBehaviour
     public GameObject[] unitPrefabs; // Préfabs pour les trois premiers éléments
     public GameObject[] objectPrefabs; // Préfabs pour les deux derniers éléments
 
-    float columnTileYOffset = 0.75f; 
+    float columnTileYOffset = 0.75f;
 
     private int unitCount = 0;
 
@@ -53,11 +53,11 @@ public class ItemPlacer : MonoBehaviour
         // Convert List<uint> to uint[]
         return decimals.ToArray();
     }
- 
+
     public void PlaceItemsAboveColumns()
     {
         var shopEntity = PlayerData.Instance.shopEntity;
-        if(shopEntity == null)
+        if (shopEntity == null)
         {
             Debug.LogError("Shop entity not found");
             return;
@@ -77,7 +77,7 @@ public class ItemPlacer : MonoBehaviour
             {
                 int tileIndex = x + y * tilemap.cellBounds.size.x;
 
-                 if (allTiles[tileIndex] != null)
+                if (allTiles[tileIndex] != null)
                 {
                     GameObject prefabToPlace;
                     // Utilisez le compteur pour déterminer quel tableau de préfabs utiliser
@@ -102,7 +102,7 @@ public class ItemPlacer : MonoBehaviour
                             return;
                         }
                     }
-                   
+
                     Vector3Int cellPosition = new Vector3Int(tilemap.cellBounds.xMin + x, tilemap.cellBounds.yMin + y, 0);
                     Vector3 cellCenterWorld = tilemap.GetCellCenterWorld(cellPosition);
                     Vector3 placePosition = cellCenterWorld + new Vector3(0, tilemap.cellSize.y - columnTileYOffset, 0);

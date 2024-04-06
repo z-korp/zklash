@@ -204,13 +204,15 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn take_damage(ref self: Character, mut damage: u8) {
+    fn take_damage(ref self: Character, mut damage: u8) -> u8 {
         // [Effect] Apply the damage to the character
         if damage > 0 {
             damage -= Math::min(damage, self.absorb);
             self.absorb = 0;
         }
-        self.health -= Math::min(damage, self.health);
+        damage = Math::min(damage, self.health);
+        self.health -= damage;
+        damage
     }
 
     #[inline(always)]

@@ -3,7 +3,7 @@ using System.Collections; // Assurez-vous d'avoir TextMesh Pro dans votre projet
 
 public class OverlayCharacter : MonoBehaviour
 {
-     public Transform healthBarGreen; // Assurez-vous que c'est le Transform de l'objet avec le Sprite Renderer
+    public Transform healthBarGreen; // Assurez-vous que c'est le Transform de l'objet avec le Sprite Renderer
     public Transform healthBarBlack;
 
     private float maxHealth = 100f;
@@ -16,7 +16,7 @@ public class OverlayCharacter : MonoBehaviour
         StartCoroutine(DamageOverTimeCoroutine());
     }
 
-        private IEnumerator DamageOverTimeCoroutine()
+    private IEnumerator DamageOverTimeCoroutine()
     {
         while (true)
         {
@@ -25,21 +25,17 @@ public class OverlayCharacter : MonoBehaviour
         }
     }
 
-     public void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        if(currentHealth <= 0)
-        {
-            currentHealth = 0;
-        }
-        UpdateHealthBar();
+        //UpdateHealthBar();
     }
 
 
     private void UpdateHealthBar()
     {
         float healthRatio = currentHealth / maxHealth;
-    
+
         float originalWidth = healthBarGreen.GetComponent<SpriteRenderer>().sprite.bounds.size.x * healthBarGreen.lossyScale.x;
 
         healthBarGreen.localScale = new Vector3(healthRatio, 1f, 1f);
@@ -47,5 +43,5 @@ public class OverlayCharacter : MonoBehaviour
         float widthDifference = originalWidth - (healthBarGreen.GetComponent<SpriteRenderer>().sprite.bounds.size.x * healthBarGreen.lossyScale.x);
 
         healthBarGreen.position = new Vector3(healthBarGreen.position.x - widthDifference / 2, healthBarGreen.position.y, healthBarGreen.position.z);
-}
+    }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ArcherAudio : MonoBehaviour
 {
 
-    public AudioClip attackSound;
+    public AudioClip attackArcherSound;
 
     private void Awake()
     {
@@ -19,9 +19,13 @@ public class ArcherAudio : MonoBehaviour
     {
     }
 
-    public void playAttackSound()
+    public void PlayAttackArcherSound()
     {
-        AudioManager.instance.PlayClipAt(attackSound, transform.position);
+        if (attackArcherSound != null)
+        {
+            AudioManager.instance.PlayClipAt(attackArcherSound, transform.position);
+        }
+
     }
 
 }

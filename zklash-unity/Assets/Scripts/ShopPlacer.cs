@@ -103,6 +103,22 @@ public class ItemPlacer : MonoBehaviour
                     ElementData data = instance.GetComponent<ElementData>();
                     if (data != null)
                     {
+                        var name = (Role)roles[index];
+                        if (name == Role.Knight)
+                        {
+                            data.currentHealth = 3;
+                            data.currentDamage = 1;
+                        }
+                        else if (name == Role.Bowman)
+                        {
+                            data.currentHealth = 2;
+                            data.currentDamage = 2;
+                        }
+                        else if (name == Role.Pawn)
+                        {
+                            data.currentHealth = 2;
+                            data.currentDamage = 1;
+                        }
                         data.indexFromShop = index;
                     }
                     break; // Arrêtez la recherche de tuiles une fois que vous avez instancié un objet

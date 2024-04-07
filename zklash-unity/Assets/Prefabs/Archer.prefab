@@ -205,6 +205,7 @@ MonoBehaviour:
   indexFromShop: 0
   index: -1
   entity: 
+  mobData: {fileID: 11400000, guid: b17c77933520f4a9d814db28787f9260, type: 2}
   maxHealth: 10
   currentHealth: 3
   currentDamage: 2

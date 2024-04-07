@@ -75,9 +75,9 @@ public class Draggable : MonoBehaviour
                 if (isFromShop)
                 {
 
-                    //ElementData data = gameObject.GetComponent<ElementData>();
-                    //ContractActions.instance.TriggerHire(data.indexFromShop);
-                    //data.index = zoneId;
+                    ElementData data = gameObject.GetComponent<ElementData>();
+                    ContractActions.instance.TriggerHire(data.indexFromShop);
+                    data.index = zoneId;
                     isFromShop = false;
                     currentDroppableZone.onZone = gameObject.GetComponent<ElementData>().mobData.nameMob;
 

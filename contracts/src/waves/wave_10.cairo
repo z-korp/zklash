@@ -13,9 +13,10 @@ impl WaveImpl of WaveTrait {
     #[inline(always)]
     fn characters() -> Array<Character> {
         array![
-            CharacterTrait::from(201, Role::Bomboblin, 2, Item::None),
-            CharacterTrait::from(202, Role::Torchoblin, 1, Item::None),
-            CharacterTrait::from(203, Role::Dynamoblin, 1, Item::None),
+            CharacterTrait::from(201, Role::Bomboblin, 3, Item::None),
+            CharacterTrait::from(202, Role::Bomboblin, 3, Item::None),
+            CharacterTrait::from(203, Role::Bomboblin, 3, Item::None),
+            CharacterTrait::from(204, Role::Bomboblin, 3, Item::None),
         ]
     }
 }

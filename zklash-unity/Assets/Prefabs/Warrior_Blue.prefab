@@ -192,16 +192,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexFromShop: 0
+  index: -1
   entity: 
   maxHealth: 10
   currentHealth: 3
+  currentDamage: 2
   animator: {fileID: 4569523674553832488}
   spriteRenderer: {fileID: 8753150383481289107}
   txtLife: {fileID: 7316034404455692560}
+  txtAttack: {fileID: 2837798910189757624}
   vfxHandler: {fileID: 8209207336449970602}
-  isInvicible: 0
-  invicibilityBlinkDuration: 0.2
-  invicibilityTimeAfterHit: 2
+  canvas: {fileID: 7826900362793863607}
+  isBlinking: 0
+  blinkDuration: 0.2
+  blinkTimeAfterHit: 1
 --- !u!50 &5389027940959983678
 Rigidbody2D:
   serializedVersion: 4
@@ -405,6 +409,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
+--- !u!114 &2837798910189757624 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1618594593373061852, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
+  m_PrefabInstance: {fileID: 3537441331813508708}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7316034404455692560 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6093443556408123252, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
@@ -419,5 +434,10 @@ MonoBehaviour:
 --- !u!224 &7782621286845567624 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6707804836854084844, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
+  m_PrefabInstance: {fileID: 3537441331813508708}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7826900362793863607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6739980230971305939, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
   m_PrefabInstance: {fileID: 3537441331813508708}
   m_PrefabAsset: {fileID: 0}

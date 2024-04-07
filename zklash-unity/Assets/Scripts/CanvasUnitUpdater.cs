@@ -63,7 +63,7 @@ public class CanvasUnitUpdater : MonoBehaviour
 
     private string GetDescriptionBasedOnLevelAndPrefab(string prefab, int level)
     {
-        if (prefab == "Warrior_Blue")
+        if (prefabName.Contains("Warrior"))
         {
             switch (level)
             {
@@ -73,7 +73,7 @@ public class CanvasUnitUpdater : MonoBehaviour
                 default: return "No description for this level.";
             }
         }
-        else if (prefab == "Archer")
+        else if (prefabName.Contains("Archer"))
         {
             switch (level)
             {
@@ -83,7 +83,7 @@ public class CanvasUnitUpdater : MonoBehaviour
                 default: return "No description for this level.";
             }
         }
-        else if (prefab == "Pawn")
+        else if (prefabName.Contains("Pawn"))
         {
             switch (level)
             {

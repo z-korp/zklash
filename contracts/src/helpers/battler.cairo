@@ -175,19 +175,21 @@ impl Battler of BattlerTrait {
 
         // [Compute] Post mortem effects
         let (next_buff1, next_buff2) = if char1.is_dead() {
+            tick += 1;
             let next_buff1: Buff = Battler::post_mortem(
-                ref char2, ref char1, battle_id, tick, ref usages, ref talents
+                ref char2, ref char1, battle_id, tick, ref hits, ref usages, ref talents
             );
             let next_buff2: Buff = Battler::post_mortem(
-                ref char1, ref char2, battle_id, tick, ref usages, ref talents
+                ref char1, ref char2, battle_id, tick, ref hits, ref usages, ref talents
             );
             (next_buff1, next_buff2)
         } else {
+            tick += 1;
             let next_buff2: Buff = Battler::post_mortem(
-                ref char2, ref char1, battle_id, tick, ref usages, ref talents
+                ref char2, ref char1, battle_id, tick, ref hits, ref usages, ref talents
             );
             let next_buff1: Buff = Battler::post_mortem(
-                ref char1, ref char2, battle_id, tick, ref usages, ref talents
+                ref char1, ref char2, battle_id, tick, ref hits, ref usages, ref talents
             );
             (next_buff1, next_buff2)
         };
@@ -216,6 +218,7 @@ impl Battler of BattlerTrait {
         ref foe: Character,
         battle_id: u8,
         tick: u32,
+        ref hits: Array<Hit>,
         ref usages: Array<Usage>,
         ref talents: Array<Talent>
     ) -> Buff {
@@ -229,6 +232,7 @@ impl Battler of BattlerTrait {
             talents.append(talent);
             foe.stun(stun);
             foe.take_damage(damage);
+            hits.append(HitTrait::new(battle_id, tick, char, foe, damage));
             next_buff
         } else {
             Zeroable::zero()

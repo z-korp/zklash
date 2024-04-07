@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct Fighter
+public interface IEventDetails { }
+
+public class Fighter : IEventDetails
 {
     public string PlayerId;
     public uint TeamId;
@@ -20,7 +22,7 @@ public struct Fighter
     public uint Stun;
 }
 
-public struct Hit
+public class Hit : IEventDetails
 {
     public string PlayerId;
     public uint TeamId;
@@ -31,7 +33,7 @@ public struct Hit
     public uint Damage;
 }
 
-public struct Stun
+public class Stun : IEventDetails
 {
     public string PlayerId;
     public uint TeamId;
@@ -42,7 +44,7 @@ public struct Stun
     public uint Value;
 }
 
-public struct Absorb
+public class Absorb : IEventDetails
 {
     public string PlayerId;
     public uint TeamId;
@@ -52,7 +54,8 @@ public struct Absorb
     public uint Value;
 }
 
-public struct Usage
+
+public class Usage : IEventDetails
 {
     public string PlayerId;
     public uint TeamId;
@@ -67,7 +70,8 @@ public struct Usage
     public uint Damage;
 }
 
-public struct Talent
+
+public class Talent : IEventDetails
 {
     public string PlayerId;
     public uint TeamId;
@@ -99,12 +103,12 @@ public class EventParser
         { "Talent", "0x24adf676f72d49020e56880b277e37210699f6b1c3822f9401e727754aa8a49" }
     };
 
-    public void ProcessNode(string id, string[] keys, string[] data, string createdAt, string transactionHash)
+    public IEventDetails ProcessNode(string id, string[] keys, string[] data, string createdAt, string transactionHash)
     {
         if (keys.Length < 1)
         {
             Debug.Log($"Event ID: {id} has no keys.");
-            return;
+            return null;
         }
 
         // Assuming GetEventNameFromHex is implemented to map the hex value to a readable event name
@@ -123,35 +127,35 @@ public class EventParser
                 var hitEvent = ParseHitEvent(keys, data);
                 // Now, do something with hitEvent
                 Debug.Log($"Processed a Hit event with damage: {hitEvent.Damage}");
-                break;
+                return hitEvent;
             case "Stun":
                 var stunEvent = ParseStunEvent(keys, data);
                 // Process stunEvent as needed
                 Debug.Log($"Processed a Stun event with value: {stunEvent.Value}");
-                break;
+                return stunEvent;
             case "Absorb":
                 var absorbEvent = ParseAbsorbEvent(keys, data);
                 // Process absorbEvent as needed
                 Debug.Log($"Processed an Absorb event with value: {absorbEvent.Value}");
-                break;
+                return absorbEvent;
             case "Usage":
                 var usageEvent = ParseUsageEvent(keys, data);
                 // Process usageEvent as needed
                 Debug.Log($"Processed a Usage event with item: {usageEvent.Item}");
-                break;
+                return usageEvent;
             case "Talent":
                 var talentEvent = ParseTalentEvent(keys, data);
                 // Process talentEvent as needed
                 Debug.Log($"Processed a Talent event with role: {talentEvent.Role}");
-                break;
+                return talentEvent;
             case "Fighter":
                 var fighterEvent = ParseFighterEvent(keys, data);
                 // Process fighterEvent as needed
                 Debug.Log($"Processed a Fighter event with character ID: {fighterEvent.CharacterId}");
-                break;
+                return fighterEvent;
             default:
                 Debug.LogError($"Unknown event type: {eventName}");
-                break;
+                return null;
         }
     }
 

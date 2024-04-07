@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Role {
+public enum Role
+{
     None, Knight, Bowman, Pawn, Torchoblin, Dynamoblin, Bomboblin,
 }
 
-public enum Item {
+public enum Item
+{
     None, MushroomSmall, MushroomMedium, MushroomLarge, RockSmall, RockMedium, RockLarge, BushSmall, BushMedium, BushLarge, PumpkinSmall, PumpkinMedium, PumpkinLarge,
 }
 
@@ -16,8 +18,8 @@ public class PrefabMappings
         { Role.Knight, "Warrior_Blue" },
         { Role.Bowman, "Archer" },
         { Role.Pawn, "Pawn" },
-        { Role.Torchoblin, "TorchoblinPrefab" },
-        { Role.Dynamoblin, "Dynamite" },
+        { Role.Torchoblin, "Torchoblin" },
+        { Role.Dynamoblin, "Dynamoblin" },
         { Role.Bomboblin, "Bomboblin" },
     };
 

@@ -5,16 +5,83 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+    public static BattleManager Instance { get; private set; }
+
     public List<GameObject> allies;
     public List<GameObject> enemies;
 
     public bool isCoroutineRunning = false;
     public float delay = 0.1f;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Optional: Keep the manager across scenes
+        }
+        else
+        {
+            Destroy(gameObject); // Ensures there's only one instance
+        }
+    }
+
+    public void AddAlly(GameObject ally)
+    {
+        if (!allies.Contains(ally))
+        {
+            allies.Add(ally);
+        }
+    }
+
+    public void RemoveAlly(GameObject ally)
+    {
+        if (allies.Contains(ally))
+        {
+            allies.Remove(ally);
+        }
+    }
+
+    public void AddEnemy(GameObject enemy)
+    {
+        if (!enemies.Contains(enemy))
+        {
+            enemies.Add(enemy);
+        }
+    }
+
+    public void RemoveEnemy(GameObject enemy)
+    {
+        if (enemies.Contains(enemy))
+        {
+            enemies.Remove(enemy);
+        }
+    }
+
     void Start()
     {
-        StartCoroutine(FigthRoutine());
+        // sort fighters by index
+        VillageData.Instance.fighterEventDetails.Sort((x, y) => x.Index.CompareTo(y.Index));
+        foreach (var fighter in VillageData.Instance.fighterEventDetails)
+        {
+            Role role = (Role)fighter.Role;
+            var prefab = PrefabMappings.NameToRoleMap[role];
+            if (fighter.CharacterId > 200)
+            {
+                // enemy
+                //var enemy = Instantiate(prefabToPlace, placePosition, Quaternion.identity);
+                //enemies.Add(enemy);
+            }
+            else
+            {
+                // ally
+                //var ally = Instantiate(prefabToPlace, placePosition, Quaternion.identity);
+                //enemies.Add(ally);
+            }
+        }
+        //StartCoroutine(FigthRoutine());
     }
+
     void Update()
     {
 

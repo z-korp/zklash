@@ -12,7 +12,7 @@ public class MouseHoverDetector : MonoBehaviour
         }
     }
 
-   
+
     void OnMouseEnter()
     {
         if (canvas != null)
@@ -28,4 +28,13 @@ public class MouseHoverDetector : MonoBehaviour
             canvas.SetActive(false);
         }
     }
+
+    void OnMouseDown()
+    {
+        if (canvas != null)
+        {
+            canvas.SetActive(false);
+        }
+    }
+
 }

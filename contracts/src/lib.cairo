@@ -40,6 +40,14 @@ mod waves {
     mod interface;
     mod wave_01;
     mod wave_02;
+    mod wave_03;
+    mod wave_04;
+    mod wave_05;
+    mod wave_06;
+    mod wave_07;
+    mod wave_08;
+    mod wave_09;
+    mod wave_10;
 }
 
 mod models {

@@ -192,6 +192,7 @@ MonoBehaviour:
   txtLife: {fileID: 1877701594120604714}
   txtAttack: {fileID: 6406592790535967106}
   vfxHandler: {fileID: 8277802778979092650}
+  canvas: {fileID: 1375732350156291213}
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
@@ -390,6 +391,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
+--- !u!1 &1375732350156291213 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6739980230971305939, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
+  m_PrefabInstance: {fileID: 5665155630900908894}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1407451790755145650 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6707804836854084844, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}

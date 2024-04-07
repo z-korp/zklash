@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1422990844300819237}
   m_Layer: 0
   m_Name: Archer
-  m_TagString: Ally
+  m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -210,6 +210,7 @@ MonoBehaviour:
   txtLife: {fileID: 1102237089642557484}
   txtAttack: {fileID: 5597353519593057668}
   vfxHandler: {fileID: 1351780870096012954}
+  canvas: {fileID: 455589399502897291}
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
@@ -341,6 +342,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
+--- !u!1 &455589399502897291 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6739980230971305939, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
+  m_PrefabInstance: {fileID: 6619073649775144792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &490123388164725684 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6707804836854084844, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}

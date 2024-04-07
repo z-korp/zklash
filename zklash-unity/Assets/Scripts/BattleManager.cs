@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
+using System;
+
 
 public class BattleManager : MonoBehaviour
 {
@@ -43,7 +46,11 @@ public class BattleManager : MonoBehaviour
         if (allies.Count > 0 && enemies.Count > 0 && characterIdBindings.Count > 0 && !isCoroutineRunning)
         {
             isCoroutineRunning = true;
-            StartCoroutine(StartBattle());
+            StartCoroutine(StartBattle(() =>
+                    {
+                        // Code to execute after the coroutine finishes
+                        SceneManager.LoadScene("ShopScene");
+                    }));
         }
     }
 
@@ -56,8 +63,8 @@ public class BattleManager : MonoBehaviour
         tempCombinedEventDetails.AddRange(VillageData.Instance.hitEventDetails.Cast<ITickable>());
         //tempCombinedEventDetails.AddRange(VillageData.Instance.stunEventDetails.Cast<ITickable>());
         //tempCombinedEventDetails.AddRange(VillageData.Instance.absorbEventDetails.Cast<ITickable>());
-        //tempCombinedEventDetails.AddRange(VillageData.Instance.usageEventDetails.Cast<ITickable>());
-        //tempCombinedEventDetails.AddRange(VillageData.Instance.talentEventDetails.Cast<ITickable>());
+        tempCombinedEventDetails.AddRange(VillageData.Instance.usageEventDetails.Cast<ITickable>());
+        tempCombinedEventDetails.AddRange(VillageData.Instance.talentEventDetails.Cast<ITickable>());
 
         // Sort the temporary list based on the Tick property
         var sortedEventDetails = tempCombinedEventDetails.OrderBy(detail => detail.Tick).ToList();
@@ -109,11 +116,10 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    IEnumerator StartBattle()
+    IEnumerator StartBattle(Action onCompleted = null)
     {
         foreach (var detail in combinedEventDetails)
         {
-
             if (detail is Hit)
             {
                 Hit hit = (Hit)detail;
@@ -132,7 +138,20 @@ public class BattleManager : MonoBehaviour
                     yield return StartCoroutine(AllyHit(fromIndex, toIndex, (int)hit.Damage));
                 }
             }
+            else if (detail is Usage)
+            {
+                Usage usage = (Usage)detail;
+                //Debug.Log($"Event: {usage.GetType().Name}, Tick: {usage.Tick}, CharacterId: {usage.CharacterId}, ItemId: {usage.ItemId}");
+
+            }
+            else if (detail is Talent)
+            {
+                Talent talent = (Talent)detail;
+                //Debug.Log($"Event: {talent.GetType().Name}, Tick: {talent.Tick}, CharacterId: {talent.CharacterId}, TalentId: {talent.TalentId}");
+
+            }
         }
+        onCompleted?.Invoke();
         yield return null;
     }
 
@@ -227,9 +246,6 @@ public class BattleManager : MonoBehaviour
             elementData.MoveEnemy();
         }
     }
-
-
-
 
     IEnumerator FigthRoutine()
     {

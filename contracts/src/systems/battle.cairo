@@ -122,7 +122,7 @@ mod battle {
             };
 
             // [Effect] Update team characters and fight
-            let (mut fighters, mut hits, mut stuns, mut absorbs, mut usages, mut talents) = team
+            let (mut fighters, mut hits, _, _, _, _) = team
                 .fight(ref shop, ref characters);
 
             // [Effect] Update shop
@@ -154,50 +154,50 @@ mod battle {
                     Option::None => { break; },
                 }
             };
-            loop {
-                match stuns.pop_front() {
-                    Option::Some(event) => {
-                        let mut event = event;
-                        event.player_id = player.id.into();
-                        event.team_id = team.id;
-                        emit!(world, (Event::Stun(event)));
-                    },
-                    Option::None => { break; },
-                }
-            };
-            loop {
-                match absorbs.pop_front() {
-                    Option::Some(event) => {
-                        let mut event = event;
-                        event.player_id = player.id.into();
-                        event.team_id = team.id;
-                        emit!(world, (Event::Absorb(event)));
-                    },
-                    Option::None => { break; },
-                }
-            };
-            loop {
-                match usages.pop_front() {
-                    Option::Some(event) => {
-                        let mut event = event;
-                        event.player_id = player.id.into();
-                        event.team_id = team.id;
-                        emit!(world, (Event::Usage(event)));
-                    },
-                    Option::None => { break; },
-                }
-            };
-            loop {
-                match talents.pop_front() {
-                    Option::Some(event) => {
-                        let mut event = event;
-                        event.player_id = player.id.into();
-                        event.team_id = team.id;
-                        emit!(world, (Event::Talent(event)));
-                    },
-                    Option::None => { break; },
-                }
-            };
+            // loop {
+            //     match stuns.pop_front() {
+            //         Option::Some(event) => {
+            //             let mut event = event;
+            //             event.player_id = player.id.into();
+            //             event.team_id = team.id;
+            //             emit!(world, (Event::Stun(event)));
+            //         },
+            //         Option::None => { break; },
+            //     }
+            // };
+            // loop {
+            //     match absorbs.pop_front() {
+            //         Option::Some(event) => {
+            //             let mut event = event;
+            //             event.player_id = player.id.into();
+            //             event.team_id = team.id;
+            //             emit!(world, (Event::Absorb(event)));
+            //         },
+            //         Option::None => { break; },
+            //     }
+            // };
+            // loop {
+            //     match usages.pop_front() {
+            //         Option::Some(event) => {
+            //             let mut event = event;
+            //             event.player_id = player.id.into();
+            //             event.team_id = team.id;
+            //             emit!(world, (Event::Usage(event)));
+            //         },
+            //         Option::None => { break; },
+            //     }
+            // };
+            // loop {
+            //     match talents.pop_front() {
+            //         Option::Some(event) => {
+            //             let mut event = event;
+            //             event.player_id = player.id.into();
+            //             event.team_id = team.id;
+            //             emit!(world, (Event::Talent(event)));
+            //         },
+            //         Option::None => { break; },
+            //     }
+            // };
         }
     }
 }

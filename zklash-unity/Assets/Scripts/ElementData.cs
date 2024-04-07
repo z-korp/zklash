@@ -81,7 +81,6 @@ public class ElementData : MonoBehaviour
         }
         else
         {
-
             SetTextHealth(currentHealth);
 
             isBlinking = true;

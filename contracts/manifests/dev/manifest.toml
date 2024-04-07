@@ -30,8 +30,8 @@ name = "zklash::systems::account::account"
 [[contracts]]
 kind = "DojoContract"
 address = "0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1"
-class_hash = "0x755a064e610f560ae977adc43b1398a5eaace723fea940dab1e40095fdb8942"
-original_class_hash = "0x755a064e610f560ae977adc43b1398a5eaace723fea940dab1e40095fdb8942"
+class_hash = "0x76c82c0df1c36d039d9e69505603d1ac848825cce8bc11032b4fe8e0ac79acf"
+original_class_hash = "0x76c82c0df1c36d039d9e69505603d1ac848825cce8bc11032b4fe8e0ac79acf"
 base_class_hash = "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76"
 abi = "abis/deployments/contracts/zklash_systems_battle_battle.json"
 reads = []
@@ -42,8 +42,8 @@ name = "zklash::systems::battle::battle"
 [[contracts]]
 kind = "DojoContract"
 address = "0x53fb59cc9aab03983033de799d10c9a0d3e4475e19224a661cefeacb0577871"
-class_hash = "0x457d48cf16322caba596bc05f7370093d29f63a0c07312fbf4ec20d1e62e654"
-original_class_hash = "0x457d48cf16322caba596bc05f7370093d29f63a0c07312fbf4ec20d1e62e654"
+class_hash = "0x7b578a69bee528ed963257ef60520c717452bdd7e67e858662a166846af8fca"
+original_class_hash = "0x7b578a69bee528ed963257ef60520c717452bdd7e67e858662a166846af8fca"
 base_class_hash = "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76"
 abi = "abis/deployments/contracts/zklash_systems_market_market.json"
 reads = []

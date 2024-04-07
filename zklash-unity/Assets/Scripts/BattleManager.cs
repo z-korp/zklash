@@ -123,19 +123,22 @@ public class BattleManager : MonoBehaviour
             if (detail is Hit)
             {
                 Hit hit = (Hit)detail;
-                Debug.Log($"Event: {hit.GetType().Name}, Tick: {hit.Tick}, From: {hit.FromCharacterId}, To: {hit.ToCharacterId}, Damage: {hit.Damage}");
                 int fromIndex = (int)characterIdBindings[hit.FromCharacterId];
                 int toIndex = (int)characterIdBindings[hit.ToCharacterId];
 
-                if (hit.FromCharacterId > 200)
+
+                if (hit.Damage > 0)
                 {
-                    // enemy
-                    yield return StartCoroutine(EnemyHit(fromIndex, toIndex, (int)hit.Damage));
-                }
-                else
-                {
-                    // ally
-                    yield return StartCoroutine(AllyHit(fromIndex, toIndex, (int)hit.Damage));
+                    if (hit.FromCharacterId > 200) // enemy
+                    {
+                        Debug.Log($"Event: {hit.GetType().Name}, [ENEMY] Tick: {hit.Tick}, From: {fromIndex}, To: {toIndex}, Damage: {hit.Damage}");
+                        yield return StartCoroutine(EnemyHit(fromIndex, toIndex, (int)hit.Damage));
+                    }
+                    else // ally
+                    {
+                        Debug.Log($"Event: {hit.GetType().Name}, [ALLY] Tick: {hit.Tick}, From: {fromIndex}, To: {toIndex}, Damage: {hit.Damage}");
+                        yield return StartCoroutine(AllyHit(fromIndex, toIndex, (int)hit.Damage));
+                    }
                 }
             }
             else if (detail is Usage)
@@ -158,17 +161,17 @@ public class BattleManager : MonoBehaviour
     IEnumerator AllyHit(int indexAlly, int indexEnemy, int dmg)
     {
         yield return new WaitForSeconds(delay);
-        DealDamageEnemy(indexEnemy, dmg);
+        DealDamageAlly(indexAlly, dmg);
         yield return new WaitForSeconds(delay);
-        ReceiveDamageAlly(indexAlly, dmg);
+        ReceiveDamageEnemy(indexEnemy, dmg);
     }
 
     IEnumerator EnemyHit(int indexEnemy, int indexAlly, int dmg)
     {
         yield return new WaitForSeconds(delay);
-        DealDamageAlly(indexAlly, dmg);
+        DealDamageEnemy(indexEnemy, dmg);
         yield return new WaitForSeconds(delay);
-        ReceiveDamageEnemy(indexEnemy, dmg);
+        ReceiveDamageAlly(indexAlly, dmg);
     }
 
     // Ally methodes

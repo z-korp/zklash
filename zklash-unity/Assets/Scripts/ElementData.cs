@@ -65,13 +65,16 @@ public class ElementData : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        Debug.Log($"TakeDamage: currentHealth: {currentHealth}");
         currentHealth -= amount;
+        Debug.Log($"TakeDamage: {amount}, currentHealth: {currentHealth}");
+
         //healthBar.SetHealth(currentHealth);
 
         // Verifier si le joueur est mort
         if (currentHealth <= 0)
         {
-            currentHealth = 0;
+            //currentHealth = 0;
             SetTextHealth(currentHealth);
             Death();
             //gameObject.SetActive(false);

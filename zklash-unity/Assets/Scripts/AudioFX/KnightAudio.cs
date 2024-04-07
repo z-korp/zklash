@@ -5,7 +5,7 @@ using UnityEngine;
 public class KnightAudio : MonoBehaviour
 {
 
-    public AudioClip attackSound;
+    public AudioClip attackKnightSound;
 
     private void Awake()
     {
@@ -19,9 +19,10 @@ public class KnightAudio : MonoBehaviour
     {
     }
 
-    public void playAttackSound()
+    public void PlayAttackKnightSound()
     {
-        AudioManager.instance.PlayClipAt(attackSound, transform.position);
+        if (attackKnightSound != null)
+            AudioManager.instance.PlayClipAt(attackKnightSound, transform.position);
     }
 
 }

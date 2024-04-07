@@ -5,7 +5,7 @@ using UnityEngine;
 public class TorchoblinAudio : MonoBehaviour
 {
 
-    public AudioClip attackSound;
+    public AudioClip attackTorchoblinSound;
 
     private void Awake()
     {
@@ -19,9 +19,10 @@ public class TorchoblinAudio : MonoBehaviour
     {
     }
 
-    public void playAttackSound()
+    public void PlayAttackTorchoblinSound()
     {
-        AudioManager.instance.PlayClipAt(attackSound, transform.position);
+        if (attackTorchoblinSound != null)
+            AudioManager.instance.PlayClipAt(attackTorchoblinSound, transform.position);
     }
 
 }

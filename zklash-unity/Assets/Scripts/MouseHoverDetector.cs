@@ -4,6 +4,8 @@ public class MouseHoverDetector : MonoBehaviour
 {
     public GameObject canvas;
 
+    private bool isDragging = false;
+
     void Start()
     {
         if (canvas != null)
@@ -15,7 +17,7 @@ public class MouseHoverDetector : MonoBehaviour
 
     void OnMouseEnter()
     {
-        if (canvas != null)
+        if (canvas != null && !isDragging)
         {
             canvas.SetActive(true);
         }
@@ -23,7 +25,9 @@ public class MouseHoverDetector : MonoBehaviour
 
     void OnMouseExit()
     {
-        if (canvas != null)
+        Debug.Log("Mouse Exit");
+        Debug.Log("isDragging: " + isDragging);
+        if (canvas != null && !isDragging)
         {
             canvas.SetActive(false);
         }
@@ -33,7 +37,16 @@ public class MouseHoverDetector : MonoBehaviour
     {
         if (canvas != null)
         {
+            isDragging = true;
             canvas.SetActive(false);
+        }
+    }
+
+    void OnMouseUp()
+    {
+        if (canvas != null)
+        {
+            isDragging = false;
         }
     }
 

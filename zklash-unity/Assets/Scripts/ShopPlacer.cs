@@ -103,7 +103,7 @@ public class ItemPlacer : MonoBehaviour
                     ElementData data = instance.GetComponent<ElementData>();
                     if (data != null)
                     {
-                        var name = (Role)roles[unitCount];
+                        var name = (Role)roles[index];
                         if (name == Role.Knight)
                         {
                             data.currentHealth = 3;

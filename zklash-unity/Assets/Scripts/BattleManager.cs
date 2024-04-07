@@ -63,8 +63,9 @@ public class BattleManager : MonoBehaviour
         tempCombinedEventDetails.AddRange(VillageData.Instance.hitEventDetails.Cast<ITickable>());
         //tempCombinedEventDetails.AddRange(VillageData.Instance.stunEventDetails.Cast<ITickable>());
         //tempCombinedEventDetails.AddRange(VillageData.Instance.absorbEventDetails.Cast<ITickable>());
-        tempCombinedEventDetails.AddRange(VillageData.Instance.usageEventDetails.Cast<ITickable>());
-        tempCombinedEventDetails.AddRange(VillageData.Instance.talentEventDetails.Cast<ITickable>());
+
+        //tempCombinedEventDetails.AddRange(VillageData.Instance.usageEventDetails.Cast<ITickable>());
+        //tempCombinedEventDetails.AddRange(VillageData.Instance.talentEventDetails.Cast<ITickable>());
 
         // Sort the temporary list based on the Tick property
         var sortedEventDetails = tempCombinedEventDetails.OrderBy(detail => detail.Tick).ToList();
@@ -74,8 +75,6 @@ public class BattleManager : MonoBehaviour
 
         // Repopulate combinedEventDetails with sorted events
         combinedEventDetails.AddRange(sortedEventDetails);
-
-
     }
 
     public void AddAlly(GameObject ally)
@@ -160,84 +159,130 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator AllyHit(int indexAlly, int indexEnemy, int dmg)
     {
-        yield return new WaitForSeconds(delay);
         DealDamageAlly(indexAlly, dmg);
+        yield return new WaitForSeconds(delay / 10);
+        bool isDead = ReceiveDamageEnemy(indexEnemy, dmg);
+        if (isDead)
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                yield return new WaitForSeconds(delay);
+                // Move each enemy to the new position based on the updated index
+                MoveEnemy(i); // Assumes MoveEnemy moves the enemy based on its index in the list
+            }
+        }
         yield return new WaitForSeconds(delay);
-        ReceiveDamageEnemy(indexEnemy, dmg);
     }
 
     IEnumerator EnemyHit(int indexEnemy, int indexAlly, int dmg)
     {
-        yield return new WaitForSeconds(delay);
         DealDamageEnemy(indexEnemy, dmg);
+        yield return new WaitForSeconds(delay / 10);
+        bool isDead = ReceiveDamageAlly(indexAlly, dmg);
+        if (isDead)
+        {
+            for (int i = 0; i < allies.Count; i++)
+            {
+                yield return new WaitForSeconds(delay);
+                // Move each ally to the new position based on the updated index
+                MoveAlly(i); // Assumes MoveAlly moves the ally based on its index in the list
+            }
+        }
         yield return new WaitForSeconds(delay);
-        ReceiveDamageAlly(indexAlly, dmg);
     }
 
     // Ally methodes
-    public void ReceiveDamageAlly(int indexAlly, int amount)
+    public bool ReceiveDamageAlly(int indexAlly, int amount)
     {
-        ElementData elementData = allies.ElementAtOrDefault(indexAlly)?.GetComponent<ElementData>();
+        ElementData elementData = allies.ElementAt(indexAlly)?.GetComponent<ElementData>();
         if (elementData != null)
         {
-            elementData.TakeDamage(amount);
+            return elementData.TakeDamage(amount);
         }
-
+        else
+        {
+            Debug.LogError("ElementData is null");
+        }
+        return false;
     }
 
     public void DealDamageAlly(int indexAlly, int amount)
     {
-        ElementData elementData = allies.ElementAtOrDefault(indexAlly)?.GetComponent<ElementData>();
+        ElementData elementData = allies.ElementAt(indexAlly)?.GetComponent<ElementData>();
         if (elementData != null)
         {
             elementData.DealDamage(amount);
+        }
+        else
+        {
+            Debug.LogError("ElementData is null");
         }
     }
 
     public void MoveAlly(int indexAlly)
     {
-        ElementData elementData = allies.ElementAtOrDefault(indexAlly)?.GetComponent<ElementData>();
+        ElementData elementData = allies.ElementAt(indexAlly)?.GetComponent<ElementData>();
         if (elementData != null)
         {
             elementData.MoveAlly();
         }
+        else
+        {
+            Debug.LogError("ElementData is null");
+        }
     }
     public void HealUpAlly(int indexAlly, int amount)
     {
-        ElementData elementData = allies.ElementAtOrDefault(indexAlly)?.GetComponent<ElementData>();
+        ElementData elementData = allies.ElementAt(indexAlly)?.GetComponent<ElementData>();
         if (elementData != null)
         {
             elementData.HealPlayer(amount);
+        }
+        else
+        {
+            Debug.LogError("ElementData is null");
         }
     }
 
     public void PowerUpAlly(int indexAlly, int amount)
     {
-        ElementData elementData = allies.ElementAtOrDefault(indexAlly)?.GetComponent<ElementData>();
+        ElementData elementData = allies.ElementAt(indexAlly)?.GetComponent<ElementData>();
         if (elementData != null)
         {
             elementData.PowerUp(amount);
+        }
+        else
+        {
+            Debug.LogError("ElementData is null");
         }
     }
 
     // Enemy methodes
 
-    public void ReceiveDamageEnemy(int indexEnemy, int amount)
+    public bool ReceiveDamageEnemy(int indexEnemy, int amount)
     {
-        ElementData elementData = enemies.ElementAtOrDefault(indexEnemy)?.GetComponent<ElementData>();
+        ElementData elementData = enemies.ElementAt(indexEnemy)?.GetComponent<ElementData>();
         if (elementData != null)
         {
-            elementData.TakeDamage(amount);
+            return elementData.TakeDamage(amount); ;
         }
-
+        else
+        {
+            Debug.LogError("ElementData is null");
+        }
+        return false;
     }
 
     public void DealDamageEnemy(int indexEnemy, int amount)
     {
-        ElementData elementData = enemies.ElementAtOrDefault(indexEnemy)?.GetComponent<ElementData>();
+        ElementData elementData = enemies.ElementAt(indexEnemy)?.GetComponent<ElementData>();
         if (elementData != null)
         {
             elementData.DealDamage(amount);
+        }
+        else
+        {
+            Debug.LogError("ElementData is null");
         }
     }
 

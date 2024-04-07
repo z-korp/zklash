@@ -6,7 +6,7 @@ public class ElementData : MonoBehaviour
 {
     public uint indexFromShop;
     public int index = -1;
-    public string entity;
+    public string entity = null;
 
     public int maxHealth = 10;
     public int currentHealth = 3;
@@ -29,8 +29,6 @@ public class ElementData : MonoBehaviour
     public bool isBlinking = false;
     public float blinkDuration = 0.2f;
     public float blinkTimeAfterHit = 1f;
-
-
 
     void Start()
     {
@@ -60,9 +58,23 @@ public class ElementData : MonoBehaviour
         {
             PowerUp(1);
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            MoveAlly();
+        }
+
+        /*if (entity != null)
+        {
+            var character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
+            currentHealth = character.health;
+            currentDamage = character.attack;
+            currentXp = character.xp;
+            currentLevel = character.level;
+        }*/
     }
 
-    public void TakeDamage(int amount)
+    public bool TakeDamage(int amount)
     {
         Debug.Log($"TakeDamage: currentHealth: {currentHealth}");
         currentHealth -= amount;
@@ -77,7 +89,7 @@ public class ElementData : MonoBehaviour
             SetTextHealth(currentHealth);
             Death();
             //gameObject.SetActive(false);
-            return;
+            return true;
         }
         else
         {
@@ -89,6 +101,8 @@ public class ElementData : MonoBehaviour
             // TBD: Update text from health bar
             //animator.SetTrigger("IsHurt");
         }
+
+        return false;
     }
 
     public void DealDamage(int amount)
@@ -104,7 +118,6 @@ public class ElementData : MonoBehaviour
 
     public void PowerUp(int amount)
     {
-
         currentDamage += amount;
         SetTextAttack(currentDamage);
 
@@ -148,17 +161,17 @@ public class ElementData : MonoBehaviour
 
     public void MoveAlly()
     {
-        animator.SetBool("IsWalking", true);
+        //animator.SetBool("IsWalking", true);
         gameObject.transform.position += new Vector3(2f, 0, 0);
-        animator.SetBool("IsWalking", false);
+        //animator.SetBool("IsWalking", false);
 
     }
 
     public void MoveEnemy()
     {
-        animator.SetBool("IsWalking", true);
+        //animator.SetBool("IsWalking", true);
         gameObject.transform.position -= new Vector3(2f, 0, 0);
-        animator.SetBool("IsWalking", false);
+        //animator.SetBool("IsWalking", false);
 
     }
 

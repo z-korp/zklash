@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SimpleGraphQL;
 using System.Threading.Tasks;
 using UnityEngine;
+using Dojo;
 
 [Serializable]
 public class EventNodeData
@@ -34,12 +35,14 @@ public class EventsQueryResponse
 
 public class EventsFetcher : MonoBehaviour
 {
+    [SerializeField] WorldManagerData dojoConfig;
+
     private GraphQLClient client;
 
     // Initialize your GraphQL client
     void Start()
     {
-        client = new GraphQLClient("http://localhost:8080/graphql");
+        client = new GraphQLClient(dojoConfig.toriiUrl + "/graphql");
     }
 
     // Method to fetch events once

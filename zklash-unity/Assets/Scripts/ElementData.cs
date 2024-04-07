@@ -13,6 +13,8 @@ public class ElementData : MonoBehaviour
     public int currentHealth = 3;
 
     public int currentDamage = 2;
+    public int currentXp = 0;
+    public int currentLevel = 1;
 
     public Animator animator;
 

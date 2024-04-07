@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 
 public class CanvasUnitUpdater : MonoBehaviour
 {
+
     private Image unitImageLeft;
     private Image unitImageRight;
     private TextMeshProUGUI unitLevelText;
@@ -21,6 +22,9 @@ public class CanvasUnitUpdater : MonoBehaviour
 
     private string prefabName;
 
+    private Image ribbon;
+    private Image secondRibbon;
+
     void Awake()
     {
         prefabName = transform.root.name;  // transform.root vous donnera le GameObject racine le plus haut de la hiérarchie.
@@ -34,8 +38,35 @@ public class CanvasUnitUpdater : MonoBehaviour
         itemLevelText = transform.Find("ItemInfo/Lvl/LevelText").GetComponent<TextMeshProUGUI>();
         itemNameText = transform.Find("ItemInfo/Title").GetComponent<TextMeshProUGUI>();
         itemDescription = transform.Find("ItemInfo/Description").GetComponent<TextMeshProUGUI>();
+        ribbon = transform.Find("Ribbon").GetComponent<Image>();
+        secondRibbon = transform.Find("SecondRibbon").GetComponent<Image>();
+
+        Debug.Log("Unit prefab name: " + ribbon);
+        Debug.Log("Unit prefab name: " + secondRibbon);
         SetupUIBasedOnPrefabName();
         SetupItemUIBasedOnPrefabName();
+    }
+
+    void Update()
+    {
+        ToggleRibbonsBasedOnItem();
+    }
+
+    public void ToggleRibbonsBasedOnItem()
+    {
+        if (string.IsNullOrEmpty(itemName))
+        {
+            // Si itemName est nul ou vide, activez SecondRibbon et désactivez Ribbon
+            secondRibbon.gameObject.SetActive(true);
+            ribbon.gameObject.SetActive(false);
+            transform.Find("ItemInfo").gameObject.SetActive(false);
+        }
+        else
+        {
+            // Si itemName a une valeur, activez Ribbon et désactivez SecondRibbon
+            ribbon.gameObject.SetActive(true);
+            secondRibbon.gameObject.SetActive(false);
+        }
     }
 
     private Sprite GetSpriteByName(string spriteName)

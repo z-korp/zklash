@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5119562565659632083}
   - component: {fileID: 9064048037241660876}
   - component: {fileID: 5535904283382871288}
+  - component: {fileID: 6111887428919254946}
   m_Layer: 0
   m_Name: Dynamoblin
   m_TagString: Enemy
@@ -187,6 +188,8 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 3
   currentDamage: 2
+  currentXp: 0
+  currentLevel: 1
   animator: {fileID: 817016773752028206}
   spriteRenderer: {fileID: 517514919511314406}
   txtLife: {fileID: 4044559087075912294}
@@ -223,6 +226,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6111887428919254946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3616953106443787091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aef08caba1a741578997b0a969eeb31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: 4b85fcf7cda9b4354a8f3213d630e79a, type: 3}
 --- !u!1001 &3513926811772357226
 PrefabInstance:
   m_ObjectHideFlags: 0

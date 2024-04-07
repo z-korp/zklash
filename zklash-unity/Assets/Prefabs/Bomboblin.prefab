@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5287114801269858022}
   - component: {fileID: 4369952106558740638}
   - component: {fileID: 4114133524138475952}
+  - component: {fileID: 8830843773231208421}
   m_Layer: 0
   m_Name: Bomboblin
   m_TagString: Enemy
@@ -182,6 +183,8 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 3
   currentDamage: 2
+  currentXp: 0
+  currentLevel: 1
   animator: {fileID: 8241610283200433622}
   spriteRenderer: {fileID: 6299402786898010029}
   txtLife: {fileID: 3665559667397155527}
@@ -218,6 +221,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8830843773231208421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565273498285202334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a09b37e11e54e6f8f2d4a1a32ca842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: a089d24e2e3d0456aa3eeb1a405016f3, type: 3}
 --- !u!1001 &1200794786517939930
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,7 +11,9 @@ public class CanvasUnitUpdater : MonoBehaviour
     private TextMeshProUGUI unitNameText;
     private TextMeshProUGUI unitDescription;
 
-    public int unitLevel;
+    public int unitLevel = 1;
+    public string itemName; // TODO get name from entity
+    public int itemLevel = 1;
     private Image itemImage;
     private TextMeshProUGUI itemLevelText;
     private TextMeshProUGUI itemNameText;
@@ -33,11 +35,21 @@ public class CanvasUnitUpdater : MonoBehaviour
         itemNameText = transform.Find("ItemInfo/Title").GetComponent<TextMeshProUGUI>();
         itemDescription = transform.Find("ItemInfo/Description").GetComponent<TextMeshProUGUI>();
         SetupUIBasedOnPrefabName();
+        SetupItemUIBasedOnPrefabName();
     }
 
     private Sprite GetSpriteByName(string spriteName)
     {
         return Resources.Load<Sprite>("Sprites/" + spriteName);
+    }
+
+    private void SetupItemUIBasedOnPrefabName()
+    {
+        string description = GetItemDescriptionBasedOnLevelAndPrefab(itemName, itemLevel);
+
+        Sprite itemSprite = GetSpriteByName(itemName + "_" + itemLevel); // Exemple de nommage de sprite
+
+        SetItemInfo(itemSprite, itemLevel.ToString(), itemName, description);
     }
 
     private void SetupUIBasedOnPrefabName()
@@ -99,6 +111,53 @@ public class CanvasUnitUpdater : MonoBehaviour
         }
     }
 
+    private string GetItemDescriptionBasedOnLevelAndPrefab(string itemName, int level)
+    {
+        itemName = itemName.ToLower();
+        Debug.Log("itemName : " + itemName);
+        Debug.Log("itemName : " + itemName.Contains("mushroom"));
+        if (itemName.Contains("mushroom"))
+        {
+            switch (level)
+            {
+                case 1: return "Give +1 health when equipped.";
+                case 2: return "Give +2 health when equipped.";
+                case 3: return "Give +3 health when equipped.";
+                default: return "No description for this level.";
+            }
+        }
+        else if (itemName.Contains("rock"))
+        {
+            switch (level)
+            {
+                case 1: return "Deal +1 damage once when engaging the fight.";
+                case 2: return "Deal +2 damage once when engaging the fight.";
+                case 3: return "Deal +3 damage once when engaging the fight.";
+                default: return "No description for this level.";
+            }
+        }
+        else if (itemName.Contains("bush"))
+        {
+            switch (level)
+            {
+                case 1: return "Absorb 1 damage once.";
+                case 2: return "Absorb 2 damage once.";
+                case 3: return "Absorb 3 damage once.";
+                default: return "No description for this level.";
+            }
+        }
+        else if (itemName.Contains("pumpkin"))
+        {
+            switch (level)
+            {
+                case 1: return "At death, revive with 1 health point, once.";
+                case 2: return "At death, revive with 1 health point, twice.";
+                default: return "No description for this level.";
+            }
+        }
+
+        return "No description available.";
+    }
     public void SetUnitInfo(Sprite image, string level, string name, string description)
     {
         if (unitImageLeft != null) unitImageLeft.sprite = image;
@@ -108,18 +167,22 @@ public class CanvasUnitUpdater : MonoBehaviour
         if (unitDescription != null) unitDescription.text = description;
     }
 
-    public void SetItemInfo(Sprite image, string level, string name)
+    public void SetItemInfo(Sprite image, string level, string name, string description)
     {
         if (itemImage != null) itemImage.sprite = image;
-        if (itemLevelText != null) itemLevelText.text = level;
+        if (itemLevelText != null) itemLevelText.text = GetSizeTextFromLevel(int.Parse(level));
         if (itemNameText != null) itemNameText.text = name;
+        if (itemDescription != null) itemDescription.text = description;
     }
 
-    // Méthode pour appeler pour mettre à jour les UI
-    // public void UpdateUI(Sprite unitSprite, string unitLevel, string unitName,
-    //                      Sprite itemSprite, string itemLevel, string itemName)
-    // {
-    //     SetUnitInfo(unitSprite, unitLevel, unitName);
-    //     SetItemInfo(itemSprite, itemLevel, itemName);
-    // }
+    private string GetSizeTextFromLevel(int level)
+    {
+        switch (level)
+        {
+            case 1: return "XS";
+            case 2: return "M";
+            case 3: return "XL";
+            default: return "Unknown"; // ou retournez une valeur par défaut si cela a du sens dans votre contexte
+        }
+    }
 }

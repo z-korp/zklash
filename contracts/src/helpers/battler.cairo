@@ -171,7 +171,7 @@ impl Battler of BattlerTrait {
         let damage = char1.take_damage(char2.attack() + damage2);
         hits.append(HitTrait::new(battle_id, tick, char2, char1, damage));
         let damage = char2.take_damage(char1.attack() + damage1);
-        hits.append(HitTrait::new(battle_id, tick, char2, char1, damage));
+        hits.append(HitTrait::new(battle_id, tick, char1, char2, damage));
 
         // [Compute] Post mortem effects
         let (next_buff1, next_buff2) = if char1.is_dead() {

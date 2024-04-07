@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
-  - Ally
-  - Item
   - Mob
+  - Ally
+  - Enemy
+  - Item
   layers:
   - Default
   - TransparentFX

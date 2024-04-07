@@ -41,6 +41,13 @@ public class VillageData : MonoBehaviour
 
     public List<ShopSpot> Spots = new List<ShopSpot>();
 
+    public List<Hit> hitEventDetails = new List<Hit>();
+    public List<Fighter> fighterEventDetails = new List<Fighter>();
+    public List<Stun> stunEventDetails = new List<Stun>();
+    public List<Absorb> absorbEventDetails = new List<Absorb>();
+    public List<Usage> usageEventDetails = new List<Usage>();
+    public List<Talent> talentEventDetails = new List<Talent>();
+
     void Awake()
     {
         if (_instance == null)

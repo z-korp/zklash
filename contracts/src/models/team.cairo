@@ -44,6 +44,7 @@ mod errors {
     const TEAM_NOT_AFFORDABLE: felt252 = 'Team: not affordable';
     const TEAM_IS_DEFEATED: felt252 = 'Team: is defeated';
     const TEAM_XP_INVALID_ROLE: felt252 = 'Team: invalid role for xp';
+    const TEAM_CANNOT_FIGHT: felt252 = 'Team: cannot fight';
 }
 
 #[generate_trait]
@@ -60,7 +61,7 @@ impl TeamImpl of TeamTrait {
             nonce: 0,
             gold: constants::DEFAULT_GOLD,
             health: constants::DEFAULT_HEALTH,
-            level: constants::DEFAULT_LEVEL,
+            level: 0,
             character_count: 0,
             battle_id: 0,
         }
@@ -158,7 +159,7 @@ impl TeamImpl of TeamTrait {
         // [Check] Not empty
         assert(chars.len() != 0, errors::TEAM_IS_EMPTY);
         // [Compute] Generate foes according to level
-        let wave: Wave = self.level.into();
+        let wave: Wave = (self.level + 1).into();
         let mut foes: Array<Character> = wave.characters();
         // [Effect] Fight and manage the win status
         let (win, fighters, hits, stuns, absorbs, usages, talents) = Battler::start(
@@ -200,6 +201,11 @@ impl TeamAssert of AssertTrait {
     #[inline(always)]
     fn assert_not_defeated(self: Team) {
         assert(self.health > 0, errors::TEAM_IS_DEFEATED);
+    }
+
+    #[inline(always)]
+    fn assert_can_fight(self: Team) {
+        assert(self.level < 10, errors::TEAM_CANNOT_FIGHT);
     }
 }
 

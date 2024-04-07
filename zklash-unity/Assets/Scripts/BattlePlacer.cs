@@ -13,10 +13,10 @@ public class BattlePlacer : MonoBehaviour
 
     void Update()
     {
-        if (VillageData.Instance.fighterEventDetails.Count != 0 && !hasPlacedMobs)
+        if (BattleManager.Instance.fighterEventDetails.Count != 0 && !hasPlacedMobs)
         {
-            VillageData.Instance.fighterEventDetails.Sort((x, y) => x.Index.CompareTo(y.Index));
-            foreach (var fighter in VillageData.Instance.fighterEventDetails)
+            BattleManager.Instance.fighterEventDetails.Sort((x, y) => x.Index.CompareTo(y.Index));
+            foreach (var fighter in BattleManager.Instance.fighterEventDetails)
             {
                 Role role = (Role)fighter.Role;
                 var name = PrefabMappings.NameToRoleMap[role];

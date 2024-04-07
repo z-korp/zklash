@@ -22,7 +22,6 @@ public class CanvasUnitUpdater : MonoBehaviour
     void Awake()
     {
         prefabName = transform.root.name;  // transform.root vous donnera le GameObject racine le plus haut de la hiérarchie.
-        Debug.Log("Prefab Name: " + prefabName);
 
         unitImageLeft = transform.Find("UnitInfo/UnitLeft").GetComponent<Image>();
         unitImageRight = transform.Find("UnitInfo/UnitRight").GetComponent<Image>();

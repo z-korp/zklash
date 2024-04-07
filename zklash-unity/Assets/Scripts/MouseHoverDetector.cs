@@ -25,8 +25,6 @@ public class MouseHoverDetector : MonoBehaviour
 
     void OnMouseExit()
     {
-        Debug.Log("Mouse Exit");
-        Debug.Log("isDragging: " + isDragging);
         if (canvas != null && !isDragging)
         {
             canvas.SetActive(false);

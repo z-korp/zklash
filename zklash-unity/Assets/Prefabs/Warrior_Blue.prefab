@@ -192,6 +192,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexFromShop: 0
   entity: 
+  maxHealth: 10
+  currentHealth: 3
+  animator: {fileID: 4569523674553832488}
+  spriteRenderer: {fileID: 8753150383481289107}
+  isInvicible: 0
+  invicibilityBlinkDuration: 0.2
+  invicibilityTimeAfterHit: 2
 --- !u!50 &5389027940959983678
 Rigidbody2D:
   serializedVersion: 4

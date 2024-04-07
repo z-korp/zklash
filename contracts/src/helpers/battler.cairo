@@ -168,9 +168,11 @@ impl Battler of BattlerTrait {
         stuns.append(StunTrait::new(battle_id, tick, char2, char1, stun));
 
         // [Compute] Receive damage from opponents
-        let damage = char1.take_damage(char2.attack() + damage2);
+        let damage = char2.attack() + damage2;
+        char1.take_damage(damage);
         hits.append(HitTrait::new(battle_id, tick, char2, char1, damage));
-        let damage = char2.take_damage(char1.attack() + damage1);
+        let damage = char1.attack() + damage1;
+        char2.take_damage(damage);
         hits.append(HitTrait::new(battle_id, tick, char1, char2, damage));
 
         // [Compute] Post mortem effects

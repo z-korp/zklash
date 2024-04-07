@@ -143,6 +143,22 @@ public class ElementData : MonoBehaviour
         txtAttack.text = amount.ToString();
     }
 
+    public void MoveAlly()
+    {
+        animator.SetBool("IsWalking", true);
+        gameObject.transform.position += new Vector3(2f, 0, 0);
+        animator.SetBool("IsWalking", false);
+
+    }
+
+    public void MoveEnemy()
+    {
+        animator.SetBool("IsWalking", true);
+        gameObject.transform.position -= new Vector3(2f, 0, 0);
+        animator.SetBool("IsWalking", false);
+
+    }
+
     public IEnumerator BlinkPowerUpFlash()
     {
         while (isBlinking)

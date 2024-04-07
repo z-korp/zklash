@@ -20,6 +20,7 @@ public class BattleManager : MonoBehaviour
 
     }
 
+    // Ally methodes
     public void ReceiveDamageAlly(int indexAlly, int amount)
     {
         ElementData elementData = allies.ElementAtOrDefault(indexAlly)?.GetComponent<ElementData>();
@@ -38,6 +39,34 @@ public class BattleManager : MonoBehaviour
             elementData.DealDamage(amount);
         }
     }
+
+    public void MoveAlly(int indexAlly)
+    {
+        ElementData elementData = allies.ElementAtOrDefault(indexAlly)?.GetComponent<ElementData>();
+        if (elementData != null)
+        {
+            elementData.MoveAlly();
+        }
+    }
+    public void HealUpAlly(int indexAlly, int amount)
+    {
+        ElementData elementData = allies.ElementAtOrDefault(indexAlly)?.GetComponent<ElementData>();
+        if (elementData != null)
+        {
+            elementData.HealPlayer(amount);
+        }
+    }
+
+    public void PowerUpAlly(int indexAlly, int amount)
+    {
+        ElementData elementData = allies.ElementAtOrDefault(indexAlly)?.GetComponent<ElementData>();
+        if (elementData != null)
+        {
+            elementData.PowerUp(amount);
+        }
+    }
+
+    // Enemy methodes
 
     public void ReceiveDamageEnemy(int indexEnemy, int amount)
     {
@@ -58,21 +87,60 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public void MoveEnemy(int indexEnemy)
+    {
+        ElementData elementData = enemies.ElementAtOrDefault(indexEnemy)?.GetComponent<ElementData>();
+        if (elementData != null)
+        {
+            elementData.MoveEnemy();
+        }
+    }
+
 
     IEnumerator FigthRoutine()
     {
         yield return new WaitForSeconds(delay);
-        DealDamageEnemy(1, 2);
+        DealDamageEnemy(0, 2);
         yield return new WaitForSeconds(delay);
-        ReceiveDamageAlly(1, 2);
+        ReceiveDamageAlly(0, 2);
+        yield return new WaitForSeconds(delay);
+        DealDamageAlly(0, 2);
+        yield return new WaitForSeconds(delay);
+        ReceiveDamageEnemy(0, 2);
+        yield return new WaitForSeconds(delay);
+        DealDamageEnemy(0, 2);
+        yield return new WaitForSeconds(delay);
+        ReceiveDamageAlly(0, 2);
+        yield return new WaitForSeconds(delay);
+        MoveAlly(1);
+        MoveAlly(2);
+        yield return new WaitForSeconds(delay);
+        PowerUpAlly(1, 1);
+        yield return new WaitForSeconds(delay);
+        HealUpAlly(1, 1);
         yield return new WaitForSeconds(delay);
         DealDamageAlly(1, 2);
         yield return new WaitForSeconds(delay);
-        ReceiveDamageEnemy(1, 2);
+        ReceiveDamageEnemy(0, 2);
         yield return new WaitForSeconds(delay);
-        DealDamageEnemy(1, 2);
+        MoveEnemy(1);
+        MoveEnemy(2);
         yield return new WaitForSeconds(delay);
-        ReceiveDamageAlly(1, 2);
+        DealDamageEnemy(1, 10);
+        yield return new WaitForSeconds(delay);
+        ReceiveDamageAlly(1, 10);
+        ReceiveDamageEnemy(1, 10);
+        yield return new WaitForSeconds(delay);
+        MoveEnemy(2);
+        MoveAlly(2);
+        yield return new WaitForSeconds(delay);
+        PowerUpAlly(2, 3);
+        yield return new WaitForSeconds(delay);
+        DealDamageAlly(2, 5);
+        yield return new WaitForSeconds(delay);
+        ReceiveDamageEnemy(2, 5);
+
+
     }
 
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class DynamoblinAudio : MonoBehaviour
 {
 
-    public AudioClip attackSound;
+    public AudioClip attackDynamoSound;
 
     private void Awake()
     {
@@ -19,9 +19,10 @@ public class DynamoblinAudio : MonoBehaviour
     {
     }
 
-    public void playAttackSound()
+    public void PlayAttackDynamoSound()
     {
-        AudioManager.instance.PlayClipAt(attackSound, transform.position);
+        if (attackDynamoSound != null)
+            AudioManager.instance.PlayClipAt(attackDynamoSound, transform.position);
     }
 
 }

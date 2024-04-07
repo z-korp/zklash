@@ -8,6 +8,8 @@ public class ElementData : MonoBehaviour
     public int index = -1;
     public string entity = null;
 
+    public MobData mobData;
+
     public int maxHealth = 10;
     public int currentHealth = 3;
 

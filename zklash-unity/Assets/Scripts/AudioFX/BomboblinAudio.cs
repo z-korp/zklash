@@ -5,7 +5,7 @@ using UnityEngine;
 public class BomboblinAudio : MonoBehaviour
 {
 
-    public AudioClip attackSound;
+    public AudioClip attackBombolinSound;
 
     private void Awake()
     {
@@ -19,9 +19,10 @@ public class BomboblinAudio : MonoBehaviour
     {
     }
 
-    public void playAttackSound()
+    public void PlayAttackBomboSound()
     {
-        AudioManager.instance.PlayClipAt(attackSound, transform.position);
+        if (attackBombolinSound != null)
+            AudioManager.instance.PlayClipAt(attackBombolinSound, transform.position);
     }
 
 }

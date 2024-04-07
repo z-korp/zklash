@@ -5,7 +5,7 @@ using UnityEngine;
 public class PawAudio : MonoBehaviour
 {
 
-    public AudioClip attackSound;
+    public AudioClip attackPawnSound;
 
     private void Awake()
     {
@@ -19,9 +19,10 @@ public class PawAudio : MonoBehaviour
     {
     }
 
-    public void playAttackSound()
+    public void PlayAttackPawnSound()
     {
-        AudioManager.instance.PlayClipAt(attackSound, transform.position);
+        if (attackPawnSound != null)
+            AudioManager.instance.PlayClipAt(attackPawnSound, transform.position);
     }
 
 }

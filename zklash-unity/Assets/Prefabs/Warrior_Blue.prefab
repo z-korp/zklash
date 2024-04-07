@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5389027940959983678}
   - component: {fileID: 1234032042347397527}
   - component: {fileID: 2989463505962362010}
+  - component: {fileID: 2632868461452710512}
   m_Layer: 0
   m_Name: Warrior_Blue
   m_TagString: Mob
@@ -199,6 +200,8 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 3
   currentDamage: 2
+  currentXp: 0
+  currentLevel: 1
   animator: {fileID: 4569523674553832488}
   spriteRenderer: {fileID: 8753150383481289107}
   txtLife: {fileID: 7316034404455692560}
@@ -256,6 +259,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 8146747496543787672}
+--- !u!114 &2632868461452710512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549481bccd354482db7543edf481832d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: b7911476e8ec04c8dae5a086b7c78472, type: 3}
 --- !u!1001 &662944998919359772
 PrefabInstance:
   m_ObjectHideFlags: 0

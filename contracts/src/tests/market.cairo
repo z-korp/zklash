@@ -22,7 +22,7 @@ use zklash::systems::market::IMarketDispatcherTrait;
 use zklash::tests::setup::{setup, setup::{Systems, PLAYER}};
 
 #[test]
-fn test_market_hire() {
+fn test_market_hire_one() {
     // [Setup]
     let (world, systems, context) = setup::spawn_game();
     let store = StoreTrait::new(world);
@@ -44,4 +44,44 @@ fn test_market_hire() {
     let character_id = team.character_count;
     let character = store.character(context.player_id, team.id, character_id);
     character.assert_exists();
+}
+
+#[test]
+fn test_market_hire_all_from_first_to_last() {
+    // [Setup]
+    let (world, systems, context) = setup::spawn_game();
+    let store = StoreTrait::new(world);
+
+    // [Spawn]
+    systems.account.spawn(world);
+
+    // [Hire]
+    let player: Player = store.player(context.player_id);
+    systems.market.hire(world, player.team_id(), 0);
+    systems.market.hire(world, player.team_id(), 1);
+    systems.market.hire(world, player.team_id(), 2);
+
+    // [Assert] Shop
+    let shop = store.shop(context.player_id, player.team_id());
+    assert(shop.roles == 0, 'Hire: wrong shop roles');
+}
+
+#[test]
+fn test_market_hire_all_from_last_to_first() {
+    // [Setup]
+    let (world, systems, context) = setup::spawn_game();
+    let store = StoreTrait::new(world);
+
+    // [Spawn]
+    systems.account.spawn(world);
+
+    // [Hire]
+    let player: Player = store.player(context.player_id);
+    systems.market.hire(world, player.team_id(), 2);
+    systems.market.hire(world, player.team_id(), 1);
+    systems.market.hire(world, player.team_id(), 0);
+
+    // [Assert] Shop
+    let shop = store.shop(context.player_id, player.team_id());
+    assert(shop.roles == 0, 'Hire: wrong shop roles');
 }

@@ -63,13 +63,14 @@ public class Draggable : MonoBehaviour
 
             if (VillageData.Instance.Spots.Count > zoneId && VillageData.Instance.Spots[zoneId].IsAvailable)
             {
-                Debug.Log($"Objet déposé dans la zone droppable: {currentDroppableZone.gameObject.name}.");
+                Debug.Log($"Objet déposé dans la zone droppable: {currentDroppableZone.gameObject.name} ${zoneId}.");
 
                 if (isFromShop)
                 {
                     ElementData data = gameObject.GetComponent<ElementData>();
-                    // Call the TriggerHire method from ContractActions
+                    Debug.Log("-------------------> TriggerHire " + data.indexFromShop);
                     ContractActions.instance.TriggerHire(data.indexFromShop);
+                    data.index = zoneId;
                     isFromShop = false;
                 }
 

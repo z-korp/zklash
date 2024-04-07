@@ -13,12 +13,7 @@ public class BattleManager : MonoBehaviour
     public bool isCoroutineRunning = false;
     public float delay = 0.1f;
 
-    public List<Hit> hitEventDetails = new List<Hit>();
-    public List<Fighter> fighterEventDetails = new List<Fighter>();
-    public List<Stun> stunEventDetails = new List<Stun>();
-    public List<Absorb> absorbEventDetails = new List<Absorb>();
-    public List<Usage> usageEventDetails = new List<Usage>();
-    public List<Talent> talentEventDetails = new List<Talent>();
+    private List<ITickable> combinedEventDetails = new List<ITickable>();
 
     private void Awake()
     {
@@ -30,6 +25,35 @@ public class BattleManager : MonoBehaviour
         else
         {
             Destroy(gameObject); // Ensures there's only one instance
+        }
+
+        CombineAndSortEvents();
+    }
+
+    private void CombineAndSortEvents()
+    {
+        // Temporary list to hold all event details before sorting
+        List<ITickable> tempCombinedEventDetails = new List<ITickable>();
+
+        // Add event details to the temporary list, assuming they all implement ITickable
+        tempCombinedEventDetails.AddRange(VillageData.Instance.hitEventDetails.Cast<ITickable>());
+        //tempCombinedEventDetails.AddRange(VillageData.Instance.stunEventDetails.Cast<ITickable>());
+        //tempCombinedEventDetails.AddRange(VillageData.Instance.absorbEventDetails.Cast<ITickable>());
+        //tempCombinedEventDetails.AddRange(VillageData.Instance.usageEventDetails.Cast<ITickable>());
+        //tempCombinedEventDetails.AddRange(VillageData.Instance.talentEventDetails.Cast<ITickable>());
+
+        // Sort the temporary list based on the Tick property
+        var sortedEventDetails = tempCombinedEventDetails.OrderBy(detail => detail.Tick).ToList();
+
+        // Clear the original combinedEventDetails list
+        combinedEventDetails.Clear();
+
+        // Repopulate combinedEventDetails with sorted events
+        combinedEventDetails.AddRange(sortedEventDetails);
+
+        foreach (var detail in combinedEventDetails)
+        {
+            Debug.Log($"Event: {detail.GetType().Name}, Tick: {detail.Tick}");
         }
     }
 
@@ -68,8 +92,8 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         // sort fighters by index
-        fighterEventDetails.Sort((x, y) => x.Index.CompareTo(y.Index));
-        foreach (var fighter in fighterEventDetails)
+        VillageData.Instance.fighterEventDetails.Sort((x, y) => x.Index.CompareTo(y.Index));
+        foreach (var fighter in VillageData.Instance.fighterEventDetails)
         {
             Role role = (Role)fighter.Role;
             var prefab = PrefabMappings.NameToRoleMap[role];

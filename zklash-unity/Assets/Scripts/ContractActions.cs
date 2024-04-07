@@ -234,12 +234,12 @@ public class ContractActions : MonoBehaviour
         Debug.Log("Talent events: " + talentEventDetails.Count);
         Debug.Log("Fighter events: " + fighterEventDetails.Count);
 
-        BattleManager.Instance.hitEventDetails = hitEventDetails;
-        BattleManager.Instance.fighterEventDetails = fighterEventDetails;
-        BattleManager.Instance.stunEventDetails = stunEventDetails;
-        BattleManager.Instance.absorbEventDetails = absorbEventDetails;
-        BattleManager.Instance.usageEventDetails = usageEventDetails;
-        BattleManager.Instance.talentEventDetails = talentEventDetails;
+        VillageData.Instance.hitEventDetails = hitEventDetails;
+        VillageData.Instance.fighterEventDetails = fighterEventDetails;
+        VillageData.Instance.stunEventDetails = stunEventDetails;
+        VillageData.Instance.absorbEventDetails = absorbEventDetails;
+        VillageData.Instance.usageEventDetails = usageEventDetails;
+        VillageData.Instance.talentEventDetails = talentEventDetails;
 
         // Display CombatScene
         SceneManager.LoadScene("BattleScene");

@@ -63,12 +63,12 @@ public class Draggable : MonoBehaviour
 
             if (VillageData.Instance.Spots.Count > zoneId && VillageData.Instance.Spots[zoneId].IsAvailable)
             {
-                Debug.Log($"Objet déposé dans la zone droppable: {currentDroppableZone.gameObject.name} ${zoneId}.");
+                // Debug.Log($"Objet déposé dans la zone droppable: {currentDroppableZone.gameObject.name} ${zoneId}.");
 
                 if (isFromShop)
                 {
                     ElementData data = gameObject.GetComponent<ElementData>();
-                    Debug.Log("-------------------> TriggerHire " + data.indexFromShop);
+                    // Debug.Log("-------------------> TriggerHire " + data.indexFromShop);
                     ContractActions.instance.TriggerHire(data.indexFromShop);
                     data.index = zoneId;
                     isFromShop = false;
@@ -79,13 +79,13 @@ public class Draggable : MonoBehaviour
             else
             {
                 rb.MovePosition(initPos);
-                Debug.Log("Object not dropped. Zone not available.");
+                // Debug.Log("Object not dropped. Zone not available.");
             }
         }
         else
         {
             rb.MovePosition(initPos);
-            Debug.Log("Object not dropped.");
+            // Debug.Log("Object not dropped.");
         }
     }
 
@@ -93,29 +93,29 @@ public class Draggable : MonoBehaviour
     {
         // Trouvez toutes les zones droppables dans la scène
         DroppableZone[] allDroppableZones = FindObjectsOfType<DroppableZone>();
-        Debug.Log("Found " + allDroppableZones.Length + " droppable zones.");
+        // Debug.Log("Found " + allDroppableZones.Length + " droppable zones.");
 
         // Utilisez une liste temporaire pour stocker les Transform des zones valides
         List<Transform> validDropTargets = new List<Transform>();
 
         foreach (DroppableZone zone in allDroppableZones)
         {
-            Debug.Log("Checking droppable zone: " + zone.name);
+            // Debug.Log("Checking droppable zone: " + zone.name);
             string zoneName = zone.name;
             string idString = zoneName.Split('_')[1]; // Split the name by '_' and take the second part
             int zoneId = int.Parse(idString); // Convert the ID part to an integer
-            Debug.Log("Zone ID: " + zoneId);
-            Debug.Log("Is available: " + VillageData.Instance.Spots[zoneId].IsAvailable);
+            // Debug.Log("Zone ID: " + zoneId);
+            // Debug.Log("Is available: " + VillageData.Instance.Spots[zoneId].IsAvailable);
             if (VillageData.Instance.Spots[zoneId].IsAvailable)
             {
                 validDropTargets.Add(zone.transform); // Ajoutez le Transform si la zone est valide
-                Debug.Log("Added a valid drop target: " + zone.transform.name);
+                // Debug.Log("Added a valid drop target: " + zone.transform.name);
             }
         }
 
         // Convertissez la liste en tableau et affectez-la à targets
         targets = validDropTargets.ToArray();
-        Debug.Log("Updated targets with " + targets.Length + " valid drop targets.");
+        // Debug.Log("Updated targets with " + targets.Length + " valid drop targets.");
     }
 
     private void CreateIndicators()
@@ -125,7 +125,7 @@ public class Draggable : MonoBehaviour
             GameObject indicator = Instantiate(indicatorPrefab, target.position, Quaternion.identity);
             indicators.Add(indicator);
             StartCoroutine(AnimateIndicator(indicator.transform));
-            Debug.Log("Created indicator for target: " + target.name);
+            // Debug.Log("Created indicator for target: " + target.name);
         }
     }
 

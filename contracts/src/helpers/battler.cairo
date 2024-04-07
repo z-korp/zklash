@@ -168,26 +168,30 @@ impl Battler of BattlerTrait {
         stuns.append(StunTrait::new(battle_id, tick, char2, char1, stun));
 
         // [Compute] Receive damage from opponents
-        let damage = char1.take_damage(char2.attack() + damage2);
+        let damage = char2.attack() + damage2;
+        char1.take_damage(damage);
         hits.append(HitTrait::new(battle_id, tick, char2, char1, damage));
-        let damage = char2.take_damage(char1.attack() + damage1);
-        hits.append(HitTrait::new(battle_id, tick, char2, char1, damage));
+        let damage = char1.attack() + damage1;
+        char2.take_damage(damage);
+        hits.append(HitTrait::new(battle_id, tick, char1, char2, damage));
 
         // [Compute] Post mortem effects
         let (next_buff1, next_buff2) = if char1.is_dead() {
+            tick += 1;
             let next_buff1: Buff = Battler::post_mortem(
-                ref char2, ref char1, battle_id, tick, ref usages, ref talents
+                ref char2, ref char1, battle_id, tick, ref hits, ref usages, ref talents
             );
             let next_buff2: Buff = Battler::post_mortem(
-                ref char1, ref char2, battle_id, tick, ref usages, ref talents
+                ref char1, ref char2, battle_id, tick, ref hits, ref usages, ref talents
             );
             (next_buff1, next_buff2)
         } else {
+            tick += 1;
             let next_buff2: Buff = Battler::post_mortem(
-                ref char2, ref char1, battle_id, tick, ref usages, ref talents
+                ref char2, ref char1, battle_id, tick, ref hits, ref usages, ref talents
             );
             let next_buff1: Buff = Battler::post_mortem(
-                ref char1, ref char2, battle_id, tick, ref usages, ref talents
+                ref char1, ref char2, battle_id, tick, ref hits, ref usages, ref talents
             );
             (next_buff1, next_buff2)
         };
@@ -216,6 +220,7 @@ impl Battler of BattlerTrait {
         ref foe: Character,
         battle_id: u8,
         tick: u32,
+        ref hits: Array<Hit>,
         ref usages: Array<Usage>,
         ref talents: Array<Talent>
     ) -> Buff {
@@ -229,6 +234,7 @@ impl Battler of BattlerTrait {
             talents.append(talent);
             foe.stun(stun);
             foe.take_damage(damage);
+            hits.append(HitTrait::new(battle_id, tick, char, foe, damage));
             next_buff
         } else {
             Zeroable::zero()

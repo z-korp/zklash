@@ -5,6 +5,11 @@ using UnityEngine;
 
 public interface IEventDetails { }
 
+public interface ITickable
+{
+    uint Tick { get; }
+}
+
 public class Fighter : IEventDetails
 {
     public string PlayerId;
@@ -22,45 +27,45 @@ public class Fighter : IEventDetails
     public uint Stun;
 }
 
-public class Hit : IEventDetails
+public class Hit : IEventDetails, ITickable
 {
     public string PlayerId;
     public uint TeamId;
     public uint BattleId;
-    public uint Tick;
+    public uint Tick { get; set; }
     public uint FromCharacterId;
     public uint ToCharacterId;
     public uint Damage;
 }
 
-public class Stun : IEventDetails
+public class Stun : IEventDetails, ITickable
 {
     public string PlayerId;
     public uint TeamId;
     public uint BattleId;
-    public uint Tick;
+    public uint Tick { get; set; }
     public uint FromCharacterId;
     public uint ToCharacterId;
     public uint Value;
 }
 
-public class Absorb : IEventDetails
+public class Absorb : IEventDetails, ITickable
 {
     public string PlayerId;
     public uint TeamId;
     public uint BattleId;
-    public uint Tick;
+    public uint Tick { get; set; }
     public uint CharacterId;
     public uint Value;
 }
 
 
-public class Usage : IEventDetails
+public class Usage : IEventDetails, ITickable
 {
     public string PlayerId;
     public uint TeamId;
     public uint BattleId;
-    public uint Tick;
+    public uint Tick { get; set; }
     public uint CharacterId;
     public uint Item;
     public uint NewItem;
@@ -71,12 +76,12 @@ public class Usage : IEventDetails
 }
 
 
-public class Talent : IEventDetails
+public class Talent : IEventDetails, ITickable
 {
     public string PlayerId;
     public uint TeamId;
     public uint BattleId;
-    public uint Tick;
+    public uint Tick { get; set; }
     public uint CharacterId;
     public uint Role;
     public uint Health;

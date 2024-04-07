@@ -2,16 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
+using System;
+
 
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager Instance { get; private set; }
 
-    public List<GameObject> allies;
-    public List<GameObject> enemies;
+    public List<GameObject> allies = new List<GameObject>();
+    public List<GameObject> enemies = new List<GameObject>();
 
     public bool isCoroutineRunning = false;
-    public float delay = 0.1f;
+    public float delay = 1f;
+
+    private List<ITickable> combinedEventDetails = new List<ITickable>();
+
+    public Dictionary<uint, uint> characterIdBindings = new Dictionary<uint, uint>();
 
     private void Awake()
     {
@@ -24,6 +32,50 @@ public class BattleManager : MonoBehaviour
         {
             Destroy(gameObject); // Ensures there's only one instance
         }
+
+        CombineAndSortEvents();
+    }
+
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+        if (allies.Count > 0 && enemies.Count > 0 && characterIdBindings.Count > 0 && !isCoroutineRunning)
+        {
+            isCoroutineRunning = true;
+            StartCoroutine(StartBattle(() =>
+                    {
+                        // Code to execute after the coroutine finishes
+                        SceneManager.LoadScene("ShopScene");
+                    }));
+        }
+    }
+
+    private void CombineAndSortEvents()
+    {
+        // Temporary list to hold all event details before sorting
+        List<ITickable> tempCombinedEventDetails = new List<ITickable>();
+
+        // Add event details to the temporary list, assuming they all implement ITickable
+        tempCombinedEventDetails.AddRange(VillageData.Instance.hitEventDetails.Cast<ITickable>());
+        //tempCombinedEventDetails.AddRange(VillageData.Instance.stunEventDetails.Cast<ITickable>());
+        //tempCombinedEventDetails.AddRange(VillageData.Instance.absorbEventDetails.Cast<ITickable>());
+        tempCombinedEventDetails.AddRange(VillageData.Instance.usageEventDetails.Cast<ITickable>());
+        tempCombinedEventDetails.AddRange(VillageData.Instance.talentEventDetails.Cast<ITickable>());
+
+        // Sort the temporary list based on the Tick property
+        var sortedEventDetails = tempCombinedEventDetails.OrderBy(detail => detail.Tick).ToList();
+
+        // Clear the original combinedEventDetails list
+        combinedEventDetails.Clear();
+
+        // Repopulate combinedEventDetails with sorted events
+        combinedEventDetails.AddRange(sortedEventDetails);
+
+
     }
 
     public void AddAlly(GameObject ally)
@@ -42,6 +94,11 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public void AddBindings(uint characterId, uint index)
+    {
+        characterIdBindings.Add(characterId, index);
+    }
+
     public void AddEnemy(GameObject enemy)
     {
         if (!enemies.Contains(enemy))
@@ -58,33 +115,60 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    void Start()
+
+    IEnumerator StartBattle(Action onCompleted = null)
     {
-        // sort fighters by index
-        VillageData.Instance.fighterEventDetails.Sort((x, y) => x.Index.CompareTo(y.Index));
-        foreach (var fighter in VillageData.Instance.fighterEventDetails)
+        foreach (var detail in combinedEventDetails)
         {
-            Role role = (Role)fighter.Role;
-            var prefab = PrefabMappings.NameToRoleMap[role];
-            if (fighter.CharacterId > 200)
+            if (detail is Hit)
             {
-                // enemy
-                //var enemy = Instantiate(prefabToPlace, placePosition, Quaternion.identity);
-                //enemies.Add(enemy);
+                Hit hit = (Hit)detail;
+                Debug.Log($"Event: {hit.GetType().Name}, Tick: {hit.Tick}, From: {hit.FromCharacterId}, To: {hit.ToCharacterId}, Damage: {hit.Damage}");
+                int fromIndex = (int)characterIdBindings[hit.FromCharacterId];
+                int toIndex = (int)characterIdBindings[hit.ToCharacterId];
+
+                if (hit.FromCharacterId > 200)
+                {
+                    // enemy
+                    yield return StartCoroutine(EnemyHit(fromIndex, toIndex, (int)hit.Damage));
+                }
+                else
+                {
+                    // ally
+                    yield return StartCoroutine(AllyHit(fromIndex, toIndex, (int)hit.Damage));
+                }
             }
-            else
+            else if (detail is Usage)
             {
-                // ally
-                //var ally = Instantiate(prefabToPlace, placePosition, Quaternion.identity);
-                //enemies.Add(ally);
+                Usage usage = (Usage)detail;
+                //Debug.Log($"Event: {usage.GetType().Name}, Tick: {usage.Tick}, CharacterId: {usage.CharacterId}, ItemId: {usage.ItemId}");
+
+            }
+            else if (detail is Talent)
+            {
+                Talent talent = (Talent)detail;
+                //Debug.Log($"Event: {talent.GetType().Name}, Tick: {talent.Tick}, CharacterId: {talent.CharacterId}, TalentId: {talent.TalentId}");
+
             }
         }
-        //StartCoroutine(FigthRoutine());
+        onCompleted?.Invoke();
+        yield return null;
     }
 
-    void Update()
+    IEnumerator AllyHit(int indexAlly, int indexEnemy, int dmg)
     {
+        yield return new WaitForSeconds(delay);
+        DealDamageEnemy(indexEnemy, dmg);
+        yield return new WaitForSeconds(delay);
+        ReceiveDamageAlly(indexAlly, dmg);
+    }
 
+    IEnumerator EnemyHit(int indexEnemy, int indexAlly, int dmg)
+    {
+        yield return new WaitForSeconds(delay);
+        DealDamageAlly(indexAlly, dmg);
+        yield return new WaitForSeconds(delay);
+        ReceiveDamageEnemy(indexEnemy, dmg);
     }
 
     // Ally methodes
@@ -163,9 +247,12 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-
     IEnumerator FigthRoutine()
     {
+        yield return new WaitForSeconds(delay);
+        DealDamageEnemy(0, 2);
+        yield return new WaitForSeconds(delay);
+        ReceiveDamageAlly(0, 2);
         yield return new WaitForSeconds(delay);
         DealDamageEnemy(0, 2);
         yield return new WaitForSeconds(delay);
@@ -179,7 +266,7 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         ReceiveDamageAlly(0, 2);
         yield return new WaitForSeconds(delay);
-        MoveAlly(1);
+        /*MoveAlly(1);
         MoveAlly(2);
         yield return new WaitForSeconds(delay);
         PowerUpAlly(1, 1);
@@ -205,7 +292,7 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         DealDamageAlly(2, 5);
         yield return new WaitForSeconds(delay);
-        ReceiveDamageEnemy(2, 5);
+        ReceiveDamageEnemy(2, 5);*/
 
 
     }

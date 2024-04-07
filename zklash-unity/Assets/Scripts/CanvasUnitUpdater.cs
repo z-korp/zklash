@@ -45,17 +45,17 @@ public class CanvasUnitUpdater : MonoBehaviour
     {
         string description = GetDescriptionBasedOnLevelAndPrefab(prefabName, unitLevel);
 
-        if (prefabName == "Archer")
+        if (prefabName.Contains("Archer"))
         {
             Sprite unitSprite = GetSpriteByName("Archer_Blue");
             SetUnitInfo(unitSprite, unitLevel.ToString(), "ARCHER", description);
         }
-        else if (prefabName == "Warrior_Blue")
+        else if (prefabName.Contains("Warrior"))
         {
             Sprite unitSprite = GetSpriteByName("Warrior_Blue");
             SetUnitInfo(unitSprite, unitLevel.ToString(), "KNIGHT", description);
         }
-        else if (prefabName == "Pawn")
+        else if (prefabName.Contains("Pawn"))
         {
             Sprite unitSprite = GetSpriteByName("Pawn_Blue");
             SetUnitInfo(unitSprite, unitLevel.ToString(), "PAWN", description);

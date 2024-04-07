@@ -37,6 +37,22 @@ public class TeamFetcher : MonoBehaviour
                 {
                     ElementData data = instance.GetComponent<ElementData>();
                     data.entity = spot.EntityContained;
+
+                    if (role == Role.Knight)
+                    {
+                        data.currentHealth = 3;
+                        data.currentDamage = 1;
+                    }
+                    else if (role == Role.Bowman)
+                    {
+                        data.currentHealth = 2;
+                        data.currentDamage = 2;
+                    }
+                    else if (role == Role.Pawn)
+                    {
+                        data.currentHealth = 2;
+                        data.currentDamage = 1;
+                    }
                 }
 
                 Debug.Log($"Instantiated prefab at {zoneGameObject.name}");

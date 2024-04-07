@@ -1,0 +1,20 @@
+kind = "DojoModel"
+class_hash = "0x22b755bbed6cbd4279862602b16e83153cdb896aaac1ee3dce2c11eaa76190a"
+original_class_hash = "0x22b755bbed6cbd4279862602b16e83153cdb896aaac1ee3dce2c11eaa76190a"
+abi = "manifests/dev/abis/base/models/zklash_models_player_player.json"
+name = "zklash::models::player::player"
+
+[[members]]
+name = "id"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "name"
+type = "felt252"
+key = false
+
+[[members]]
+name = "team_count"
+type = "u32"
+key = false

@@ -9,7 +9,10 @@ use zklash::roles::interface::{RoleTrait, Phase};
 impl RoleImpl of RoleTrait {
     #[inline(always)]
     fn health(phase: Phase, level: u8) -> u8 {
-        0
+        match phase {
+            Phase::OnHire => { 1 },
+            _ => 0,
+        }
     }
 
     #[inline(always)]

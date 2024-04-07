@@ -138,7 +138,7 @@ mod battle {
                         let mut event = event;
                         event.player_id = player.id.into();
                         event.team_id = team.id;
-                        emit!(world, (event,));
+                        emit!(world, (Event::Fighter(event)));
                     },
                     Option::None => { break; },
                 }
@@ -149,7 +149,7 @@ mod battle {
                         let mut event = event;
                         event.player_id = player.id.into();
                         event.team_id = team.id;
-                        emit!(world, (event,));
+                        emit!(world, (Event::Hit(event)));
                     },
                     Option::None => { break; },
                 }
@@ -160,7 +160,7 @@ mod battle {
                         let mut event = event;
                         event.player_id = player.id.into();
                         event.team_id = team.id;
-                        emit!(world, (event,));
+                        emit!(world, (Event::Stun(event)));
                     },
                     Option::None => { break; },
                 }
@@ -171,7 +171,7 @@ mod battle {
                         let mut event = event;
                         event.player_id = player.id.into();
                         event.team_id = team.id;
-                        emit!(world, (event,));
+                        emit!(world, (Event::Absorb(event)));
                     },
                     Option::None => { break; },
                 }
@@ -182,7 +182,7 @@ mod battle {
                         let mut event = event;
                         event.player_id = player.id.into();
                         event.team_id = team.id;
-                        emit!(world, (event,));
+                        emit!(world, (Event::Usage(event)));
                     },
                     Option::None => { break; },
                 }
@@ -193,7 +193,7 @@ mod battle {
                         let mut event = event;
                         event.player_id = player.id.into();
                         event.team_id = team.id;
-                        emit!(world, (event,));
+                        emit!(world, (Event::Talent(event)));
                     },
                     Option::None => { break; },
                 }

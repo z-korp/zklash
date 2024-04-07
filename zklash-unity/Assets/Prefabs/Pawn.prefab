@@ -200,16 +200,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexFromShop: 0
+  index: -1
   entity: 
   maxHealth: 10
   currentHealth: 3
+  currentDamage: 2
   animator: {fileID: 4569523674553832488}
   spriteRenderer: {fileID: 8753150383481289107}
   txtLife: {fileID: 3749020962830596209}
+  txtAttack: {fileID: 8566153420002911705}
   vfxHandler: {fileID: 9120059296598718034}
-  isInvicible: 0
-  invicibilityBlinkDuration: 0.2
-  invicibilityTimeAfterHit: 2
+  isBlinking: 0
+  blinkDuration: 0.2
+  blinkTimeAfterHit: 1
 --- !u!50 &1039956107568584100
 Rigidbody2D:
   serializedVersion: 4
@@ -421,3 +424,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6707804836854084844, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
   m_PrefabInstance: {fileID: 6960154974279689989}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8566153420002911705 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1618594593373061852, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
+  m_PrefabInstance: {fileID: 6960154974279689989}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1422990844300819237}
   m_Layer: 0
   m_Name: Archer
-  m_TagString: Mob
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -200,16 +200,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexFromShop: 0
+  index: -1
   entity: 
   maxHealth: 10
   currentHealth: 3
+  currentDamage: 2
   animator: {fileID: 4569523674553832488}
   spriteRenderer: {fileID: 8753150383481289107}
   txtLife: {fileID: 1102237089642557484}
+  txtAttack: {fileID: 5597353519593057668}
   vfxHandler: {fileID: 1351780870096012954}
-  isInvicible: 0
-  invicibilityBlinkDuration: 0.2
-  invicibilityTimeAfterHit: 2
+  isBlinking: 0
+  blinkDuration: 0.2
+  blinkTimeAfterHit: 1
 --- !u!50 &1422990844300819237
 Rigidbody2D:
   serializedVersion: 4
@@ -346,6 +349,17 @@ RectTransform:
 --- !u!114 &1102237089642557484 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6093443556408123252, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
+  m_PrefabInstance: {fileID: 6619073649775144792}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5597353519593057668 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1618594593373061852, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
   m_PrefabInstance: {fileID: 6619073649775144792}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

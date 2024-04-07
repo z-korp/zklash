@@ -12,6 +12,8 @@ public class ContractActions : MonoBehaviour
 {
     public static ContractActions instance;
 
+    public EventsFetcher eventsFetcher;
+
     [SerializeField] WorldManagerData dojoConfig;
 
     [SerializeField] MarketSystem marketSystem;
@@ -58,6 +60,17 @@ public class ContractActions : MonoBehaviour
         Debug.Log($"dojoConfig: {dojoConfig.worldAddress}");
         var txHash = await marketSystem.Hire(currentBurner, dojoConfig.worldAddress, player.team_count, index);
         Debug.Log($"[Hire] Transaction Hash: {txHash.Hex()}");
+    }
+
+    public static string RemoveLeadingZerosFromHex(string hex)
+    {
+        if (string.IsNullOrEmpty(hex) || !hex.StartsWith("0x"))
+        {
+            throw new ArgumentException("The input string is not a valid hexadecimal number.", nameof(hex));
+        }
+
+        // Remove the "0x" prefix, trim leading zeros, and then re-add the "0x" prefix.
+        return "0x" + hex.Substring(2).TrimStart('0');
     }
 
     public async void TriggerStartBattle()
@@ -134,5 +147,12 @@ public class ContractActions : MonoBehaviour
         Debug.Log($"[Hire] Transaction Hash: {txHash.Hex()}");
 
         await gameManager.provider.WaitForTransaction(txHash);
+
+        //eventFetcher.FetchEvents();
+        string eventSelector = "*";//"0x2e716cf114cb4ac634249799a5c2f6d92d29e1ffbabe1b53fd81dd04a93343d";
+        string playerId = player.id.Hex().ToString();
+        //string teamId = player.team_count.ToString();
+        //string battleId = "0x0";
+        eventsFetcher.FetchEventsOnce(new string[] { eventSelector, RemoveLeadingZerosFromHex(playerId), "0x1", "0x0" });
     }
 }

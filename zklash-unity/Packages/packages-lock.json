@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.lastabyss.simplegraphql": {
+      "version": "https://github.com/ngoninteractive/SimpleGraphQL-For-Unity.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "2.0.0"
+      },
+      "hash": "78d6962a171b2b27f7109bbdd6751f8af79d6b5b"
+    },
     "com.unity.2d.animation": {
       "version": "9.1.0",
       "depth": 1,

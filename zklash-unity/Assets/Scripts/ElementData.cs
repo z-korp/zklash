@@ -5,6 +5,6 @@ using UnityEngine;
 public class ElementData : MonoBehaviour
 {
     public uint indexFromShop;
-
+    public int index = -1;
     public string entity;
 }

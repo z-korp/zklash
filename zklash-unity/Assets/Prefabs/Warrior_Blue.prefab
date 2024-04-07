@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1234032042347397527}
   m_Layer: 0
   m_Name: Warrior_Blue
-  m_TagString: Player
+  m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,6 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexFromShop: 0
+  entity: 
 --- !u!50 &5389027940959983678
 Rigidbody2D:
   serializedVersion: 4

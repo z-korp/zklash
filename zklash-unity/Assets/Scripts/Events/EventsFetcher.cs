@@ -43,7 +43,7 @@ public class EventsFetcher : MonoBehaviour
     }
 
     // Method to fetch events once
-    public async Task FetchEventsOnce(string[] keys)
+    public async Task<List<EventNode>> FetchEventsOnce(string[] keys)
     {
         string formattedKeys = string.Join(",", Array.ConvertAll(keys, key => $"\"{key}\""));
         Debug.Log($"Formatted keys: {formattedKeys}");
@@ -104,18 +104,21 @@ public class EventsFetcher : MonoBehaviour
                     });
                 }
                 Debug.Log("Events fetched successfully.");
-                ParseEvents(eventNodes); // Call to your new parsing method
+                return eventNodes; // Return the list of EventNode directly
             }
             else
             {
                 Debug.Log("No events found.");
+                return new List<EventNode>();
             }
         }
         catch (Exception ex)
         {
             Debug.LogError($"Failed to fetch events: {ex.Message}");
+            return new List<EventNode>();
         }
     }
+
 
     private void ParseEvents(List<EventNode> edges)
     {

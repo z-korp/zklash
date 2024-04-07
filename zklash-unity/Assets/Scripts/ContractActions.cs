@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System;
+using System.Threading.Tasks;
+
 
 public class ContractActions : MonoBehaviour
 {
@@ -147,12 +149,65 @@ public class ContractActions : MonoBehaviour
         Debug.Log($"[Hire] Transaction Hash: {txHash.Hex()}");
 
         await gameManager.provider.WaitForTransaction(txHash);
+        await Task.Delay(1000);
 
-        //eventFetcher.FetchEvents();
-        string eventSelector = "*";//"0x2e716cf114cb4ac634249799a5c2f6d92d29e1ffbabe1b53fd81dd04a93343d";
         string playerId = player.id.Hex().ToString();
-        //string teamId = player.team_count.ToString();
-        //string battleId = "0x0";
-        eventsFetcher.FetchEventsOnce(new string[] { eventSelector, RemoveLeadingZerosFromHex(playerId), "0x1", "0x0" });
+
+        List<string> hitEventDetails = new List<string>();
+        List<string> fighterEventDetails = new List<string>();
+        List<string> stunEventDetails = new List<string>();
+        List<string> absorbEventDetails = new List<string>();
+        List<string> usageEventDetails = new List<string>();
+        List<string> talentEventDetails = new List<string>();
+
+        EventParser parser = new EventParser();
+
+        // Fetch and process "Hit" events
+        var hitEvents = await eventsFetcher.FetchEventsOnce(new string[] { "0x33f1adaeb6b7468c983c7285a0776514bd4bc3082362e9ead4211d605daf6fa", RemoveLeadingZerosFromHex(playerId), "0x1", "0x0" });
+        foreach (var eventNode in hitEvents)
+        {
+            // Process each hit event here and store details in hitEventDetails if necessary
+            parser.ProcessNode(eventNode.node.id, eventNode.node.keys, eventNode.node.data, eventNode.node.createdAt, eventNode.node.transactionHash);
+        }
+
+        var stunEvents = await eventsFetcher.FetchEventsOnce(new string[] { "0x2726959cf68d0c5db668fc83c0d2dba1219eac773ca2dcbc132751349bc56b1", RemoveLeadingZerosFromHex(playerId), "0x1", "0x0" });
+        foreach (var eventNode in stunEvents)
+        {
+            // Process each stun event here and store details in stunEventDetails if necessary
+            parser.ProcessNode(eventNode.node.id, eventNode.node.keys, eventNode.node.data, eventNode.node.createdAt, eventNode.node.transactionHash);
+        }
+
+        var absorbEvents = await eventsFetcher.FetchEventsOnce(new string[] { "0x1fa8f09733b3238e24214d0467ad01fb18a7a487aeee6341fb65b8a65a9f0ec", RemoveLeadingZerosFromHex(playerId), "0x1", "0x0" });
+        foreach (var eventNode in absorbEvents)
+        {
+            // Process each absorb event here and store details in absorbEventDetails if necessary
+            parser.ProcessNode(eventNode.node.id, eventNode.node.keys, eventNode.node.data, eventNode.node.createdAt, eventNode.node.transactionHash);
+        }
+
+        var usageEvents = await eventsFetcher.FetchEventsOnce(new string[] { "0x31dc5bb49c81bb56051cf4df0b97da231ab1dc494fd966e87d79dccf76f4244", RemoveLeadingZerosFromHex(playerId), "0x1", "0x0" });
+        foreach (var eventNode in usageEvents)
+        {
+            parser.ProcessNode(eventNode.node.id, eventNode.node.keys, eventNode.node.data, eventNode.node.createdAt, eventNode.node.transactionHash);
+        }
+
+        var talentEvents = await eventsFetcher.FetchEventsOnce(new string[] { "0x24adf676f72d49020e56880b277e37210699f6b1c3822f9401e727754aa8a49", RemoveLeadingZerosFromHex(playerId), "0x1", "0x0" });
+        foreach (var eventNode in talentEvents)
+        {
+            parser.ProcessNode(eventNode.node.id, eventNode.node.keys, eventNode.node.data, eventNode.node.createdAt, eventNode.node.transactionHash);
+        }
+
+        var fighterEvents = await eventsFetcher.FetchEventsOnce(new string[] { "0x2e716cf114cb4ac634249799a5c2f6d92d29e1ffbabe1b53fd81dd04a93343d", RemoveLeadingZerosFromHex(playerId), "0x1", "0x0" });
+        foreach (var eventNode in fighterEvents)
+        {
+            parser.ProcessNode(eventNode.node.id, eventNode.node.keys, eventNode.node.data, eventNode.node.createdAt, eventNode.node.transactionHash);
+        }
+
+        Debug.Log("Battle events fetched and processed.");
+        Debug.Log("Hit events: " + hitEventDetails.Count);
+        Debug.Log("Stun events: " + stunEventDetails.Count);
+        Debug.Log("Absorb events: " + absorbEventDetails.Count);
+        Debug.Log("Usage events: " + usageEventDetails.Count);
+        Debug.Log("Talent events: " + talentEventDetails.Count);
+        Debug.Log("Fighter events: " + fighterEventDetails.Count);
     }
 }

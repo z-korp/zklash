@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ElementData : MonoBehaviour
 {
@@ -15,16 +16,37 @@ public class ElementData : MonoBehaviour
 
     public SpriteRenderer spriteRenderer;
 
+    public TextMeshProUGUI txtLife;
+
+    public GameObject vfxHandler;
+
     public bool isInvicible = false;
     public float invicibilityBlinkDuration = 0.2f;
     public float invicibilityTimeAfterHit = 2f;
 
+
+
+    void Start()
+    {
+        if (gameObject.CompareTag("Enemy"))
+        {
+            SetTextHealth(currentHealth);
+        }
+        else
+        {
+
+        }
+    }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
             TakeDamage(2);
+            if (gameObject.CompareTag("Enemy"))
+            {
+                vfxHandler.GetComponent<VfxManager>().PlayExplodeVFX();
+            }
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -44,11 +66,18 @@ public class ElementData : MonoBehaviour
         // Verifier si le joueur est mort
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
+            SetTextHealth(currentHealth);
             Death();
+            //gameObject.SetActive(false);
             return;
         }
         else
         {
+            if (gameObject.CompareTag("Enemy"))
+            {
+                SetTextHealth(currentHealth);
+            }
             isInvicible = true;
             StartCoroutine(InvincibilityFlash());
             StartCoroutine(HandleInvincibilityDelay());
@@ -82,7 +111,6 @@ public class ElementData : MonoBehaviour
 
     public void StopAnimAttack()
     {
-        // TBD: Update text from health bar
         animator.SetTrigger("Attack");
     }
 
@@ -96,12 +124,17 @@ public class ElementData : MonoBehaviour
         {
             currentHealth += amount;
         }
-        // TBD: Update text from health bar
+        SetTextHealth(currentHealth);
 
     }
 
     public void Death()
     {
         animator.SetTrigger("Death");
+    }
+
+    public void SetTextHealth(int amount)
+    {
+        txtLife.text = amount.ToString();
     }
 }

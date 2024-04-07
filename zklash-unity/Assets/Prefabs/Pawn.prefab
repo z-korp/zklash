@@ -210,6 +210,7 @@ MonoBehaviour:
   txtLife: {fileID: 3749020962830596209}
   txtAttack: {fileID: 8566153420002911705}
   vfxHandler: {fileID: 9120059296598718034}
+  canvas: {fileID: 4404037053972007126}
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
@@ -419,6 +420,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4404037053972007126 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6739980230971305939, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
+  m_PrefabInstance: {fileID: 6960154974279689989}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4431991627234300905 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6707804836854084844, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}

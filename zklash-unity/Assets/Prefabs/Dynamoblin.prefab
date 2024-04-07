@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.991, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7262039287043887409}
@@ -192,6 +192,7 @@ MonoBehaviour:
   txtLife: {fileID: 4044559087075912294}
   txtAttack: {fileID: 8847053849529890766}
   vfxHandler: {fileID: 5196115702729004764}
+  canvas: {fileID: 3546676935081237185}
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
@@ -394,6 +395,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
+--- !u!1 &3546676935081237185 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6739980230971305939, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
+  m_PrefabInstance: {fileID: 7832159625341678866}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3577972857712411134 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6707804836854084844, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}

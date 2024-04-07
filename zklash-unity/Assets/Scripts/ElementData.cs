@@ -23,6 +23,8 @@ public class ElementData : MonoBehaviour
 
     public GameObject vfxHandler;
 
+    public GameObject canvas;
+
     public bool isBlinking = false;
     public float blinkDuration = 0.2f;
     public float blinkTimeAfterHit = 1f;
@@ -31,14 +33,8 @@ public class ElementData : MonoBehaviour
 
     void Start()
     {
-        if (gameObject.CompareTag("Enemy"))
-        {
-            SetTextHealth(currentHealth);
-        }
-        else
-        {
-
-        }
+        SetTextHealth(currentHealth);
+        SetTextAttack(currentDamage);
     }
 
     void Update()
@@ -107,7 +103,7 @@ public class ElementData : MonoBehaviour
     {
 
         currentDamage += amount;
-        SetTextHealth(currentDamage);
+        SetTextAttack(currentDamage);
 
         isBlinking = true;
         StartCoroutine(BlinkPowerUpFlash());
@@ -134,11 +130,17 @@ public class ElementData : MonoBehaviour
     public void Death()
     {
         animator.SetTrigger("Death");
+        canvas.SetActive(false);
     }
 
     public void SetTextHealth(int amount)
     {
         txtLife.text = amount.ToString();
+    }
+
+    public void SetTextAttack(int amount)
+    {
+        txtAttack.text = amount.ToString();
     }
 
     public IEnumerator BlinkPowerUpFlash()

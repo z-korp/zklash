@@ -1,0 +1,50 @@
+kind = "DojoModel"
+class_hash = "0x52e1ae973db9c7a87e705aec61e089eff17d803e07cc5152dc40c2fbf6a71db"
+original_class_hash = "0x52e1ae973db9c7a87e705aec61e089eff17d803e07cc5152dc40c2fbf6a71db"
+abi = "manifests/dev/abis/base/models/zklash_models_team_team.json"
+name = "zklash::models::team::team"
+
+[[members]]
+name = "player_id"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "id"
+type = "u32"
+key = true
+
+[[members]]
+name = "seed"
+type = "felt252"
+key = false
+
+[[members]]
+name = "nonce"
+type = "felt252"
+key = false
+
+[[members]]
+name = "gold"
+type = "u32"
+key = false
+
+[[members]]
+name = "health"
+type = "u32"
+key = false
+
+[[members]]
+name = "level"
+type = "u8"
+key = false
+
+[[members]]
+name = "character_count"
+type = "u8"
+key = false
+
+[[members]]
+name = "battle_id"
+type = "u8"
+key = false

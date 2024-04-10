@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -1434053531911401733}
   - component: {fileID: 1039956107568584100}
   - component: {fileID: 7394533514395470957}
-  - component: {fileID: 6880896942866403515}
+  - component: {fileID: 4500970693168511666}
   m_Layer: 0
   m_Name: Pawn
   m_TagString: Mob
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 2192907515555227593}
---- !u!114 &6880896942866403515
+--- !u!114 &4500970693168511666
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7526038476407582817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18ae75880cb054fcb91a897b73d82805, type: 3}
+  m_Script: {fileID: 11500000, guid: fa1ca82b12fd749c3bc5774449a26bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 8300000, guid: a652bc54200c043a28ec84f0d38470e2, type: 3}

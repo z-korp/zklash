@@ -89,7 +89,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.016666668
-    functionName: PlayAttackArcherSound
+    functionName: PlayAttackSound
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

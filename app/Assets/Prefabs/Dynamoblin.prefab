@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5119562565659632083}
   - component: {fileID: 9064048037241660876}
   - component: {fileID: 5535904283382871288}
-  - component: {fileID: 6111887428919254946}
+  - component: {fileID: 4319819171561303866}
   m_Layer: 0
   m_Name: Dynamoblin
   m_TagString: Enemy
@@ -227,7 +227,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6111887428919254946
+--- !u!114 &4319819171561303866
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3616953106443787091}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aef08caba1a741578997b0a969eeb31, type: 3}
+  m_Script: {fileID: 11500000, guid: fa1ca82b12fd749c3bc5774449a26bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 8300000, guid: 4b85fcf7cda9b4354a8f3213d630e79a, type: 3}

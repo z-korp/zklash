@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5287114801269858022}
   - component: {fileID: 4369952106558740638}
   - component: {fileID: 4114133524138475952}
-  - component: {fileID: 8830843773231208421}
+  - component: {fileID: 4308000117875194057}
   m_Layer: 0
   m_Name: Bomboblin
   m_TagString: Enemy
@@ -222,7 +222,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8830843773231208421
+--- !u!114 &4308000117875194057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4565273498285202334}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27a09b37e11e54e6f8f2d4a1a32ca842, type: 3}
+  m_Script: {fileID: 11500000, guid: fa1ca82b12fd749c3bc5774449a26bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 8300000, guid: a089d24e2e3d0456aa3eeb1a405016f3, type: 3}

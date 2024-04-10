@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4839069381135324523}
   - component: {fileID: 634524516086548021}
   - component: {fileID: 4104212305022181693}
+  - component: {fileID: 4150198432033238275}
   m_Layer: 0
   m_Name: Torchoblin
   m_TagString: Enemy
@@ -237,6 +238,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef517f77de9b74d42ac86e0581caa360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackTorchoblinSound: {fileID: 0}
+--- !u!114 &4150198432033238275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971632552838307129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa1ca82b12fd749c3bc5774449a26bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 8300000, guid: 38fd20c721e7544d5ba886fe23b67b3e, type: 3}

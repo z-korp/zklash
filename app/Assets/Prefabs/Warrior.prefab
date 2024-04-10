@@ -92,9 +92,9 @@ GameObject:
   - component: {fileID: 5389027940959983678}
   - component: {fileID: 1234032042347397527}
   - component: {fileID: 2989463505962362010}
-  - component: {fileID: 2632868461452710512}
+  - component: {fileID: -8194320957344741318}
   m_Layer: 0
-  m_Name: Warrior_Blue
+  m_Name: Warrior
   m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 8146747496543787672}
---- !u!114 &2632868461452710512
+--- !u!114 &-8194320957344741318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7526038476407582817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 549481bccd354482db7543edf481832d, type: 3}
+  m_Script: {fileID: 11500000, guid: fa1ca82b12fd749c3bc5774449a26bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 8300000, guid: b7911476e8ec04c8dae5a086b7c78472, type: 3}

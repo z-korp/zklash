@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: zKorp
-  productName: zklash-unity
+  productName: app
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -629,14 +629,14 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: zklash-unity
+  metroPackageName: app
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: zklash-unity
+  metroApplicationDescription: app
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -707,7 +707,7 @@ PlayerSettings:
   cloudProjectId: 7fba8c26-dfef-475a-925c-206de8124e31
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: zklash-unity 2024-04-05_09-37-58
+  projectName: app 2024-04-05_09-37-58
   organizationId: unity_950f9748d969776a3300
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

@@ -18,6 +18,11 @@ GameObject:
   - component: {fileID: 1422990844300819237}
   - component: {fileID: 4189336186093714446}
   - component: {fileID: 571462470347713988}
+  - component: {fileID: 2256946722988703079}
+  - component: {fileID: 9201970892224235183}
+  - component: {fileID: 4552967640662640120}
+  - component: {fileID: 3451549602337854142}
+  - component: {fileID: 5118835483282909340}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Mob
@@ -272,7 +277,78 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1ca82b12fd749c3bc5774449a26bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSound: {fileID: 8300000, guid: 95cbafff9073f44e8942234ef9c87681, type: 3}
+  attackArcherSound: {fileID: 0}
+--- !u!114 &9201970892224235183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _objectReferences: []
+--- !u!114 &4552967640662640120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9684b67ec91b34865ab6607ca07a01e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobData: {fileID: 0}
+  animator: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  txtLife: {fileID: 0}
+  vfxHandler: {fileID: 0}
+  canvas: {fileID: 0}
+  isBlinking: 0
+  blinkDuration: 0.2
+  blinkTimeAfterHit: 1
+--- !u!114 &3451549602337854142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c881191a9f44612a56a82ac65c5534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  rb: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+--- !u!114 &5118835483282909340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac88512a89d3940fabcab20d5796945b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  animator: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  txtAttack: {fileID: 0}
+  isBlinking: 0
+  blinkDuration: 0.2
+  blinkTimeAfterHit: 1
 --- !u!1001 &3644808349410388790
 PrefabInstance:
   m_ObjectHideFlags: 0

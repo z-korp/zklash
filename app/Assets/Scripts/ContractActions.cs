@@ -242,6 +242,6 @@ public class ContractActions : MonoBehaviour
         VillageData.Instance.talentEventDetails = talentEventDetails;
 
         // Display CombatScene
-        SceneManager.LoadScene("BattleScene");
+        SceneManager.LoadScene("Battle");
     }
 }

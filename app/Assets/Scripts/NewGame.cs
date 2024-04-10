@@ -17,7 +17,7 @@ public class NewGame : MonoBehaviour
             string playerName = inputFieldTMP.text;
             GameManager.Instance.TriggerCreatePlayAsync(playerName);
 
-            SceneManager.LoadScene("ShopScene");
+            SceneManager.LoadScene("Shop");
         }
     }
 }

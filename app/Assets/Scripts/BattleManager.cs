@@ -49,7 +49,7 @@ public class BattleManager : MonoBehaviour
             StartCoroutine(StartBattle(() =>
                     {
                         // Code to execute after the coroutine finishes
-                        SceneManager.LoadScene("ShopScene");
+                        SceneManager.LoadScene("Shop");
                     }));
         }
     }

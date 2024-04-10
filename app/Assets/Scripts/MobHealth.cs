@@ -23,14 +23,6 @@ public class MobHealth : MonoBehaviour
         SetTextHealth(health);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            HealPlayer(1);
-        }
-    }
-
     public bool TakeDamage(int amount)
     {
         health -= amount;

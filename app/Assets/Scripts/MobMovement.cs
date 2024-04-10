@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MobMovement : MonoBehaviour
 {
     public int speed;
-    public Transform target;
+    private readonly List<Transform> targets = new();
     public Rigidbody2D rb;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
@@ -15,28 +16,29 @@ public class MobMovement : MonoBehaviour
         // Translate from the current transform position to the target transform position at a specified speed
         // Aplly an easing effect to the movement In and Out
         // Then clear the target
-        if (target != null)
+        if (targets.Count != 0)
         {
+            Transform target = targets[0];
             Vector3 direction = target.position - transform.position;
             Flip(direction.x);
             if (Mathf.Abs(direction.x) > epsilon)
             {
                 animator.SetBool("IsWalking", true);
                 // rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, Time.deltaTime);
-                transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
+                transform.Translate(speed * Time.deltaTime * direction.normalized, Space.World);
             }
             else
             {
                 animator.SetBool("IsWalking", false);
                 rb.velocity = Vector3.zero;
-                target = null;
+                targets.RemoveAt(0);
             }
         }
     }
     
     public void Move(Transform _target)
     {
-        target = _target;
+        targets.Add(_target);
     }
 
     void Flip(float _movement)

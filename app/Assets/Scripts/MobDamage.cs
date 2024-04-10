@@ -20,14 +20,6 @@ public class MobDamage : MonoBehaviour
         SetTextAttack(damage);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            DealDamage(1);
-        }
-    }
-
     public void DealDamage(int amount)
     {
         animator.SetTrigger("Attack");

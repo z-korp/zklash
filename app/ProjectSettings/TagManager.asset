@@ -8,6 +8,7 @@ TagManager:
   - Ally
   - Enemy
   - Item
+  - DroppableZone
   layers:
   - Default
   - TransparentFX

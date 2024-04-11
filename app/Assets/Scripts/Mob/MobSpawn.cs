@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawn : MonoBehaviour
+public class MobSpawn : MonoBehaviour
 {
     public Role role;
-    private GameObject mob;
+    private GameObject mobObject;
     
     void Update()
     {
         if (role != Role.None)
         {
-            if (mob != null)
+            if (mobObject != null)
             {
-                Destroy(mob);
+                Destroy(mobObject);
             }
-            mob = MobFactory.instance.Create(role, transform);
+            mobObject = MobManager.instance.Create(role, transform);
             role = Role.None;
         }
     }

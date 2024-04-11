@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MobData", menuName = "MobData")]
+[CreateAssetMenu(fileName = "MobData", menuName = "Mob/MobData")]
 public class MobData : ScriptableObject
 {
     public int id;

@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 5536078236386406108}
   - component: {fileID: 4839069381135324523}
   - component: {fileID: 634524516086548021}
-  - component: {fileID: 4104212305022181693}
   - component: {fileID: 4150198432033238275}
+  - component: {fileID: 908491819400762038}
+  - component: {fileID: 1469513408296575766}
   m_Layer: 0
   m_Name: Torchoblin
   m_TagString: Enemy
@@ -228,19 +229,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4104212305022181693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4971632552838307129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef517f77de9b74d42ac86e0581caa360, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackTorchoblinSound: {fileID: 0}
 --- !u!114 &4150198432033238275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +242,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 8300000, guid: 38fd20c721e7544d5ba886fe23b67b3e, type: 3}
+--- !u!114 &908491819400762038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971632552838307129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2e990f043944dbb99f8e1951249396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobData: {fileID: 11400000, guid: 1a8d2415a8acc4f16b39585db330d4f0, type: 2}
+  txtAttack: {fileID: 6406592790535967106}
+  isBlinking: 0
+  blinkDuration: 0.2
+  blinkTimeAfterHit: 1
+  target: {fileID: 0}
+--- !u!114 &1469513408296575766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971632552838307129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9684b67ec91b34865ab6607ca07a01e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobData: {fileID: 11400000, guid: 1a8d2415a8acc4f16b39585db330d4f0, type: 2}
+  txtLife: {fileID: 1877701594120604714}
+  canvas: {fileID: 1375732350156291213}
+  isBlinking: 0
+  blinkDuration: 0.2
+  blinkTimeAfterHit: 1
 --- !u!1001 &738343669645317148
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -93,6 +93,8 @@ GameObject:
   - component: {fileID: 1234032042347397527}
   - component: {fileID: 2989463505962362010}
   - component: {fileID: -8194320957344741318}
+  - component: {fileID: 1854110326139120505}
+  - component: {fileID: 4041850376886812023}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Mob
@@ -348,6 +350,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 8300000, guid: b7911476e8ec04c8dae5a086b7c78472, type: 3}
+--- !u!114 &1854110326139120505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2e990f043944dbb99f8e1951249396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobData: {fileID: 11400000, guid: 33539ea9a0ac547c3a4c92970b997573, type: 2}
+  txtAttack: {fileID: 2837798910189757624}
+  isBlinking: 0
+  blinkDuration: 0.2
+  blinkTimeAfterHit: 1
+  target: {fileID: 0}
+--- !u!114 &4041850376886812023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9684b67ec91b34865ab6607ca07a01e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobData: {fileID: 11400000, guid: 33539ea9a0ac547c3a4c92970b997573, type: 2}
+  txtLife: {fileID: 7316034404455692560}
+  canvas: {fileID: 7826900362793863607}
+  isBlinking: 0
+  blinkDuration: 0.2
+  blinkTimeAfterHit: 1
 --- !u!1001 &662944998919359772
 PrefabInstance:
   m_ObjectHideFlags: 0

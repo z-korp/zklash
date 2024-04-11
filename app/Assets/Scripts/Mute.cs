@@ -1,10 +1,8 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-using System.Data.Common;
 
-public class Mute : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class Mute : MonoBehaviour
 {
     public Image _imageBtn;
     public Image _imageMute;
@@ -13,16 +11,6 @@ public class Mute : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public AudioMixer audioMixer;
 
     private bool isMuted = false;
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-
-    }
 
     public void MuteUnmuteVolume()
     {

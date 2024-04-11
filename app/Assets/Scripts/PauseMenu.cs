@@ -27,7 +27,19 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    void Paused()
+    public void ToggleMenu()
+    {
+        if (gameIsPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            Paused();
+        }
+    }
+
+    public void Paused()
     {
         // Activer notre menu de pause
         pauseMenuUI.SetActive(true);

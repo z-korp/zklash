@@ -179,7 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initPos: {x: 0, y: 0, z: 0}
   isFromShop: 1
-  indexFromShop: 0
+  index: 0
   animator: {fileID: 4569523674553832488}
 --- !u!114 &2761097008875629303
 MonoBehaviour:
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36fb19009957446d99c8529dc99a3a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indexFromShop: 0
+  index: 0
   index: -1
   entity: 
   mobData: {fileID: 11400000, guid: b17c77933520f4a9d814db28787f9260, type: 2}

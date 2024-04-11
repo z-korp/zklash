@@ -177,8 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9a0cc452dc94fb683f714408cc1779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicatorPrefab: {fileID: 3179098151685365424, guid: e101c69d01f4ff24a9ac04aa6ff8fe0f, type: 3}
-  targets: []
   initPos: {x: 0, y: 0, z: 0}
   isFromShop: 1
   animator: {fileID: 4569523674553832488}

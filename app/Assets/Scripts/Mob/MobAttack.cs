@@ -2,8 +2,8 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
-public class MobDamage : MonoBehaviour
-{    
+public class MobAttack : MonoBehaviour
+{
     public int damage;
 
     public Animator animator;
@@ -15,6 +15,9 @@ public class MobDamage : MonoBehaviour
     public float blinkDuration = 0.2f;
     public float blinkTimeAfterHit = 1f;
 
+    [HideInInspector]
+    public MobHealth target;
+
     void Start()
     {
         SetTextAttack(damage);
@@ -23,6 +26,11 @@ public class MobDamage : MonoBehaviour
     public void DealDamage(int amount)
     {
         animator.SetTrigger("Attack");
+    }
+
+    public void TriggerDamageOnTarget()
+    {
+        target.TakeDamage(damage);
     }
 
     public void IncreaseDamage(int amount)

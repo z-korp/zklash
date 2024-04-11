@@ -41,11 +41,6 @@ public class MobHealth : MonoBehaviour
         return false;
     }
 
-    public void DealDamage()
-    {
-        animator.SetTrigger("Attack");
-    }
-
     public void HealPlayer(int amount)
     {
         health += amount;

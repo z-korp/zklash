@@ -7,7 +7,6 @@ public class CustomCursor : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Cursor texture: " + cursorTexture.width);
         Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto);
     }
 }

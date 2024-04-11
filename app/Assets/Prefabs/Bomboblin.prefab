@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2389760385310208008}
   - component: {fileID: 6299402786898010029}
   - component: {fileID: 8241610283200433622}
-  - component: {fileID: 8320017242283200109}
   - component: {fileID: 5287114801269858022}
   - component: {fileID: 4369952106558740638}
   - component: {fileID: 4114133524138475952}
@@ -113,23 +112,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8320017242283200109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4565273498285202334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a9a0cc452dc94fb683f714408cc1779, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indicatorPrefab: {fileID: 0}
-  targets: []
-  initPos: {x: 0, y: 0, z: 0}
-  isFromShop: 1
-  animator: {fileID: 0}
 --- !u!58 &5287114801269858022
 CircleCollider2D:
   m_ObjectHideFlags: 0

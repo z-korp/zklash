@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 3101395059832571986}
   - component: {fileID: 9043669772713116572}
   - component: {fileID: 6125002363066190232}
+  - component: {fileID: 7076237271828842103}
   m_Layer: 0
   m_Name: DroppableZone
-  m_TagString: Untagged
+  m_TagString: DroppableZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,3 +144,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d48c3c8844341499d89355f3d1595402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onZone: 
+--- !u!114 &7076237271828842103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105265753552325528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67738539d1b60405897f483e90df2f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicatorPrefab: {fileID: 3179098151685365424, guid: e101c69d01f4ff24a9ac04aa6ff8fe0f, type: 3}
+  target: {fileID: 6171378583013750175}

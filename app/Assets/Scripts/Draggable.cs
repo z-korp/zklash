@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 
 public class Draggable : MonoBehaviour
 {
-    public GameObject indicatorPrefab; // Référence au préfab de la flèche
-    public Transform[] targets; // Les cibles vers lesquelles les flèches vont pointer
-
-    private List<GameObject> indicators = new List<GameObject>();
+    //public GameObject indicatorPrefab; // Référence au préfab de la flèche
+    //public Transform[] targets; // Les cibles vers lesquelles les flèches vont pointer
+    //private List<GameObject> indicators = new List<GameObject>();
 
     bool drag;
     public Vector3 initPos = Vector3.zero;
@@ -19,11 +17,22 @@ public class Draggable : MonoBehaviour
 
     public Animator animator;
 
+    private GameObject[] droppableZones;
+
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         UpdateDropTargets();
+
+        droppableZones = GameObject.FindGameObjectsWithTag("DroppableZone");
+
+        // Trouvez le gestionnaire d'indicateurs dans la scène
+        // indicatorManager = FindObjectOfType<IndicatorManager>();
+        // if (indicatorManager == null)
+        // {
+        //     Debug.LogError("IndicatorManager not found in the scene.");
+        // }
     }
 
     private void Update()
@@ -47,14 +56,16 @@ public class Draggable : MonoBehaviour
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
 
-        CreateIndicators();
+        CreateAllIndicators();
     }
 
     private void OnMouseUp()
     {
         drag = false;
         animator.SetBool("IsWalking", false);
-        DestroyIndicators();
+
+        DestroyAllIndicators();
+
         if (currentDroppableZone != null && currentDroppableZone.CanBeDropped())
         {
             string zoneName = currentDroppableZone.gameObject.name;
@@ -123,61 +134,10 @@ public class Draggable : MonoBehaviour
         }
 
         // Convertissez la liste en tableau et affectez-la à targets
-        targets = validDropTargets.ToArray();
+        //if (indicatorManager != null)
+        //indicatorManager.targets = validDropTargets.ToArray();
         // Debug.Log("Updated targets with " + targets.Length + " valid drop targets.");
     }
-
-    private void CreateIndicators()
-    {
-        foreach (Transform target in targets)
-        {
-            GameObject indicator = Instantiate(indicatorPrefab, target.position, Quaternion.identity);
-            indicators.Add(indicator);
-            StartCoroutine(AnimateIndicator(indicator.transform));
-            // Debug.Log("Created indicator for target: " + target.name);
-        }
-    }
-
-    private IEnumerator AnimateIndicator(Transform indicatorTransform)
-    {
-        // Valeurs pour l'animation de scale up et scale down
-        float duration = 0.5f; // Durée d'un cycle
-        Vector3 scaleUp = new Vector3(1.5f, 1.5f, 1f); // Taille maximale
-        Vector3 scaleDown = new Vector3(1.2f, 1.2f, 1f); // Taille minimale
-
-        while (indicatorTransform != null)
-        {
-            // Scale up
-            float timer = 0f;
-            while (timer <= duration)
-            {
-                indicatorTransform.localScale = Vector3.Lerp(indicatorTransform.localScale, scaleUp, timer / duration);
-                timer += Time.deltaTime;
-                yield return null;
-            }
-
-            // Scale down
-            timer = 0f;
-            while (timer <= duration)
-            {
-                indicatorTransform.localScale = Vector3.Lerp(indicatorTransform.localScale, scaleDown, timer / duration);
-                timer += Time.deltaTime;
-                yield return null;
-            }
-        }
-    }
-
-    private void DestroyIndicators()
-    {
-        foreach (GameObject indicator in indicators)
-        {
-            StopAllCoroutines(); // Arrête toutes les coroutines en cours pour cet objet
-            Destroy(indicator);
-        }
-        indicators.Clear();
-    }
-
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -194,6 +154,37 @@ public class Draggable : MonoBehaviour
         if (zone == currentDroppableZone)
         {
             currentDroppableZone = null;
+        }
+    }
+
+    // Indicator methods
+    private void DestroyAllIndicators()
+    {
+        if (droppableZones != null && droppableZones.Length > 0)
+        {
+            foreach (GameObject zone in droppableZones)
+            {
+                IndicatorManager indicatorManager = zone.GetComponent<IndicatorManager>();
+                if (indicatorManager != null)
+                {
+                    indicatorManager.DestroyIndicator();
+                }
+            }
+        }
+    }
+
+    private void CreateAllIndicators()
+    {
+        if (droppableZones != null && droppableZones.Length > 0)
+        {
+            foreach (GameObject zone in droppableZones)
+            {
+                IndicatorManager indicatorManager = zone.GetComponent<IndicatorManager>();
+                if (indicatorManager != null)
+                {
+                    indicatorManager.CreateIndicator();
+                }
+            }
         }
     }
 

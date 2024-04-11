@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MobDraggable : MonoBehaviour
@@ -132,13 +131,7 @@ public class MobDraggable : MonoBehaviour
 
         foreach (DroppableZone zone in allDroppableZones)
         {
-            // Debug.Log("Checking droppable zone: " + zone.name);
-            string zoneName = zone.name;
-            string idString = zoneName.Split('_')[1]; // Split the name by '_' and take the second part
-            int zoneId = int.Parse(idString); // Convert the ID part to an integer
-            // Debug.Log("Zone ID: " + zoneId);
-            // Debug.Log("Is available: " + VillageData.Instance.Spots[zoneId].IsAvailable);
-            if (VillageData.Instance.Spots[zoneId].IsAvailable)
+            if (VillageData.Instance.Spots[zone.index].IsAvailable)
             {
                 validDropTargets.Add(zone.transform); // Ajoutez le Transform si la zone est valide
                 // Debug.Log("Added a valid drop target: " + zone.transform.name);

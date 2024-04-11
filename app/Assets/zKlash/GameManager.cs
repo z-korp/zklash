@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log(">>>>>>>>>>>> Current character information stored.");
                 PlayerData.Instance.characterEntities.Add(entity.name);
-                VillageData.Instance.UpdateFirstAvailableSpot(entity.name);
+                VillageData.Instance.UpdateFirstAvailableSpot((Role)characterComponent.role);
             }
             //PlayerData.Instance.teamEntity = entity.name;
         }

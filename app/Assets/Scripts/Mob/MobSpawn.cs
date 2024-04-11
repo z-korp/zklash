@@ -21,7 +21,7 @@ public class MobSpawn : MonoBehaviour
             if (index != -1)
             {
                 mobDraggable.isFromShop = true;
-                mobDraggable.indexFromShop = (uint)index;
+                mobDraggable.index = index;
             } else {
                 mobDraggable.isFromShop = false;
             }

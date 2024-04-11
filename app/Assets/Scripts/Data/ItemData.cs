@@ -10,5 +10,6 @@ public class ItemData : ScriptableObject
     public int damage;
     public int absorb;
     public Sprite image;
+    public Item item;
 
 }

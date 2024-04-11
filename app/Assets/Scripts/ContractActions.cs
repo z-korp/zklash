@@ -112,7 +112,8 @@ public class ContractActions : MonoBehaviour
         foreach (var data in orderedMobDataList)
         {
             var entity = VillageData.Instance.Spots[data.index].EntityContained;
-            orderedEntities.Add(entity);
+            // FIXME: what is a string entity?
+            // orderedEntities.Add(entity);
             Debug.Log($"Ordered Mob Entity: {entity}, Index: {data.index}");
         }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MobDraggable : MonoBehaviour
@@ -11,7 +12,7 @@ public class MobDraggable : MonoBehaviour
     public Vector3 initPos = Vector3.zero;
 
     public bool isFromShop = true;
-    public uint indexFromShop;
+    public int index;
 
     private Rigidbody2D rb;
     private DroppableZone currentDroppableZone;
@@ -19,6 +20,7 @@ public class MobDraggable : MonoBehaviour
     public Animator animator;
 
     private GameObject[] droppableZones;
+    private Vector3 offset = new(0, 0.5f, 0);
 
 
     private void Awake()
@@ -65,50 +67,60 @@ public class MobDraggable : MonoBehaviour
     {
         drag = false;
         animator.SetBool("IsWalking", false);
-
         DestroyAllIndicators();
 
-        if (currentDroppableZone != null && currentDroppableZone.CanBeDropped())
+        // Cancel the drag if the object is not dropped in a valid zone
+        if (!currentDroppableZone || !currentDroppableZone.CanBeDropped())
         {
-            string zoneName = currentDroppableZone.gameObject.name;
-            string idString = zoneName.Split('_')[1]; // Split the name by '_' and take the second part
-            int zoneId = int.Parse(idString); // Convert the ID part to an integer
-
-            if (currentDroppableZone != null && currentDroppableZone.onZone == gameObject.GetComponent<ElementData>().mobData.title)
-            {
-                // TBD :: Fusionner les deux objets dans la zone
-                Debug.Log("Objet à fusionner");
-
-            }
-
-            if (VillageData.Instance.Spots.Count > zoneId && VillageData.Instance.Spots[zoneId].IsAvailable)
-            {
-                // Debug.Log($"Objet déposé dans la zone droppable: {currentDroppableZone.gameObject.name} ${zoneId}.");
-
-                if (isFromShop)
-                {
-
-                    ElementData data = gameObject.GetComponent<ElementData>();
-                    ContractActions.instance.TriggerHire(indexFromShop);
-                    data.index = zoneId;
-                    isFromShop = false;
-                    currentDroppableZone.onZone = gameObject.GetComponent<ElementData>().mobData.title;
-
-                }
-
-                VillageData.Instance.FillSpot(zoneId, null);
-            }
-            else
-            {
-                rb.MovePosition(initPos);
-                // Debug.Log("Object not dropped. Zone not available.");
-            }
-        }
-        else
-        {
+            Debug.Log("Drop in invalid zone");
             rb.MovePosition(initPos);
-            // Debug.Log("Object not dropped.");
+            return;
         }
+
+        // Get the ID of the zone where the object is dropped
+        string zoneName = currentDroppableZone.gameObject.name;
+        string idString = zoneName.Split('_')[1];
+        int zoneId = int.Parse(idString);
+
+        // Manage the case where the object is dropped at the same place
+        if (!isFromShop && zoneId == index)
+        {
+            Debug.Log("Drop at the same place");
+            rb.MovePosition(initPos);
+            return;
+        }
+
+        // Manage the merge case
+        if (VillageData.Instance.RoleAtIndex(zoneId) == gameObject.GetComponent<MobHealth>().mobData.role)
+        {
+            Debug.Log("Objects to merge");
+            VillageData.Instance.FreeSpot(index);
+            Destroy(gameObject);
+            // Merge the objects
+            return;
+        }
+
+        // Cancel the drag if the object is dropped in a zone that is not available
+        if (zoneId > VillageData.Instance.Spots.Count || !VillageData.Instance.Spots[zoneId].IsAvailable)
+        {
+            Debug.Log("Drop in unavailable zone");
+            rb.MovePosition(initPos);
+            return;
+        }
+
+        // Manage the case where the object is dropped in a valid zone and come from the shop
+        if (isFromShop)
+        {
+            isFromShop = false;
+            // ContractActions.instance.TriggerHire((uint)index);
+        } else {
+            VillageData.Instance.FreeSpot(index);
+        }
+
+        Role role = gameObject.GetComponent<MobHealth>().mobData.role;
+        VillageData.Instance.FillSpot(zoneId, role);
+        rb.MovePosition(currentDroppableZone.transform.position + offset);
+        index = zoneId;
     }
 
     void UpdateDropTargets()

@@ -4,9 +4,6 @@ public class DroppableZone : MonoBehaviour
 {
     private bool isDroppable;
 
-    public string onZone;
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         MobDraggable draggable = collision.gameObject.GetComponent<MobDraggable>();

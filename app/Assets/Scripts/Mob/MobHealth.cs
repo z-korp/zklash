@@ -4,22 +4,37 @@ using TMPro;
 
 public class MobHealth : MonoBehaviour
 {
-    public int health;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
-    public Animator animator;
-
-    public SpriteRenderer spriteRenderer;
+    public MobData mobData;
+    private int health;
 
     public TextMeshProUGUI txtLife;
 
     public GameObject canvas;
 
+    [HideInInspector]
     public bool isBlinking = false;
     public float blinkDuration = 0.2f;
     public float blinkTimeAfterHit = 1f;
 
-    void Start()
+    void Awake()
     {
+        health = mobData.health;
+
+        animator = GetComponentInParent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator component not found in parent GameObject.", this);
+        }
+
+        spriteRenderer = GetComponentInParent<SpriteRenderer>();
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("SpriteRenderer component not found in parent GameObject.", this);
+        }
+
         SetTextHealth(health);
     }
 
@@ -29,7 +44,7 @@ public class MobHealth : MonoBehaviour
         if (health <= 0)
         {
             SetTextHealth(health);
-            Die();
+            TriggerDie();
             return true;
         }
         SetTextHealth(health);
@@ -51,7 +66,7 @@ public class MobHealth : MonoBehaviour
         StartCoroutine(HandleBlinkDelay());
     }
 
-    public void Die()
+    public void TriggerDie()
     {
         animator.SetTrigger("Death");
         canvas.SetActive(false);

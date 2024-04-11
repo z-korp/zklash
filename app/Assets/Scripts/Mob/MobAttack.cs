@@ -4,13 +4,17 @@ using TMPro;
 
 public class MobAttack : MonoBehaviour
 {
-    public int damage;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
-    public Animator animator;
+    public MobData mobData;
+    private int baseDamage;
+    private int bonusDamage = 0;
+    private int damage => baseDamage + bonusDamage;
 
-    public SpriteRenderer spriteRenderer;
     public TextMeshProUGUI txtAttack;
 
+    [HideInInspector]
     public bool isBlinking = false;
     public float blinkDuration = 0.2f;
     public float blinkTimeAfterHit = 1f;
@@ -18,24 +22,42 @@ public class MobAttack : MonoBehaviour
     [HideInInspector]
     public MobHealth target;
 
-    void Start()
+    void Awake()
     {
+        baseDamage = mobData.damage;
+
+        animator = GetComponentInParent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator component not found in parent GameObject.", this);
+        }
+
+        spriteRenderer = GetComponentInParent<SpriteRenderer>();
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("SpriteRenderer component not found in parent GameObject.", this);
+        }
+
         SetTextAttack(damage);
     }
 
-    public void DealDamage(int amount)
+    void Start()
+    {
+    }
+
+    public void TriggerAttack()
     {
         animator.SetTrigger("Attack");
     }
 
-    public void TriggerDamageOnTarget()
+    public void TakeDamageOnTarget()
     {
         target.TakeDamage(damage);
     }
 
     public void IncreaseDamage(int amount)
     {
-        damage += amount;
+        bonusDamage += amount;
         SetTextAttack(damage);
 
         isBlinking = true;

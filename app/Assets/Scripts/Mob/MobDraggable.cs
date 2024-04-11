@@ -78,9 +78,7 @@ public class MobDraggable : MonoBehaviour
         }
 
         // Get the ID of the zone where the object is dropped
-        string zoneName = currentDroppableZone.gameObject.name;
-        string idString = zoneName.Split('_')[1];
-        int zoneId = int.Parse(idString);
+        int zoneId = currentDroppableZone.index;
 
         // Manage the case where the object is dropped at the same place
         if (!isFromShop && zoneId == index)

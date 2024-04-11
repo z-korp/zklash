@@ -15,7 +15,7 @@ public class PrefabMappings
 {
     public static readonly Dictionary<Role, string> NameToRoleMap = new Dictionary<Role, string>
     {
-        { Role.Knight, "Warrior_Blue" },
+        { Role.Knight, "Warrior" },
         { Role.Bowman, "Archer" },
         { Role.Pawn, "Pawn" },
         { Role.Torchoblin, "Torchoblin" },

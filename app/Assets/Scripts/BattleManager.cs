@@ -9,72 +9,34 @@ using System;
 
 public class BattleManager : MonoBehaviour
 {
-    public static BattleManager Instance { get; private set; }
-
+    public static BattleManager instance { get; private set; }
     public List<GameObject> allies = new List<GameObject>();
-    public List<GameObject> enemies = new List<GameObject>();
-
-    public bool isCoroutineRunning = false;
+    public List<GameObject> enemies = new List<GameObject>(); 
     public float delay = 1f;
-
-    private List<ITickable> combinedEventDetails = new List<ITickable>();
-
     public Dictionary<uint, uint> characterIdBindings = new Dictionary<uint, uint>();
 
     private void Awake()
     {
-        if (Instance == null)
+        if (instance != null)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: Keep the manager across scenes
-        }
-        else
-        {
-            Destroy(gameObject); // Ensures there's only one instance
+            Debug.LogWarning("Multiple instances of BattleManager found.");
+            return;
         }
 
-        CombineAndSortEvents();
-    }
-
-    void Start()
-    {
-
+        instance = this;
     }
 
     void Update()
     {
-        if (allies.Count > 0 && enemies.Count > 0 && characterIdBindings.Count > 0 && !isCoroutineRunning)
-        {
-            isCoroutineRunning = true;
-            StartCoroutine(StartBattle(() =>
-                    {
-                        // Code to execute after the coroutine finishes
-                        SceneManager.LoadScene("Shop");
-                    }));
-        }
-    }
-
-    private void CombineAndSortEvents()
-    {
-        // Temporary list to hold all event details before sorting
-        List<ITickable> tempCombinedEventDetails = new List<ITickable>();
-
-        // Add event details to the temporary list, assuming they all implement ITickable
-        tempCombinedEventDetails.AddRange(VillageData.Instance.hitEventDetails.Cast<ITickable>());
-        //tempCombinedEventDetails.AddRange(VillageData.Instance.stunEventDetails.Cast<ITickable>());
-        //tempCombinedEventDetails.AddRange(VillageData.Instance.absorbEventDetails.Cast<ITickable>());
-
-        //tempCombinedEventDetails.AddRange(VillageData.Instance.usageEventDetails.Cast<ITickable>());
-        //tempCombinedEventDetails.AddRange(VillageData.Instance.talentEventDetails.Cast<ITickable>());
-
-        // Sort the temporary list based on the Tick property
-        var sortedEventDetails = tempCombinedEventDetails.OrderBy(detail => detail.Tick).ToList();
-
-        // Clear the original combinedEventDetails list
-        combinedEventDetails.Clear();
-
-        // Repopulate combinedEventDetails with sorted events
-        combinedEventDetails.AddRange(sortedEventDetails);
+        // if (allies.Count > 0 && enemies.Count > 0 && characterIdBindings.Count > 0 && !isCoroutineRunning)
+        // {
+            // isCoroutineRunning = true;
+            // StartCoroutine(StartBattle(() =>
+            //         {
+            //             // Code to execute after the coroutine finishes
+            //             SceneManager.LoadScene("Shop");
+            //         }));
+        // }
     }
 
     public void AddAlly(GameObject ally)
@@ -91,11 +53,6 @@ public class BattleManager : MonoBehaviour
         {
             allies.Remove(ally);
         }
-    }
-
-    public void AddBindings(uint characterId, uint index)
-    {
-        characterIdBindings.Add(characterId, index);
     }
 
     public void AddEnemy(GameObject enemy)
@@ -117,43 +74,43 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator StartBattle(Action onCompleted = null)
     {
-        foreach (var detail in combinedEventDetails)
-        {
-            if (detail is Hit)
-            {
-                Hit hit = (Hit)detail;
-                int fromIndex = (int)characterIdBindings[hit.FromCharacterId];
-                int toIndex = (int)characterIdBindings[hit.ToCharacterId];
+        // foreach (var detail in combinedEventDetails)
+        // {
+        //     if (detail is Hit)
+        //     {
+        //         Hit hit = (Hit)detail;
+        //         int fromIndex = (int)characterIdBindings[hit.FromCharacterId];
+        //         int toIndex = (int)characterIdBindings[hit.ToCharacterId];
 
 
-                if (hit.Damage > 0)
-                {
-                    if (hit.FromCharacterId > 200) // enemy
-                    {
-                        Debug.Log($"Event: {hit.GetType().Name}, [ENEMY] Tick: {hit.Tick}, From: {fromIndex}, To: {toIndex}, Damage: {hit.Damage}");
-                        yield return StartCoroutine(EnemyHit(fromIndex, toIndex, (int)hit.Damage));
-                    }
-                    else // ally
-                    {
-                        Debug.Log($"Event: {hit.GetType().Name}, [ALLY] Tick: {hit.Tick}, From: {fromIndex}, To: {toIndex}, Damage: {hit.Damage}");
-                        yield return StartCoroutine(AllyHit(fromIndex, toIndex, (int)hit.Damage));
-                    }
-                }
-            }
-            else if (detail is Usage)
-            {
-                Usage usage = (Usage)detail;
-                //Debug.Log($"Event: {usage.GetType().Name}, Tick: {usage.Tick}, CharacterId: {usage.CharacterId}, ItemId: {usage.ItemId}");
+        //         if (hit.Damage > 0)
+        //         {
+        //             if (hit.FromCharacterId > 200) // enemy
+        //             {
+        //                 Debug.Log($"Event: {hit.GetType().Name}, [ENEMY] Tick: {hit.Tick}, From: {fromIndex}, To: {toIndex}, Damage: {hit.Damage}");
+        //                 yield return StartCoroutine(EnemyHit(fromIndex, toIndex, (int)hit.Damage));
+        //             }
+        //             else // ally
+        //             {
+        //                 Debug.Log($"Event: {hit.GetType().Name}, [ALLY] Tick: {hit.Tick}, From: {fromIndex}, To: {toIndex}, Damage: {hit.Damage}");
+        //                 yield return StartCoroutine(AllyHit(fromIndex, toIndex, (int)hit.Damage));
+        //             }
+        //         }
+        //     }
+        //     else if (detail is Usage)
+        //     {
+        //         Usage usage = (Usage)detail;
+        //         //Debug.Log($"Event: {usage.GetType().Name}, Tick: {usage.Tick}, CharacterId: {usage.CharacterId}, ItemId: {usage.ItemId}");
 
-            }
-            else if (detail is Talent)
-            {
-                Talent talent = (Talent)detail;
-                //Debug.Log($"Event: {talent.GetType().Name}, Tick: {talent.Tick}, CharacterId: {talent.CharacterId}, TalentId: {talent.TalentId}");
+        //     }
+        //     else if (detail is Talent)
+        //     {
+        //         Talent talent = (Talent)detail;
+        //         //Debug.Log($"Event: {talent.GetType().Name}, Tick: {talent.Tick}, CharacterId: {talent.CharacterId}, TalentId: {talent.TalentId}");
 
-            }
-        }
-        onCompleted?.Invoke();
+        //     }
+        // }
+        // onCompleted?.Invoke();
         yield return null;
     }
 

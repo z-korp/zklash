@@ -13,7 +13,7 @@ public class BattlePlacer : MonoBehaviour
 
     void Update()
     {
-        if (VillageData.Instance.fighterEventDetails.Count != 0 && !hasPlacedMobs && BattleManager.Instance != null)
+        if (VillageData.Instance.fighterEventDetails.Count != 0 && !hasPlacedMobs && BattleManager.instance != null)
         {
             VillageData.Instance.fighterEventDetails.Sort((x, y) => x.Index.CompareTo(y.Index));
             foreach (var fighter in VillageData.Instance.fighterEventDetails)
@@ -26,8 +26,8 @@ public class BattlePlacer : MonoBehaviour
                     // enemy
                     var placer = enemiesPlacer[fighter.Index];
                     var enemy = Instantiate(prefab, placer.transform.position, Quaternion.identity);
-                    BattleManager.Instance.AddEnemy(enemy);
-                    BattleManager.Instance.characterIdBindings.Add(fighter.CharacterId, fighter.Index);
+                    BattleManager.instance.AddEnemy(enemy);
+                    BattleManager.instance.characterIdBindings.Add(fighter.CharacterId, fighter.Index);
                     if (enemy.GetComponent<ElementData>() != null)
                     {
                         enemy.GetComponent<ElementData>().currentHealth = (int)fighter.Health;
@@ -39,8 +39,8 @@ public class BattlePlacer : MonoBehaviour
                     // ally
                     var placer = alliesPlacer[fighter.Index];
                     var ally = Instantiate(prefab, placer.transform.position, Quaternion.identity);
-                    BattleManager.Instance.AddAlly(ally);
-                    BattleManager.Instance.characterIdBindings.Add(fighter.CharacterId, fighter.Index);
+                    BattleManager.instance.AddAlly(ally);
+                    BattleManager.instance.characterIdBindings.Add(fighter.CharacterId, fighter.Index);
                     if (ally.GetComponent<ElementData>() != null)
                     {
                         ally.GetComponent<ElementData>().currentHealth = (int)fighter.Health;

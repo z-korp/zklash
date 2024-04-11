@@ -4,9 +4,10 @@ using UnityEngine;
 public class MobData : ScriptableObject
 {
     public int id;
-    public string nameMob;
+    public string title;
     public int health;
     public int damage;
     public int xp;
+    public Sprite image;
 
 }

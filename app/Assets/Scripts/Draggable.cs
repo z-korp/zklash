@@ -72,7 +72,7 @@ public class Draggable : MonoBehaviour
             string idString = zoneName.Split('_')[1]; // Split the name by '_' and take the second part
             int zoneId = int.Parse(idString); // Convert the ID part to an integer
 
-            if (currentDroppableZone != null && currentDroppableZone.onZone == gameObject.GetComponent<ElementData>().mobData.nameMob)
+            if (currentDroppableZone != null && currentDroppableZone.onZone == gameObject.GetComponent<ElementData>().mobData.title)
             {
                 // TBD :: Fusionner les deux objets dans la zone
                 Debug.Log("Objet à fusionner");
@@ -90,7 +90,7 @@ public class Draggable : MonoBehaviour
                     ContractActions.instance.TriggerHire(data.indexFromShop);
                     data.index = zoneId;
                     isFromShop = false;
-                    currentDroppableZone.onZone = gameObject.GetComponent<ElementData>().mobData.nameMob;
+                    currentDroppableZone.onZone = gameObject.GetComponent<ElementData>().mobData.title;
 
                 }
 

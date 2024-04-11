@@ -8,6 +8,8 @@ TagManager:
   - Ally
   - Enemy
   - Item
+  - ShopMob
+  - ShopItem
   layers:
   - Default
   - TransparentFX

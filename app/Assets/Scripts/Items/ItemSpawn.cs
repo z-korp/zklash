@@ -16,6 +16,15 @@ public class ItemSpawn : MonoBehaviour
                 Destroy(itemObject);
             }
             itemObject = ItemManager.instance.Create(item, transform);
+            int index = ShopManager.instance.IndexOfItemSpawn(this);
+            ItemDraggable itemDraggable = itemObject.GetComponent<ItemDraggable>();
+            if (index != -1)
+            {
+                itemDraggable.isFromShop = true;
+                itemDraggable.indexFromShop = (uint)index;
+            } else {
+                itemDraggable.isFromShop = false;
+            }
             item = Item.None;
         }
     }

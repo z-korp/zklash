@@ -3,14 +3,38 @@ using UnityEngine;
 
 public class MobMovement : MonoBehaviour
 {
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
+    private Rigidbody2D rb;
+
     public int speed;
     private readonly List<Transform> targets = new();
-    public Rigidbody2D rb;
-    public Animator animator;
-    public SpriteRenderer spriteRenderer;
+
+
     private readonly float epsilon = 0.05f;
 
-    public void Update()
+    void Awake()
+    {
+        animator = GetComponentInParent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator component not found in parent GameObject.", this);
+        }
+
+        spriteRenderer = GetComponentInParent<SpriteRenderer>();
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("SpriteRenderer component not found in parent GameObject.", this);
+        }
+
+        rb = GetComponentInParent<Rigidbody2D>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D component not found in parent GameObject.", this);
+        }
+    }
+
+    void Update()
     {
         // If the target transform position is not close to the current position then
         // Translate from the current transform position to the target transform position at a specified speed

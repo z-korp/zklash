@@ -498,7 +498,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1385100975866279080, guid: f6cf21d5ad11743bf8a4126b4124a569, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1657815278}
   m_SourcePrefab: {fileID: 100100000, guid: f6cf21d5ad11743bf8a4126b4124a569, type: 3}
 --- !u!224 &98540500 stripped
 RectTransform:
@@ -1086,6 +1089,36 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1117045643170826042, guid: f6cf21d5ad11743bf8a4126b4124a569, type: 3}
   m_PrefabInstance: {fileID: 50001569}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1657815278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657815275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.6862745}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1829045103
 GameObject:
   m_ObjectHideFlags: 0

@@ -221,6 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 8300000, guid: a089d24e2e3d0456aa3eeb1a405016f3, type: 3}
+  deathSound: {fileID: 8300000, guid: 56f93b54da0e144a7b2a3e6d94570f6e, type: 3}
 --- !u!114 &2034940840436361003
 MonoBehaviour:
   m_ObjectHideFlags: 0

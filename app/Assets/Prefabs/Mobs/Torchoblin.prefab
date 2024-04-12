@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36fb19009957446d99c8529dc99a3a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indexFromShop: 0
+  index: 0
   index: -1
   entity: 
   mobData: {fileID: 11400000, guid: 1a8d2415a8acc4f16b39585db330d4f0, type: 2}

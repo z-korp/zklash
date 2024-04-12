@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemSpawn : MonoBehaviour
@@ -21,7 +19,7 @@ public class ItemSpawn : MonoBehaviour
             if (index != -1)
             {
                 itemDraggable.isFromShop = true;
-                itemDraggable.indexFromShop = (uint)index;
+                itemDraggable.index = index;
             } else {
                 itemDraggable.isFromShop = false;
             }

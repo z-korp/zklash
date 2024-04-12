@@ -2,7 +2,13 @@ using UnityEngine;
 
 public class DroppableZone : MonoBehaviour
 {
+    public int index;
     private bool isDroppable;
+
+    void Start()
+    {
+        index = DroppableManager.instance.IndexOf(this);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

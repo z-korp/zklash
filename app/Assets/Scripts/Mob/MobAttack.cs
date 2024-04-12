@@ -45,19 +45,26 @@ public class MobAttack : MonoBehaviour
     {
     }
 
-    public void TriggerAttack()
+    public IEnumerator TriggerAttackCoroutine()
     {
         animator.SetTrigger("Attack");
+
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
+        yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f);
+
+        Debug.Log($"Attacking {target.name} for {damage} damage");
+        yield return target.TakeDamage(damage);
     }
 
     public void TakeDamageOnTarget()
     {
-        target.TakeDamage(damage);
+        //target.TakeDamage(damage);
     }
 
     public void IncreaseDamage(int amount)
     {
         bonusDamage += amount;
+
         SetTextAttack(damage);
 
         isBlinking = true;

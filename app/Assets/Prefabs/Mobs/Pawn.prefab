@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 4500970693168511666}
   - component: {fileID: 6583077094389153570}
   - component: {fileID: 956034650704389636}
+  - component: {fileID: 8876065409572277273}
   m_Layer: 0
   m_Name: Pawn
   m_TagString: Mob
@@ -175,7 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9a0cc452dc94fb683f714408cc1779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicatorManager: {fileID: 0}
   initPos: {x: 0, y: 0, z: 0}
   isFromShop: 1
   animator: {fileID: 4569523674553832488}
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7526038476407582817}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36fb19009957446d99c8529dc99a3a36, type: 3}
   m_Name: 
@@ -305,11 +305,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobData: {fileID: 11400000, guid: fb151d53ab82f4e1fade711b5776112b, type: 2}
+  health: 0
+  isDead: 0
   txtLife: {fileID: 3749020962830596209}
   canvas: {fileID: 4404037053972007126}
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
+--- !u!114 &8876065409572277273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c881191a9f44612a56a82ac65c5534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  rb: {fileID: 1039956107568584100}
+  animator: {fileID: 4569523674553832488}
+  spriteRenderer: {fileID: 8753150383481289107}
 --- !u!1001 &454656849729792740
 PrefabInstance:
   m_ObjectHideFlags: 0

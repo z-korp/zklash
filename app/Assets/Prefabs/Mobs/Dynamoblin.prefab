@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4319819171561303866}
   - component: {fileID: 2416784710284706374}
   - component: {fileID: 4608825558053575954}
+  - component: {fileID: 8662991011392396853}
   m_Layer: 0
   m_Name: Dynamoblin
   m_TagString: Enemy
@@ -179,7 +180,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3616953106443787091}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36fb19009957446d99c8529dc99a3a36, type: 3}
   m_Name: 
@@ -273,11 +274,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobData: {fileID: 11400000, guid: d7043a55a02a842c5a35f27285bddc5f, type: 2}
+  health: 0
+  isDead: 0
   txtLife: {fileID: 4044559087075912294}
   canvas: {fileID: 3546676935081237185}
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
+--- !u!114 &8662991011392396853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3616953106443787091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c881191a9f44612a56a82ac65c5534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  rb: {fileID: 5535904283382871288}
+  animator: {fileID: 817016773752028206}
+  spriteRenderer: {fileID: 517514919511314406}
 --- !u!1001 &3513926811772357226
 PrefabInstance:
   m_ObjectHideFlags: 0

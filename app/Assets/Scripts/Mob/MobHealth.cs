@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class MobHealth : MonoBehaviour
 {
@@ -8,7 +9,12 @@ public class MobHealth : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     public MobData mobData;
-    private int health;
+
+    [HideInInspector]
+    public int health;
+
+    [HideInInspector]
+    public bool isDead = false;
 
     public TextMeshProUGUI txtLife;
 
@@ -38,22 +44,21 @@ public class MobHealth : MonoBehaviour
         SetTextHealth(health);
     }
 
-    public bool TakeDamage(int amount)
+    public IEnumerator TakeDamage(int amount)
     {
         health -= amount;
-        if (health <= 0)
-        {
-            SetTextHealth(health);
-            TriggerDie();
-            return true;
-        }
-        SetTextHealth(health);
+        SetTextHealth(Math.Max(0, health));
 
         // Animation
         isBlinking = true;
         StartCoroutine(BlinkDamageFlash());
-        StartCoroutine(HandleBlinkDelay());
-        return false;
+        yield return StartCoroutine(HandleBlinkDelay());
+
+        if (health <= 0)
+        {
+            yield return TriggerDie();
+            canvas.SetActive(false);
+        }
     }
 
     public void HealPlayer(int amount)
@@ -66,10 +71,18 @@ public class MobHealth : MonoBehaviour
         StartCoroutine(HandleBlinkDelay());
     }
 
-    public void TriggerDie()
+    public IEnumerator TriggerDie()
     {
         animator.SetTrigger("Death");
-        canvas.SetActive(false);
+
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dead"));
+        yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f);
+    }
+
+    public void TriggerDeathEffect()
+    {
+        Debug.Log("TriggerDeathEffect");
+        isDead = true;
     }
 
     public void SetTextHealth(int amount)

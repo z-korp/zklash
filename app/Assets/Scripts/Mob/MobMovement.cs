@@ -23,19 +23,19 @@ public class MobMovement : MonoBehaviour
             Flip(direction.x);
             if (Mathf.Abs(direction.x) > epsilon)
             {
-                animator.SetBool("IsWalking", true);
+                //animator.SetBool("IsWalking", true);
                 // rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, Time.deltaTime);
                 transform.Translate(speed * Time.deltaTime * direction.normalized, Space.World);
             }
             else
             {
-                animator.SetBool("IsWalking", false);
+                //animator.SetBool("IsWalking", false);
                 rb.velocity = Vector3.zero;
                 targets.RemoveAt(0);
             }
         }
     }
-    
+
     public void Move(Transform _target)
     {
         targets.Add(_target);
@@ -46,7 +46,8 @@ public class MobMovement : MonoBehaviour
         if (_movement > epsilon)
         {
             spriteRenderer.flipX = false;
-        }else if(_movement < -epsilon)
+        }
+        else if (_movement < -epsilon)
         {
             spriteRenderer.flipX = true;
         }

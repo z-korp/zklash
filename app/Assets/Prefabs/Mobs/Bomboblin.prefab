@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4308000117875194057}
   - component: {fileID: 2034940840436361003}
   - component: {fileID: 888077694904347642}
+  - component: {fileID: 3288869230180071498}
   m_Layer: 0
   m_Name: Bomboblin
   m_TagString: Enemy
@@ -156,7 +157,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4565273498285202334}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36fb19009957446d99c8529dc99a3a36, type: 3}
   m_Name: 
@@ -250,11 +251,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobData: {fileID: 11400000, guid: cff437dfa5e264d538aba8f1dae03d0a, type: 2}
+  health: 0
+  isDead: 0
   txtLife: {fileID: 3665559667397155527}
   canvas: {fileID: 4307646823769483872}
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
+--- !u!114 &3288869230180071498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565273498285202334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c881191a9f44612a56a82ac65c5534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  rb: {fileID: 4114133524138475952}
+  animator: {fileID: 8241610283200433622}
+  spriteRenderer: {fileID: 6299402786898010029}
 --- !u!1001 &1200794786517939930
 PrefabInstance:
   m_ObjectHideFlags: 0

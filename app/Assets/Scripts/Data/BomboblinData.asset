@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: BomboblinData
   m_EditorClassIdentifier: 
   id: 3
-  nameMob: Bomboblin
+  title: 
   health: 1
   damage: 0
   xp: 0
+  image: {fileID: 0}

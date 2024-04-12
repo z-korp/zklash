@@ -199,7 +199,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7526038476407582817}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36fb19009957446d99c8529dc99a3a36, type: 3}
   m_Name: 
@@ -302,6 +302,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2e990f043944dbb99f8e1951249396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 4569523674553832488}
+  spriteRenderer: {fileID: 8753150383481289107}
   mobData: {fileID: 11400000, guid: b17c77933520f4a9d814db28787f9260, type: 2}
   txtAttack: {fileID: 5597353519593057668}
   isBlinking: 0

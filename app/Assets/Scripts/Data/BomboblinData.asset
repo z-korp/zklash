@@ -18,3 +18,4 @@ MonoBehaviour:
   damage: 0
   xp: 0
   image: {fileID: 0}
+  role: 6

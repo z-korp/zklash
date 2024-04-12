@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public class ShopSpot
 {
     public bool IsAvailable;
-    public string EntityContained;
+    public Role EntityContained;
 
-    public ShopSpot(bool isAvailable, string entityContained = null)
+    public ShopSpot(bool isAvailable, Role entityContained = Role.None)
     {
         IsAvailable = isAvailable;
         EntityContained = entityContained;
@@ -70,29 +70,29 @@ public class VillageData : MonoBehaviour
         }
     }
 
-    public void UpdateFirstAvailableSpot(string entityName)
+    public void UpdateFirstAvailableSpot(Role _role)
     {
         foreach (var spot in Spots)
         {
-            if (!spot.IsAvailable && string.IsNullOrEmpty(spot.EntityContained))
+            if (!spot.IsAvailable && spot.EntityContained == Role.None)
             {
-                spot.EntityContained = entityName; // Assign the entity to this spot
-                Debug.Log($"Spot updated with entity: {entityName}");
+                spot.EntityContained = _role; // Assign the entity to this spot
+                Debug.Log($"Spot updated with entity: {_role}");
                 return; // Exit the method after updating the first matching spot
             }
         }
     }
 
     // Call this method to fill a spot with an entity
-    public bool FillSpot(int spotIndex, string entityContained)
+    public bool FillSpot(int spotIndex, Role _role)
     {
         if (spotIndex < 0 || spotIndex >= Spots.Count || !Spots[spotIndex].IsAvailable)
         {
             return false; // Spot index is out of range or spot is not available
         }
 
-        Spots[spotIndex] = new ShopSpot(false, entityContained); // Fill the spot
-        Debug.Log($"Spot {spotIndex} filled with entity: {entityContained}");
+        Spots[spotIndex] = new ShopSpot(false, _role); // Fill the spot
+        Debug.Log($"Spot {spotIndex} filled with entity: {_role}");
         return true;
     }
 
@@ -105,6 +105,17 @@ public class VillageData : MonoBehaviour
         }
 
         Spots[spotIndex] = new ShopSpot(true); // Make the spot available again
+        Debug.Log($"Spot {spotIndex} is now available");
         return true;
+    }
+
+    public Role RoleAtIndex(int index)
+    {
+        if (index < 0 || index >= Spots.Count)
+        {
+            return Role.None; // Return Role.None if index is out of range
+        }
+
+        return Spots[index].EntityContained; // Return the entity contained in the spot
     }
 }

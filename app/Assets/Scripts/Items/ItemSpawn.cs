@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemSpawn : MonoBehaviour
@@ -16,6 +14,15 @@ public class ItemSpawn : MonoBehaviour
                 Destroy(itemObject);
             }
             itemObject = ItemManager.instance.Create(item, transform);
+            int index = ShopManager.instance.IndexOfItemSpawn(this);
+            ItemDraggable itemDraggable = itemObject.GetComponent<ItemDraggable>();
+            if (index != -1)
+            {
+                itemDraggable.isFromShop = true;
+                itemDraggable.index = index;
+            } else {
+                itemDraggable.isFromShop = false;
+            }
             item = Item.None;
         }
     }

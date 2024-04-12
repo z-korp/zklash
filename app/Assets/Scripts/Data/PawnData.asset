@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: PawnData
   m_EditorClassIdentifier: 
   id: 2
-  nameMob: Pawn
+  title: 
   health: 2
   damage: 1
   xp: 0
+  image: {fileID: 0}
+  role: 3

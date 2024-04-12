@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Draggable : MonoBehaviour
+public class MobDraggable : MonoBehaviour
 {
     //public GameObject indicatorPrefab; // Référence au préfab de la flèche
     //public Transform[] targets; // Les cibles vers lesquelles les flèches vont pointer
@@ -11,6 +11,7 @@ public class Draggable : MonoBehaviour
     public Vector3 initPos = Vector3.zero;
 
     public bool isFromShop = true;
+    public int index;
 
     private Rigidbody2D rb;
     private DroppableZone currentDroppableZone;
@@ -18,6 +19,9 @@ public class Draggable : MonoBehaviour
     public Animator animator;
 
     private GameObject[] droppableZones;
+    private Vector3 offset = new(0, 0.5f, 0);
+
+    public MouseHoverDetector mouseHoverDetector;
 
 
     private void Awake()
@@ -26,6 +30,8 @@ public class Draggable : MonoBehaviour
         UpdateDropTargets();
 
         droppableZones = GameObject.FindGameObjectsWithTag("DroppableZone");
+
+        mouseHoverDetector = GetComponent<MouseHoverDetector>();
 
         // Trouvez le gestionnaire d'indicateurs dans la scène
         // indicatorManager = FindObjectOfType<IndicatorManager>();
@@ -39,6 +45,7 @@ public class Draggable : MonoBehaviour
     {
         if (drag)
         {
+            // TBD: Magic numbers for z-order to change
             GetComponent<SpriteRenderer>().sortingOrder = 1000;
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             rb.MovePosition(mousePos);
@@ -55,6 +62,8 @@ public class Draggable : MonoBehaviour
         drag = true;
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
+        if (mouseHoverDetector != null)
+            mouseHoverDetector.OnMouseDownCanvas();
 
         CreateAllIndicators();
     }
@@ -63,50 +72,63 @@ public class Draggable : MonoBehaviour
     {
         drag = false;
         animator.SetBool("IsWalking", false);
-
         DestroyAllIndicators();
 
-        if (currentDroppableZone != null && currentDroppableZone.CanBeDropped())
+        if (mouseHoverDetector != null)
+            mouseHoverDetector.OnMouseUpCanvas();
+
+        // Cancel the drag if the object is not dropped in a valid zone
+        if (!currentDroppableZone || !currentDroppableZone.CanBeDropped())
         {
-            string zoneName = currentDroppableZone.gameObject.name;
-            string idString = zoneName.Split('_')[1]; // Split the name by '_' and take the second part
-            int zoneId = int.Parse(idString); // Convert the ID part to an integer
+            Debug.Log("Drop in invalid zone");
+            rb.MovePosition(initPos);
+            return;
+        }
 
-            if (currentDroppableZone != null && currentDroppableZone.onZone == gameObject.GetComponent<ElementData>().mobData.title)
-            {
-                // TBD :: Fusionner les deux objets dans la zone
-                Debug.Log("Objet à fusionner");
+        // Get the ID of the zone where the object is dropped
+        int zoneId = currentDroppableZone.index;
 
-            }
+        // Manage the case where the object is dropped at the same place
+        if (!isFromShop && zoneId == index)
+        {
+            Debug.Log("Drop at the same place");
+            rb.MovePosition(initPos);
+            return;
+        }
 
-            if (VillageData.Instance.Spots.Count > zoneId && VillageData.Instance.Spots[zoneId].IsAvailable)
-            {
-                // Debug.Log($"Objet déposé dans la zone droppable: {currentDroppableZone.gameObject.name} ${zoneId}.");
+        // Manage the merge case
+        if (VillageData.Instance.RoleAtIndex(zoneId) == gameObject.GetComponent<MobHealth>().mobData.role)
+        {
+            Debug.Log("Objects to merge");
+            VillageData.Instance.FreeSpot(index);
+            Destroy(gameObject);
+            // Merge the objects
+            return;
+        }
 
-                if (isFromShop)
-                {
+        // Cancel the drag if the object is dropped in a zone that is not available
+        if (zoneId > VillageData.Instance.Spots.Count || !VillageData.Instance.Spots[zoneId].IsAvailable)
+        {
+            Debug.Log("Drop in unavailable zone");
+            rb.MovePosition(initPos);
+            return;
+        }
 
-                    ElementData data = gameObject.GetComponent<ElementData>();
-                    ContractActions.instance.TriggerHire(data.indexFromShop);
-                    data.index = zoneId;
-                    isFromShop = false;
-                    currentDroppableZone.onZone = gameObject.GetComponent<ElementData>().mobData.title;
-
-                }
-
-                VillageData.Instance.FillSpot(zoneId, null);
-            }
-            else
-            {
-                rb.MovePosition(initPos);
-                // Debug.Log("Object not dropped. Zone not available.");
-            }
+        // Manage the case where the object is dropped in a valid zone and come from the shop
+        if (isFromShop)
+        {
+            isFromShop = false;
+            // ContractActions.instance.TriggerHire((uint)index);
         }
         else
         {
-            rb.MovePosition(initPos);
-            // Debug.Log("Object not dropped.");
+            VillageData.Instance.FreeSpot(index);
         }
+
+        Role role = gameObject.GetComponent<MobHealth>().mobData.role;
+        VillageData.Instance.FillSpot(zoneId, role);
+        rb.MovePosition(currentDroppableZone.transform.position + offset);
+        index = zoneId;
     }
 
     void UpdateDropTargets()
@@ -120,13 +142,7 @@ public class Draggable : MonoBehaviour
 
         foreach (DroppableZone zone in allDroppableZones)
         {
-            // Debug.Log("Checking droppable zone: " + zone.name);
-            string zoneName = zone.name;
-            string idString = zoneName.Split('_')[1]; // Split the name by '_' and take the second part
-            int zoneId = int.Parse(idString); // Convert the ID part to an integer
-            // Debug.Log("Zone ID: " + zoneId);
-            // Debug.Log("Is available: " + VillageData.Instance.Spots[zoneId].IsAvailable);
-            if (VillageData.Instance.Spots[zoneId].IsAvailable)
+            if (VillageData.Instance.Spots[zone.index].IsAvailable)
             {
                 validDropTargets.Add(zone.transform); // Ajoutez le Transform si la zone est valide
                 // Debug.Log("Added a valid drop target: " + zone.transform.name);

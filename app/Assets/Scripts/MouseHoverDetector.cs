@@ -31,7 +31,7 @@ public class MouseHoverDetector : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
+    public void OnMouseDownCanvas()
     {
         if (canvas != null)
         {
@@ -40,11 +40,12 @@ public class MouseHoverDetector : MonoBehaviour
         }
     }
 
-    void OnMouseUp()
+    public void OnMouseUpCanvas()
     {
         if (canvas != null)
         {
             isDragging = false;
+            canvas.SetActive(true);
         }
     }
 

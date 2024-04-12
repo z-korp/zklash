@@ -115,7 +115,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6716920274621748807}
   - {fileID: 7782621286845567624}
   - {fileID: 2950358791773230161}
   m_Father: {fileID: 0}
@@ -257,7 +256,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initPos: {x: 0, y: 0, z: 0}
   isFromShop: 1
+  index: 0
   animator: {fileID: 4569523674553832488}
+  mouseHoverDetector: {fileID: 0}
 --- !u!114 &-1544029575477610373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexFromShop: 0
-  index: -1
+  index: 0
   entity: 
   mobData: {fileID: 11400000, guid: 33539ea9a0ac547c3a4c92970b997573, type: 2}
   maxHealth: 10
@@ -283,7 +284,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8753150383481289107}
   txtLife: {fileID: 7316034404455692560}
   txtAttack: {fileID: 2837798910189757624}
-  vfxHandler: {fileID: 8209207336449970602}
+  vfxHandler: {fileID: 0}
   canvas: {fileID: 7826900362793863607}
   isBlinking: 0
   blinkDuration: 0.2
@@ -512,7 +513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6707804836854084844, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 416.3777
+      value: 98.6811
       objectReference: {fileID: 0}
     - target: {fileID: 6707804836854084844, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -548,7 +549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6707804836854084844, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.276
+      value: -0.979
       objectReference: {fileID: 0}
     - target: {fileID: 6707804836854084844, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

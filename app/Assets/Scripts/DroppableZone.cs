@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class DroppableZone : MonoBehaviour
 {
+    public int index;
     private bool isDroppable;
 
-    public string onZone;
-
+    void Start()
+    {
+        index = DroppableManager.instance.IndexOf(this);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Draggable draggable = collision.gameObject.GetComponent<Draggable>();
+        MobDraggable draggable = collision.gameObject.GetComponent<MobDraggable>();
         if (draggable != null)
         {
             Debug.Log("Player entered droppable zone");
@@ -20,7 +23,7 @@ public class DroppableZone : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Draggable draggable = collision.gameObject.GetComponent<Draggable>();
+        MobDraggable draggable = collision.gameObject.GetComponent<MobDraggable>();
 
         if (draggable != null)
         {

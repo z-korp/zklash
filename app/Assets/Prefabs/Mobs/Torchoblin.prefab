@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 908491819400762038}
   - component: {fileID: 1469513408296575766}
   - component: {fileID: 7998195433769204859}
+  - component: {fileID: 1207117466704949312}
   m_Layer: 0
   m_Name: Torchoblin
   m_TagString: Enemy
@@ -185,8 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36fb19009957446d99c8529dc99a3a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  indexFromShop: 0
   index: 0
-  index: -1
   entity: 
   mobData: {fileID: 11400000, guid: 1a8d2415a8acc4f16b39585db330d4f0, type: 2}
   maxHealth: 10
@@ -294,9 +295,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  rb: {fileID: 634524516086548021}
-  animator: {fileID: 9079720197046210478}
-  spriteRenderer: {fileID: 8866626820411103120}
+--- !u!114 &1207117466704949312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971632552838307129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf0b428cafc640b9906abecde955bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageText: {fileID: 3246916715954128492}
+  moveSpeed: 1
+  displayTime: 0.5
 --- !u!1001 &738343669645317148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -478,6 +491,17 @@ RectTransform:
 --- !u!114 &1877701594120604714 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6093443556408123252, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
+  m_PrefabInstance: {fileID: 5665155630900908894}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3246916715954128492 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7174780161917605170, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
   m_PrefabInstance: {fileID: 5665155630900908894}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

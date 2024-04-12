@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 1854110326139120505}
   - component: {fileID: 4041850376886812023}
   - component: {fileID: 2767045833729598622}
+  - component: {fileID: 8075818746476112349}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Mob
@@ -117,6 +118,7 @@ RectTransform:
   m_Children:
   - {fileID: 7782621286845567624}
   - {fileID: 2950358791773230161}
+  - {fileID: 6716920274621748807}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -401,9 +403,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  rb: {fileID: 5389027940959983678}
-  animator: {fileID: 4569523674553832488}
-  spriteRenderer: {fileID: 8753150383481289107}
+--- !u!114 &8075818746476112349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf0b428cafc640b9906abecde955bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageText: {fileID: 2498228223185361823}
+  moveSpeed: 1
+  displayTime: 0.5
 --- !u!1001 &662944998919359772
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -464,11 +478,6 @@ PrefabInstance:
 --- !u!4 &6716920274621748807 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6053976512854956891, guid: dc33ebaf5cf874163970c272cc0d4821, type: 3}
-  m_PrefabInstance: {fileID: 662944998919359772}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8209207336449970602 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8709880739712490678, guid: dc33ebaf5cf874163970c272cc0d4821, type: 3}
   m_PrefabInstance: {fileID: 662944998919359772}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3537441331813508708
@@ -572,6 +581,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
+--- !u!114 &2498228223185361823 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1422285855167806971, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
+  m_PrefabInstance: {fileID: 3537441331813508708}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2837798910189757624 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1618594593373061852, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
@@ -686,7 +706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8476826900991160219, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00000011921
+      value: -0.00000011920929
       objectReference: {fileID: 0}
     - target: {fileID: 8476826900991160219, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_AnchoredPosition.y

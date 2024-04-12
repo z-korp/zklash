@@ -46,6 +46,16 @@ public class MobHealth : MonoBehaviour
 
     public IEnumerator TakeDamage(int amount)
     {
+        MobDamageText damageTextComponent = GetComponent<MobDamageText>();
+        if (damageTextComponent == null)
+        {
+            Debug.LogWarning("DamageTextComponent not found on the mob.");
+        }
+        else
+        {
+            damageTextComponent.ShowDamage(amount);
+        }
+
         health -= amount;
         SetTextHealth(Math.Max(0, health));
 

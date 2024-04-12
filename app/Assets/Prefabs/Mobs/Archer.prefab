@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 7356887050185767196}
   - component: {fileID: 4552967640662640120}
   - component: {fileID: 3451549602337854142}
+  - component: {fileID: 3506797288223814770}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Mob
@@ -205,8 +206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36fb19009957446d99c8529dc99a3a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  indexFromShop: 0
   index: 0
-  index: -1
   entity: 
   mobData: {fileID: 11400000, guid: b17c77933520f4a9d814db28787f9260, type: 2}
   maxHealth: 10
@@ -303,8 +304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2e990f043944dbb99f8e1951249396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 4569523674553832488}
-  spriteRenderer: {fileID: 8753150383481289107}
   mobData: {fileID: 11400000, guid: b17c77933520f4a9d814db28787f9260, type: 2}
   txtAttack: {fileID: 5597353519593057668}
   isBlinking: 0
@@ -324,6 +323,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobData: {fileID: 11400000, guid: b17c77933520f4a9d814db28787f9260, type: 2}
+  health: 0
+  isDead: 0
   txtLife: {fileID: 1102237089642557484}
   canvas: {fileID: 455589399502897291}
   isBlinking: 0
@@ -342,9 +343,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  rb: {fileID: 1422990844300819237}
-  animator: {fileID: 4569523674553832488}
-  spriteRenderer: {fileID: 8753150383481289107}
+--- !u!114 &3506797288223814770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf0b428cafc640b9906abecde955bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageText: {fileID: 5217232260715516579}
+  moveSpeed: 1
+  displayTime: 0.5
 --- !u!1001 &3644808349410388790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -356,6 +369,10 @@ PrefabInstance:
     - target: {fileID: 3196840196865663314, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_Name
       value: CanvasUnits
+      objectReference: {fileID: 0}
+    - target: {fileID: 3196840196865663314, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8476826900991160219, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_Pivot.x
@@ -566,6 +583,17 @@ RectTransform:
 --- !u!114 &1102237089642557484 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6093443556408123252, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
+  m_PrefabInstance: {fileID: 6619073649775144792}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5217232260715516579 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1422285855167806971, guid: 4bc82ed60e3f24875a2d86e533dad7ab, type: 3}
   m_PrefabInstance: {fileID: 6619073649775144792}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

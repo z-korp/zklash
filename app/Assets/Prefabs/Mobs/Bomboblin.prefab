@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2034940840436361003}
   - component: {fileID: 888077694904347642}
   - component: {fileID: 3288869230180071498}
+  - component: {fileID: 4200744420925542712}
   m_Layer: 0
   m_Name: Bomboblin
   m_TagString: Enemy
@@ -162,8 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36fb19009957446d99c8529dc99a3a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  indexFromShop: 0
   index: 0
-  index: -1
   entity: 
   mobData: {fileID: 11400000, guid: cff437dfa5e264d538aba8f1dae03d0a, type: 2}
   maxHealth: 10
@@ -271,9 +272,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  rb: {fileID: 4114133524138475952}
-  animator: {fileID: 8241610283200433622}
-  spriteRenderer: {fileID: 6299402786898010029}
+--- !u!114 &4200744420925542712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565273498285202334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf0b428cafc640b9906abecde955bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageText: {fileID: 423088994141851777}
+  moveSpeed: 1
+  displayTime: 0.5
 --- !u!1001 &1200794786517939930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -442,6 +455,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
+--- !u!114 &423088994141851777 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7174780161917605170, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}
+  m_PrefabInstance: {fileID: 7372091023048934835}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3665559667397155527 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6093443556408123252, guid: 4b149a439581143af8acc4d9b51a8b4e, type: 3}

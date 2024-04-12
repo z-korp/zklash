@@ -22,6 +22,8 @@ public class MobDraggable : MonoBehaviour
     private GameObject[] droppableZones;
     private Vector3 offset = new(0, 0.5f, 0);
 
+    public MouseHoverDetector mouseHoverDetector;
+
 
     private void Awake()
     {
@@ -29,6 +31,8 @@ public class MobDraggable : MonoBehaviour
         UpdateDropTargets();
 
         droppableZones = GameObject.FindGameObjectsWithTag("DroppableZone");
+
+        mouseHoverDetector = GetComponent<MouseHoverDetector>();
 
         // Trouvez le gestionnaire d'indicateurs dans la scène
         // indicatorManager = FindObjectOfType<IndicatorManager>();
@@ -59,6 +63,8 @@ public class MobDraggable : MonoBehaviour
         drag = true;
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
+        if (mouseHoverDetector != null)
+            mouseHoverDetector.OnMouseDownCanvas();
 
         CreateAllIndicators();
     }
@@ -68,6 +74,9 @@ public class MobDraggable : MonoBehaviour
         drag = false;
         animator.SetBool("IsWalking", false);
         DestroyAllIndicators();
+
+        if (mouseHoverDetector != null)
+            mouseHoverDetector.OnMouseUpCanvas();
 
         // Cancel the drag if the object is not dropped in a valid zone
         if (!currentDroppableZone || !currentDroppableZone.CanBeDropped())
@@ -113,7 +122,9 @@ public class MobDraggable : MonoBehaviour
         {
             isFromShop = false;
             // ContractActions.instance.TriggerHire((uint)index);
-        } else {
+        }
+        else
+        {
             VillageData.Instance.FreeSpot(index);
         }
 

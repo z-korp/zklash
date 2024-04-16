@@ -25,6 +25,9 @@ public class MobHealth : MonoBehaviour
     public float blinkDuration = 0.2f;
     public float blinkTimeAfterHit = 1f;
 
+    [HideInInspector]
+    public MobHealth source;
+
     void Awake()
     {
         health = mobData.health;
@@ -46,13 +49,17 @@ public class MobHealth : MonoBehaviour
 
     public IEnumerator TakeDamage(int amount)
     {
+        if (amount == 0) yield break;
+
         MobDamageText damageTextComponent = GetComponent<MobDamageText>();
+
         if (damageTextComponent == null)
         {
             Debug.LogWarning("DamageTextComponent not found on the mob.");
         }
         else
         {
+            Debug.Log($"Taking {amount} damage on {mobData.name}");
             damageTextComponent.ShowDamage(amount);
         }
 
@@ -67,6 +74,7 @@ public class MobHealth : MonoBehaviour
         if (health <= 0)
         {
             yield return TriggerDie();
+            yield return TriggerDeathEffect();
             canvas.SetActive(false);
         }
     }
@@ -89,10 +97,16 @@ public class MobHealth : MonoBehaviour
         yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f);
     }
 
-    public void TriggerDeathEffect()
+    public IEnumerator TriggerDeathEffect()
     {
-        Debug.Log("TriggerDeathEffect");
-        isDead = true;
+        if (mobData.role == Role.Bomboblin)
+        {
+            yield return source.TakeDamage(99);
+        }
+        else
+        {
+            yield return null;
+        }
     }
 
     public void SetTextHealth(int amount)

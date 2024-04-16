@@ -6,6 +6,7 @@ public class MobAudio : MonoBehaviour
 {
 
     public AudioClip attackSound;
+    public AudioClip deathSound;
 
     private void Awake()
     {
@@ -24,6 +25,15 @@ public class MobAudio : MonoBehaviour
         if (attackSound != null)
         {
             AudioManager.instance.PlayClipAt(attackSound, transform.position);
+        }
+
+    }
+
+    public void PlayDeathSound()
+    {
+        if (deathSound != null)
+        {
+            AudioManager.instance.PlayClipAt(deathSound, transform.position);
         }
 
     }

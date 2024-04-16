@@ -13,8 +13,12 @@ public class MobDraggable : MonoBehaviour
     public bool isFromShop = true;
     public int index;
 
+    public GameObject mobFxPrefab;
+
     private Rigidbody2D rb;
     private DroppableZone currentDroppableZone;
+
+    private CharacterAnimatorController characterAnimatorController;
 
     public Animator animator;
 
@@ -30,7 +34,6 @@ public class MobDraggable : MonoBehaviour
         UpdateDropTargets();
 
         droppableZones = GameObject.FindGameObjectsWithTag("DroppableZone");
-
         mouseHoverDetector = GetComponent<MouseHoverDetector>();
 
         // Trouvez le gestionnaire d'indicateurs dans la scène
@@ -102,6 +105,15 @@ public class MobDraggable : MonoBehaviour
             Debug.Log("Objects to merge");
             VillageData.Instance.FreeSpot(index);
             Destroy(gameObject);
+
+            // Instantiate the FX for level up animation
+            GameObject mobFx = Instantiate(mobFxPrefab, TeamManager.instance.GetMemberFromTeam(zoneId).transform.position, Quaternion.identity);
+            // Set the sorting order of the FX to be on top of the mob
+            int MobOrder = GetComponent<SpriteRenderer>().sortingOrder;
+            mobFx.GetComponent<SpriteRenderer>().sortingOrder = MobOrder + 1;
+            // Play level up animation don't need to destroy mobFx it destroy itself when animation is done
+            mobFx.GetComponent<Animator>().SetTrigger("LevelUp");
+
             // Merge the objects
             return;
         }
@@ -128,6 +140,10 @@ public class MobDraggable : MonoBehaviour
         Role role = gameObject.GetComponent<MobHealth>().mobData.role;
         VillageData.Instance.FillSpot(zoneId, role);
         rb.MovePosition(currentDroppableZone.transform.position + offset);
+
+        // Update the team with new member
+        TeamManager.instance.AddTeamMember(zoneId, gameObject);
+
         index = zoneId;
     }
 

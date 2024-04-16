@@ -4,6 +4,7 @@ public class CharacterAnimatorController : MonoBehaviour
 {
     Animator animator;
 
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -16,10 +17,10 @@ public class CharacterAnimatorController : MonoBehaviour
 
     public void Attack()
     {
-        animator.SetTrigger("Attack"); 
+        animator.SetTrigger("Attack");
     }
 
-  
+
     public void Idle()
     {
         animator.SetBool("IsWalking", false);

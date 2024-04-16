@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using System.Threading.Tasks;
-using UnityEngine.SceneManagement;
 using System;
 
 
@@ -11,7 +9,7 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance { get; private set; }
     public List<GameObject> allies = new List<GameObject>();
-    public List<GameObject> enemies = new List<GameObject>(); 
+    public List<GameObject> enemies = new List<GameObject>();
     public float delay = 1f;
     public Dictionary<uint, uint> characterIdBindings = new Dictionary<uint, uint>();
 
@@ -30,12 +28,12 @@ public class BattleManager : MonoBehaviour
     {
         // if (allies.Count > 0 && enemies.Count > 0 && characterIdBindings.Count > 0 && !isCoroutineRunning)
         // {
-            // isCoroutineRunning = true;
-            // StartCoroutine(StartBattle(() =>
-            //         {
-            //             // Code to execute after the coroutine finishes
-            //             SceneManager.LoadScene("Shop");
-            //         }));
+        // isCoroutineRunning = true;
+        // StartCoroutine(StartBattle(() =>
+        //         {
+        //             // Code to execute after the coroutine finishes
+        //             SceneManager.LoadScene("Shop");
+        //         }));
         // }
     }
 

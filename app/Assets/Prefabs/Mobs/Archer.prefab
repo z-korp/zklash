@@ -180,6 +180,7 @@ MonoBehaviour:
   initPos: {x: 0, y: 0, z: 0}
   isFromShop: 1
   index: 0
+  mobFxPrefab: {fileID: 8427836806556268264, guid: 11c571b4f3e0c43b495c1daccf899b39, type: 3}
   animator: {fileID: 4569523674553832488}
   mouseHoverDetector: {fileID: 0}
 --- !u!114 &2761097008875629303
@@ -373,7 +374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3196840196865663314, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8476826900991160219, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_Pivot.x

@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameManagerData gameManagerData;
 
     public BurnerManager burnerManager;
+
     private Dictionary<FieldElement, string> spawnedAccounts = new();
     public AccountSystem accountSystem;
 

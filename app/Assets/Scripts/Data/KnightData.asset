@@ -16,6 +16,6 @@ MonoBehaviour:
   title: 
   health: 3
   damage: 1
-  xp: 0
+  xp: 1
   image: {fileID: 0}
   role: 1

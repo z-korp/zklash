@@ -8,8 +8,6 @@ public class ElementData : MonoBehaviour
     public int index = -1;
     public string entity = null;
 
-    public MobData mobData;
-
     public int maxHealth = 10;
     public int currentHealth = 3;
 
@@ -24,10 +22,6 @@ public class ElementData : MonoBehaviour
     public TextMeshProUGUI txtLife;
     public TextMeshProUGUI txtAttack;
 
-    public GameObject vfxHandler;
-
-    public GameObject canvas;
-
     public bool isBlinking = false;
     public float blinkDuration = 0.2f;
     public float blinkTimeAfterHit = 1f;
@@ -40,40 +34,7 @@ public class ElementData : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            TakeDamage(2);
-            if (gameObject.CompareTag("Enemy"))
-            {
-                vfxHandler.GetComponent<VfxManager>().PlayExplodeVFX();
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            HealPlayer(1);
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            DealDamage(1);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            PowerUp(1);
-        }
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            MoveAlly();
-        }
-
-        /*if (entity != null)
-        {
-            var character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
-            currentHealth = character.health;
-            currentDamage = character.attack;
-            currentXp = character.xp;
-            currentLevel = character.level;
-        }*/
     }
 
     public bool TakeDamage(int amount)
@@ -148,7 +109,6 @@ public class ElementData : MonoBehaviour
     public void Death()
     {
         animator.SetTrigger("Death");
-        canvas.SetActive(false);
     }
 
     public void SetTextHealth(int amount)

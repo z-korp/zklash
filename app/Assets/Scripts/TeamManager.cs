@@ -19,11 +19,6 @@ public class TeamManager : MonoBehaviour
         instance = this;
     }
 
-    // public void AddTeamMember(GameObject mobPrefab)
-    // {
-    //     if (team != null)
-    //         team.Add(mobPrefab);
-    // }
     void Update()
     {
         // Vérifier si la touche 'P' est pressée

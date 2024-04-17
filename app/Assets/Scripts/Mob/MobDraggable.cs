@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,13 +36,6 @@ public class MobDraggable : MonoBehaviour
 
         droppableZones = GameObject.FindGameObjectsWithTag("DroppableZone");
         mouseHoverDetector = GetComponent<MouseHoverDetector>();
-
-        // Trouvez le gestionnaire d'indicateurs dans la scène
-        // indicatorManager = FindObjectOfType<IndicatorManager>();
-        // if (indicatorManager == null)
-        // {
-        //     Debug.LogError("IndicatorManager not found in the scene.");
-        // }
     }
 
     private void Update()
@@ -113,6 +107,17 @@ public class MobDraggable : MonoBehaviour
             mobFx.GetComponent<SpriteRenderer>().sortingOrder = MobOrder + 1;
             // Play level up animation don't need to destroy mobFx it destroy itself when animation is done
             mobFx.GetComponent<Animator>().SetTrigger("LevelUp");
+            int currentUnitMergedCount = gameObject.GetComponent<MobLevel>().unitMerged;
+            int currentMobLevel = gameObject.GetComponent<MobLevel>().currentLevel;
+            int currentMobLevelAmount = gameObject.GetComponent<MobLevel>().xpAmount;
+            MobLevel mobLevelFromTeam = TeamManager.instance.GetMemberFromTeam(zoneId).GetComponent<MobLevel>();
+            mobLevelFromTeam.currentLevel = Math.Max(currentMobLevel, mobLevelFromTeam.currentLevel);
+            mobLevelFromTeam.xpAmount = Math.Max(currentMobLevelAmount, mobLevelFromTeam.xpAmount);
+            if (mobLevelFromTeam.currentLevel == 2 && currentMobLevel == 2)
+                mobLevelFromTeam.LevelUp(100);
+            mobLevelFromTeam.LevelUp();
+
+
 
             // Merge the objects
             return;

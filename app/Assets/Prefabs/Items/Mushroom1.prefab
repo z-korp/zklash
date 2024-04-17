@@ -130,6 +130,7 @@ MonoBehaviour:
   initPos: {x: 0, y: 0, z: 0}
   isFromShop: 1
   index: 0
+  canDropItem: 0
 --- !u!61 &6350920298004029007
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -159,7 +160,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

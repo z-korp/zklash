@@ -114,5 +114,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  orbitDistance: 2
-  orbitSpeed: 50
+  orbitDistance: 0.5
+  orbitSpeed: 130

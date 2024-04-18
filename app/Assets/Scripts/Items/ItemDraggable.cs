@@ -9,6 +9,10 @@ public class ItemDraggable : MonoBehaviour
     private Rigidbody2D rb;
     public bool canDropItem;
 
+    public GameObject orbitObjectPrefab;
+
+    public GameObject mob;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -43,11 +47,17 @@ public class ItemDraggable : MonoBehaviour
         if (canDropItem)
         {
             isFromShop = false;
+            GameObject itemOrbiterGO = Instantiate(orbitObjectPrefab, mob.transform.position, Quaternion.identity);
+            OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
+            itemOrbiter.target = mob.transform;
+            itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+            Destroy(gameObject);
+
         }
         else
         {
-            gameObject.GetComponent<MobItem>().itemPrefab = gameObject;
             Debug.Log("Object not dropped.");
+            rb.MovePosition(initPos);
         }
     }
 
@@ -58,6 +68,8 @@ public class ItemDraggable : MonoBehaviour
         {
             Debug.Log("Mob detected");
             canDropItem = true;
+            mob = collision.gameObject;
+
         }
     }
 

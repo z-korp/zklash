@@ -215,6 +215,8 @@ MonoBehaviour:
   isFromShop: 1
   index: 0
   canDropItem: 0
+  orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
+  mob: {fileID: 0}
 --- !u!61 &1668857486163212815
 BoxCollider2D:
   m_ObjectHideFlags: 0

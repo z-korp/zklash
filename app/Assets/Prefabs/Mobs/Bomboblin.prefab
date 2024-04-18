@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 888077694904347642}
   - component: {fileID: 3288869230180071498}
   - component: {fileID: 4200744420925542712}
+  - component: {fileID: -3624417847255533616}
   m_Layer: 0
   m_Name: Bomboblin
   m_TagString: Enemy
@@ -166,7 +167,6 @@ MonoBehaviour:
   indexFromShop: 0
   index: 0
   entity: 
-  mobData: {fileID: 11400000, guid: cff437dfa5e264d538aba8f1dae03d0a, type: 2}
   maxHealth: 10
   currentHealth: 3
   currentDamage: 2
@@ -176,8 +176,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6299402786898010029}
   txtLife: {fileID: 3665559667397155527}
   txtAttack: {fileID: 8086365469238560623}
-  vfxHandler: {fileID: 7527100601081965164}
-  canvas: {fileID: 4307646823769483872}
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
@@ -260,6 +258,7 @@ MonoBehaviour:
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
+  source: {fileID: 0}
 --- !u!114 &3288869230180071498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +287,19 @@ MonoBehaviour:
   damageText: {fileID: 423088994141851777}
   moveSpeed: 1
   displayTime: 0.5
+--- !u!114 &-3624417847255533616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565273498285202334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9f62c214b7a44b79e7769d5bce8aeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!1001 &1200794786517939930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -348,11 +360,6 @@ PrefabInstance:
 --- !u!4 &4948928152652868993 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6053976512854956891, guid: dc33ebaf5cf874163970c272cc0d4821, type: 3}
-  m_PrefabInstance: {fileID: 1200794786517939930}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7527100601081965164 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8709880739712490678, guid: dc33ebaf5cf874163970c272cc0d4821, type: 3}
   m_PrefabInstance: {fileID: 1200794786517939930}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7372091023048934835

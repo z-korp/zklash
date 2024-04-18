@@ -427,9 +427,9 @@ MonoBehaviour:
   initPos: {x: 0, y: 0, z: 0}
   isFromShop: 1
   index: 0
+  item: {fileID: 11400000, guid: 3d434f2c3761742c8ba5bed005f65e6a, type: 2}
   canDropItem: 0
   orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
-  mob: {fileID: 0}
 --- !u!61 &4510001283045523001
 BoxCollider2D:
   m_ObjectHideFlags: 0

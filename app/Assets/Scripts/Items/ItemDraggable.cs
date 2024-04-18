@@ -6,12 +6,13 @@ public class ItemDraggable : MonoBehaviour
     public Vector3 initPos = Vector3.zero;
     public bool isFromShop = true;
     public int index;
+    public ItemData item;
     private Rigidbody2D rb;
     public bool canDropItem;
 
     public GameObject orbitObjectPrefab;
 
-    public GameObject mob;
+    private GameObject mob;
 
     private void Awake()
     {
@@ -51,6 +52,7 @@ public class ItemDraggable : MonoBehaviour
             OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
             itemOrbiter.target = mob.transform;
             itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+            mob.GetComponent<MobItem>().item = item;
             Destroy(gameObject);
 
         }

@@ -2,16 +2,6 @@ using UnityEngine;
 
 public class MobItem : MonoBehaviour
 {
-    public GameObject itemPrefab;
-    // Start is called before the first frame update
-    void Start()
-    {
+    public ItemData item;
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

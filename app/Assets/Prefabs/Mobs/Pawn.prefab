@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 8876065409572277273}
   - component: {fileID: 3578257819075621083}
   - component: {fileID: 1778395795526548483}
+  - component: {fileID: -1820550729740538754}
   m_Layer: 0
   m_Name: Pawn
   m_TagString: Mob
@@ -315,6 +316,7 @@ MonoBehaviour:
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
+  source: {fileID: 0}
 --- !u!114 &8876065409572277273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,7 +361,22 @@ MonoBehaviour:
   xpBar: {fileID: 0}
   levelText: {fileID: 6487083173476709986}
   currentLevel: 1
+  unitMerged: 1
+  xpAmount: 100
   xpLevel: 0
+--- !u!114 &-1820550729740538754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9f62c214b7a44b79e7769d5bce8aeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!1001 &3617429525847738011
 PrefabInstance:
   m_ObjectHideFlags: 0

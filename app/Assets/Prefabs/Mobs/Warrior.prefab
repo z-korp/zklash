@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 2767045833729598622}
   - component: {fileID: 8075818746476112349}
   - component: {fileID: 6026135302560026739}
+  - component: {fileID: 782451542966870360}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Mob
@@ -390,6 +391,7 @@ MonoBehaviour:
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
+  source: {fileID: 0}
 --- !u!114 &2767045833729598622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,7 +436,22 @@ MonoBehaviour:
   xpBar: {fileID: 8631417279999252292}
   levelText: {fileID: 8462525640500365679}
   currentLevel: 1
+  unitMerged: 1
+  xpAmount: 100
   xpLevel: 0
+--- !u!114 &782451542966870360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9f62c214b7a44b79e7769d5bce8aeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!1001 &3537441331813508708
 PrefabInstance:
   m_ObjectHideFlags: 0

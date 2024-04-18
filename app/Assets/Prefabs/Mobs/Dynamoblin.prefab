@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 4608825558053575954}
   - component: {fileID: 8662991011392396853}
   - component: {fileID: 3819377067236578147}
+  - component: {fileID: 2591881034079378767}
   m_Layer: 0
   m_Name: Dynamoblin
   m_TagString: Enemy
@@ -189,7 +190,6 @@ MonoBehaviour:
   indexFromShop: 0
   index: 0
   entity: 
-  mobData: {fileID: 11400000, guid: d7043a55a02a842c5a35f27285bddc5f, type: 2}
   maxHealth: 10
   currentHealth: 3
   currentDamage: 2
@@ -199,8 +199,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 517514919511314406}
   txtLife: {fileID: 4044559087075912294}
   txtAttack: {fileID: 8847053849529890766}
-  vfxHandler: {fileID: 5196115702729004764}
-  canvas: {fileID: 3546676935081237185}
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
@@ -283,6 +281,7 @@ MonoBehaviour:
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
+  source: {fileID: 0}
 --- !u!114 &8662991011392396853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +310,19 @@ MonoBehaviour:
   damageText: {fileID: 1090041696935993376}
   moveSpeed: 1
   displayTime: 0.5
+--- !u!114 &2591881034079378767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3616953106443787091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9f62c214b7a44b79e7769d5bce8aeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!1001 &3513926811772357226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -368,11 +380,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc33ebaf5cf874163970c272cc0d4821, type: 3}
---- !u!1 &5196115702729004764 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8709880739712490678, guid: dc33ebaf5cf874163970c272cc0d4821, type: 3}
-  m_PrefabInstance: {fileID: 3513926811772357226}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7262039287043887409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6053976512854956891, guid: dc33ebaf5cf874163970c272cc0d4821, type: 3}

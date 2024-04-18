@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 3451549602337854142}
   - component: {fileID: 3506797288223814770}
   - component: {fileID: 436795394132684660}
+  - component: {fileID: 832450929761200642}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Mob
@@ -331,6 +332,7 @@ MonoBehaviour:
   isBlinking: 0
   blinkDuration: 0.2
   blinkTimeAfterHit: 1
+  source: {fileID: 0}
 --- !u!114 &3451549602337854142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,7 +377,22 @@ MonoBehaviour:
   xpBar: {fileID: 6036617809668587005}
   levelText: {fileID: 5872207488580412374}
   currentLevel: 1
+  unitMerged: 1
+  xpAmount: 100
   xpLevel: 0
+--- !u!114 &832450929761200642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9f62c214b7a44b79e7769d5bce8aeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!1001 &3644808349410388790
 PrefabInstance:
   m_ObjectHideFlags: 0

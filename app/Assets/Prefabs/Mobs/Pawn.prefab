@@ -358,7 +358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobData: {fileID: 11400000, guid: fb151d53ab82f4e1fade711b5776112b, type: 2}
-  xpBar: {fileID: 0}
+  xpBar: {fileID: 6394730720225454153}
   levelText: {fileID: 6487083173476709986}
   currentLevel: 1
   unitMerged: 1
@@ -377,6 +377,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  health: 0
+  attack: 0
+  damage: 0
+  absorb: 0
+  save: 0
+  durability: 0
 --- !u!1001 &3617429525847738011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -738,6 +744,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4174653123879183155, guid: 76f25ccb9ee3e42ef98fc4e359850fe3, type: 3}
   m_PrefabInstance: {fileID: 8484610148785031699}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6394730720225454153 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3243091251659104858, guid: 76f25ccb9ee3e42ef98fc4e359850fe3, type: 3}
+  m_PrefabInstance: {fileID: 8484610148785031699}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26fe3892173aa422eb11aa5727a688fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6487083173476709986 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3439021943674616945, guid: 76f25ccb9ee3e42ef98fc4e359850fe3, type: 3}

@@ -18,8 +18,6 @@ public class MobHealth : MonoBehaviour
 
     public TextMeshProUGUI txtLife;
 
-    public GameObject canvas;
-
     [HideInInspector]
     public bool isBlinking = false;
     public float blinkDuration = 0.2f;
@@ -75,7 +73,7 @@ public class MobHealth : MonoBehaviour
         {
             yield return TriggerDie();
             yield return TriggerDeathEffect();
-            canvas.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 

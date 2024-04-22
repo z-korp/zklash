@@ -6,15 +6,15 @@ public class MobOrientation : MonoBehaviour
 {
     public enum Orientation
     {
+        Right,
         Left,
-        Right
     }
 
     public Orientation orientation;
 
     private SpriteRenderer spriteRenderer;
 
-    void Start()
+    void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -36,6 +36,10 @@ public class MobOrientation : MonoBehaviour
 
             // Flip the sprite based on the orientation
             spriteRenderer.flipX = (orientation == Orientation.Left);
+        }
+        else
+        {
+            Debug.LogError("SpriteRenderer component not found on the GameObject.", this);
         }
     }
 }

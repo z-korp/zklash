@@ -21,5 +21,5 @@ MonoBehaviour:
   health: 4
   damage: 1
   xp: 1
-  image: {fileID: 0}
+  image: {fileID: 1343856753, guid: 3725583d287c04219b4e8be418adbe39, type: 3}
   role: 4

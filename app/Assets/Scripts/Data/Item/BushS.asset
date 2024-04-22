@@ -22,3 +22,4 @@ MonoBehaviour:
   absorb: 1
   save: 0
   durability: 1
+  image: {fileID: 21300000, guid: c3e16b0b7c2384040bdd1f72f4f55343, type: 3}

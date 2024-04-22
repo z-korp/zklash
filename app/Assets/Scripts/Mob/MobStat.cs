@@ -23,6 +23,7 @@ public class MobStat : MonoBehaviour
         UpdateGameObjectWithItemData();
         descriptionMob.text = powerLV1;
         levelMob.text = currentLevel.ToString();
+        titleMob.text = title;
     }
 
     private void UpdateGameObjectWithItemData()

@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: DynamoblinData
   m_EditorClassIdentifier: 
   id: 4
-  title: 
+  title: Dynamoblin
+  powerLV1: At death, deal 1 damage to the current foe.
+  powerLV2: At death, deal 2 damage to the current foe.
+  powerLV3: At death, deal 3 damage to the current foe.
+  element: 
   health: 2
   damage: 3
   xp: 1

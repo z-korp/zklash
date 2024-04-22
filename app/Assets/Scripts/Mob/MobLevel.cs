@@ -48,6 +48,8 @@ public class MobLevel : MonoBehaviour
             {
                 currentLevel += 1;
                 levelText.text = "LVL " + currentLevel;
+                GetComponent<MobStat>().UpdateMobLevelBannerUI(currentLevel);
+                GetComponent<MobStat>().UpdateMobPowerBannerUI(currentLevel);
                 xpLevel = 0;
                 if (currentLevel == LevelMax)
                 {

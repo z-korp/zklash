@@ -20,6 +20,14 @@ public class MobItem : MonoBehaviour
     public int absorb;
     public int save;
     public int durability;
+
+    private void Start()
+    {
+        titleItem.text = "";
+        sizeItem.text = "";
+        descriptionItem.text = "";
+    }
+
     private void Update()
     {
 

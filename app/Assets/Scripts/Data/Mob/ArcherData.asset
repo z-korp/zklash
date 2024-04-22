@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: ArcherData
   m_EditorClassIdentifier: 
   id: 1
-  title: 
+  title: Archer
+  powerLV1: At death, stun the foe for 1 turn.
+  powerLV2: At death, stun the foe for 2 turn.
+  powerLV3: At death, stun the foe for 3 turn.
+  element: 
   health: 2
   damage: 2
   xp: 1

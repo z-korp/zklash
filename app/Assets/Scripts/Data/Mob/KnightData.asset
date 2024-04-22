@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: KnightData
   m_EditorClassIdentifier: 
   id: 0
-  title: 
+  title: Knight
+  powerLV1: Get +1 health when an item is equipped.
+  powerLV2: Get +2 health when an item is equipped.
+  powerLV3: Get +3 health when an item is equipped.
+  element: 
   health: 3
   damage: 1
   xp: 1

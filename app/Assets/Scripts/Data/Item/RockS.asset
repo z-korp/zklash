@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: RockS
   m_EditorClassIdentifier: 
   id: 7
-  title: Rock S
+  title: Rock
+  size: 83
   description: Deals +1 damage
   health: 0
   attack: 1

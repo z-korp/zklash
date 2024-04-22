@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ShroomS
   m_EditorClassIdentifier: 
   id: 1
-  title: Mushroom S
+  title: Mushroom
+  size: 83
   description: Give +1 health
   health: 1
   attack: 0

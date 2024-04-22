@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: BushL
   m_EditorClassIdentifier: 
   id: 6
-  title: Bush L
+  title: Bush
+  size: 76
   description: Absorb 3 damages
   health: 0
   attack: 0

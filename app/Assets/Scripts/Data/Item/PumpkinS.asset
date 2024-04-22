@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: PumpkinS
   m_EditorClassIdentifier: 
   id: 10
-  title: Pumkin S
+  title: Pumkin
+  size: 83
   description: Save you once
   health: 0
   attack: 0

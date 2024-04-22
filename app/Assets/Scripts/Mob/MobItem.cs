@@ -1,11 +1,19 @@
+using System;
+using TMPro;
 using UnityEngine;
 
 public class MobItem : MonoBehaviour
 {
     public ItemData item;
+
+    public TextMeshProUGUI titleItem;
+    public TextMeshProUGUI sizeItem;
+    public TextMeshProUGUI descriptionItem;
     private ItemData previousItem;
 
-
+    public string title;
+    public char size;
+    public string description;
     public int health;
     public int attack;
     public int damage;
@@ -20,12 +28,16 @@ public class MobItem : MonoBehaviour
             Debug.Log("Item changed");
             previousItem = item;
             UpdateGameObjectWithItemData();
+            UpdateItemBannerUI(description, title, size);
         }
     }
     private void UpdateGameObjectWithItemData()
     {
         if (item != null)
         {
+            title = item.title;
+            size = item.size;
+            description = item.description;
             health = item.health;
             attack = item.attack;
             damage = item.damage;
@@ -33,6 +45,16 @@ public class MobItem : MonoBehaviour
             save = item.save;
             durability = item.durability;
         }
+    }
+
+    private void UpdateItemBannerUI(string description, string title, char size)
+    {
+        if (descriptionItem != null && description != null)
+            descriptionItem.text = description;
+        if (titleItem != null && title != null)
+            titleItem.text = title;
+        if (sizeItem != null && size != null)
+            sizeItem.text = size.ToString();
     }
 
 }

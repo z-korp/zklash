@@ -1,14 +1,14 @@
-using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MobStat : MonoBehaviour
 {
     public MobData mob;
-
     public TextMeshProUGUI titleMob;
     public TextMeshProUGUI levelMob;
     public TextMeshProUGUI descriptionMob;
+    public Image imageLeftMob, imageRightMob;
 
     public string title;
     public int currentLevel = 1;
@@ -35,6 +35,8 @@ public class MobStat : MonoBehaviour
             powerLV3 = mob.powerLV3;
             health = mob.health;
             damage = mob.damage;
+            imageLeftMob.sprite = mob.image;
+            imageRightMob.sprite = mob.image;
         }
     }
 

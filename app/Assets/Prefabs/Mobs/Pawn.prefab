@@ -382,6 +382,7 @@ MonoBehaviour:
   titleItem: {fileID: 7110539149965054196}
   sizeItem: {fileID: 2155120167067514477}
   descriptionItem: {fileID: 6285982036580958986}
+  itemImage: {fileID: 7967304490879962935}
   title: 
   size: 85
   description: 
@@ -420,6 +421,8 @@ MonoBehaviour:
   titleMob: {fileID: 5301781309546071366}
   levelMob: {fileID: 3047082722762710253}
   descriptionMob: {fileID: 6285982036580958986}
+  imageLeftMob: {fileID: 0}
+  imageRightMob: {fileID: 0}
   title: 
   currentLevel: 1
   powerLV1: 
@@ -704,6 +707,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7967304490879962935 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6674965510484674988, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
+  m_PrefabInstance: {fileID: 3617429525847738011}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6960154974279689989

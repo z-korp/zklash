@@ -1,15 +1,16 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MobItem : MonoBehaviour
 {
     public ItemData item;
-
     public TextMeshProUGUI titleItem;
     public TextMeshProUGUI sizeItem;
     public TextMeshProUGUI descriptionItem;
     private ItemData previousItem;
+    public Image itemImage;
 
     public string title;
     public char size;
@@ -52,6 +53,7 @@ public class MobItem : MonoBehaviour
             absorb = item.absorb;
             save = item.save;
             durability = item.durability;
+            itemImage.sprite = item.image;
         }
     }
 

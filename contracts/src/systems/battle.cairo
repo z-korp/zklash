@@ -35,7 +35,6 @@ mod battle {
 
     use zklash::constants::WORLD;
     use zklash::store::{Store, StoreImpl};
-    use zklash::events::{Fighter, Hit, Stun, Absorb, Usage, Talent};
     use zklash::helpers::packer::Packer;
     use zklash::helpers::array::ArrayTraitExt;
     use zklash::models::player::{Player, PlayerImpl, PlayerAssert};
@@ -57,19 +56,6 @@ mod battle {
 
     #[storage]
     struct Storage {}
-
-    // Events
-
-    #[event]
-    #[derive(Drop, starknet::Event)]
-    enum Event {
-        Fighter: Fighter,
-        Hit: Hit,
-        Stun: Stun,
-        Absorb: Absorb,
-        Usage: Usage,
-        Talent: Talent,
-    }
 
     // Implementations
 
@@ -122,82 +108,13 @@ mod battle {
             };
 
             // [Effect] Update team characters and fight
-            let (mut fighters, mut hits, _, _, _, _) = team
-                .fight(ref shop, ref characters);
+            team.fight(ref shop, ref characters);
 
             // [Effect] Update shop
             store.set_shop(shop);
 
             // [Effect] Update team
             store.set_team(team);
-
-            // [Emit] Events
-            loop {
-                match fighters.pop_front() {
-                    Option::Some(event) => {
-                        let mut event = event;
-                        event.player_id = player.id.into();
-                        event.team_id = team.id;
-                        emit!(world, (Event::Fighter(event)));
-                    },
-                    Option::None => { break; },
-                }
-            };
-            loop {
-                match hits.pop_front() {
-                    Option::Some(event) => {
-                        let mut event = event;
-                        event.player_id = player.id.into();
-                        event.team_id = team.id;
-                        emit!(world, (Event::Hit(event)));
-                    },
-                    Option::None => { break; },
-                }
-            };
-            // loop {
-            //     match stuns.pop_front() {
-            //         Option::Some(event) => {
-            //             let mut event = event;
-            //             event.player_id = player.id.into();
-            //             event.team_id = team.id;
-            //             emit!(world, (Event::Stun(event)));
-            //         },
-            //         Option::None => { break; },
-            //     }
-            // };
-            // loop {
-            //     match absorbs.pop_front() {
-            //         Option::Some(event) => {
-            //             let mut event = event;
-            //             event.player_id = player.id.into();
-            //             event.team_id = team.id;
-            //             emit!(world, (Event::Absorb(event)));
-            //         },
-            //         Option::None => { break; },
-            //     }
-            // };
-            // loop {
-            //     match usages.pop_front() {
-            //         Option::Some(event) => {
-            //             let mut event = event;
-            //             event.player_id = player.id.into();
-            //             event.team_id = team.id;
-            //             emit!(world, (Event::Usage(event)));
-            //         },
-            //         Option::None => { break; },
-            //     }
-            // };
-            // loop {
-            //     match talents.pop_front() {
-            //         Option::Some(event) => {
-            //             let mut event = event;
-            //             event.player_id = player.id.into();
-            //             event.team_id = team.id;
-            //             emit!(world, (Event::Talent(event)));
-            //         },
-            //         Option::None => { break; },
-            //     }
-            // };
         }
     }
 }

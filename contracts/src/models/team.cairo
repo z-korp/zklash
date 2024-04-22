@@ -10,7 +10,6 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::constants;
-use zklash::events::{Fighter, Hit, Stun, Absorb, Usage, Talent,};
 use zklash::store::{Store, StoreImpl};
 use zklash::helpers::packer::Packer;
 use zklash::helpers::battler::Battler;
@@ -151,9 +150,7 @@ impl TeamImpl of TeamTrait {
     }
 
     #[inline(always)]
-    fn fight(
-        ref self: Team, ref shop: Shop, ref chars: Array<Character>
-    ) -> (Array<Fighter>, Array<Hit>, Array<Stun>, Array<Absorb>, Array<Usage>, Array<Talent>,) {
+    fn fight(ref self: Team, ref shop: Shop, ref chars: Array<Character>) {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Not empty
@@ -162,9 +159,7 @@ impl TeamImpl of TeamTrait {
         let wave: Wave = (self.level + 1).into();
         let mut foes: Array<Character> = wave.characters();
         // [Effect] Fight and manage the win status
-        let (win, fighters, hits, stuns, absorbs, usages, talents) = Battler::start(
-            ref chars, ref foes, self.battle_id,
-        );
+        let win = Battler::start(ref chars, ref foes, self.battle_id,);
         if win {
             self.level += 1;
         } else {
@@ -177,7 +172,6 @@ impl TeamImpl of TeamTrait {
         self.nonce += 1;
         // [Effect] Increase battle id
         self.battle_id += 1;
-        (fighters, hits, stuns, absorbs, usages, talents,)
     }
 }
 

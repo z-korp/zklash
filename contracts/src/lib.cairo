@@ -1,6 +1,5 @@
 mod constants;
 mod store;
-mod events;
 
 mod types {
     mod dice;

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 3578257819075621083}
   - component: {fileID: 1778395795526548483}
   - component: {fileID: -1820550729740538754}
+  - component: {fileID: 4962763978797303551}
   m_Layer: 0
   m_Name: Pawn
   m_TagString: Mob
@@ -383,6 +384,19 @@ MonoBehaviour:
   absorb: 0
   save: 0
   durability: 0
+--- !u!114 &4962763978797303551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 055d098d9d7df4f73bfc4d720c6f7e0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: 0
 --- !u!1001 &799712522235122783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -507,6 +521,10 @@ PrefabInstance:
     - target: {fileID: 3196840196865663314, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_Name
       value: CanvasUnits
+      objectReference: {fileID: 0}
+    - target: {fileID: 3196840196865663314, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8476826900991160219, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_Pivot.x

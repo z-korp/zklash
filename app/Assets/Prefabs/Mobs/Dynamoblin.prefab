@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 3819377067236578147}
   - component: {fileID: 3332116210848859907}
   - component: {fileID: 2591881034079378767}
+  - component: {fileID: 2584179623629992328}
   m_Layer: 0
   m_Name: Dynamoblin
   m_TagString: Enemy
@@ -91,7 +92,7 @@ SpriteRenderer:
   m_SortingOrder: 5
   m_Sprite: {fileID: -925582985, guid: b57af6dc1ec37440e937340076e3d1a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1.34375, y: 1.0625}
@@ -350,6 +351,19 @@ MonoBehaviour:
   absorb: 0
   save: 0
   durability: 0
+--- !u!114 &2584179623629992328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3616953106443787091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 055d098d9d7df4f73bfc4d720c6f7e0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: 0
 --- !u!1001 &935669558014768611
 PrefabInstance:
   m_ObjectHideFlags: 0

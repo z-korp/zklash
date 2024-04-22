@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4200744420925542712}
   - component: {fileID: 5227032506161704369}
   - component: {fileID: -3624417847255533616}
+  - component: {fileID: 4576874303461797819}
   m_Layer: 0
   m_Name: Bomboblin
   m_TagString: Enemy
@@ -90,7 +91,7 @@ SpriteRenderer:
   m_SortingOrder: 5
   m_Sprite: {fileID: -83638651, guid: 73beb986810a8476eaee4ffcc1037e3a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2, y: 2}
@@ -327,6 +328,19 @@ MonoBehaviour:
   absorb: 0
   save: 0
   durability: 0
+--- !u!114 &4576874303461797819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565273498285202334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 055d098d9d7df4f73bfc4d720c6f7e0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: 0
 --- !u!1001 &1200794786517939930
 PrefabInstance:
   m_ObjectHideFlags: 0

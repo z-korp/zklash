@@ -18,13 +18,13 @@ GameObject:
   - component: {fileID: 1422990844300819237}
   - component: {fileID: 4189336186093714446}
   - component: {fileID: 571462470347713988}
-  - component: {fileID: 9201970892224235183}
   - component: {fileID: 7356887050185767196}
   - component: {fileID: 4552967640662640120}
   - component: {fileID: 3451549602337854142}
   - component: {fileID: 3506797288223814770}
   - component: {fileID: 436795394132684660}
   - component: {fileID: 832450929761200642}
+  - component: {fileID: 2665120738802177697}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Mob
@@ -280,21 +280,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackSound: {fileID: 8300000, guid: 95cbafff9073f44e8942234ef9c87681, type: 3}
   deathSound: {fileID: 8300000, guid: 56f93b54da0e144a7b2a3e6d94570f6e, type: 3}
---- !u!114 &9201970892224235183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7526038476407582817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
 --- !u!114 &7356887050185767196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,6 +384,19 @@ MonoBehaviour:
   absorb: 0
   save: 0
   durability: 0
+--- !u!114 &2665120738802177697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 055d098d9d7df4f73bfc4d720c6f7e0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: 0
 --- !u!1001 &3644808349410388790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -413,7 +411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3196840196865663314, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8476826900991160219, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_Pivot.x

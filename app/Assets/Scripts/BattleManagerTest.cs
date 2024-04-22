@@ -20,7 +20,9 @@ public class BattleManagerTest : MonoBehaviour
         {
             if (allyPrefabs[i] != null && allySpots[i] != null)
             {
-                allies.Add(Instantiate(allyPrefabs[i], allySpots[i].transform.position, Quaternion.identity));
+                GameObject ally = Instantiate(allyPrefabs[i], allySpots[i].transform.position, Quaternion.identity);
+                ally.GetComponent<MobOrientation>().SetOrientation(MobOrientation.Orientation.Right);
+                allies.Add(ally);
             }
         }
 
@@ -29,7 +31,9 @@ public class BattleManagerTest : MonoBehaviour
         {
             if (enemyPrefabs[i] != null && enemySpots[i] != null)
             {
-                enemies.Add(Instantiate(enemyPrefabs[i], enemySpots[i].transform.position, Quaternion.identity));
+                GameObject enemy = Instantiate(enemyPrefabs[i], enemySpots[i].transform.position, Quaternion.identity);
+                enemy.GetComponent<MobOrientation>().SetOrientation(MobOrientation.Orientation.Left);
+                enemies.Add(enemy);
             }
         }
     }

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: RockM
   m_EditorClassIdentifier: 
   id: 8
-  title: RockM
+  title: Rock M
+  description: Deals +2 damages
   health: 0
   attack: 2
   damage: 0

@@ -5,6 +5,7 @@ public class ItemData : ScriptableObject
 {
     public int id;
     public string title;
+    public string description;
     public int health;
     public int attack;
     public int damage;

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ShroomL
   m_EditorClassIdentifier: 
   id: 3
-  title: MushroomL
+  title: Mushroom L
+  description: Give +3 health
   health: 3
   attack: 0
   damage: 0

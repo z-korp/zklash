@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: BushS
   m_EditorClassIdentifier: 
   id: 4
-  title: BushS
+  title: Bush S
+  description: Absorb 1 damage
   health: 0
   attack: 0
   damage: 0

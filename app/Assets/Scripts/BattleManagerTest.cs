@@ -21,6 +21,8 @@ public class BattleManagerTest : MonoBehaviour
 
     public GameObject[] unitPrefabs;
 
+    public ItemData[] itemData;
+
     public List<GameObject> allySpots = new List<GameObject>();
     public List<GameObject> enemySpots = new List<GameObject>();
 
@@ -44,6 +46,17 @@ public class BattleManagerTest : MonoBehaviour
             {
                 GameObject allyObject = Instantiate(prefab, allySpots[i].transform.position, Quaternion.identity);
                 allyObject.GetComponent<MobOrientation>().SetOrientation(MobOrientation.Orientation.Right);
+                allyObject.GetComponent<MobController>().ConfigureCharacter(character);
+
+                Debug.Log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJ Item: " + ally.item);
+                var name2 = PrefabMappings.NameToItemDataMap[ally.item];
+                Debug.Log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJ Name2: " + name2);
+                if (name2 != "None")
+                {
+                    var item = PrefabUtils.FindScriptableByName(itemData, name2);
+                    allyObject.GetComponent<MobItem>().item = item;
+                }
+
                 allies.Add(allyObject);
             }
         }
@@ -61,6 +74,8 @@ public class BattleManagerTest : MonoBehaviour
             {
                 GameObject enemyObject = Instantiate(prefab, enemySpots[i].transform.position, Quaternion.identity);
                 enemyObject.GetComponent<MobOrientation>().SetOrientation(MobOrientation.Orientation.Left);
+                enemyObject.GetComponent<MobController>().ConfigureCharacter(character);
+
                 enemies.Add(enemyObject);
             }
         }
@@ -74,54 +89,47 @@ public class BattleManagerTest : MonoBehaviour
         }
     }
 
-    IEnumerator Attack(GameObject attacker, GameObject defender)
-    {
-        MobAttack attackerAttack = attacker.GetComponent<MobAttack>();
-        MobHealth defenderHealth = defender.GetComponent<MobHealth>();
-
-        Debug.Log("-------->" + attackerAttack.mobData.name + " is attacking " + defenderHealth.mobData.name);
-
-        if (attackerAttack != null || defenderHealth != null)
-        {
-            // Set the target of the MobAttack to the MobHealth component of the enemy
-            attackerAttack.target = defender.GetComponent<MobHealth>();
-            // Set the source of the MobHealth to the MobAttack component of the attacker
-            defenderHealth.source = attacker.GetComponent<MobHealth>();
-            yield return StartCoroutine(attackerAttack.TriggerAttackCoroutine());
-        }
-        else
-        {
-            Debug.Log("MobAttack component not found on attacker or MobHealth component not found on defender.");
-        }
-    }
+    private Buff next_buff1 = new Buff();
+    private Buff next_buff2 = new Buff();
 
     IEnumerator Battle(List<GameObject> team1, List<GameObject> team2)
     {
-        if (team1.Count == 0)
-        {
-            Debug.Log("Team 1 has lost");
-            yield break;
-        }
-        else if (team2.Count == 0)
-        {
-            Debug.Log("Team 2 has lost");
-            yield break;
-        }
-
-        if (team1[0].GetComponent<MobHealth>().health <= 0)
+        if (team1[0].GetComponent<MobHealth>().Health <= 0)
         {
             team1.RemoveAt(0);
+            if (team1.Count == 0)
+            {
+                Debug.Log("Team 1 has lost");
+                yield break;
+            }
+
+            // [Effect] Apply effects on dispatch
+            Debug.Log(">>>>>>>>>> DISPATCH ALLY <<<<<<<<<<<< ");
+            applyEffect(team1[0], Phase.OnDispatch);
+            // [Effect] Apply floating buff
+            team1[0].GetComponent<MobController>().Character.ApplyBuff(next_buff1);
+            next_buff1 = new Buff(); // reinit buff for next character
         }
 
-        if (team2[0].GetComponent<MobHealth>().health <= 0)
+        if (team2[0].GetComponent<MobHealth>().Health <= 0)
         {
             team2.RemoveAt(0);
+            if (team2.Count == 0)
+            {
+                Debug.Log("Team 2 has lost");
+                yield break;
+            }
+
+            // [Effect] Apply effects on dispatch
+            Debug.Log(">>>>>>>>>> DISPATCH ENEMY <<<<<<<<<<<<");
+            applyEffect(team2[0], Phase.OnDispatch);
+            // [Effect] Apply floating buff
+            team2[0].GetComponent<MobController>().Character.ApplyBuff(next_buff2);
+            next_buff2 = new Buff(); // reinit buff for next character
         }
 
         GameObject char1 = team1[0];
-        applyEffect(char1, Phase.OnDispatch);
         GameObject char2 = team2[0];
-        applyEffect(char2, Phase.OnDispatch);
 
         yield return Duel(char1, char2);
 
@@ -133,50 +141,171 @@ public class BattleManagerTest : MonoBehaviour
 
     IEnumerator Duel(GameObject char1, GameObject char2)
     {
-        Debug.Log("============================================================");
+        GameCharacter c1 = char1.GetComponent<MobController>().Character;
+        GameCharacter c2 = char2.GetComponent<MobController>().Character;
+
+        Debug.Log("[START DUEL]============================================================");
         Debug.Log("Dueling");
-        Coroutine attack1 = StartCoroutine(Attack(char1, char2));
-        Coroutine attack2 = StartCoroutine(Attack(char2, char1));
+
+        // [Effect] Apply talent and item buff for char1 and char2
+        var (damage1, stun1, _) = applyEffect(char1, Phase.OnFight);
+        var (damage2, stun2, _) = applyEffect(char2, Phase.OnFight);
+
+        // [Effect] Apply stun effects
+        c1.Stun = stun2;
+        c2.Stun = stun1;
+
+        Coroutine attack1 = StartCoroutine(Attack(char1, char2, damage1));
+        Coroutine attack2 = StartCoroutine(Attack(char2, char1, damage2));
         yield return attack1;
         yield return attack2;
 
         yield return new WaitForSeconds(0.1f);
 
-        bool isChar1Dead = char1.GetComponent<MobHealth>().health <= 0;
-        bool isChar2Dead = char2.GetComponent<MobHealth>().health <= 0;
+        bool isChar1Dead = char1.GetComponent<MobHealth>().Health <= 0;
+        bool isChar2Dead = char2.GetComponent<MobHealth>().Health <= 0;
+
+        if (isChar1Dead)
+        {
+            var (dmg1, buff1) = postMortem(char1, char2);
+            if (dmg1 > 0)
+                yield return StartCoroutine(PostMortem(char1, char2, dmg1));
+
+            var (dmg2, buff2) = postMortem(char2, char1);
+            if (dmg2 > 0)
+                yield return StartCoroutine(PostMortem(char2, char1, dmg2));
+
+            next_buff1 = buff1;
+            next_buff2 = buff2;
+        }
+        else if (isChar2Dead)
+        {
+            var (dmg2, buff2) = postMortem(char2, char1);
+            if (dmg2 > 0)
+                yield return StartCoroutine(PostMortem(char2, char1, dmg2));
+
+            var (dmg1, buff1) = postMortem(char1, char2);
+            if (dmg1 > 0)
+                yield return StartCoroutine(PostMortem(char1, char2, dmg1));
+
+            next_buff1 = buff1;
+            next_buff2 = buff2;
+        }
+
+        isChar1Dead = char1.GetComponent<MobHealth>().Health <= 0;
+        if (isChar1Dead)
+        {
+            yield return char1.GetComponent<MobHealth>().TriggerDie();
+        }
+
+        isChar2Dead = char2.GetComponent<MobHealth>().Health <= 0;
+        if (isChar2Dead)
+        {
+            yield return char2.GetComponent<MobHealth>().TriggerDie();
+        }
 
         if (isChar1Dead || isChar2Dead)
         {
-            Debug.Log("============================================================");
+            Debug.Log("[END DUEL]============================================================");
             yield break;
         }
 
-        Debug.Log("============================================================");
+        yield return WaitForNKey();
+        Debug.Log("[END CONTINUE DUEL]============================================================");
+
         yield return Duel(char1, char2);
+    }
+
+    IEnumerator WaitForNKey()
+    {
+        while (!Input.GetKeyDown(KeyCode.N))
+        {
+            yield return null;
+        }
+    }
+
+    IEnumerator Attack(GameObject attacker, GameObject defender, int additionalDamage)
+    {
+        // Get the damage of the attacker
+        int dmg = attacker.GetComponent<MobController>().Character.Attack;
+        // and add the additional damage from the talent
+        int totalDamage = dmg + additionalDamage;
+
+        //yield return new WaitForSeconds(5f);
+        MobAttack attackerAttack = attacker.GetComponent<MobAttack>();
+        MobHealth defenderHealth = defender.GetComponent<MobHealth>();
+
+        Debug.Log("-------->" + attackerAttack.mobData.name + " is attacking " + defenderHealth.mobData.name);
+
+        if (attackerAttack != null || defenderHealth != null)
+        {
+            // Set the target of the MobAttack to the MobHealth component of the enemy
+            attackerAttack.target = defender.GetComponent<MobHealth>();
+            // Set the source of the MobHealth to the MobAttack component of the attacker
+            defenderHealth.source = attacker.GetComponent<MobHealth>();
+            yield return StartCoroutine(attackerAttack.TriggerAttackCoroutine(totalDamage));
+        }
+        else
+        {
+            Debug.Log("MobAttack component not found on attacker or MobHealth component not found on defender.");
+        }
     }
 
     IEnumerator ApplyEffects(GameObject character, Phase phase)
     {
+
         yield return null;
     }
 
     (int, int, Buff) applyEffect(GameObject character, Phase phase)
     {
-        /*        // [Effect] Apply talent and item buff for char
-        let (talent_damage, stun, next_buff) = char.talent(phase, battle_id, tick);
-        let item_damage = char.usage(phase, battle_id, tick);
-        (talent_damage + item_damage, stun, next_buff)*/
-        //Talent talent = character.Talent;
-        //Item item = character.GetComponent<MobItem>();
-
-
-
-        return (0, 0, new Buff());
+        GameCharacter c = character.GetComponent<MobController>().Character;
+        // Talent buff
+        var (talent_damage, stun, next_buff) = c.Talent(phase);
+        Debug.Log("----> " + "Next buff: " + next_buff.Health + " " + next_buff.Attack + " " + next_buff.Absorb);
+        // Item buff
+        var item_dmg = c.Usage(phase);
+        return (talent_damage + item_dmg, stun, next_buff);
     }
 
-    IEnumerator PostMortem()
+    IEnumerator PostMortem(GameObject attacker, GameObject defender, int dmg)
     {
-        yield return null;
+        //yield return new WaitForSeconds(5f);
+        MobAttack attackerAttack = attacker.GetComponent<MobAttack>();
+        MobHealth defenderHealth = defender.GetComponent<MobHealth>();
+
+        Debug.Log("-------->" + attackerAttack.mobData.name + " is postmorteming " + defenderHealth.mobData.name);
+
+        if (attackerAttack != null || defenderHealth != null)
+        {
+            // Set the target of the MobAttack to the MobHealth component of the enemy
+            attackerAttack.target = defender.GetComponent<MobHealth>();
+            // Set the source of the MobHealth to the MobAttack component of the attacker
+            defenderHealth.source = attacker.GetComponent<MobHealth>();
+            yield return StartCoroutine(attackerAttack.TriggerPostMortemCoroutine(dmg));
+        }
+        else
+        {
+            Debug.Log("MobAttack component not found on attacker or MobHealth component not found on defender.");
+        }
+    }
+
+
+    (int, Buff) postMortem(GameObject character, GameObject foe)
+    {
+        GameCharacter c = character.GetComponent<MobController>().Character;
+        GameCharacter f = foe.GetComponent<MobController>().Character;
+        if (c.IsDead())
+        {
+            var (damage, stun, next_buff) = applyEffect(character, Phase.OnDeath);
+            f.Stun = stun;
+            f.TakeDamage(damage);
+            return (damage, next_buff);
+        }
+        else
+        {
+            return (0, new Buff());
+        }
     }
 
     IEnumerator RepositionTeams()
@@ -195,7 +324,7 @@ public class BattleManagerTest : MonoBehaviour
             }
 
             // Remove the first mob and update the list, shifting all others down by one
-            allies.RemoveAt(0);
+            //allies.RemoveAt(0);
         }
 
         if (IsFirstMobDead(enemies))
@@ -211,7 +340,7 @@ public class BattleManagerTest : MonoBehaviour
             }
 
             // Remove the first mob and update the list, shifting all others down by one
-            enemies.RemoveAt(0);
+            //enemies.RemoveAt(0);
         }
 
         yield return null;
@@ -222,8 +351,8 @@ public class BattleManagerTest : MonoBehaviour
         if (mobs != null && mobs.Count > 0)
         {
             MobHealth mobHealth = mobs[0].GetComponent<MobHealth>();
-            Debug.Log(mobHealth.health);
-            return mobHealth != null && mobHealth.health <= 0;
+            Debug.Log(mobHealth.Health);
+            return mobHealth != null && mobHealth.Health <= 0;
         }
         return false;
     }

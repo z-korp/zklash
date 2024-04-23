@@ -30,4 +30,21 @@ public class PrefabMappings
         { Item.RockMedium, "Rock2" },
         { Item.RockLarge, "Rock3" },
     };
+
+    public static readonly Dictionary<Item, string> NameToItemDataMap = new Dictionary<Item, string>
+    {
+        { Item.None, "None"},
+        { Item.BushSmall, "BushS" },
+        { Item.BushMedium, "BushM" },
+        { Item.BushLarge, "BushL" },
+        { Item.MushroomSmall, "ShroomS" },
+        { Item.MushroomMedium, "ShroomM" },
+        { Item.MushroomLarge, "ShroomL" },
+        { Item.PumpkinSmall, "PumpkinS" },
+        { Item.PumpkinMedium, "PumpkinM" },
+        { Item.PumpkinLarge, "PumpkinL" },
+        { Item.RockSmall, "RockS" },
+        { Item.RockMedium, "RockM" },
+        { Item.RockLarge, "RockL" },
+    };
 }

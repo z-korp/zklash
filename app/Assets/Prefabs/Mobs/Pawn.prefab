@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: -1820550729740538754}
   - component: {fileID: 4962763978797303551}
   - component: {fileID: 206987725946559450}
+  - component: {fileID: 5731635283803301629}
   m_Layer: 0
   m_Name: Pawn
   m_TagString: Mob
@@ -312,7 +313,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobData: {fileID: 11400000, guid: fb151d53ab82f4e1fade711b5776112b, type: 2}
-  health: 0
   isDead: 0
   txtLife: {fileID: 3749020962830596209}
   isBlinking: 0
@@ -430,6 +430,18 @@ MonoBehaviour:
   powerLV3: 
   health: 0
   damage: 0
+--- !u!114 &5731635283803301629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791b1c631898d489092a6b0319f25e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &799712522235122783
 PrefabInstance:
   m_ObjectHideFlags: 0

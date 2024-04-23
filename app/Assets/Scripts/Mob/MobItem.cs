@@ -3,9 +3,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using zKlash.Game;
+using zKlash.Game.Items;
 
 public class MobItem : MonoBehaviour
 {
+    public IItem Item { get; set; }
+
     public ItemData item;
     public TextMeshProUGUI titleItem;
     public TextMeshProUGUI sizeItem;

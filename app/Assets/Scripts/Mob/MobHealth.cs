@@ -6,13 +6,21 @@ using zKlash.Game.Roles;
 
 public class MobHealth : MonoBehaviour
 {
+    private MobController mobController;
+
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
     public MobData mobData;
 
-    [HideInInspector]
-    public int health;
+    public int Health
+    {
+        get
+        {
+            Debug.Assert(mobController != null, "MobController is not set on " + gameObject.name);
+            return mobController ? mobController.Character.Health : 0;
+        }
+    }
 
     [HideInInspector]
     public bool isDead = false;
@@ -29,7 +37,7 @@ public class MobHealth : MonoBehaviour
 
     void Awake()
     {
-        health = mobData.health;
+        //health = mobData.health;
 
         animator = GetComponentInParent<Animator>();
         if (animator == null)
@@ -42,13 +50,34 @@ public class MobHealth : MonoBehaviour
         {
             Debug.LogError("SpriteRenderer component not found in parent GameObject.", this);
         }
+    }
 
-        SetTextHealth(health);
+    void Start()
+    {
+        // Get the MobController component from the GameObject
+        mobController = GetComponent<MobController>();
+
+        if (mobController == null)
+        {
+            Debug.LogError("MobController component not found on the GameObject.", this);
+            return;
+        }
+
+        // Initialize health from the Character object
+        //health = mobController.Character.Health;
+        SetTextHealth(Health);
+    }
+
+    void Update()
+    {
+        SetTextHealth(Health);
     }
 
     public IEnumerator TakeDamage(int amount)
     {
         if (amount == 0) yield break;
+
+        int real_dmg = mobController.Character.TakeDamage(amount);
 
         MobDamageText damageTextComponent = GetComponent<MobDamageText>();
 
@@ -58,27 +87,20 @@ public class MobHealth : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Taking {amount} damage on {mobData.name}");
+            Debug.Log($"Taking {real_dmg} damage on {mobData.name}");
             damageTextComponent.ShowDamage(amount);
         }
 
-        health -= amount;
-        SetTextHealth(Math.Max(0, health));
+        //health -= amount;
+        SetTextHealth(Math.Max(0, Health));
 
         // Animation
         isBlinking = true;
         StartCoroutine(BlinkDamageFlash());
         yield return StartCoroutine(HandleBlinkDelay());
-
-        if (health <= 0)
-        {
-            yield return TriggerDie();
-            yield return TriggerDeathEffect();
-            gameObject.SetActive(false);
-        }
     }
 
-    public void HealPlayer(int amount)
+    /*public void HealPlayer(int amount)
     {
         health += amount;
         SetTextHealth(health);
@@ -86,26 +108,28 @@ public class MobHealth : MonoBehaviour
         isBlinking = true;
         StartCoroutine(BlinkHealFlash());
         StartCoroutine(HandleBlinkDelay());
-    }
+    }*/
 
     public IEnumerator TriggerDie()
     {
         animator.SetTrigger("Death");
 
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dead"));
-        yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f);
+        yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f);
+
+        gameObject.SetActive(false);
     }
 
     public IEnumerator TriggerDeathEffect()
     {
-        if (mobData.role == Role.Bomboblin)
+        /*if (mobData.role == Role.Bomboblin)
         {
             yield return source.TakeDamage(99);
         }
         else
-        {
-            yield return null;
-        }
+        {*/
+        yield return null;
+        //}
     }
 
     public void SetTextHealth(int amount)

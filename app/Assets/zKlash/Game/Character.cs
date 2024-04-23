@@ -35,6 +35,8 @@ namespace zKlash.Game
             private set => _attack = value;
         }
 
+        public int Damage => _attack;
+
         public int Absorb
         {
             get => _absorb;
@@ -50,8 +52,9 @@ namespace zKlash.Game
         public IRole Role { get; private set; }
         public IItem Item { get; private set; }
 
-        public Character(Role roleType, int level, ItemEnum item = ItemEnum.None)
+        public Character(Role roleType, int level, ItemEnum item)
         {
+            Item = ItemFactory.GetItem(ItemEnum.None);
             Role = RoleFactory.GetRole(roleType);
 
             Level = level;
@@ -61,7 +64,7 @@ namespace zKlash.Game
             _absorb = Role.Absorb(Phase.OnHire, level);
             _stun = 0;
 
-            Item = ItemFactory.GetItem(item);
+            Equip(item);
         }
 
         /*public void FromGameObject(GameObject gameObject)
@@ -139,6 +142,42 @@ namespace zKlash.Game
             Item = ItemFactory.GetItem(Item.Usage(phase));
             // [Effect] Return the item damage
             return Item.Damage(phase);
+        }
+
+
+        public void Unequip()
+        {
+            // [Effect] Update the item's effect
+            Buff buff = new Buff
+            {
+                Health = Item.Health(Phase.OnEquip),
+                Attack = Item.Attack(Phase.OnEquip),
+                Absorb = Item.Absorb(Phase.OnEquip),
+            };
+            ApplyDebuff(buff);
+            Item = ItemFactory.GetItem(ItemEnum.None);
+        }
+
+        public void Equip(ItemEnum item)
+        {
+            // [Effect] Remove the previous item's effect
+            Unequip();
+            Item = ItemFactory.GetItem(item);
+
+            if (item != ItemEnum.None)
+            {
+                Talent(Phase.OnEquip);
+            }
+
+            // [Effect] Equip and apply the new item's effect
+            Buff buff = new Buff
+            {
+                Health = Item.Health(Phase.OnEquip),
+                Attack = Item.Attack(Phase.OnEquip),
+                Absorb = Item.Absorb(Phase.OnEquip),
+            };
+            Debug.Log("MMMMMMMMMMMMM Applying buff: " + buff.Health + " " + buff.Attack + " " + buff.Absorb);
+            ApplyBuff(buff);
         }
     }
 }

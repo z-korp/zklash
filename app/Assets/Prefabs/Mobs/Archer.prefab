@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 832450929761200642}
   - component: {fileID: 2665120738802177697}
   - component: {fileID: 7323098220767229983}
+  - component: {fileID: 2215707457893609956}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Mob
@@ -312,7 +313,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobData: {fileID: 11400000, guid: b17c77933520f4a9d814db28787f9260, type: 2}
-  health: 0
   isDead: 0
   txtLife: {fileID: 1102237089642557484}
   isBlinking: 0
@@ -430,6 +430,18 @@ MonoBehaviour:
   powerLV3: 
   health: 0
   damage: 0
+--- !u!114 &2215707457893609956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791b1c631898d489092a6b0319f25e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3644808349410388790
 PrefabInstance:
   m_ObjectHideFlags: 0

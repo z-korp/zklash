@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 3263924243137518979}
   - component: {fileID: 928076116124518190}
   - component: {fileID: 761462056379111851}
+  - component: {fileID: 4511937055904262526}
   m_Layer: 0
   m_Name: Torchoblin
   m_TagString: Enemy
@@ -280,7 +281,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobData: {fileID: 11400000, guid: 1a8d2415a8acc4f16b39585db330d4f0, type: 2}
-  health: 0
   isDead: 0
   txtLife: {fileID: 2175499225573954065}
   isBlinking: 0
@@ -398,6 +398,18 @@ MonoBehaviour:
   powerLV3: 
   health: 0
   damage: 0
+--- !u!114 &4511937055904262526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971632552838307129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791b1c631898d489092a6b0319f25e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &371192795962761803
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,13 +4,30 @@ using TMPro;
 
 public class MobAttack : MonoBehaviour
 {
+    private MobController mobController;
+
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
     public MobData mobData;
-    private int baseDamage;
-    private int bonusDamage = 0;
-    private int damage => baseDamage + bonusDamage;
+    //private int baseDamage;
+    //private int bonusDamage = 0;
+    //private int damage => baseDamage + bonusDamage;
+
+    private int _damage;
+
+    public int Damage
+    {
+        get
+        {
+            Debug.Assert(mobController != null, "MobController is not set on " + gameObject.name);
+            return mobController ? mobController.Character.Damage : 0;
+        }
+        private set
+        {
+            _damage = value;
+        }
+    }
 
     public TextMeshProUGUI txtAttack;
 
@@ -24,7 +41,7 @@ public class MobAttack : MonoBehaviour
 
     void Awake()
     {
-        baseDamage = mobData.damage;
+        //baseDamage = mobData.damage;
 
         animator = GetComponentInParent<Animator>();
         if (animator == null)
@@ -37,23 +54,42 @@ public class MobAttack : MonoBehaviour
         {
             Debug.LogError("SpriteRenderer component not found in parent GameObject.", this);
         }
-
-        SetTextAttack(damage);
     }
 
     void Start()
     {
+        // Get the MobController component from the GameObject
+        mobController = GetComponent<MobController>();
+
+        if (mobController == null)
+        {
+            Debug.LogError("MobController component not found on the GameObject.", this);
+            return;
+        }
+
+        SetTextAttack(Damage);
     }
 
-    public IEnumerator TriggerAttackCoroutine()
+    void Update()
+    {
+        SetTextAttack(Damage);
+    }
+
+    public IEnumerator TriggerAttackCoroutine(int dmg)
     {
         animator.SetTrigger("Attack");
 
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
         yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f);
 
-        Debug.Log($"Attacking {target.name} for {damage} damage");
-        yield return target.TakeDamage(damage);
+        Debug.Log($"Attacking {target.name} for {dmg} damage");
+        yield return target.TakeDamage(dmg);
+    }
+
+    public IEnumerator TriggerPostMortemCoroutine(int dmg)
+    {
+        Debug.Log($"PostMorteming {target.name} for {dmg} damage");
+        yield return target.TakeDamage(dmg);
     }
 
     public void TakeDamageOnTarget()
@@ -61,7 +97,7 @@ public class MobAttack : MonoBehaviour
         //target.TakeDamage(damage);
     }
 
-    public void IncreaseDamage(int amount)
+    /*public void IncreaseDamage(int amount)
     {
         bonusDamage += amount;
 
@@ -70,7 +106,7 @@ public class MobAttack : MonoBehaviour
         isBlinking = true;
         StartCoroutine(BlinkPowerUpFlash());
         StartCoroutine(HandleBlinkDelay());
-    }
+    }*/
 
     public void SetTextAttack(int amount)
     {

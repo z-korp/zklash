@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: -3624417847255533616}
   - component: {fileID: 4576874303461797819}
   - component: {fileID: 3181539645783667248}
+  - component: {fileID: 7787966755507272248}
   m_Layer: 0
   m_Name: Bomboblin
   m_TagString: Enemy
@@ -257,7 +258,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobData: {fileID: 11400000, guid: cff437dfa5e264d538aba8f1dae03d0a, type: 2}
-  health: 0
   isDead: 0
   txtLife: {fileID: 5685697233200557372}
   isBlinking: 0
@@ -375,6 +375,18 @@ MonoBehaviour:
   powerLV3: 
   health: 0
   damage: 0
+--- !u!114 &7787966755507272248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565273498285202334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791b1c631898d489092a6b0319f25e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1200794786517939930
 PrefabInstance:
   m_ObjectHideFlags: 0

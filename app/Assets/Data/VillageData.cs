@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using zKlash.Game.Roles;
 
 [System.Serializable] // Makes the struct visible in the Unity Inspector, allowing for easier debugging and setup
 public class ShopSpot

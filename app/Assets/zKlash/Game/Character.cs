@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using zKlash.Game.Items;
+using ItemEnum = zKlash.Game.Items.Item;
 using zKlash.Game.Roles;
 
 namespace zKlash.Game
@@ -49,7 +50,7 @@ namespace zKlash.Game
         public IRole Role { get; private set; }
         public IItem Item { get; private set; }
 
-        public Character(RoleEnum roleType, int level, ItemEnum item = ItemEnum.None)
+        public Character(Role roleType, int level, ItemEnum item = ItemEnum.None)
         {
             Role = RoleFactory.GetRole(roleType);
 
@@ -126,11 +127,6 @@ namespace zKlash.Game
 
         public int Usage(Phase phase)
         {
-            if (Item == null)
-            {
-                return 0;
-            }
-
             // [Effect] Update the item's effect
             Buff buff = new Buff
             {

@@ -12,6 +12,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using Object = System.Object;
 using Random = UnityEngine.Random;
+using zKlash.Game.Roles;
 
 public class GameManager : MonoBehaviour
 {

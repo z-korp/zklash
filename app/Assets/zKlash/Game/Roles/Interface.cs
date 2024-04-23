@@ -3,7 +3,7 @@ using System;
 namespace zKlash.Game.Roles
 {
 
-    public enum RoleEnum
+    public enum Role
     {
         None, Knight, Bowman, Pawn, Torchoblin, Dynamoblin, Bomboblin,
     }
@@ -22,21 +22,21 @@ namespace zKlash.Game.Roles
 
     public static class RoleFactory
     {
-        public static IRole GetRole(RoleEnum role)
+        public static IRole GetRole(Role role)
         {
             switch (role)
             {
-                case RoleEnum.Knight:
+                case Role.Knight:
                     return new Knight();
-                case RoleEnum.Bowman:
+                case Role.Bowman:
                     return new Bowman();
-                case RoleEnum.Pawn:
+                case Role.Pawn:
                     return new Pawn();
-                case RoleEnum.Torchoblin:
+                case Role.Torchoblin:
                     return new Torchoblin();
-                case RoleEnum.Dynamoblin:
+                case Role.Dynamoblin:
                     return new Dynamoblin();
-                case RoleEnum.Bomboblin:
+                case Role.Bomboblin:
                     return new Bomboblin();
                 default:
                     throw new ArgumentException("Invalid role type");

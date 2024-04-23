@@ -39,20 +39,20 @@ namespace zKlash.Game.Items
             return 0;
         }
 
-        public ItemEnum Usage(Phase phase)
+        public Item Usage(Phase phase)
         {
             if (phase == Phase.OnFight)
             {
-                return ItemEnum.None;
+                return Item.None;
             }
             else
             {
                 return _size switch
                 {
-                    Size.Small => ItemEnum.RockSmall,
-                    Size.Medium => ItemEnum.RockMedium,
-                    Size.Large => ItemEnum.RockLarge,
-                    _ => ItemEnum.None
+                    Size.Small => Item.RockSmall,
+                    Size.Medium => Item.RockMedium,
+                    Size.Large => Item.RockLarge,
+                    _ => Item.None
                 };
             }
         }

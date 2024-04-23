@@ -1,4 +1,5 @@
 using UnityEngine;
+using zKlash.Game.Roles;
 
 public class MobManager : MonoBehaviour
 {

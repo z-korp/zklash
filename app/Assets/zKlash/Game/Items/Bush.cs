@@ -39,14 +39,14 @@ namespace zKlash.Game.Items
             return 0;
         }
 
-        public ItemEnum Usage(Phase phase)
+        public Item Usage(Phase phase)
         {
             return _size switch
             {
-                Size.Small => ItemEnum.BushSmall,
-                Size.Medium => ItemEnum.BushMedium,
-                Size.Large => ItemEnum.BushLarge,
-                _ => ItemEnum.None
+                Size.Small => Item.BushSmall,
+                Size.Medium => Item.BushMedium,
+                Size.Large => Item.BushLarge,
+                _ => Item.None
             };
         }
     }

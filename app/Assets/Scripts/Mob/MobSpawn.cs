@@ -1,10 +1,11 @@
 using UnityEngine;
+using zKlash.Game.Roles;
 
 public class MobSpawn : MonoBehaviour
 {
     public Role role;
     private GameObject mobObject;
-    
+
     void Update()
     {
         if (role != Role.None)
@@ -20,7 +21,9 @@ public class MobSpawn : MonoBehaviour
             {
                 mobDraggable.isFromShop = true;
                 mobDraggable.index = index;
-            } else {
+            }
+            else
+            {
                 mobDraggable.isFromShop = false;
             }
             role = Role.None;

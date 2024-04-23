@@ -5,49 +5,49 @@ namespace zKlash.Game.Roles
         public int Health(Phase phase, int level)
         {
             if (phase == Phase.OnHire)
-                return 2;  // Pawn has 2 health points when hired
+                return 2;
             return 0;
         }
 
         public int Attack(Phase phase, int level)
         {
             if (phase == Phase.OnHire)
-                return 1;  // Pawn has 1 attack point when hired
+                return 1;
             return 0;
         }
 
         public int Absorb(Phase phase, int level)
         {
-            return 0;  // Pawn does not have any absorb capability
+            return 0;
         }
 
         public int Damage(Phase phase, int level)
         {
-            return 0;  // Pawn does not deal additional damage
+            return 0;
         }
 
         public int Stun(Phase phase, int level)
         {
-            return 0;  // Pawn does not stun opponents
+            return 0;
         }
 
         public int NextHealth(Phase phase, int level)
         {
             if (phase == Phase.OnDeath)
-                return level;  // Returns the current level as next health on death
+                return level;
             return 0;
         }
 
         public int NextAttack(Phase phase, int level)
         {
             if (phase == Phase.OnDeath)
-                return level;  // Returns the current level as next attack on death
+                return level;
             return 0;
         }
 
         public int NextAbsorb(Phase phase, int level)
         {
-            return 0;  // Pawn does not have future absorb capabilities
+            return 0;
         }
     }
 }

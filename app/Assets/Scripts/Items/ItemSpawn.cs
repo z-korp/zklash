@@ -1,10 +1,11 @@
 using UnityEngine;
+using zKlash.Game.Items;
 
 public class ItemSpawn : MonoBehaviour
 {
     public Item item;
     private GameObject itemObject;
-    
+
     void Update()
     {
         if (item != Item.None)
@@ -20,7 +21,9 @@ public class ItemSpawn : MonoBehaviour
             {
                 itemDraggable.isFromShop = true;
                 itemDraggable.index = index;
-            } else {
+            }
+            else
+            {
                 itemDraggable.isFromShop = false;
             }
             item = Item.None;

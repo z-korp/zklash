@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using zKlash.Game;
 
 public class MobItem : MonoBehaviour
 {
@@ -31,7 +32,6 @@ public class MobItem : MonoBehaviour
 
     private void Update()
     {
-
         if (item != previousItem)
         {
             Debug.Log("Item changed");
@@ -40,6 +40,7 @@ public class MobItem : MonoBehaviour
             UpdateItemBannerUI(description, title, size);
         }
     }
+
     private void UpdateGameObjectWithItemData()
     {
         if (item != null)
@@ -66,5 +67,4 @@ public class MobItem : MonoBehaviour
         if (sizeItem != null && size != null)
             sizeItem.text = size.ToString();
     }
-
 }

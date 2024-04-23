@@ -9,7 +9,7 @@ namespace zKlash.Game.Items
         Large
     }
 
-    public enum ItemEnum
+    public enum Item
     {
         None,
         MushroomSmall,
@@ -32,7 +32,7 @@ namespace zKlash.Game.Items
         int Attack(Phase phase);
         int Damage(Phase phase);
         int Absorb(Phase phase);
-        ItemEnum Usage(Phase phase);
+        Item Usage(Phase phase);
     }
 
     public class NoneItem : IItem
@@ -41,40 +41,40 @@ namespace zKlash.Game.Items
         public int Attack(Phase phase) => 0;
         public int Damage(Phase phase) => 0;
         public int Absorb(Phase phase) => 0;
-        public ItemEnum Usage(Phase phase) => ItemEnum.None;
+        public Item Usage(Phase phase) => Item.None;
     }
 
     public static class ItemFactory
     {
-        public static IItem GetItem(ItemEnum item)
+        public static IItem GetItem(Item item)
         {
             switch (item)
             {
-                case ItemEnum.None:
+                case Item.None:
                     return new NoneItem();
-                case ItemEnum.MushroomSmall:
+                case Item.MushroomSmall:
                     return new Mushroom(Size.Small);
-                case ItemEnum.RockSmall:
+                case Item.RockSmall:
                     return new Rock(Size.Small);
-                case ItemEnum.BushSmall:
+                case Item.BushSmall:
                     return new Bush(Size.Small);
-                case ItemEnum.PumpkinSmall:
+                case Item.PumpkinSmall:
                     return new Pumpkin(Size.Small);
-                case ItemEnum.MushroomMedium:
+                case Item.MushroomMedium:
                     return new Mushroom(Size.Medium);
-                case ItemEnum.RockMedium:
+                case Item.RockMedium:
                     return new Rock(Size.Medium);
-                case ItemEnum.BushMedium:
+                case Item.BushMedium:
                     return new Bush(Size.Medium);
-                case ItemEnum.PumpkinMedium:
+                case Item.PumpkinMedium:
                     return new Pumpkin(Size.Medium);
-                case ItemEnum.MushroomLarge:
+                case Item.MushroomLarge:
                     return new Mushroom(Size.Large);
-                case ItemEnum.RockLarge:
+                case Item.RockLarge:
                     return new Rock(Size.Large);
-                case ItemEnum.BushLarge:
+                case Item.BushLarge:
                     return new Bush(Size.Large);
-                case ItemEnum.PumpkinLarge:
+                case Item.PumpkinLarge:
                     return new Pumpkin(Size.Large);
                 default:
                     throw new ArgumentException("Invalid item type");

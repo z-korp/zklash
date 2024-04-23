@@ -31,26 +31,26 @@ namespace zKlash.Game.Items
             return 0;
         }
 
-        public ItemEnum Usage(Phase phase)
+        public Item Usage(Phase phase)
         {
             if (phase == Phase.OnDeath)
             {
                 switch (_size)
                 {
-                    case Size.Small: return ItemEnum.None;
-                    case Size.Medium: return ItemEnum.PumpkinSmall;
-                    case Size.Large: return ItemEnum.PumpkinMedium;
-                    default: return ItemEnum.None;
+                    case Size.Small: return Item.None;
+                    case Size.Medium: return Item.PumpkinSmall;
+                    case Size.Large: return Item.PumpkinMedium;
+                    default: return Item.None;
                 }
             }
             else
             {
                 switch (_size)
                 {
-                    case Size.Small: return ItemEnum.PumpkinSmall;
-                    case Size.Medium: return ItemEnum.PumpkinMedium;
-                    case Size.Large: return ItemEnum.PumpkinLarge;
-                    default: return ItemEnum.None;
+                    case Size.Small: return Item.PumpkinSmall;
+                    case Size.Medium: return Item.PumpkinMedium;
+                    case Size.Large: return Item.PumpkinLarge;
+                    default: return Item.None;
                 }
             }
         }

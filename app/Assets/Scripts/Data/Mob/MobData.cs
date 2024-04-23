@@ -1,4 +1,5 @@
 using UnityEngine;
+using zKlash.Game.Roles;
 
 [CreateAssetMenu(fileName = "MobData", menuName = "Mob/MobData")]
 public class MobData : ScriptableObject
@@ -14,5 +15,4 @@ public class MobData : ScriptableObject
     public int xp;
     public Sprite image;
     public Role role;
-
 }

@@ -1,15 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum Role
-{
-    None, Knight, Bowman, Pawn, Torchoblin, Dynamoblin, Bomboblin,
-}
-
-public enum Item
-{
-    None, MushroomSmall, MushroomMedium, MushroomLarge, RockSmall, RockMedium, RockLarge, BushSmall, BushMedium, BushLarge, PumpkinSmall, PumpkinMedium, PumpkinLarge,
-}
+using zKlash.Game.Roles;
+using zKlash.Game.Items;
 
 public class PrefabMappings
 {

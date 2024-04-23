@@ -1,4 +1,5 @@
 using UnityEngine;
+using zKlash.Game.Items;
 
 public class ItemManager : MonoBehaviour
 {

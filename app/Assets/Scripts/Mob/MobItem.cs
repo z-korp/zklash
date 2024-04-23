@@ -18,6 +18,8 @@ public class MobItem : MonoBehaviour
 
     public GameObject orbitObjectPrefab;
 
+    public GameObject itemOrbiterGO;
+
     public string title;
     public char size;
     public string description;
@@ -40,10 +42,11 @@ public class MobItem : MonoBehaviour
         if (item != previousItem)
         {
             Debug.Log("Item changed");
+            Destroy(itemOrbiterGO);
             previousItem = item;
             UpdateGameObjectWithItemData();
             UpdateItemBannerUI(description, title, size);
-            GameObject itemOrbiterGO = Instantiate(orbitObjectPrefab, gameObject.transform.position, Quaternion.identity);
+            itemOrbiterGO = Instantiate(orbitObjectPrefab, gameObject.transform.position, Quaternion.identity);
             OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
             itemOrbiter.target = gameObject.transform;
             itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;

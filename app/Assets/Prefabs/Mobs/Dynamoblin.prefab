@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 2584179623629992328}
   - component: {fileID: 6664062670199765547}
   - component: {fileID: 622144972395861353}
+  - component: {fileID: 8959545287576748735}
   m_Layer: 0
   m_Name: Dynamoblin
   m_TagString: Enemy
@@ -352,6 +353,7 @@ MonoBehaviour:
   descriptionItem: {fileID: 3880543356644482929}
   itemImage: {fileID: 8193143247752982697}
   orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
+  itemOrbiterGO: {fileID: 0}
   title: 
   size: 80
   description: 
@@ -411,6 +413,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791b1c631898d489092a6b0319f25e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8959545287576748735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3616953106443787091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed188fbb0bb4b5449f909f8b99c864f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 93639510252230743}
 --- !u!1001 &935669558014768611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -625,6 +640,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
+--- !u!1 &93639510252230743 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3196840196865663314, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
+  m_PrefabInstance: {fileID: 3247616069281036549}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &201236159419140595 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3448410014572409078, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}

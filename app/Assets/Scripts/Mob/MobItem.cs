@@ -53,6 +53,18 @@ public class MobItem : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        if (itemOrbiterGO != null)
+            itemOrbiterGO.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        if (itemOrbiterGO != null)
+            itemOrbiterGO.SetActive(true);
+    }
+
     private void UpdateGameObjectWithItemData()
     {
         if (item != null)

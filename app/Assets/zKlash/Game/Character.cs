@@ -139,9 +139,11 @@ namespace zKlash.Game
             };
             ApplyBuff(buff);
 
+            int dmg = Item.Damage(phase);
+
             Item = ItemFactory.GetItem(Item.Usage(phase));
             // [Effect] Return the item damage
-            return Item.Damage(phase);
+            return dmg;
         }
 
 

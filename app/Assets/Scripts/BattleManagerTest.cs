@@ -31,6 +31,8 @@ public class BattleManagerTest : MonoBehaviour
     private List<GameObject> enemies = new List<GameObject>();
     private List<GameCharacter> enemyCharacters = new List<GameCharacter>();
 
+    private bool isBattleStarted = false;
+
     void Start()
     {
         for (int i = 0; i < alliesSetup.Count; i++)
@@ -83,9 +85,10 @@ public class BattleManagerTest : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.Space) && !isBattleStarted)
         {
             StartCoroutine(Battle(allies, enemies));
+            isBattleStarted = true;
         }
     }
 
@@ -273,6 +276,7 @@ public class BattleManagerTest : MonoBehaviour
         Debug.Log("----> " + "Next buff: " + next_buff.Health + " " + next_buff.Attack + " " + next_buff.Absorb);
         // Item buff
         var item_dmg = c.Usage(phase);
+        Debug.Log("----> " + "item_dmg: " + item_dmg);
         return (talent_damage + item_dmg, stun, next_buff);
     }
 

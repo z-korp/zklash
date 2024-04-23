@@ -309,7 +309,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobData: {fileID: 11400000, guid: 33539ea9a0ac547c3a4c92970b997573, type: 2}
-  health: 0
   isDead: 0
   txtLife: {fileID: 7316034404455692560}
   isBlinking: 0
@@ -380,6 +379,7 @@ MonoBehaviour:
   sizeItem: {fileID: 8253211581474229052}
   descriptionItem: {fileID: 5015275588169424318}
   itemImage: {fileID: 139690013812716134}
+  orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
   title: 
   size: 116
   description: 

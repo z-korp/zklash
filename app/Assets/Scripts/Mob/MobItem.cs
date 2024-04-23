@@ -16,6 +16,8 @@ public class MobItem : MonoBehaviour
     private ItemData previousItem;
     public Image itemImage;
 
+    public GameObject orbitObjectPrefab;
+
     public string title;
     public char size;
     public string description;
@@ -41,6 +43,10 @@ public class MobItem : MonoBehaviour
             previousItem = item;
             UpdateGameObjectWithItemData();
             UpdateItemBannerUI(description, title, size);
+            GameObject itemOrbiterGO = Instantiate(orbitObjectPrefab, gameObject.transform.position, Quaternion.identity);
+            OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
+            itemOrbiter.target = gameObject.transform;
+            itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
         }
     }
 

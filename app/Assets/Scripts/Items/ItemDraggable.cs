@@ -48,10 +48,10 @@ public class ItemDraggable : MonoBehaviour
         if (canDropItem)
         {
             isFromShop = false;
-            GameObject itemOrbiterGO = Instantiate(orbitObjectPrefab, mob.transform.position, Quaternion.identity);
-            OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
-            itemOrbiter.target = mob.transform;
-            itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+            //GameObject itemOrbiterGO = Instantiate(orbitObjectPrefab, mob.transform.position, Quaternion.identity);
+            //OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
+            //itemOrbiter.target = mob.transform;
+            //itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
             mob.GetComponent<MobItem>().item = item;
             Destroy(gameObject);
 

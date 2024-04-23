@@ -351,6 +351,7 @@ MonoBehaviour:
   sizeItem: {fileID: 6723103508065725736}
   descriptionItem: {fileID: 7664521434154089386}
   itemImage: {fileID: 3329365611491890290}
+  orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
   title: 
   size: 48
   description: 

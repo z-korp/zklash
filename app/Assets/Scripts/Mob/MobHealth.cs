@@ -17,8 +17,12 @@ public class MobHealth : MonoBehaviour
     {
         get
         {
-            Debug.Assert(mobController != null, "MobController is not set on " + gameObject.name);
-            return mobController ? mobController.Character.Health : 0;
+            if (mobController == null)
+            {
+                Debug.LogError("MobController is not set on " + gameObject.name, this);
+                return 0;
+            }
+            return mobController.Character != null ? mobController.Character.Health : 0;
         }
     }
 

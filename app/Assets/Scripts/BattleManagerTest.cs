@@ -192,33 +192,41 @@ public class BattleManagerTest : MonoBehaviour
             next_buff2 = buff2;
         }
 
+
+        Coroutine dead1 = null;
+        Coroutine dead2 = null;
+
         isChar1Dead = char1.GetComponent<MobHealth>().Health <= 0;
         if (isChar1Dead)
         {
-            yield return char1.GetComponent<MobHealth>().TriggerDie();
+            dead1 = StartCoroutine(char1.GetComponent<MobHealth>().TriggerDie());
         }
 
         isChar2Dead = char2.GetComponent<MobHealth>().Health <= 0;
         if (isChar2Dead)
         {
-            yield return char2.GetComponent<MobHealth>().TriggerDie();
+            dead2 = StartCoroutine(char2.GetComponent<MobHealth>().TriggerDie());
         }
+
+        yield return dead1;
+        yield return dead2;
 
         if (isChar1Dead || isChar2Dead)
         {
+            yield return WaitForKey();
             Debug.Log("[END DUEL]============================================================");
             yield break;
         }
 
-        yield return WaitForNKey();
+        yield return WaitForKey();
         Debug.Log("[END CONTINUE DUEL]============================================================");
 
         yield return Duel(char1, char2);
     }
 
-    IEnumerator WaitForNKey()
+    IEnumerator WaitForKey()
     {
-        while (!Input.GetKeyDown(KeyCode.N))
+        while (!Input.GetKeyDown(KeyCode.Space))
         {
             yield return null;
         }

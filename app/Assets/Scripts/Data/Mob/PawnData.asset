@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   title: Pawn
-  powerLV1: At death, add +1 attack and +1 health to the next friend.
-  powerLV2: At death, add +2 attack and +2 health to the next friend.
-  powerLV3: At death, add +3 attack and +3 health to the next friend.
+  powerLV1: At death, add (+1/+1) to the next friend.
+  powerLV2: At death, add (+2/+2) health to the next friend.
+  powerLV3: At death, add (+3/+3) health to the next friend.
   element: 
   health: 2
   damage: 1

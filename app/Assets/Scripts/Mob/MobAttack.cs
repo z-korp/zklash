@@ -118,6 +118,19 @@ public class MobAttack : MonoBehaviour
         txtAttack.text = amount.ToString();
     }
 
+    public IEnumerator BlinkPowerUp()
+    {
+        float blinkDuration = 0.2f;
+        spriteRenderer.color = new Color(0f, 0f, 1f, 1f);
+        yield return new WaitForSeconds(blinkDuration);
+        spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+        yield return new WaitForSeconds(blinkDuration);
+        spriteRenderer.color = new Color(0f, 0f, 1f, 1f);
+        yield return new WaitForSeconds(blinkDuration);
+        spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+        yield return new WaitForSeconds(blinkDuration);
+    }
+
     public IEnumerator BlinkPowerUpFlash()
     {
         while (isBlinking)

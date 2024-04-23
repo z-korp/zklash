@@ -50,14 +50,15 @@ public class BattleManagerTest : MonoBehaviour
                 allyObject.GetComponent<MobOrientation>().SetOrientation(MobOrientation.Orientation.Right);
                 allyObject.GetComponent<MobController>().ConfigureCharacter(character);
 
-                Debug.Log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJ Item: " + ally.item);
-                var name2 = PrefabMappings.NameToItemDataMap[ally.item];
-                Debug.Log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJ Name2: " + name2);
-                if (name2 != "None")
+
+                var itemName = PrefabMappings.NameToItemDataMap[ally.item];
+                if (itemName != "None")
                 {
-                    var item = PrefabUtils.FindScriptableByName(itemData, name2);
+                    var item = PrefabUtils.FindScriptableByName(itemData, itemName);
                     allyObject.GetComponent<MobItem>().item = item;
                 }
+
+                HideXpCanvas(allyObject);
 
                 allies.Add(allyObject);
             }
@@ -78,6 +79,15 @@ public class BattleManagerTest : MonoBehaviour
                 enemyObject.GetComponent<MobOrientation>().SetOrientation(MobOrientation.Orientation.Left);
                 enemyObject.GetComponent<MobController>().ConfigureCharacter(character);
 
+                var itemName = PrefabMappings.NameToItemDataMap[enemy.item];
+                if (itemName != "None")
+                {
+                    var item = PrefabUtils.FindScriptableByName(itemData, itemName);
+                    enemyObject.GetComponent<MobItem>().item = item;
+                }
+
+                HideXpCanvas(enemyObject);
+
                 enemies.Add(enemyObject);
             }
         }
@@ -89,6 +99,27 @@ public class BattleManagerTest : MonoBehaviour
         {
             StartCoroutine(Battle(allies, enemies));
             isBattleStarted = true;
+        }
+    }
+
+    void HideXpCanvas(GameObject go)
+    {
+        Transform canvasXpTransform = go.transform.Find("CanvasXP"); // Adjust path if nested deeper
+        if (canvasXpTransform != null)
+        {
+            Canvas canvas = canvasXpTransform.GetComponent<Canvas>();
+            if (canvas != null)
+            {
+                canvas.enabled = false; // Disable rendering for this canvas
+            }
+            else
+            {
+                Debug.LogError("Canvas component not found on 'CanvasXP' object.");
+            }
+        }
+        else
+        {
+            Debug.LogError("CanvasXp GameObject not found.");
         }
     }
 
@@ -151,8 +182,20 @@ public class BattleManagerTest : MonoBehaviour
         Debug.Log("Dueling");
 
         // [Effect] Apply talent and item buff for char1 and char2
-        var (damage1, stun1, _) = applyEffect(char1, Phase.OnFight);
-        var (damage2, stun2, _) = applyEffect(char2, Phase.OnFight);
+        var item = c1.Item;
+        var (talent_dmg1, item_dmg1, stun1, _) = applyEffect(char1, Phase.OnFight);
+        int damage1 = talent_dmg1 + item_dmg1;
+        /*if (item_dmg1 != 0)
+        {
+            yield return StartCoroutine(ItemEffect(char1));
+        }*/
+
+        var (talent_dmg2, item_dmg2, stun2, _) = applyEffect(char2, Phase.OnFight);
+        /*if (item_dmg2 != 0)
+        {
+            yield return StartCoroutine(ItemEffect(char2));
+        }*/
+        int damage2 = talent_dmg2 + item_dmg2;
 
         // [Effect] Apply stun effects
         c1.Stun = stun2;
@@ -262,22 +305,28 @@ public class BattleManagerTest : MonoBehaviour
         }
     }
 
-    IEnumerator ApplyEffects(GameObject character, Phase phase)
+    IEnumerator ApplyEffect(GameObject character, Phase phase)
     {
-
         yield return null;
     }
 
-    (int, int, Buff) applyEffect(GameObject character, Phase phase)
+    IEnumerator ItemEffect(GameObject character)
+    {
+        Debug.Log("wwwwwwwwwwwwwwwwwwwwwww Item effect");
+        yield return character.GetComponent<MobAttack>().BlinkPowerUp();
+    }
+
+    (int, int, int, Buff) applyEffect(GameObject character, Phase phase)
     {
         GameCharacter c = character.GetComponent<MobController>().Character;
         // Talent buff
         var (talent_damage, stun, next_buff) = c.Talent(phase);
         Debug.Log("----> " + "Next buff: " + next_buff.Health + " " + next_buff.Attack + " " + next_buff.Absorb);
+
         // Item buff
         var item_dmg = c.Usage(phase);
         Debug.Log("----> " + "item_dmg: " + item_dmg);
-        return (talent_damage + item_dmg, stun, next_buff);
+        return (talent_damage, item_dmg, stun, next_buff);
     }
 
     IEnumerator PostMortem(GameObject attacker, GameObject defender, int dmg)
@@ -309,7 +358,8 @@ public class BattleManagerTest : MonoBehaviour
         GameCharacter f = foe.GetComponent<MobController>().Character;
         if (c.IsDead())
         {
-            var (damage, stun, next_buff) = applyEffect(character, Phase.OnDeath);
+            var (talent_dmg, item_dmg, stun, next_buff) = applyEffect(character, Phase.OnDeath);
+            int damage = talent_dmg + item_dmg;
             f.Stun = stun;
             f.TakeDamage(damage);
             return (damage, next_buff);

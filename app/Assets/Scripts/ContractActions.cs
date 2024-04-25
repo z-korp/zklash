@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using Dojo;
 using Dojo.Starknet;
 using System.Collections.Generic;

@@ -30,8 +30,8 @@ name = "zklash::systems::account::account"
 [[contracts]]
 kind = "DojoContract"
 address = "0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1"
-class_hash = "0x2e47db4fc93a7d07da296009b7bf6840136d8b149f734e9bfcadb12eefdd15a"
-original_class_hash = "0x2e47db4fc93a7d07da296009b7bf6840136d8b149f734e9bfcadb12eefdd15a"
+class_hash = "0x4a8ca3eb68e8e68b20b4d2224a8597464c9fd4ee07bee89c74306b5accd71e1"
+original_class_hash = "0x4a8ca3eb68e8e68b20b4d2224a8597464c9fd4ee07bee89c74306b5accd71e1"
 base_class_hash = "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76"
 abi = "abis/deployments/contracts/zklash_systems_battle_battle.json"
 reads = []

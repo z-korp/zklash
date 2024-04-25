@@ -16,6 +16,8 @@ public struct CharacterSetup
 
 public class BattleManagerTest : MonoBehaviour
 {
+    public static BattleManagerTest instance;
+
     public List<CharacterSetup> alliesSetup;
     public List<CharacterSetup> enemiesSetup;
 
@@ -26,12 +28,22 @@ public class BattleManagerTest : MonoBehaviour
     public List<GameObject> allySpots = new List<GameObject>();
     public List<GameObject> enemySpots = new List<GameObject>();
 
-    private List<GameObject> allies = new List<GameObject>();
+    public List<GameObject> allies = new List<GameObject>();
     private List<GameCharacter> allyCharacters = new List<GameCharacter>();
     private List<GameObject> enemies = new List<GameObject>();
     private List<GameCharacter> enemyCharacters = new List<GameCharacter>();
 
     private bool isBattleStarted = false;
+
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("More than one instance of BattleManager found!");
+            return;
+        }
+        instance = this;
+    }
 
     void Start()
     {
@@ -68,6 +80,7 @@ public class BattleManagerTest : MonoBehaviour
                 allies.Add(allyObject);
             }
         }
+
 
         for (int i = 0; i < enemiesSetup.Count; i++)
         {
@@ -392,6 +405,7 @@ public class BattleManagerTest : MonoBehaviour
                 MobMovement mobMovement = ally.GetComponent<MobMovement>();
                 if (mobMovement != null)
                 {
+                    mobMovement.speed = 1;
                     mobMovement.Move(allySpots[i - 1].transform);
                 }
             }

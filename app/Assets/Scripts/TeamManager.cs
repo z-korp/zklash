@@ -22,15 +22,13 @@ public class TeamManager : MonoBehaviour
 
     void Update()
     {
-        // Vérifier si la touche 'P' est pressée
         if (Input.GetKeyDown(KeyCode.P))
         {
             PrintDictionary(team);
         }
     }
 
-    // Méthode pour imprimer le dictionnaire
-    void PrintDictionary(Dictionary<int, GameObject> dict)
+    public void PrintDictionary(Dictionary<int, GameObject> dict)
     {
         Debug.Log("Dictionary:");
         foreach (KeyValuePair<int, GameObject> entry in dict)

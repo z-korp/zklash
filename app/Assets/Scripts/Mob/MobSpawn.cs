@@ -10,10 +10,6 @@ public class MobSpawn : MonoBehaviour
     {
         if (role != Role.None)
         {
-            if (mobObject != null)
-            {
-                Destroy(mobObject);
-            }
             mobObject = MobManager.instance.Create(role, transform);
             int index = ShopManager.instance.IndexOfMobSpawn(this);
             MobDraggable mobDraggable = mobObject.GetComponent<MobDraggable>();
@@ -32,6 +28,14 @@ public class MobSpawn : MonoBehaviour
 
     public void SetRole(Role _role)
     {
+        // Destroy the mob if it has not been bought
+        if (mobObject != null)
+        {
+            if (mobObject.GetComponent<MobDraggable>().isFromShop)
+            {
+                Destroy(mobObject);
+            }
+        }
         role = _role;
     }
 }

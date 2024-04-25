@@ -69,7 +69,7 @@ public class PlayerData : MonoBehaviour
             // Item
             shopItem = (Item)shop.items;
 
-            isShopSet = true; // Ensure this block only runs once
+            isShopSet = true;
         }
     }
 
@@ -86,14 +86,13 @@ public class PlayerData : MonoBehaviour
             // Convert hex to uint
             uint decimalValue = Convert.ToUInt32(hexPart, 16);
 
-            // Safely cast to Role enum, considering bounds
             if (Enum.IsDefined(typeof(Role), (int)decimalValue))
             {
                 roleList.Add((Role)decimalValue);
             }
             else
             {
-                roleList.Add(Role.None); // or handle the error as needed
+                roleList.Add(Role.None);
             }
         }
 

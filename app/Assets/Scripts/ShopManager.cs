@@ -9,6 +9,8 @@ public class ShopManager : MonoBehaviour
     public static ShopManager instance;
 
     private bool isShopOpen = false;
+    public uint rolesUint = 66051;
+    public uint itemUint = 8;
 
     void Awake()
     {
@@ -45,7 +47,7 @@ public class ShopManager : MonoBehaviour
         if (!isShopOpen)
         {
             isShopOpen = true;
-            Role[] roles = PlayerData.Instance.SplitRoles(66051);
+            Role[] roles = PlayerData.Instance.SplitRoles(rolesUint);
 
             for (int i = 0; i < shopMobs.Length; i++)
             {
@@ -54,8 +56,23 @@ public class ShopManager : MonoBehaviour
             }
 
             ItemSpawn itemSpawn = shopItems[0].GetComponent<ItemSpawn>();
-            itemSpawn.SetItem((Item)8);
+            itemSpawn.SetItem((Item)itemUint);
         }
+    }
+
+    private void SetRoles(uint _roles)
+    {
+        rolesUint = _roles;
+    }
+
+    private void SetItem(uint _item)
+    {
+        itemUint = _item;
+    }
+
+    public void Reroll()
+    {
+        isShopOpen = false;
     }
 
     public int IndexOfMobSpawn(MobSpawn _spawn)

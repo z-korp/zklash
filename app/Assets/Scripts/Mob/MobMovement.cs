@@ -6,6 +6,7 @@ public class MobMovement : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
+    private CharacterAnimatorController characterAnimatorController;
 
     public int speed;
     private readonly List<Transform> targets = new();
@@ -32,6 +33,12 @@ public class MobMovement : MonoBehaviour
         {
             Debug.LogError("Rigidbody2D component not found in parent GameObject.", this);
         }
+
+        characterAnimatorController = GetComponentInParent<CharacterAnimatorController>();
+        if (characterAnimatorController == null)
+        {
+            Debug.LogError("CharacterAnimatorController component not found in parent GameObject.", this);
+        }
     }
 
     void Update()
@@ -49,10 +56,12 @@ public class MobMovement : MonoBehaviour
             {
                 //animator.SetBool("IsWalking", true);
                 // rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, Time.deltaTime);
+                characterAnimatorController.Walk(true);
                 transform.Translate(speed * Time.deltaTime * direction.normalized, Space.World);
             }
             else
             {
+                characterAnimatorController.Idle();
                 //animator.SetBool("IsWalking", false);
                 rb.velocity = Vector3.zero;
                 targets.RemoveAt(0);

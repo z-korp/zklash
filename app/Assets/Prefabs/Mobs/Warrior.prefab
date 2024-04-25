@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4569523674553832488}
   - component: {fileID: 7255474210259257150}
   - component: {fileID: 948755911264901216}
+  - component: {fileID: 707275190169336892}
   - component: {fileID: -1544029575477610373}
   - component: {fileID: 5389027940959983678}
   - component: {fileID: 1234032042347397527}
@@ -189,6 +190,18 @@ MonoBehaviour:
   mobFxPrefab: {fileID: 8427836806556268264, guid: 11c571b4f3e0c43b495c1daccf899b39, type: 3}
   animator: {fileID: 4569523674553832488}
   mouseHoverDetector: {fileID: 0}
+--- !u!114 &707275190169336892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc46230a9917c324881d27b0a5e2bff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-1544029575477610373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,6 +393,7 @@ MonoBehaviour:
   descriptionItem: {fileID: 5015275588169424318}
   itemImage: {fileID: 139690013812716134}
   orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
+  itemOrbiterGO: {fileID: 0}
   title: 
   size: 116
   description: 

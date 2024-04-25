@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2608553004341220831}
   - component: {fileID: 1340319908974048489}
   - component: {fileID: 3483962264453319838}
-  - component: {fileID: 6162941107067530460}
   - component: {fileID: 6218048638115129554}
+  - component: {fileID: 3491579641284180801}
   m_Layer: 0
   m_Name: Bush2
   m_TagString: Untagged
@@ -115,7 +115,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &6162941107067530460
+--- !u!114 &6218048638115129554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4799187001691794266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 990b1a2e7f6f04055a5da092714957e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initPos: {x: 0, y: 0, z: 0}
+  isFromShop: 1
+  index: 0
+  item: {fileID: 11400000, guid: 7cc435beaf5d34c4e897caab24263325, type: 2}
+  canDropItem: 0
+  orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
+--- !u!61 &3491579641284180801
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,7 +162,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -160,24 +178,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6218048638115129554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4799187001691794266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 990b1a2e7f6f04055a5da092714957e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initPos: {x: 0, y: 0, z: 0}
-  isFromShop: 1
-  index: 0
-  item: {fileID: 11400000, guid: 7cc435beaf5d34c4e897caab24263325, type: 2}
-  canDropItem: 0
-  orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
 --- !u!1 &7513114535029493091
 GameObject:
   m_ObjectHideFlags: 0

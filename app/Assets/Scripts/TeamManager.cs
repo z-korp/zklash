@@ -5,9 +5,10 @@ using UnityEngine;
 public class TeamManager : MonoBehaviour
 {
     public Dictionary<int, GameObject> team = new Dictionary<int, GameObject>();
-    //public List<GameObject> team = new List<GameObject>();
 
     public static TeamManager instance;
+
+    public List<Transform> targetsTeam;
 
     void Awake()
     {
@@ -43,6 +44,17 @@ public class TeamManager : MonoBehaviour
     {
         if (team != null)
             team.Add(teamId, mobPrefab);
+    }
+
+    public void MoveTeam()
+    {
+        foreach (KeyValuePair<int, GameObject> entry in team)
+        {
+            entry.Value.GetComponent<MobMovement>().speed = 6;
+            entry.Value.GetComponent<MobMovement>().Move(targetsTeam[entry.Key]);
+
+        }
+
     }
 
     public GameObject GetMemberFromTeam(int key)

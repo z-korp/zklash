@@ -5,7 +5,7 @@ using System;
 
 public class DroppableManager : MonoBehaviour
 {
-    private GameObject[] zones;
+    public GameObject[] zones;
     public static DroppableManager instance;
 
     void Awake()
@@ -23,7 +23,7 @@ public class DroppableManager : MonoBehaviour
     }
 
     public int IndexOf(DroppableZone _zone)
-    {   
+    {
         for (int i = 0; i < zones.Length; i++)
         {
             DroppableZone zone = zones[i].GetComponent<DroppableZone>();

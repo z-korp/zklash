@@ -13,7 +13,24 @@ namespace zKlash.Game
         private int _absorb;
         private int _stun;
 
-        public int Level { get; private set; }
+        private int _xp;
+        private int _level;
+
+        public int XP
+        {
+            get => _xp;
+            set
+            {
+                _xp = value;
+                CheckLevelUp();
+            }
+        }
+
+        public int Level
+        {
+            get => _level;
+            private set => _level = value;
+        }
 
         public int Health
         {
@@ -57,6 +74,8 @@ namespace zKlash.Game
             Item = ItemFactory.GetItem(ItemEnum.None);
             Role = RoleFactory.GetRole(roleType);
 
+            _level = level;
+            _xp = CalculateXpFromLevel(level);
             Level = level;
 
             _health = Role.Health(Phase.OnHire, level);
@@ -67,13 +86,47 @@ namespace zKlash.Game
             Equip(item);
         }
 
-        /*public void FromGameObject(GameObject gameObject)
+        private void CheckLevelUp()
         {
-            Health = gameObject.GetComponent<MobStat>().health;
-            Attack = gameObject.GetComponent<MobStat>().damage;
-            //Absorb = gameObject.GetComponent<MobStat>().absorb;
-            //Stun = gameObject.GetComponent<MobStat>().stun;
-        }*/
+            while (_xp >= ExperienceRequiredForLevel(_level + 1))
+            {
+                LevelUp();
+            }
+        }
+
+        // Define how much XP is needed for a given level
+        private int ExperienceRequiredForLevel(int level)
+        {
+            return level + 1;
+        }
+
+        public void AddExperience(int amount)
+        {
+            XP += amount;
+        }
+
+        private int CalculateXpFromLevel(int level)
+        {
+            int xp = 0;
+            for (int i = 1; i <= level; i++)
+            {
+                xp += ExperienceRequiredForLevel(i);
+            }
+            return xp;
+        }
+
+        private void LevelUp()
+        {
+            _level++;
+            _xp = 0;
+        }
+
+        public void Merge(Character other)
+        {
+            // [Effect] Add the experience of the other character
+            int xpToAdd = CalculateXpFromLevel(other.Level);
+            AddExperience(xpToAdd);
+        }
 
         public bool IsDead()
         {
@@ -178,7 +231,6 @@ namespace zKlash.Game
                 Attack = Item.Attack(Phase.OnEquip),
                 Absorb = Item.Absorb(Phase.OnEquip),
             };
-            Debug.Log("MMMMMMMMMMMMM Applying buff: " + buff.Health + " " + buff.Attack + " " + buff.Absorb);
             ApplyBuff(buff);
         }
     }

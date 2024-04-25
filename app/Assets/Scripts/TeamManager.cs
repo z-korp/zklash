@@ -39,7 +39,6 @@ public class TeamManager : MonoBehaviour
         }
     }
 
-
     public void AddTeamMember(int teamId, GameObject mobPrefab)
     {
         if (team != null)
@@ -52,9 +51,7 @@ public class TeamManager : MonoBehaviour
         {
             entry.Value.GetComponent<MobMovement>().speed = 6;
             entry.Value.GetComponent<MobMovement>().Move(targetsTeam[entry.Key]);
-
         }
-
     }
 
     public GameObject GetMemberFromTeam(int key)

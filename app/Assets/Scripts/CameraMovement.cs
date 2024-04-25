@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    public static CameraMovement instance;
+
     public Transform targetPosition;
     public float speedToBattleArea = 6.0f;
     public float speedToShopArea = 20.0f;
@@ -10,6 +12,17 @@ public class CameraMovement : MonoBehaviour
 
     private bool moveToFight = false;
     private bool moveToShop = false;
+
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("More than one instance of DroppableManager found!");
+            return;
+        }
+        instance = this;
+
+    }
 
     private void Start()
     {

@@ -10,7 +10,7 @@ public class ShopManager : MonoBehaviour
 
     private bool isShopOpen = false;
     public uint rolesUint = 66051;
-    public uint itemUint = 8;
+    public uint itemUint = 4;
 
     void Awake()
     {
@@ -56,6 +56,12 @@ public class ShopManager : MonoBehaviour
             }
 
             ItemSpawn itemSpawn = shopItems[0].GetComponent<ItemSpawn>();
+            Item item = (Item)itemUint;
+            Debug.Log("qqqqqqqqqqqqqqqqqqq" + item);
+            Debug.Log("qqqqqqqqqqqqqqqqqqq" + (Item)0);
+            Debug.Log("qqqqqqqqqqqqqqqqqqq" + (Item)1);
+            Debug.Log("qqqqqqqqqqqqqqqqqqq" + (Item)7);
+            Debug.Log("qqqqqqqqqqqqqqqqqqq" + (Item)8);
             itemSpawn.SetItem((Item)itemUint);
         }
     }

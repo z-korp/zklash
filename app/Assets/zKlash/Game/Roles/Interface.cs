@@ -20,6 +20,18 @@ namespace zKlash.Game.Roles
         int NextAbsorb(Phase phase, int level);
     }
 
+    public class NoneRole : IRole
+    {
+        public int Health(Phase phase, int level) => 0;
+        public int Attack(Phase phase, int level) => 0;
+        public int Absorb(Phase phase, int level) => 0;
+        public int Damage(Phase phase, int level) => 0;
+        public int Stun(Phase phase, int level) => 0;
+        public int NextHealth(Phase phase, int level) => 0;
+        public int NextAttack(Phase phase, int level) => 0;
+        public int NextAbsorb(Phase phase, int level) => 0;
+    }
+
     public static class RoleFactory
     {
         public static IRole GetRole(Role role)
@@ -38,6 +50,8 @@ namespace zKlash.Game.Roles
                     return new Dynamoblin();
                 case Role.Bomboblin:
                     return new Bomboblin();
+                case Role.None:
+                    return new NoneRole();
                 default:
                     throw new ArgumentException("Invalid role type");
             }

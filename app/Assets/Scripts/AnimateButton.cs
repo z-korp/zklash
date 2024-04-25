@@ -12,7 +12,6 @@ public class ClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _imageBtn.sprite = _pressed;
         //audioSource.PlayOneShot(compressedClip);
         //ContractActions.instance.TriggerStartBattle();
-        TeamManager.instance.MoveTeam();
     }
 
     public void OnPointerUp(PointerEventData eventData)

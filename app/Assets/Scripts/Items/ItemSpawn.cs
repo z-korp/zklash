@@ -10,10 +10,6 @@ public class ItemSpawn : MonoBehaviour
     {
         if (item != Item.None)
         {
-            if (itemObject != null)
-            {
-                Destroy(itemObject);
-            }
             itemObject = ItemManager.instance.Create(item, transform);
             int index = ShopManager.instance.IndexOfItemSpawn(this);
             ItemDraggable itemDraggable = itemObject.GetComponent<ItemDraggable>();
@@ -32,6 +28,14 @@ public class ItemSpawn : MonoBehaviour
 
     public void SetItem(Item _item)
     {
+        // Destroy the mob if it has not been bought
+        if (itemObject != null)
+        {
+            if (itemObject.GetComponent<ItemDraggable>().isFromShop)
+            {
+                Destroy(itemObject);
+            }
+        }
         item = _item;
     }
 }

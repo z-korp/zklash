@@ -41,15 +41,20 @@ public class BattleManagerTest : MonoBehaviour
 
             GameCharacter character = new GameCharacter(ally.role, ally.level, ally.item);
             allyCharacters.Add(character);
+
+            if (ally.role == Role.None)
+            {
+                continue;
+            }
+
             var name = PrefabMappings.NameToRoleMap[ally.role];
             var prefab = PrefabUtils.FindPrefabByName(unitPrefabs, name);
 
-            if (prefab != null && allySpots[i] != null)
+            if (prefab != null && allySpots[i] != null && name != "None")
             {
                 GameObject allyObject = Instantiate(prefab, allySpots[i].transform.position, Quaternion.identity);
                 allyObject.GetComponent<MobOrientation>().SetOrientation(MobOrientation.Orientation.Right);
                 allyObject.GetComponent<MobController>().ConfigureCharacter(character);
-
 
                 var itemName = PrefabMappings.NameToItemDataMap[ally.item];
                 if (itemName != "None")
@@ -70,6 +75,12 @@ public class BattleManagerTest : MonoBehaviour
 
             GameCharacter character = new GameCharacter(enemy.role, enemy.level, enemy.item);
             enemyCharacters.Add(character);
+
+            if (enemy.role == Role.None)
+            {
+                continue;
+            }
+
             var name = PrefabMappings.NameToRoleMap[enemy.role];
             var prefab = PrefabUtils.FindPrefabByName(unitPrefabs, name);
 

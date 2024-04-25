@@ -49,6 +49,7 @@ public class TeamManager : MonoBehaviour
     {
         foreach (KeyValuePair<int, GameObject> entry in team)
         {
+            HideXpCanvas(entry.Value);
             entry.Value.GetComponent<MobMovement>().speed = 6;
             entry.Value.GetComponent<MobMovement>().Move(targetsTeam[entry.Key]);
         }
@@ -64,6 +65,27 @@ public class TeamManager : MonoBehaviour
         {
             Debug.LogError("GameObject not found for key: " + key);
             return null;
+        }
+    }
+
+    private void HideXpCanvas(GameObject go)
+    {
+        Transform canvasXpTransform = go.transform.Find("CanvasXP"); // Adjust path if nested deeper
+        if (canvasXpTransform != null)
+        {
+            Canvas canvas = canvasXpTransform.GetComponent<Canvas>();
+            if (canvas != null)
+            {
+                canvas.enabled = false; // Disable rendering for this canvas
+            }
+            else
+            {
+                Debug.LogError("Canvas component not found on 'CanvasXP' object.");
+            }
+        }
+        else
+        {
+            Debug.LogError("CanvasXp GameObject not found.");
         }
     }
 }

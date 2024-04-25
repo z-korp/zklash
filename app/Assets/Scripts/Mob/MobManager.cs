@@ -1,5 +1,8 @@
 using UnityEngine;
+using zKlash.Game;
+using zKlash.Game.Items;
 using zKlash.Game.Roles;
+using GameCharacter = zKlash.Game.Character;
 
 public class MobManager : MonoBehaviour
 {
@@ -20,6 +23,11 @@ public class MobManager : MonoBehaviour
     {
         string title = PrefabMappings.NameToRoleMap[role];
         GameObject prefab = PrefabUtils.FindPrefabByName(prefabs, title);
-        return Instantiate(prefab, transform.position, Quaternion.identity);
+        GameObject mobObject = Instantiate(prefab, transform.position, Quaternion.identity);
+
+        GameCharacter character = new GameCharacter(role, 1, Item.None);
+        mobObject.GetComponent<MobController>().ConfigureCharacter(character);
+
+        return mobObject;
     }
 }

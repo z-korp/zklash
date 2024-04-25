@@ -8,30 +8,29 @@ using dojo_bindings;
 using System.Numerics;
 
 // System definitions for `zklash::systems::battle::battle` contract
-public class BattleSystem : MonoBehaviour {
+public class BattleSystem : MonoBehaviour
+{
     // The address of this contract
     public string contractAddress;
 
-    
     // Call the `dojo_resource` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> DojoResource(Account account) {
+    public async Task<FieldElement> DojoResource(Account account)
+    {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
                 to = contractAddress,
                 selector = "dojo_resource",
                 calldata = new dojo.FieldElement[] {
-                    
                 }
             }
         });
     }
-            
 
-    
     // Call the `start` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> StartBattle(Account account, string world, uint team_id, uint order) {
+    public async Task<FieldElement> StartBattle(Account account, string world, uint team_id, uint order)
+    {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
                 to = contractAddress,
@@ -44,6 +43,5 @@ public class BattleSystem : MonoBehaviour {
             }
         });
     }
-            
+
 }
-        

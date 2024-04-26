@@ -13,7 +13,7 @@ public class MobDraggable : MonoBehaviour
     public Vector3 initPos = Vector3.zero;
 
     public bool isFromShop = true;
-    public int index;
+    public int index; // Index of the mob either in the shop (0, 1, 2) or in the team (0, 1, 2, 3)
 
     public GameObject mobFxPrefab;
 
@@ -75,7 +75,7 @@ public class MobDraggable : MonoBehaviour
         if (mouseHoverDetector != null)
             mouseHoverDetector.OnMouseUpCanvas();
 
-        // Cancel the drag if the object is not dropped in a valid zone
+        // Cancel the drag if the mob is not dropped in a valid zone
         if (!currentDroppableZone || !currentDroppableZone.CanBeDropped())
         {
             Debug.Log("Drop in invalid zone");
@@ -83,11 +83,11 @@ public class MobDraggable : MonoBehaviour
             return;
         }
 
-        // Get the ID of the zone where the object is dropped
-        int zoneId = currentDroppableZone.index;
+        // Get the index of the zone where the mob is dropped
+        int zoneIndex = currentDroppableZone.index;
 
-        // Manage the case where the object is dropped at the same place
-        if (!isFromShop && zoneId == index)
+        // Manage the case where the mob is dropped at the same place when it doesn't come from the shop
+        if (!isFromShop && zoneIndex == index)
         {
             Debug.Log("Drop at the same place");
             rb.MovePosition(initPos);
@@ -95,86 +95,83 @@ public class MobDraggable : MonoBehaviour
         }
 
         // Manage the merge case
-        if (VillageData.Instance.RoleAtIndex(zoneId) == gameObject.GetComponent<MobHealth>().mobData.role)
+        if (TeamManager.instance.RoleAtIndex(zoneIndex) == gameObject.GetComponent<MobController>().Character.Role.Role)
         {
-            Debug.Log("Objects to merge");
-            VillageData.Instance.FreeSpot(index);
-            Destroy(gameObject);
+            Debug.Log("Merge case");
+            GameObject mobToUpdate = TeamManager.instance.GetMemberFromTeam(zoneIndex);
+            GameObject mobToRemove = gameObject;
 
-            // Instantiate the FX for level up animation
-            GameObject mobFx = Instantiate(mobFxPrefab, TeamManager.instance.GetMemberFromTeam(zoneId).transform.position, Quaternion.identity);
-            // Set the sorting order of the FX to be on top of the mob
-            int MobOrder = GetComponent<SpriteRenderer>().sortingOrder;
-            mobFx.GetComponent<SpriteRenderer>().sortingOrder = MobOrder + 1;
-            // Play level up animation don't need to destroy mobFx it destroy itself when animation is done
-            mobFx.GetComponent<Animator>().SetTrigger("LevelUp");
-            int currentUnitMergedCount = gameObject.GetComponent<MobLevel>().unitMerged;
-            int currentMobLevel = gameObject.GetComponent<MobLevel>().currentLevel;
-            int currentMobLevelAmount = gameObject.GetComponent<MobLevel>().xpAmount;
-            MobLevel mobLevelFromTeam = TeamManager.instance.GetMemberFromTeam(zoneId).GetComponent<MobLevel>();
-            mobLevelFromTeam.currentLevel = Math.Max(currentMobLevel, mobLevelFromTeam.currentLevel);
-            mobLevelFromTeam.xpAmount = Math.Max(currentMobLevelAmount, mobLevelFromTeam.xpAmount);
-            if (mobLevelFromTeam.currentLevel == 2 && currentMobLevel == 2)
-                mobLevelFromTeam.LevelUp(100);
-            mobLevelFromTeam.LevelUp();
+            int oldLevel = mobToUpdate.GetComponent<MobController>().Character.Level;
 
+            // Merge the mob
+            mobToUpdate.GetComponent<MobController>().Character.Merge(mobToRemove.GetComponent<MobController>().Character);
+            Destroy(mobToRemove);
 
+            int newLevel = mobToUpdate.GetComponent<MobController>().Character.Level;
 
-            // Merge the objects
-            return;
-        }
-
-        // Cancel the drag if the object is dropped in a zone that is not available
-        if (zoneId > VillageData.Instance.Spots.Count || !VillageData.Instance.Spots[zoneId].IsAvailable)
-        {
-            Debug.Log("Drop in unavailable zone");
-            rb.MovePosition(initPos);
-            return;
-        }
-
-        // Manage the case where the object is dropped in a valid zone and come from the shop
-        if (isFromShop)
-        {
-            isFromShop = false;
-            // ContractActions.instance.TriggerHire((uint)index);
+            if (oldLevel != newLevel)
+                LevelUpAnimation(mobToUpdate);
         }
         else
         {
-            VillageData.Instance.FreeSpot(index);
+            // Cancel the drag if the mob is dropped in a zone that is not available
+            if (zoneIndex > TeamManager.instance.TeamSpots.Length || !TeamManager.instance.TeamSpots[zoneIndex].IsAvailable)
+            {
+                Debug.Log("Drop in unavailable zone");
+                rb.MovePosition(initPos);
+                return;
+            }
+
+            // Manage the case where the mob is dropped in a valid zone and come from the shop
+            if (isFromShop)
+            {
+                isFromShop = false;
+                // ContractActions.instance.TriggerHire((uint)index);
+            }
+            else
+            {
+                TeamManager.instance.FreeSpot(index);
+            }
+
+            // Fill the spot with the mob
+            Role role = gameObject.GetComponent<MobHealth>().mobData.role;
+            TeamManager.instance.FillSpot(zoneIndex, role, gameObject);
+            rb.MovePosition(currentDroppableZone.transform.position + offset);
+
+            // Update the team with new member
+            //TeamManager.instance.AddTeamMember(zoneIndex, gameObject);
+
+            // Update the index of the mob with the new index
+            index = zoneIndex;
         }
+    }
 
-        Role role = gameObject.GetComponent<MobHealth>().mobData.role;
-        VillageData.Instance.FillSpot(zoneId, role);
-        rb.MovePosition(currentDroppableZone.transform.position + offset);
-
-        // Update the team with new member
-        TeamManager.instance.AddTeamMember(zoneId, gameObject);
-
-        index = zoneId;
+    private void LevelUpAnimation(GameObject mob)
+    {
+        // Instantiate the FX for level up animation
+        GameObject mobFx = Instantiate(mobFxPrefab, mob.transform.position, Quaternion.identity);
+        // Set the sorting order of the FX to be on top of the mob
+        int MobOrder = GetComponent<SpriteRenderer>().sortingOrder;
+        mobFx.GetComponent<SpriteRenderer>().sortingOrder = MobOrder + 1;
+        // Play level up animation don't need to destroy mobFx it destroy itself when animation is done
+        mobFx.GetComponent<Animator>().SetTrigger("LevelUp");
     }
 
     void UpdateDropTargets()
     {
-        // Trouvez toutes les zones droppables dans la scène
         DroppableZone[] allDroppableZones = FindObjectsOfType<DroppableZone>();
-        // Debug.Log("Found " + allDroppableZones.Length + " droppable zones.");
 
-        // Utilisez une liste temporaire pour stocker les Transform des zones valides
+        // Use this list to store the valid drop targets
         List<Transform> validDropTargets = new List<Transform>();
 
         foreach (DroppableZone zone in allDroppableZones)
         {
-            if (VillageData.Instance.Spots[zone.index].IsAvailable)
+            if (TeamManager.instance.TeamSpots[zone.index].IsAvailable)
             {
-                validDropTargets.Add(zone.transform); // Ajoutez le Transform si la zone est valide
-                // Debug.Log("Added a valid drop target: " + zone.transform.name);
+                // Add transform of the zone if it is available
+                validDropTargets.Add(zone.transform);
             }
         }
-
-        // Convertissez la liste en tableau et affectez-la à targets
-        //if (indicatorManager != null)
-        //indicatorManager.targets = validDropTargets.ToArray();
-        // Debug.Log("Updated targets with " + targets.Length + " valid drop targets.");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

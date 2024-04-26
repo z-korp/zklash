@@ -4,66 +4,77 @@ using UnityEngine;
 
 public class MobLevel : MonoBehaviour
 {
+    private MobController mobController;
+
+    private MobStat mobStat;
+
     public MobData mobData;
     public XPBar xpBar;
 
     public TextMeshProUGUI levelText;
 
-    public int currentLevel = 1;
+    public int Level
+    {
+        get
+        {
+            if (mobController == null)
+            {
+                Debug.LogError("MobController is not set on " + gameObject.name, this);
+                return 0;
+            }
+            return mobController.Character != null ? mobController.Character.Level : 0;
+        }
+    }
 
-    public int unitMerged = 1;
+    public int XP
+    {
+        get
+        {
+            if (mobController == null)
+            {
+                Debug.LogError("MobController is not set on " + gameObject.name, this);
+                return 0;
+            }
+            return mobController.Character != null ? mobController.Character.XP : 0;
+        }
+    }
 
-    public int xpAmount = 100;
-
-    public int xpLevel = 0;
-
-    private bool updateXP = true;
-
-    private int LevelMax = 3;
-    // Start is called before the first frame update
     void Start()
     {
-        currentLevel = mobData.xp;
+        // Get the MobController component from the GameObject
+        mobController = GetComponent<MobController>();
+        if (mobController == null)
+        {
+            Debug.LogError("MobController component not found on the GameObject.", this);
+            return;
+        }
+
+        // Get the MobStat component from the GameObject
+        mobStat = GetComponent<MobStat>();
+        if (mobStat == null)
+        {
+            Debug.LogError("MobStat component not found on the GameObject.", this);
+            return;
+        }
+
         xpBar.SetMaxXP(100);
-        xpAmount = 100 / (currentLevel + 1);
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
-        if (updateXP)
-            xpBar.SetXP(xpLevel);
-    }
 
-    public bool LevelUp(int amountXP = 0)
-    {
-        // Remember to update number of unit merged before leveling up
-        if (currentLevel < LevelMax)
+        // display Xp when clicking space
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            // Avoid 99 XP case by using CeilToInt
-            xpAmount = Mathf.CeilToInt(100f / ((float)currentLevel + 1));
-            xpLevel += amountXP != 0 ? amountXP : xpAmount;
-
-            if (xpLevel >= 100)
-            {
-                currentLevel += 1;
-                levelText.text = "LVL " + currentLevel;
-                GetComponent<MobStat>().UpdateMobLevelBannerUI(currentLevel);
-                GetComponent<MobStat>().UpdateMobPowerBannerUI(currentLevel);
-                xpLevel = 0;
-                if (currentLevel == LevelMax)
-                {
-                    xpBar.SetXP(100);
-                    xpBar.SetColor(Color.green);
-                    updateXP = false;
-                }
-            }
-
-            return true;
+            Debug.Log("Level: " + Level + "XP: " + XP + " / " + mobController.Character.ExperienceRequiredForLevel(Level));
         }
 
-        return false;
-
+        xpBar.SetXP(XP * 100 / mobController.Character.ExperienceRequiredForLevel(Level));
+        mobStat.UpdateMobLevelBannerUI(Level);
+        mobStat.UpdateMobPowerBannerUI(Level);
+        levelText.text = "LVL " + Level;
     }
-
 }

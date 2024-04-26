@@ -14,7 +14,8 @@ namespace zKlash.Game
         private int _stun;
 
         private int _xp;
-        private int _level;
+        private int _lvl;
+        private const int MaxLevel = 3;  // Max level limit
 
         public int XP
         {
@@ -28,8 +29,8 @@ namespace zKlash.Game
 
         public int Level
         {
-            get => _level;
-            private set => _level = value;
+            get => _lvl;
+            private set => _lvl = value;
         }
 
         public int Health
@@ -69,18 +70,17 @@ namespace zKlash.Game
         public IRole Role { get; private set; }
         public IItem Item { get; private set; }
 
-        public Character(Role roleType, int level, ItemEnum item)
+        public Character(Role roleType, int lvl, ItemEnum item)
         {
             Item = ItemFactory.GetItem(ItemEnum.None);
             Role = RoleFactory.GetRole(roleType);
 
-            _level = level;
-            _xp = CalculateXpFromLevel(level);
-            Level = level;
+            _lvl = lvl;
+            _xp = 0;
 
-            _health = Role.Health(Phase.OnHire, level);
-            _attack = Role.Attack(Phase.OnHire, level);
-            _absorb = Role.Absorb(Phase.OnHire, level);
+            _health = Role.Health(Phase.OnHire, lvl);
+            _attack = Role.Attack(Phase.OnHire, lvl);
+            _absorb = Role.Absorb(Phase.OnHire, lvl);
             _stun = 0;
 
             Equip(item);
@@ -88,44 +88,34 @@ namespace zKlash.Game
 
         private void CheckLevelUp()
         {
-            while (_xp >= ExperienceRequiredForLevel(_level + 1))
+            while (_xp >= (_lvl + 1) && _lvl < MaxLevel)
             {
-                LevelUp();
+                _xp = 0; // Reset XP after leveling up
+                _lvl++;
+                UpdateStats(); // Update stats based on new level
             }
-        }
-
-        // Define how much XP is needed for a given level
-        private int ExperienceRequiredForLevel(int level)
-        {
-            return level + 1;
         }
 
         public void AddExperience(int amount)
         {
-            XP += amount;
+            XP += amount; // Setter handles level checking
         }
 
-        private int CalculateXpFromLevel(int level)
+        private void UpdateStats()
         {
-            int xp = 0;
-            for (int i = 1; i <= level; i++)
-            {
-                xp += ExperienceRequiredForLevel(i);
-            }
-            return xp;
+            Health = Role.Health(Phase.OnHire, _lvl);
+            Attack = Role.Attack(Phase.OnHire, _lvl);
+            Absorb = Role.Absorb(Phase.OnHire, _lvl);
         }
 
-        private void LevelUp()
+        public int ExperienceRequiredForLevel(int level)
         {
-            _level++;
-            _xp = 0;
+            return level + 1; // Each level requires 'current level + 1' XP to level up
         }
 
         public void Merge(Character other)
         {
-            // [Effect] Add the experience of the other character
-            int xpToAdd = CalculateXpFromLevel(other.Level);
-            AddExperience(xpToAdd);
+            AddExperience(1); // Gain 1 XP for merging
         }
 
         public bool IsDead()

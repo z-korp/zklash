@@ -2,6 +2,8 @@ namespace zKlash.Game.Roles
 {
     public class Bomboblin : IRole
     {
+        public Role Role => Role.Bomboblin;
+
         public int Health(Phase phase, int level)
         {
             if (phase == Phase.OnHire)

@@ -1,10 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using zKlash.Game.Roles;
+
+[System.Serializable] // Makes the struct visible in the Unity Inspector, allowing for easier debugging and setup
+public class TeamSpot
+{
+    public bool IsAvailable;
+    public Role Role;
+    public GameObject mob;
+
+    public TeamSpot(bool isAvailable, Role role = Role.None)
+    {
+        IsAvailable = isAvailable;
+        Role = role;
+        mob = null;
+    }
+}
 
 public class TeamManager : MonoBehaviour
 {
-    public Dictionary<int, GameObject> team = new Dictionary<int, GameObject>();
+    public TeamSpot[] TeamSpots = new TeamSpot[4]; // 4 spots for team members
 
     public static TeamManager instance;
 
@@ -18,52 +34,67 @@ public class TeamManager : MonoBehaviour
             return;
         }
         instance = this;
-    }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
+        // Initialize the team spots
+        for (int i = 0; i < TeamSpots.Length; i++)
         {
-            PrintDictionary(team);
+            TeamSpots[i] = new TeamSpot(true); // Make all spots available
         }
-    }
-
-    public void PrintDictionary(Dictionary<int, GameObject> dict)
-    {
-        Debug.Log("Dictionary:");
-        foreach (KeyValuePair<int, GameObject> entry in dict)
-        {
-            Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
-        }
-    }
-
-    public void AddTeamMember(int teamId, GameObject mobPrefab)
-    {
-        if (team != null)
-            team.Add(teamId, mobPrefab);
     }
 
     public void MoveTeam()
     {
-        foreach (KeyValuePair<int, GameObject> entry in team)
+        for (int i = 0; i < TeamSpots.Length; i++)
         {
-            HideXpCanvas(entry.Value);
-            entry.Value.GetComponent<MobMovement>().speed = 6;
-            entry.Value.GetComponent<MobMovement>().Move(targetsTeam[entry.Key]);
+            if (TeamSpots[i].mob != null)
+            {
+                HideXpCanvas(TeamSpots[i].mob);
+                TeamSpots[i].mob.GetComponent<MobMovement>().speed = 6;
+                TeamSpots[i].mob.GetComponent<MobMovement>().Move(targetsTeam[i]);
+            }
         }
     }
 
-    public GameObject GetMemberFromTeam(int key)
+    public GameObject GetMemberFromTeam(int index)
     {
-        if (team.TryGetValue(key, out GameObject foundGameObject))
+        return TeamSpots[index].mob;
+    }
+
+    // Call this method to fill a spot with an entity
+    public bool FillSpot(int spotIndex, Role _role, GameObject mob)
+    {
+        if (spotIndex < 0 || spotIndex >= TeamSpots.Length || !TeamSpots[spotIndex].IsAvailable)
         {
-            return foundGameObject;
+            return false; // Spot index is out of range or spot is not available
         }
-        else
+
+        TeamSpots[spotIndex] = new TeamSpot(false, _role); // Fill the spot
+        TeamSpots[spotIndex].mob = mob;
+        Debug.Log($"Spot {spotIndex} filled with entity: {_role}");
+        return true;
+    }
+
+    // Call this method to free up a spot
+    public bool FreeSpot(int spotIndex)
+    {
+        if (spotIndex < 0 || spotIndex >= TeamSpots.Length)
         {
-            Debug.LogError("GameObject not found for key: " + key);
-            return null;
+            return false; // Spot index is out of range
         }
+
+        TeamSpots[spotIndex] = new TeamSpot(true); // Make the spot available again
+        Debug.Log($"Spot {spotIndex} is now available");
+        return true;
+    }
+
+    public Role RoleAtIndex(int index)
+    {
+        if (index < 0 || index >= TeamSpots.Length)
+        {
+            return Role.None; // Return Role.None if index is out of range
+        }
+
+        return TeamSpots[index].Role; // Return the entity contained in the spot
     }
 
     private void HideXpCanvas(GameObject go)
@@ -84,6 +115,19 @@ public class TeamManager : MonoBehaviour
         else
         {
             Debug.LogError("CanvasXp GameObject not found.");
+        }
+    }
+
+    public void UpdateFirstAvailableSpot(Role _role)
+    {
+        foreach (var spot in TeamSpots)
+        {
+            if (!spot.IsAvailable && spot.Role == Role.None)
+            {
+                spot.Role = _role; // Assign the entity to this spot
+                Debug.Log($"Spot updated with entity: {_role}");
+                return; // Exit the method after updating the first matching spot
+            }
         }
     }
 }

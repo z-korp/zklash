@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 public class ClickButtonFight : MonoBehaviour
 {
@@ -19,19 +20,24 @@ public class ClickButtonFight : MonoBehaviour
         ToggleCanvases();
         TeamManager.instance.MoveTeam();
 
-        if (BattleManagerTest.instance.allies.Count == 0)
+        if (BattleManager.instance.allies.Count == 0)
         {
             Debug.Log("------> No allies found");
-            TeamManager.instance.PrintDictionary(TeamManager.instance.team);
+
+            // Reversing the TeamSpots array in place
+            TeamSpot[] reversedTeamSpots = new TeamSpot[TeamManager.instance.TeamSpots.Length];
+            Array.Copy(TeamManager.instance.TeamSpots, reversedTeamSpots, TeamManager.instance.TeamSpots.Length);
+            Array.Reverse(reversedTeamSpots);
 
             // Sorting the dictionary by descending key and converting it to a list of GameObjects
-            BattleManagerTest.instance.allies = TeamManager.instance.team.OrderByDescending(pair => pair.Key)
-                         .Select(pair => pair.Value)
-                         .ToList();
+            BattleManager.instance.allies = reversedTeamSpots
+                .Where(spot => !spot.IsAvailable)  // Filter spots where IsAvailable is false
+                .Select(spot => spot.mob)  // Select the mob GameObject from each spot
+                .ToList();
 
             // Now allies is sorted by the descending order of keys from the original dictionary
             // You can debug or work with 'allies' list now
-            foreach (var ally in BattleManagerTest.instance.allies)
+            foreach (var ally in BattleManager.instance.allies)
             {
                 Debug.Log(ally.name);
             }

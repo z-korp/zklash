@@ -90,7 +90,7 @@ public class ContractActions : MonoBehaviour
             var character = gameManager.worldManager.Entity(characterEntity).GetComponent<Character>();
             Debug.Log($"Character id: {character.id}");
         }*/
-        GameObject[] mobs = GameObject.FindGameObjectsWithTag("Mob");
+        /*GameObject[] mobs = GameObject.FindGameObjectsWithTag("Mob");
         List<ElementData> mobDataList = new List<ElementData>();
         foreach (var mob in mobs)
         {
@@ -103,10 +103,10 @@ public class ContractActions : MonoBehaviour
         }
 
         // Order the list by the index of ElementData
-        var orderedMobDataList = mobDataList.OrderBy(data => data.index).ToList();
+        var orderedMobDataList = mobDataList.OrderBy(data => data.index).ToList();*/
 
         // Extract the entity property from each ElementData in order
-        List<string> orderedEntities = new List<string>();
+        /*List<string> orderedEntities = new List<string>();
         foreach (var data in orderedMobDataList)
         {
             var entity = VillageData.Instance.Spots[data.index].EntityContained;
@@ -238,7 +238,7 @@ public class ContractActions : MonoBehaviour
         VillageData.Instance.stunEventDetails = stunEventDetails;
         VillageData.Instance.absorbEventDetails = absorbEventDetails;
         VillageData.Instance.usageEventDetails = usageEventDetails;
-        VillageData.Instance.talentEventDetails = talentEventDetails;
+        VillageData.Instance.talentEventDetails = talentEventDetails;*/
 
         // Display CombatScene
         SceneManager.LoadScene("Battle");

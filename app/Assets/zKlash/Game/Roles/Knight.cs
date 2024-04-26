@@ -2,6 +2,8 @@ namespace zKlash.Game.Roles
 {
     public class Knight : IRole
     {
+        public Role Role => Role.Knight;
+
         public int Health(Phase phase, int level)
         {
             switch (phase)

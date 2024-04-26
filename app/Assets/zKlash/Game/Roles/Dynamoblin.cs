@@ -2,6 +2,8 @@ namespace zKlash.Game.Roles
 {
     public class Dynamoblin : IRole
     {
+        public Role Role => Role.Dynamoblin;
+
         public int Health(Phase phase, int level)
         {
             if (phase == Phase.OnHire)

@@ -1,6 +1,11 @@
 using UnityEngine;
 using zKlash.Game.Roles;
 
+/* 
+    This script is responsible for spawning mobs in the Shop. 
+    It is attached to the mob spawn points in the game.
+    When the role of the mob is set, the mob is created at the spawn point.
+*/
 public class MobSpawn : MonoBehaviour
 {
     public Role role;

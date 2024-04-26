@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Character characterComponent = entity.GetComponent<Character>();
+        /*Character characterComponent = entity.GetComponent<Character>();
         if (characterComponent != null)
         {
             Debug.Log($"-> Character entity spawned");
@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
                 VillageData.Instance.UpdateFirstAvailableSpot((Role)characterComponent.role);
             }
             //PlayerData.Instance.teamEntity = entity.name;
-        }
+        }*/
 
         Debug.Log($"---------------------------------");
     }

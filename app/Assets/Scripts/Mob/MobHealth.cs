@@ -11,8 +11,6 @@ public class MobHealth : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
-    public MobData mobData;
-
     public int Health
     {
         get
@@ -41,8 +39,6 @@ public class MobHealth : MonoBehaviour
 
     void Awake()
     {
-        //health = mobData.health;
-
         animator = GetComponentInParent<Animator>();
         if (animator == null)
         {
@@ -91,11 +87,10 @@ public class MobHealth : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Taking {real_dmg} damage on {mobData.name}");
+            Debug.Log($"Taking {real_dmg} damage");
             damageTextComponent.ShowDamage(amount);
         }
 
-        //health -= amount;
         SetTextHealth(Math.Max(0, Health));
 
         // Animation
@@ -103,16 +98,6 @@ public class MobHealth : MonoBehaviour
         StartCoroutine(BlinkDamageFlash());
         yield return StartCoroutine(HandleBlinkDelay());
     }
-
-    /*public void HealPlayer(int amount)
-    {
-        health += amount;
-        SetTextHealth(health);
-
-        isBlinking = true;
-        StartCoroutine(BlinkHealFlash());
-        StartCoroutine(HandleBlinkDelay());
-    }*/
 
     public IEnumerator TriggerDie()
     {
@@ -126,14 +111,7 @@ public class MobHealth : MonoBehaviour
 
     public IEnumerator TriggerDeathEffect()
     {
-        /*if (mobData.role == Role.Bomboblin)
-        {
-            yield return source.TakeDamage(99);
-        }
-        else
-        {*/
         yield return null;
-        //}
     }
 
     public void SetTextHealth(int amount)

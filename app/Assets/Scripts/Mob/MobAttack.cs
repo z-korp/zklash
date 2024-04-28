@@ -9,11 +9,6 @@ public class MobAttack : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
-    public MobData mobData;
-    //private int baseDamage;
-    //private int bonusDamage = 0;
-    //private int damage => baseDamage + bonusDamage;
-
     private int _damage;
 
     public int Damage
@@ -46,8 +41,6 @@ public class MobAttack : MonoBehaviour
 
     void Awake()
     {
-        //baseDamage = mobData.damage;
-
         animator = GetComponentInParent<Animator>();
         if (animator == null)
         {

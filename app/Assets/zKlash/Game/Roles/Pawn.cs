@@ -2,7 +2,7 @@ namespace zKlash.Game.Roles
 {
     public class Pawn : IRole
     {
-        public Role Role => Role.Pawn;
+        public Role GetRole => Role.Pawn;
 
         public int Health(Phase phase, int level)
         {

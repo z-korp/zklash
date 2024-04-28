@@ -7,7 +7,9 @@ using zKlash.Game.Items;
 
 public class MobItem : MonoBehaviour
 {
-    public IItem Item { get; set; }
+    private MobController mobController;
+
+    private CanvasUnitUpdater canvasUnitUpdater;
 
     public ItemData item;
     public TextMeshProUGUI titleItem;
@@ -32,6 +34,22 @@ public class MobItem : MonoBehaviour
 
     private void Start()
     {
+        // Get the MobController component from the GameObject
+        mobController = GetComponent<MobController>();
+
+        if (mobController == null)
+        {
+            Debug.LogError("MobController component not found on the GameObject.", this);
+            return;
+        }
+
+        // Get the CanvasUnitUpdater component from the GameObject
+        Transform canvasUnitsTransform = transform.Find("CanvasUnits");
+        if (canvasUnitsTransform != null)
+        {
+            canvasUnitUpdater = canvasUnitsTransform.GetComponent<CanvasUnitUpdater>();
+        }
+
         titleItem.text = "";
         sizeItem.text = "";
         descriptionItem.text = "";
@@ -50,6 +68,12 @@ public class MobItem : MonoBehaviour
             OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
             itemOrbiter.target = gameObject.transform;
             itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
+
+            if (canvasUnitUpdater != null)
+            {
+                canvasUnitUpdater.ToggleRibbons(true);
+            }
+
         }
     }
 
@@ -72,10 +96,10 @@ public class MobItem : MonoBehaviour
             title = item.title;
             size = item.size;
             description = item.description;
-            health = item.health;
-            attack = item.attack;
-            damage = item.damage;
-            absorb = item.absorb;
+            health = mobController.Character.Item.Health(Phase.OnEquip);
+            attack = mobController.Character.Item.Attack(Phase.OnEquip);
+            damage = mobController.Character.Item.Damage(Phase.OnEquip);
+            absorb = mobController.Character.Item.Absorb(Phase.OnEquip);
             save = item.save;
             durability = item.durability;
             itemImage.sprite = item.image;

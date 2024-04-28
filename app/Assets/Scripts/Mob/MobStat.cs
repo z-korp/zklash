@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class MobStat : MonoBehaviour
 {
+    private MobController mobController;
+
     public MobData mob;
     public TextMeshProUGUI titleMob;
     public TextMeshProUGUI levelMob;
@@ -11,7 +13,6 @@ public class MobStat : MonoBehaviour
     public Image imageLeftMob, imageRightMob;
 
     public string title;
-    public int currentLevel = 1;
     public string powerLV1;
     public string powerLV2;
     public string powerLV3;
@@ -20,22 +21,31 @@ public class MobStat : MonoBehaviour
 
     public void Start()
     {
+        // Get the MobController component from the GameObject
+        mobController = GetComponent<MobController>();
+
+        if (mobController == null)
+        {
+            Debug.LogError("MobController component not found on the GameObject.", this);
+            return;
+        }
+
         UpdateGameObjectWithItemData();
         descriptionMob.text = powerLV1;
-        levelMob.text = currentLevel.ToString();
+        levelMob.text = "lvl " + mobController.Character.Level.ToString();
         titleMob.text = title;
     }
 
     private void UpdateGameObjectWithItemData()
     {
-        if (mob != null)
+        if (mob != null && mobController != null && mobController.Character != null)
         {
             title = mob.title;
             powerLV1 = mob.powerLV1;
             powerLV2 = mob.powerLV2;
             powerLV3 = mob.powerLV3;
-            health = mob.health;
-            damage = mob.damage;
+            health = mobController.Character.Health;
+            damage = mobController.Character.Damage;
             imageLeftMob.sprite = mob.image;
             imageRightMob.sprite = mob.image;
         }
@@ -43,7 +53,7 @@ public class MobStat : MonoBehaviour
 
     public void UpdateMobLevelBannerUI(int currentLevel)
     {
-        levelMob.text = currentLevel.ToString();
+        levelMob.text = "lvl " + currentLevel.ToString();
     }
 
     public void UpdateMobPowerBannerUI(int currentLevel)
@@ -55,5 +65,4 @@ public class MobStat : MonoBehaviour
         if (currentLevel == 3)
             descriptionMob.text = powerLV3;
     }
-
 }

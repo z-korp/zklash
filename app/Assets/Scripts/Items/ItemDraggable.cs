@@ -14,12 +14,16 @@ public class ItemDraggable : MonoBehaviour
 
     private GameObject mob;
 
-    private void Awake()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    void Start()
+    {
+    }
+
+    void Update()
     {
         if (drag)
         {
@@ -53,6 +57,7 @@ public class ItemDraggable : MonoBehaviour
             //itemOrbiter.target = mob.transform;
             //itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
             mob.GetComponent<MobItem>().item = item;
+            mob.GetComponent<MobController>().Character.Equip(item.type);
             Destroy(gameObject);
 
         }
@@ -65,13 +70,11 @@ public class ItemDraggable : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (collision.CompareTag("Mob"))
         {
             Debug.Log("Mob detected");
             canDropItem = true;
             mob = collision.gameObject;
-
         }
     }
 

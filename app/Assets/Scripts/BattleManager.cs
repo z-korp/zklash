@@ -313,8 +313,6 @@ public class BattleManager : MonoBehaviour
         MobAttack attackerAttack = attacker.GetComponent<MobAttack>();
         MobHealth defenderHealth = defender.GetComponent<MobHealth>();
 
-        Debug.Log("-------->" + attackerAttack.mobData.name + " is attacking " + defenderHealth.mobData.name);
-
         if (attackerAttack != null || defenderHealth != null)
         {
             // Set the target of the MobAttack to the MobHealth component of the enemy
@@ -358,8 +356,6 @@ public class BattleManager : MonoBehaviour
         //yield return new WaitForSeconds(5f);
         MobAttack attackerAttack = attacker.GetComponent<MobAttack>();
         MobHealth defenderHealth = defender.GetComponent<MobHealth>();
-
-        Debug.Log("-------->" + attackerAttack.mobData.name + " is postmorteming " + defenderHealth.mobData.name);
 
         if (attackerAttack != null || defenderHealth != null)
         {

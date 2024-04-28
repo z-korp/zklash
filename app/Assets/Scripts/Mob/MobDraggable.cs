@@ -95,7 +95,7 @@ public class MobDraggable : MonoBehaviour
         }
 
         // Manage the merge case
-        if (TeamManager.instance.RoleAtIndex(zoneIndex) == gameObject.GetComponent<MobController>().Character.Role.Role)
+        if (TeamManager.instance.RoleAtIndex(zoneIndex) == gameObject.GetComponent<MobController>().Character.Role.GetRole)
         {
             Debug.Log("Merge case");
             GameObject mobToUpdate = TeamManager.instance.GetMemberFromTeam(zoneIndex);
@@ -134,7 +134,7 @@ public class MobDraggable : MonoBehaviour
             }
 
             // Fill the spot with the mob
-            Role role = gameObject.GetComponent<MobHealth>().mobData.role;
+            Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
             TeamManager.instance.FillSpot(zoneIndex, role, gameObject);
             rb.MovePosition(currentDroppableZone.transform.position + offset);
 

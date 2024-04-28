@@ -10,7 +10,7 @@ namespace zKlash.Game.Roles
 
     public interface IRole
     {
-        Role Role { get; }
+        Role GetRole { get; }
         int Health(Phase phase, int level);
         int Attack(Phase phase, int level);
         int Absorb(Phase phase, int level);
@@ -23,7 +23,7 @@ namespace zKlash.Game.Roles
 
     public class NoneRole : IRole
     {
-        public Role Role => Role.None;
+        public Role GetRole => Role.None;
         public int Health(Phase phase, int level) => 0;
         public int Attack(Phase phase, int level) => 0;
         public int Absorb(Phase phase, int level) => 0;

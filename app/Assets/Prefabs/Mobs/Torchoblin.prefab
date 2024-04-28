@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8242639359080295230}
   - component: {fileID: 9079720197046210478}
   - component: {fileID: 5536078236386406108}
-  - component: {fileID: 4839069381135324523}
   - component: {fileID: 634524516086548021}
   - component: {fileID: 4150198432033238275}
   - component: {fileID: 908491819400762038}
@@ -183,33 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc46230a9917c324881d27b0a5e2bff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4839069381135324523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4971632552838307129}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36fb19009957446d99c8529dc99a3a36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indexFromShop: 0
-  index: 0
-  entity: 
-  maxHealth: 10
-  currentHealth: 3
-  currentDamage: 2
-  currentXp: 0
-  currentLevel: 1
-  animator: {fileID: 9079720197046210478}
-  spriteRenderer: {fileID: 8866626820411103120}
-  txtLife: {fileID: 0}
-  txtAttack: {fileID: 0}
-  isBlinking: 0
-  blinkDuration: 0.2
-  blinkTimeAfterHit: 1
 --- !u!50 &634524516086548021
 Rigidbody2D:
   serializedVersion: 4
@@ -331,10 +303,6 @@ MonoBehaviour:
   mobData: {fileID: 11400000, guid: 1a8d2415a8acc4f16b39585db330d4f0, type: 2}
   xpBar: {fileID: 3739623075479656912}
   levelText: {fileID: 3557233668030154747}
-  currentLevel: 1
-  unitMerged: 1
-  xpAmount: 100
-  xpLevel: 0
 --- !u!114 &3263924243137518979
 MonoBehaviour:
   m_ObjectHideFlags: 0

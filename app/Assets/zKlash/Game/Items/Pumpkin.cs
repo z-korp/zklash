@@ -9,6 +9,26 @@ namespace zKlash.Game.Items
             _size = size;
         }
 
+        public Item GetItemType()
+        {
+            if (_size == Size.Small)
+            {
+                return Item.PumpkinSmall;
+            }
+            else if (_size == Size.Medium)
+            {
+                return Item.PumpkinMedium;
+            }
+            else if (_size == Size.Large)
+            {
+                return Item.PumpkinLarge;
+            }
+            else
+            {
+                return Item.None;
+            }
+        }
+
         public int Health(Phase phase)
         {
             if (phase == Phase.OnDeath)

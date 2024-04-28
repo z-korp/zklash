@@ -28,6 +28,8 @@ namespace zKlash.Game.Items
 
     public interface IItem
     {
+        Item GetItemType();
+
         int Health(Phase phase);
         int Attack(Phase phase);
         int Damage(Phase phase);
@@ -37,6 +39,8 @@ namespace zKlash.Game.Items
 
     public class NoneItem : IItem
     {
+        public Item GetItemType() => Item.None;
+
         public int Health(Phase phase) => 0;
         public int Attack(Phase phase) => 0;
         public int Damage(Phase phase) => 0;

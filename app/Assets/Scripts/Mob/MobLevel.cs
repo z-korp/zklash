@@ -8,7 +8,6 @@ public class MobLevel : MonoBehaviour
 
     private MobStat mobStat;
 
-    public MobData mobData;
     public XPBar xpBar;
 
     public TextMeshProUGUI levelText;

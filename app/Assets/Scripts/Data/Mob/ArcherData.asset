@@ -17,9 +17,5 @@ MonoBehaviour:
   powerLV1: At death, stun the foe for 1 turn.
   powerLV2: At death, stun the foe for 2 turn.
   powerLV3: At death, stun the foe for 3 turn.
-  element: 
-  health: 2
-  damage: 2
-  xp: 1
   image: {fileID: -251256252, guid: fa4a33a3c07a89a4c9ed571b6e363c3c, type: 3}
   role: 2

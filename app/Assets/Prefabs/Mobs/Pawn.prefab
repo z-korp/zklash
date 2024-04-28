@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7255474210259257150}
   - component: {fileID: 948755911264901216}
   - component: {fileID: 7702529262357633816}
-  - component: {fileID: -1434053531911401733}
   - component: {fileID: 1039956107568584100}
   - component: {fileID: 7394533514395470957}
   - component: {fileID: 4500970693168511666}
@@ -201,33 +200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc46230a9917c324881d27b0a5e2bff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-1434053531911401733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7526038476407582817}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36fb19009957446d99c8529dc99a3a36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indexFromShop: 0
-  index: 0
-  entity: 
-  maxHealth: 10
-  currentHealth: 3
-  currentDamage: 2
-  currentXp: 0
-  currentLevel: 1
-  animator: {fileID: 4569523674553832488}
-  spriteRenderer: {fileID: 8753150383481289107}
-  txtLife: {fileID: 3749020962830596209}
-  txtAttack: {fileID: 8566153420002911705}
-  isBlinking: 0
-  blinkDuration: 0.2
-  blinkTimeAfterHit: 1
 --- !u!50 &1039956107568584100
 Rigidbody2D:
   serializedVersion: 4
@@ -294,7 +266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2e990f043944dbb99f8e1951249396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobData: {fileID: 11400000, guid: fb151d53ab82f4e1fade711b5776112b, type: 2}
   txtAttack: {fileID: 8566153420002911705}
   isBlinking: 0
   blinkDuration: 0.2
@@ -312,7 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9684b67ec91b34865ab6607ca07a01e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobData: {fileID: 11400000, guid: fb151d53ab82f4e1fade711b5776112b, type: 2}
   isDead: 0
   txtLife: {fileID: 3749020962830596209}
   isBlinking: 0
@@ -359,13 +329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a479e61eb8a0449d8f19944182a7ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobData: {fileID: 11400000, guid: fb151d53ab82f4e1fade711b5776112b, type: 2}
   xpBar: {fileID: 6394730720225454153}
   levelText: {fileID: 6487083173476709986}
-  currentLevel: 1
-  unitMerged: 1
-  xpAmount: 100
-  xpLevel: 0
 --- !u!114 &-1820550729740538754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,11 +346,12 @@ MonoBehaviour:
   item: {fileID: 0}
   titleItem: {fileID: 7110539149965054196}
   sizeItem: {fileID: 2155120167067514477}
-  descriptionItem: {fileID: 6285982036580958986}
+  descriptionItem: {fileID: 3096256596707729647}
   itemImage: {fileID: 7967304490879962935}
   orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
+  itemOrbiterGO: {fileID: 0}
   title: 
-  size: 85
+  size: 48
   description: 
   health: 0
   attack: 0
@@ -425,7 +391,6 @@ MonoBehaviour:
   imageLeftMob: {fileID: 6437064565042370605}
   imageRightMob: {fileID: 4826208933892424907}
   title: 
-  currentLevel: 1
   powerLV1: 
   powerLV2: 
   powerLV3: 
@@ -568,10 +533,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasUnits
       objectReference: {fileID: 0}
-    - target: {fileID: 3196840196865663314, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8476826900991160219, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -676,6 +637,17 @@ GameObject:
 --- !u!114 &3047082722762710253 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1763961259728460406, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
+  m_PrefabInstance: {fileID: 3617429525847738011}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3096256596707729647 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1786710813383550580, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
   m_PrefabInstance: {fileID: 3617429525847738011}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

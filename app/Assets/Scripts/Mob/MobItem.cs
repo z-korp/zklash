@@ -68,13 +68,10 @@ public class MobItem : MonoBehaviour
             OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
             itemOrbiter.target = gameObject.transform;
             itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
-
-            if (canvasUnitUpdater != null)
-            {
-                canvasUnitUpdater.ToggleRibbons(true);
-            }
-
         }
+
+        if (canvasUnitUpdater != null)
+            canvasUnitUpdater.ToggleRibbons(item != null);
     }
 
     private void OnDisable()

@@ -12,17 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9bb301c2336430592323a918e1e00d, type: 3}
   m_Name: BomboblinData
   m_EditorClassIdentifier: 
-  id: 3
   title: Bomboblin
-  powerLV1: At death, deal 99 damage to the current foe and add +1 health to the
-    next friend.
-  powerLV2: At death, deal 99 damage to the current foe and add +2 health to the
-    next friend.
-  powerLV3: At death, deal 99 damage to the current foe and add +3 health to the
-    next friend.
-  element: 
-  health: 1
-  damage: 0
-  xp: 1
-  image: {fileID: -83638651, guid: 73beb986810a8476eaee4ffcc1037e3a, type: 3}
+  powerLV1: At death, kill opponent and add +1 health to next friend.
+  powerLV2: At death, kill opponent and add +2 health to next friend.
+  powerLV3: At death, kill opponent and add +3 health to next friend.
+  image: {fileID: -1583091982, guid: 73beb986810a8476eaee4ffcc1037e3a, type: 3}
   role: 6

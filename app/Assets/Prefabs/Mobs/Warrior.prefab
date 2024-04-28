@@ -275,7 +275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2e990f043944dbb99f8e1951249396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobData: {fileID: 11400000, guid: 33539ea9a0ac547c3a4c92970b997573, type: 2}
   txtAttack: {fileID: 2837798910189757624}
   isBlinking: 0
   blinkDuration: 0.2
@@ -293,7 +292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9684b67ec91b34865ab6607ca07a01e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobData: {fileID: 11400000, guid: 33539ea9a0ac547c3a4c92970b997573, type: 2}
   isDead: 0
   txtLife: {fileID: 7316034404455692560}
   isBlinking: 0
@@ -340,7 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a479e61eb8a0449d8f19944182a7ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobData: {fileID: 11400000, guid: 33539ea9a0ac547c3a4c92970b997573, type: 2}
   xpBar: {fileID: 8631417279999252292}
   levelText: {fileID: 8462525640500365679}
 --- !u!114 &782451542966870360
@@ -403,7 +400,6 @@ MonoBehaviour:
   imageLeftMob: {fileID: 3905964991041594748}
   imageRightMob: {fileID: 3286476674124102042}
   title: 
-  currentLevel: 1
   powerLV1: 
   powerLV2: 
   powerLV3: 
@@ -689,6 +685,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4119045088184553782}
     m_Modifications:
+    - target: {fileID: 1786710813383550580, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1786710813383550580, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 3196840196865663314, guid: 83425bf7dfeac1c4d8a8a507f120e2c7, type: 3}
       propertyPath: m_Name
       value: CanvasUnits

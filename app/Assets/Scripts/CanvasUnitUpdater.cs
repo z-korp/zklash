@@ -15,24 +15,10 @@ public class CanvasUnitUpdater : MonoBehaviour
         ToggleRibbons(false);
     }
 
-    void Update()
-    {
-        // Toggle ribbons based on user input
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            ToggleRibbons(true);
-        }
-        else if (Input.GetKeyDown(KeyCode.K))
-        {
-            ToggleRibbons(false);
-        }
-    }
-
     public void ToggleRibbons(bool showRibbon)
     {
         if (ribbon == null || ribbonSimple == null)
         {
-            Debug.Log("Ribbon or RibbonSimple not found on the GameObject.", this);
             return;
         }
         SetActiveRibbon(showRibbon);

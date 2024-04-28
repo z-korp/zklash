@@ -4,7 +4,6 @@ using zKlash.Game.Roles;
 [CreateAssetMenu(fileName = "MobData", menuName = "Mob/MobData")]
 public class MobData : ScriptableObject
 {
-    public int id;
     public string title;
     public string powerLV1;
     public string powerLV2;

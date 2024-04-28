@@ -107,6 +107,7 @@ public class BattleManager : MonoBehaviour
                 if (itemName != "None")
                 {
                     var item = PrefabUtils.FindScriptableByName(itemData, itemName);
+                    enemyObject.GetComponent<MobController>().Character.Equip(item.type);
                     enemyObject.GetComponent<MobItem>().item = item;
                 }
 

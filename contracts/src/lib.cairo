@@ -12,6 +12,7 @@ mod types {
 
 mod helpers {
     mod array;
+    mod bitmap;
     mod packer;
     mod battler;
     mod math;
@@ -54,6 +55,11 @@ mod models {
     mod player;
     mod shop;
     mod team;
+    mod squad;
+    mod foe;
+    mod league;
+    mod registry;
+    mod slot;
 }
 
 mod systems {

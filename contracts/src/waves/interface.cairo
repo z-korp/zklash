@@ -1,7 +1,9 @@
 // Internal import
 
-use zklash::models::character::Character;
+use zklash::models::foe::Foe;
 
 trait WaveTrait {
-    fn characters() -> Array<Character>;
+    fn foes(registry_id: u32, squad_id: u32) -> Array<Foe>;
+    fn level() -> u8;
+    fn size() -> u8;
 }

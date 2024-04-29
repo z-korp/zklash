@@ -19,6 +19,11 @@ mod setup {
     use zklash::models::team::Team;
     use zklash::models::shop::Shop;
     use zklash::models::character::Character;
+    use zklash::models::registry::Registry;
+    use zklash::models::league::League;
+    use zklash::models::slot::Slot;
+    use zklash::models::squad::Squad;
+    use zklash::models::foe::Foe;
     use zklash::systems::account::{account, IAccountDispatcher, IAccountDispatcherTrait};
     use zklash::systems::battle::{battle, IBattleDispatcher, IBattleDispatcherTrait};
     use zklash::systems::market::{market, IMarketDispatcher, IMarketDispatcherTrait};
@@ -52,6 +57,11 @@ mod setup {
         models.append(zklash::models::team::team::TEST_CLASS_HASH);
         models.append(zklash::models::shop::shop::TEST_CLASS_HASH);
         models.append(zklash::models::character::character::TEST_CLASS_HASH);
+        models.append(zklash::models::registry::registry::TEST_CLASS_HASH);
+        models.append(zklash::models::league::league::TEST_CLASS_HASH);
+        models.append(zklash::models::slot::slot::TEST_CLASS_HASH);
+        models.append(zklash::models::squad::squad::TEST_CLASS_HASH);
+        models.append(zklash::models::foe::foe::TEST_CLASS_HASH);
         let world = spawn_test_world(models);
 
         // [Setup] Systems

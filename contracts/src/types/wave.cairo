@@ -4,7 +4,7 @@ use core::debug::PrintTrait;
 
 // Internal imports
 
-use zklash::models::character::Character;
+use zklash::models::foe::Foe;
 use zklash::waves::wave_01::WaveImpl as Wave01Impl;
 use zklash::waves::wave_02::WaveImpl as Wave02Impl;
 use zklash::waves::wave_03::WaveImpl as Wave03Impl;
@@ -37,34 +37,51 @@ mod errors {
 #[derive(Copy, Drop, Serde, PartialEq, Introspection)]
 enum Wave {
     None,
-    Wave01,
-    Wave02,
-    Wave03,
-    Wave04,
-    Wave05,
-    Wave06,
-    Wave07,
-    Wave08,
-    Wave09,
-    Wave10,
+    One,
+    Two,
+    Three,
+    Four,
+    Five,
+    Six,
+    Seven,
+    Eight,
+    Nine,
+    Ten,
 }
 
 #[generate_trait]
 impl WaveImpl of WaveTrait {
     #[inline(always)]
-    fn characters(self: Wave) -> Array<Character> {
+    fn foes(self: Wave, registry_id: u32, squad_id: u32) -> Array<Foe> {
         match self {
             Wave::None => array![],
-            Wave::Wave01 => Wave01Impl::characters(),
-            Wave::Wave02 => Wave02Impl::characters(),
-            Wave::Wave03 => Wave03Impl::characters(),
-            Wave::Wave04 => Wave04Impl::characters(),
-            Wave::Wave05 => Wave05Impl::characters(),
-            Wave::Wave06 => Wave06Impl::characters(),
-            Wave::Wave07 => Wave07Impl::characters(),
-            Wave::Wave08 => Wave08Impl::characters(),
-            Wave::Wave09 => Wave09Impl::characters(),
-            Wave::Wave10 => Wave10Impl::characters(),
+            Wave::One => Wave01Impl::foes(registry_id, squad_id),
+            Wave::Two => Wave02Impl::foes(registry_id, squad_id),
+            Wave::Three => Wave03Impl::foes(registry_id, squad_id),
+            Wave::Four => Wave04Impl::foes(registry_id, squad_id),
+            Wave::Five => Wave05Impl::foes(registry_id, squad_id),
+            Wave::Six => Wave06Impl::foes(registry_id, squad_id),
+            Wave::Seven => Wave07Impl::foes(registry_id, squad_id),
+            Wave::Eight => Wave08Impl::foes(registry_id, squad_id),
+            Wave::Nine => Wave09Impl::foes(registry_id, squad_id),
+            Wave::Ten => Wave10Impl::foes(registry_id, squad_id),
+        }
+    }
+
+    #[inline(always)]
+    fn attributes(self: Wave) -> (u8, u8) {
+        match self {
+            Wave::None => (0, 0),
+            Wave::One => (Wave01Impl::level(), Wave01Impl::size()),
+            Wave::Two => (Wave02Impl::level(), Wave02Impl::size()),
+            Wave::Three => (Wave03Impl::level(), Wave03Impl::size()),
+            Wave::Four => (Wave04Impl::level(), Wave04Impl::size()),
+            Wave::Five => (Wave05Impl::level(), Wave05Impl::size()),
+            Wave::Six => (Wave06Impl::level(), Wave06Impl::size()),
+            Wave::Seven => (Wave07Impl::level(), Wave07Impl::size()),
+            Wave::Eight => (Wave08Impl::level(), Wave08Impl::size()),
+            Wave::Nine => (Wave09Impl::level(), Wave09Impl::size()),
+            Wave::Ten => (Wave10Impl::level(), Wave10Impl::size()),
         }
     }
 }
@@ -82,16 +99,16 @@ impl WaveIntoFelt252 of core::Into<Wave, felt252> {
     fn into(self: Wave) -> felt252 {
         match self {
             Wave::None => NONE,
-            Wave::Wave01 => WAVE_01,
-            Wave::Wave02 => WAVE_02,
-            Wave::Wave03 => WAVE_03,
-            Wave::Wave04 => WAVE_04,
-            Wave::Wave05 => WAVE_05,
-            Wave::Wave06 => WAVE_06,
-            Wave::Wave07 => WAVE_07,
-            Wave::Wave08 => WAVE_08,
-            Wave::Wave09 => WAVE_09,
-            Wave::Wave10 => WAVE_10,
+            Wave::One => WAVE_01,
+            Wave::Two => WAVE_02,
+            Wave::Three => WAVE_03,
+            Wave::Four => WAVE_04,
+            Wave::Five => WAVE_05,
+            Wave::Six => WAVE_06,
+            Wave::Seven => WAVE_07,
+            Wave::Eight => WAVE_08,
+            Wave::Nine => WAVE_09,
+            Wave::Ten => WAVE_10,
         }
     }
 }
@@ -101,16 +118,16 @@ impl WaveIntoU8 of core::Into<Wave, u8> {
     fn into(self: Wave) -> u8 {
         match self {
             Wave::None => 0,
-            Wave::Wave01 => 1,
-            Wave::Wave02 => 2,
-            Wave::Wave03 => 3,
-            Wave::Wave04 => 4,
-            Wave::Wave05 => 5,
-            Wave::Wave06 => 6,
-            Wave::Wave07 => 7,
-            Wave::Wave08 => 8,
-            Wave::Wave09 => 9,
-            Wave::Wave10 => 10,
+            Wave::One => 1,
+            Wave::Two => 2,
+            Wave::Three => 3,
+            Wave::Four => 4,
+            Wave::Five => 5,
+            Wave::Six => 6,
+            Wave::Seven => 7,
+            Wave::Eight => 8,
+            Wave::Nine => 9,
+            Wave::Ten => 10,
         }
     }
 }
@@ -119,25 +136,25 @@ impl Felt252IntoWave of core::Into<felt252, Wave> {
     #[inline(always)]
     fn into(self: felt252) -> Wave {
         if self == WAVE_01 {
-            Wave::Wave01
+            Wave::One
         } else if self == WAVE_02 {
-            Wave::Wave02
+            Wave::Two
         } else if self == WAVE_03 {
-            Wave::Wave03
+            Wave::Three
         } else if self == WAVE_04 {
-            Wave::Wave04
+            Wave::Four
         } else if self == WAVE_05 {
-            Wave::Wave05
+            Wave::Five
         } else if self == WAVE_06 {
-            Wave::Wave06
+            Wave::Six
         } else if self == WAVE_07 {
-            Wave::Wave07
+            Wave::Seven
         } else if self == WAVE_08 {
-            Wave::Wave08
+            Wave::Eight
         } else if self == WAVE_09 {
-            Wave::Wave09
+            Wave::Nine
         } else if self == WAVE_10 {
-            Wave::Wave10
+            Wave::Ten
         } else {
             Wave::None
         }
@@ -148,25 +165,25 @@ impl U8IntoWave of core::Into<u8, Wave> {
     #[inline(always)]
     fn into(self: u8) -> Wave {
         if self == 1 {
-            Wave::Wave01
+            Wave::One
         } else if self == 2 {
-            Wave::Wave02
+            Wave::Two
         } else if self == 3 {
-            Wave::Wave03
+            Wave::Three
         } else if self == 4 {
-            Wave::Wave04
+            Wave::Four
         } else if self == 5 {
-            Wave::Wave05
+            Wave::Five
         } else if self == 6 {
-            Wave::Wave06
+            Wave::Six
         } else if self == 7 {
-            Wave::Wave07
+            Wave::Seven
         } else if self == 8 {
-            Wave::Wave08
+            Wave::Eight
         } else if self == 9 {
-            Wave::Wave09
+            Wave::Nine
         } else if self == 10 {
-            Wave::Wave10
+            Wave::Ten
         } else {
             Wave::None
         }

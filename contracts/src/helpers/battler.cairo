@@ -11,9 +11,10 @@ use zklash::types::phase::Phase;
 
 #[generate_trait]
 impl Battler of BattlerTrait {
-    fn start(ref team1: Array<Character>, ref team2: Array<Character>, battle_id: u8,) -> bool {
+    fn start(ref team1: Array<Character>, ref team2: Array<Character>) -> bool {
         // [Compute] Start the battle
         let mut tick: u32 = 0;
+        let battle_id: u8 = 0;
         Battler::battle(
             ref team1,
             ref team2,
@@ -92,14 +93,16 @@ impl Battler of BattlerTrait {
         // [Compute] Post mortem effects
         let (next_buff1, next_buff2) = if char1.is_dead() {
             tick += 1;
-            let next_buff1: Buff = Battler::post_mortem(ref char2, ref char1, battle_id, tick);
-            let next_buff2: Buff = Battler::post_mortem(ref char1, ref char2, battle_id, tick);
+            let next_buff1: Buff = Battler::post_mortem(ref char1, ref char2, battle_id, tick);
+            let next_buff2: Buff = Battler::post_mortem(ref char2, ref char1, battle_id, tick);
             (next_buff1, next_buff2)
-        } else {
+        } else if char2.is_dead() {
             tick += 1;
             let next_buff2: Buff = Battler::post_mortem(ref char2, ref char1, battle_id, tick);
             let next_buff1: Buff = Battler::post_mortem(ref char1, ref char2, battle_id, tick);
             (next_buff1, next_buff2)
+        } else {
+            (Zeroable::zero(), Zeroable::zero())
         };
 
         // [Compute] Stop duel is one of the fighter is dead
@@ -154,6 +157,8 @@ mod tests {
 
     use super::{Battler, Character, CharacterTrait, Phase};
 
+    // Constants
+
     #[test]
     fn test_fighter_pumpkin_small() {
         let mut characters: Array<Character> = array![
@@ -163,7 +168,7 @@ mod tests {
             CharacterTrait::from(201, Role::Bomboblin, 1, Item::None),
             CharacterTrait::from(202, Role::Bomboblin, 1, Item::None),
         ];
-        let win = Battler::start(ref characters, ref foes, 0);
+        let win = Battler::start(ref characters, ref foes);
         assert(!win, 'Battler: invalid win status');
     }
 
@@ -176,7 +181,7 @@ mod tests {
             CharacterTrait::from(201, Role::Bomboblin, 1, Item::None),
             CharacterTrait::from(202, Role::Bomboblin, 1, Item::None),
         ];
-        let win = Battler::start(ref characters, ref foes, 0);
+        let win = Battler::start(ref characters, ref foes);
         assert(win, 'Battler: invalid win status');
     }
 
@@ -188,7 +193,7 @@ mod tests {
         let mut foes: Array<Character> = array![
             CharacterTrait::from(201, Role::Bomboblin, 1, Item::None),
         ];
-        let win = Battler::start(ref characters, ref foes, 0);
+        let win = Battler::start(ref characters, ref foes);
         assert(!win, 'Battler: invalid win status');
     }
 
@@ -201,7 +206,7 @@ mod tests {
         let mut foes: Array<Character> = array![
             CharacterTrait::from(201, Role::Torchoblin, 1, Item::None),
         ];
-        let win = Battler::start(ref characters, ref foes, 0);
+        let win = Battler::start(ref characters, ref foes);
         assert(win, 'Battler: invalid win status');
     }
 }

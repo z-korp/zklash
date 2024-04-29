@@ -13,6 +13,7 @@ use zklash::constants;
 use zklash::store::{Store, StoreImpl};
 use zklash::helpers::packer::Packer;
 use zklash::helpers::battler::Battler;
+use zklash::models::squad::{Squad, SquadTrait};
 use zklash::models::shop::{Shop, ShopTrait};
 use zklash::models::character::{Character, CharacterTrait};
 use zklash::types::item::Item;
@@ -26,12 +27,14 @@ struct Team {
     player_id: ContractAddress,
     #[key]
     id: u32,
+    registry_id: u32,
     seed: felt252,
     nonce: felt252,
     gold: u32,
     health: u32,
     level: u8,
-    character_count: u8,
+    character_uuid: u8,
+    size: u8,
     battle_id: u8,
 }
 
@@ -56,12 +59,14 @@ impl TeamImpl of TeamTrait {
         Team {
             player_id,
             id,
+            registry_id: constants::DEFAULT_REGISTRY_ID,
             seed,
             nonce: 0,
             gold: constants::DEFAULT_GOLD,
             health: constants::DEFAULT_HEALTH,
-            level: 0,
-            character_count: 0,
+            level: 1,
+            character_uuid: 0,
+            size: 0,
             battle_id: 0,
         }
     }
@@ -104,8 +109,9 @@ impl TeamImpl of TeamTrait {
         self.gold -= shop.purchase_cost.into();
         // [Effect] Hire Character
         let role: Role = shop.purchase_role(index);
-        self.character_count += 1;
-        let character_id = self.character_count;
+        self.size += 1;
+        self.character_uuid += 1;
+        let character_id = self.character_uuid;
         let character: Character = CharacterTrait::new(self.player_id, self.id, character_id, role);
         character
     }
@@ -124,6 +130,8 @@ impl TeamImpl of TeamTrait {
         assert(role == purchased_role, errors::TEAM_XP_INVALID_ROLE);
         // [Effect] Update Character
         character.xp();
+        // [Effect] Update Team size
+        self.size -= 1;
     }
 
     #[inline(always)]
@@ -134,6 +142,8 @@ impl TeamImpl of TeamTrait {
         self.gold += character.level.into();
         // [Effect] Update Character
         character.nullify();
+        // [Effect] Update Team size
+        self.size -= 1;
     }
 
     #[inline(always)]
@@ -150,16 +160,21 @@ impl TeamImpl of TeamTrait {
     }
 
     #[inline(always)]
-    fn fight(ref self: Team, ref shop: Shop, ref chars: Array<Character>) {
+    fn fight(
+        ref self: Team,
+        ref shop: Shop,
+        ref team_squad: Squad,
+        ref chars: Array<Character>,
+        ref foe_squad: Squad,
+        ref foes: Array<Character>
+    ) {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Not empty
         assert(chars.len() != 0, errors::TEAM_IS_EMPTY);
-        // [Compute] Generate foes according to level
-        let wave: Wave = (self.level + 1).into();
-        let mut foes: Array<Character> = wave.characters();
+        assert(foes.len() != 0, errors::TEAM_IS_EMPTY);
         // [Effect] Fight and manage the win status
-        let win = Battler::start(ref chars, ref foes, self.battle_id,);
+        let win = team_squad.fight(ref chars, ref foe_squad, ref foes);
         if win {
             self.level += 1;
         } else {
@@ -209,12 +224,14 @@ impl ZeroableTeam of core::Zeroable<Team> {
         Team {
             player_id: Zeroable::zero(),
             id: 0,
+            registry_id: 0,
             seed: 0,
             nonce: 0,
             gold: 0,
             health: 0,
             level: 0,
-            character_count: 0,
+            character_uuid: 0,
+            size: 0,
             battle_id: 0,
         }
     }

@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8843f1c51a44a0f941ddcdb769678d, type: 3}
   m_Name: RockS
   m_EditorClassIdentifier: 
-  id: 7
+  type: 4
   title: Rock
   size: 83
   description: Deals +1 damage
-  health: 0
-  attack: 1
-  damage: 0
-  absorb: 0
   save: 0
   durability: 1
   image: {fileID: 21300000, guid: 201887c338347413d866ba4880ec7190, type: 3}

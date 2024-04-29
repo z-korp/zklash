@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8843f1c51a44a0f941ddcdb769678d, type: 3}
   m_Name: PumpkinS
   m_EditorClassIdentifier: 
-  id: 10
+  type: 10
   title: Pumkin
   size: 83
   description: Save you once
-  health: 0
-  attack: 0
-  damage: 0
-  absorb: 0
   save: 1
   durability: 1
   image: {fileID: 21300000, guid: f994e71fd2c3d45a0bc22ef20fd1c7c5, type: 3}

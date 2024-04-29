@@ -59,7 +59,6 @@ public class ItemDraggable : MonoBehaviour
             mob.GetComponent<MobItem>().item = item;
             mob.GetComponent<MobController>().Character.Equip(item.type);
             Destroy(gameObject);
-
         }
         else
         {
@@ -82,5 +81,4 @@ public class ItemDraggable : MonoBehaviour
     {
         canDropItem = false;
     }
-
 }

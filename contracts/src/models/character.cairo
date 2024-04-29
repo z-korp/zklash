@@ -149,7 +149,7 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn talent(ref self: Character, phase: Phase, battle_id: u8, tick: u32) -> (u8, u8, Buff) {
+    fn talent(ref self: Character, phase: Phase, tick: u32) -> (u8, u8, Buff) {
         // [Effect] Update the item's effect
         let role: Role = self.role.into();
         let buff = Buff {
@@ -169,7 +169,7 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn usage(ref self: Character, phase: Phase, battle_id: u8, tick: u32) -> u8 {
+    fn usage(ref self: Character, phase: Phase, tick: u32) -> u8 {
         // [Effect] Update the item's effect
         let item: Item = self.item.into();
         let buff = Buff {

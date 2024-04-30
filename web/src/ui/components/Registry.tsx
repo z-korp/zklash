@@ -1,11 +1,7 @@
 import * as React from "react";
-
-import { Entity } from "@dojoengine/recs";
-
 import {
   Carousel,
   CarouselContent,
-  CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from "@/ui/elements/carousel";

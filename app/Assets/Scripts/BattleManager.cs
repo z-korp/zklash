@@ -159,6 +159,7 @@ public class BattleManager : MonoBehaviour
             if (team1.Count == 0)
             {
                 Debug.Log("Team 1 has lost");
+                CameraMovement.instance.MoveCameraToShop();
                 yield break;
             }
 
@@ -176,6 +177,7 @@ public class BattleManager : MonoBehaviour
             if (team2.Count == 0)
             {
                 Debug.Log("Team 2 has lost");
+                CameraMovement.instance.MoveCameraToShop();
                 yield break;
             }
 

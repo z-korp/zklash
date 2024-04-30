@@ -38,10 +38,10 @@ impl PlayerImpl of PlayerTrait {
     }
 
     #[inline(always)]
-    fn spawn_team(ref self: Player, salt: felt252) -> Team {
+    fn spawn_team(ref self: Player) -> Team {
         // [Return] Team
         self.team_count += 1;
-        let team = TeamTrait::new(self.id, self.team_count, salt);
+        let team = TeamTrait::new(self.id, self.team_count);
         team
     }
 }

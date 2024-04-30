@@ -131,7 +131,7 @@ mod battle {
 
             // [Check] Player exists
             let caller = get_caller_address();
-            let player = store.player(caller.into());
+            let mut player = store.player(caller.into());
             player.assert_exists();
 
             // [Check] Team exists
@@ -182,14 +182,14 @@ mod battle {
 
             // [Effect] Fight and update players
             let mut foes = store.characters(foe_squad);
-            team
+            let won = team
                 .fight(
                     ref shop, ref team_squad, ref characters, ref foe_squad, ref foes, registry.seed
                 );
 
             // [Effect] Update player, league and slot
             let league_id = LeagueTrait::compute_id(team_squad.rating);
-            let mut league = store.league(0, league_id);
+            let mut league = store.league(registry.id, league_id);
             let slot = registry.subscribe(ref league, ref team_squad);
             store.set_league(league);
             store.set_slot(slot);
@@ -197,7 +197,7 @@ mod battle {
 
             // [Effect] Update Foe, league and slot
             let league_id = LeagueTrait::compute_id(foe_squad.rating);
-            let mut league = store.league(0, league_id);
+            let mut league = store.league(registry.id, league_id);
             let slot = registry.subscribe(ref league, ref foe_squad);
             store.set_league(league);
             store.set_slot(slot);
@@ -211,6 +211,12 @@ mod battle {
 
             // [Effect] Update Registry
             store.set_registry(registry);
+
+            // [Effect] Update Player win count if won
+            if won {
+                player.win_count += 1;
+                store.set_player(player);
+            }
         }
     }
 }

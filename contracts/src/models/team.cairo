@@ -44,7 +44,9 @@ mod errors {
     const TEAM_NOT_AFFORDABLE: felt252 = 'Team: not affordable';
     const TEAM_IS_DEFEATED: felt252 = 'Team: is defeated';
     const TEAM_XP_INVALID_ROLE: felt252 = 'Team: invalid role for xp';
-    const TEAM_CANNOT_FIGHT: felt252 = 'Team: cannot fight';
+    const TEAM_ALREADY_WON: felt252 = 'Team: has already won';
+    const TEAM_INVALID_TEAM: felt252 = 'Team: invalid team';
+    const TEAM_INVALID_ROLE: felt252 = 'Team: invalid role';
 }
 
 #[generate_trait]
@@ -118,7 +120,19 @@ impl TeamImpl of TeamTrait {
         assert(role == purchased_role, errors::TEAM_XP_INVALID_ROLE);
         // [Effect] Update Character
         character.xp();
-        // [Effect] Update Team size
+    }
+
+    #[inline(always)]
+    fn merge(ref self: Team, ref from: Character, ref to: Character) {
+        // [Check] Not defeated
+        self.assert_not_defeated();
+        // [Check] Roles match
+        let from_role: Role = from.role.into();
+        let to_role: Role = to.role.into();
+        assert(from_role == to_role, errors::TEAM_XP_INVALID_ROLE);
+        // [Effect] Update Character
+        from.merge(ref to);
+        // [Effect] Update team size
         self.size -= 1;
     }
 
@@ -155,7 +169,7 @@ impl TeamImpl of TeamTrait {
         ref foe_squad: Squad,
         ref foes: Array<Character>,
         seed: felt252,
-    ) {
+    ) -> bool {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Not empty
@@ -167,7 +181,7 @@ impl TeamImpl of TeamTrait {
             self.level += 1;
         } else {
             self.health -= 1;
-        }
+        };
         // [Effect] Reset gold
         self.gold = constants::DEFAULT_GOLD;
         // [Effect] Reroll Shop
@@ -176,6 +190,13 @@ impl TeamImpl of TeamTrait {
         self.foe_squad_id = foe_squad.id;
         // [Effect] Increase battle id
         self.battle_id += 1;
+        // [Return] Won status
+        if self.level == constants::TEAM_MAX_LEVEL {
+            // [Effect] Game over
+            self.health = 0;
+            return true;
+        };
+        false
     }
 }
 
@@ -199,11 +220,6 @@ impl TeamAssert of AssertTrait {
     #[inline(always)]
     fn assert_not_defeated(self: Team) {
         assert(self.health > 0, errors::TEAM_IS_DEFEATED);
-    }
-
-    #[inline(always)]
-    fn assert_can_fight(self: Team) {
-        assert(self.level < 10, errors::TEAM_CANNOT_FIGHT);
     }
 }
 

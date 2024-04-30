@@ -133,7 +133,7 @@ mod market {
             let mut shop = store.shop(player.id, team_id);
             shop.assert_exists();
 
-            // [Effect] Purchase item
+            // [Effect] Hide mob
             let character = team.hire(ref shop, index);
 
             // [Effect] Update character
@@ -173,7 +173,7 @@ mod market {
             let mut character = store.character(player.id, team_id, character_id);
             character.assert_exists();
 
-            // [Effect] Purchase item
+            // [Effect] Purchase mob
             team.xp(ref shop, ref character, index);
 
             // [Effect] Update character
@@ -198,7 +198,7 @@ mod market {
             player.assert_exists();
 
             // [Check] Team exists
-            let team = store.team(player.id, team_id);
+            let mut team = store.team(player.id, team_id);
             team.assert_exists();
 
             // [Check] From Character exists
@@ -209,12 +209,15 @@ mod market {
             let mut to = store.character(player.id, team_id, to_id);
             to.assert_exists();
 
-            // [Effect] Purchase item
-            from.merge(ref to);
+            // [Effect] Merge characters
+            team.merge(ref from, ref to);
 
             // [Effect] Update characters
             store.set_character(from);
             store.set_character(to);
+
+            // [Effect] Update team
+            store.set_team(team);
         }
 
         fn sell(self: @ContractState, world: IWorldDispatcher, team_id: u32, character_id: u8,) {

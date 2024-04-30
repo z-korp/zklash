@@ -1,0 +1,55 @@
+kind = "DojoModel"
+class_hash = "0x2e5c290f97c9ef2beec6812dfa0fb6a02295381d4658aa5ca8bc26421ca493a"
+original_class_hash = "0x2e5c290f97c9ef2beec6812dfa0fb6a02295381d4658aa5ca8bc26421ca493a"
+abi = "manifests/dev/abis/base/models/zklash_models_foe_foe.json"
+name = "zklash::models::foe::foe"
+
+[[members]]
+name = "registry_id"
+type = "u32"
+key = true
+
+[[members]]
+name = "squad_id"
+type = "u32"
+key = true
+
+[[members]]
+name = "id"
+type = "u8"
+key = true
+
+[[members]]
+name = "role"
+type = "u8"
+key = false
+
+[[members]]
+name = "item"
+type = "u8"
+key = false
+
+[[members]]
+name = "level"
+type = "u8"
+key = false
+
+[[members]]
+name = "health"
+type = "u8"
+key = false
+
+[[members]]
+name = "attack"
+type = "u8"
+key = false
+
+[[members]]
+name = "absorb"
+type = "u8"
+key = false
+
+[[members]]
+name = "stun"
+type = "u8"
+key = false

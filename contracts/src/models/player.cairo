@@ -18,6 +18,7 @@ struct Player {
     id: ContractAddress,
     name: felt252,
     team_count: u32,
+    win_count: u32,
 }
 
 #[generate_trait]
@@ -28,7 +29,7 @@ impl PlayerImpl of PlayerTrait {
         assert(name != 0, errors::PLAYER_INVALID_NAME);
 
         // [Return] Player
-        Player { id, name, team_count: 0, }
+        Player { id, name, team_count: 0, win_count: 0 }
     }
 
     #[inline(always)]
@@ -62,7 +63,7 @@ impl PlayerAssert of AssertTrait {
 impl ZeroablePlayerImpl of core::Zeroable<Player> {
     #[inline(always)]
     fn zero() -> Player {
-        Player { id: Zeroable::zero(), name: 0, team_count: 0, }
+        Player { id: Zeroable::zero(), name: 0, team_count: 0, win_count: 0 }
     }
 
     #[inline(always)]

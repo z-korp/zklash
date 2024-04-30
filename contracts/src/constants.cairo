@@ -30,6 +30,7 @@ const DEFAULT_SHOP_PURCHASE_COST: u8 = 3;
 const DEFAULT_SHOP_REROLL_COST: u8 = 1;
 const DEFAULT_ITEM_COUNT: u8 = 1;
 const DEFAULT_ROLE_COUNT: u8 = 3;
+const TEAM_MAX_LEVEL: u8 = 11;
 
 // Bitmap
 

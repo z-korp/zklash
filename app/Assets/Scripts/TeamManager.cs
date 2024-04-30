@@ -26,6 +26,10 @@ public class TeamManager : MonoBehaviour
 
     public List<Transform> targetsTeam;
 
+    public List<Transform> targetsShopTeam;
+
+    private Vector3 offset = new(0, 0.5f, 0);
+
     void Awake()
     {
         if (instance != null)
@@ -54,6 +58,27 @@ public class TeamManager : MonoBehaviour
             }
         }
     }
+
+    public void TPTeamToShop()
+    {
+        for (int i = 0; i < TeamSpots.Length; i++)
+        {
+            if (TeamSpots[i].mob != null)
+            {
+                // Hide team still alive
+                HideXpCanvas(TeamSpots[i].mob);
+                TeamSpots[i].mob.SetActive(false);
+
+                // Move Team to shop
+                TeamSpots[i].mob.transform.position = targetsShopTeam[i].position + offset;
+                HideXpCanvas(TeamSpots[i].mob, false);
+
+                // Show team again
+                TeamSpots[i].mob.SetActive(true);
+            }
+        }
+    }
+
 
     public GameObject GetMemberFromTeam(int index)
     {
@@ -97,7 +122,7 @@ public class TeamManager : MonoBehaviour
         return TeamSpots[index].Role; // Return the entity contained in the spot
     }
 
-    private void HideXpCanvas(GameObject go)
+    private void HideXpCanvas(GameObject go, bool hide = true)
     {
         Transform canvasXpTransform = go.transform.Find("CanvasXP"); // Adjust path if nested deeper
         if (canvasXpTransform != null)
@@ -105,7 +130,15 @@ public class TeamManager : MonoBehaviour
             Canvas canvas = canvasXpTransform.GetComponent<Canvas>();
             if (canvas != null)
             {
-                canvas.enabled = false; // Disable rendering for this canvas
+                if (hide)
+                {
+                    canvas.enabled = false; // Disable rendering for this canvas
+                }
+                else
+                {
+                    canvas.enabled = true;
+                }
+
             }
             else
             {

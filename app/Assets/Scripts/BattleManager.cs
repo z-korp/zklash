@@ -160,6 +160,8 @@ public class BattleManager : MonoBehaviour
             {
                 Debug.Log("Team 1 has lost");
                 CameraMovement.instance.MoveCameraToShop();
+                TeamManager.instance.TPTeamToShop();
+                CanvasManager.instance.ToggleCanvases();
                 yield break;
             }
 
@@ -178,6 +180,8 @@ public class BattleManager : MonoBehaviour
             {
                 Debug.Log("Team 2 has lost");
                 CameraMovement.instance.MoveCameraToShop();
+                TeamManager.instance.TPTeamToShop();
+                CanvasManager.instance.ToggleCanvases();
                 yield break;
             }
 

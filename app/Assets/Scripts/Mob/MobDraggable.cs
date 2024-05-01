@@ -159,7 +159,7 @@ public class MobDraggable : MonoBehaviour
             if (isFromShop)
             {
                 isFromShop = false;
-                ContractActions.instance.TriggerHire((uint)index);
+                //ContractActions.instance.TriggerHire((uint)index);
             }
             else
             {

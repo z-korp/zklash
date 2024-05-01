@@ -27,9 +27,6 @@ public class Team : ModelInstance
     [ModelField("character_uuid")]
     public byte character_uuid;
 
-    [ModelField("size")]
-    public byte size;
-
     [ModelField("battle_id")]
     public byte battle_id;
 
@@ -38,7 +35,7 @@ public class Team : ModelInstance
 
     public override string ToString()
     {
-        return $"Player ID: {player_id.Hex()}, Gold: {gold}, Level: {level} Health: {health} Size: {size} Battle ID: {battle_id} Foe Squad ID: {foe_squad_id}";
+        return $"Player ID: {player_id.Hex()}, Gold: {gold}, Level: {level} Health: {health} UUID: {character_uuid} Battle ID: {battle_id} Foe Squad ID: {foe_squad_id}";
     }
 
     // Start is called before the first frame update

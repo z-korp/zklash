@@ -49,6 +49,7 @@ public class CameraMovement : MonoBehaviour
             yield return null;
         }
         moveToShop = false;
+        CanvasManager.instance.ToggleCanvasInterStep();
     }
 
     public void MoveCameraToFight()

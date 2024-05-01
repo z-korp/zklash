@@ -264,6 +264,7 @@ public class BattleManager : MonoBehaviour
                 TeamManager.instance.ResetStatCharacter();
                 TeamManager.instance.TPTeamToShop();
                 CanvasManager.instance.ToggleCanvases();
+                CanvasManager.instance.ToggleCanvasInterStep(false);
                 isBattleStarted = false;
                 yield break;
             }
@@ -286,6 +287,7 @@ public class BattleManager : MonoBehaviour
                 TeamManager.instance.ResetStatCharacter();
                 TeamManager.instance.TPTeamToShop();
                 CanvasManager.instance.ToggleCanvases();
+                CanvasManager.instance.ToggleCanvasInterStep(true);
                 isBattleStarted = false;
                 yield break;
             }

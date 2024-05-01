@@ -6,6 +6,7 @@ public class CanvasManager : MonoBehaviour
 
     public GameObject canvasInfo;
     public GameObject canvasShopInfo;
+    public GameObject canvasInterStep;
 
     void Awake()
     {
@@ -25,6 +26,12 @@ public class CanvasManager : MonoBehaviour
     public void ToggleCanvasShopInfo()
     {
         canvasShopInfo.SetActive(!canvasShopInfo.activeSelf);
+    }
+
+    public void ToggleCanvasInterStep(bool victory = true)
+    {
+        canvasInterStep.SetActive(!canvasInterStep.activeSelf);
+        canvasInterStep.GetComponent<CanvasInterStep>().ToggleRibbonVictoryDefeat(victory);
     }
 
     public void ToggleCanvases()

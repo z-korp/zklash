@@ -14,8 +14,10 @@ public class ClickButtonFight : MonoBehaviour
         canvasInfo.SetActive(!canvasInfo.activeSelf);
         canvasShopInfo.SetActive(!canvasShopInfo.activeSelf);
     }
+
     public void OnClickFight()
     {
+        //ContractActions.instance.TriggerStartBattle();
         CameraMovement.instance.MoveCameraToFight();
         ToggleCanvases();
         TeamManager.instance.MoveTeam();
@@ -32,7 +34,7 @@ public class ClickButtonFight : MonoBehaviour
             // Sorting the dictionary by descending key and converting it to a list of GameObjects
             BattleManager.instance.allies = reversedTeamSpots
                 .Where(spot => !spot.IsAvailable)  // Filter spots where IsAvailable is false
-                .Select(spot => spot.mob)  // Select the mob GameObject from each spot
+                .Select(spot => spot.Mob)  // Select the mob GameObject from each spot
                 .ToList();
 
             // Now allies is sorted by the descending order of keys from the original dictionary

@@ -15,9 +15,16 @@ public class NewGame : MonoBehaviour
         if (GameManager.Instance != null)
         {
             string playerName = inputFieldTMP.text;
-            GameManager.Instance.TriggerCreatePlayAsync(playerName);
-
-            SceneManager.LoadScene("Shop");
+            StartCoroutine(CreateSpawnAndLoadScene(playerName));
         }
+    }
+
+    private IEnumerator CreateSpawnAndLoadScene(string playerName)
+    {
+        // Start the game creation process using the GameManager's TriggerCreatePlay coroutine
+        yield return StartCoroutine(GameManager.Instance.TriggerCreateAndSpawn(playerName));
+
+        // After creation is complete, load the next scene
+        SceneManager.LoadScene("Shop");
     }
 }

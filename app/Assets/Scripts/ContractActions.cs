@@ -7,10 +7,12 @@ using System.Text;
 using System;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class ContractActions : MonoBehaviour
 {
     public static ContractActions instance;
+    private List<FieldElement> transactionHashes = new List<FieldElement>();
 
     public EventsFetcher eventsFetcher;
 
@@ -45,21 +47,113 @@ public class ContractActions : MonoBehaviour
         }
     }
 
-    public async void TriggerHire(uint index)
+    public async void TriggerEquip(byte character_id, uint index)
     {
-        Debug.Log("TriggerHire");
-        Debug.Log("GameManager: " + gameManager);
-        Debug.Log("BurnerManager: " + gameManager.burnerManager);
+        Debug.Log("TriggerEquip");
         Account currentBurner = gameManager.burnerManager.CurrentBurner;
 
         var playerEntity = PlayerData.Instance.playerEntity;
         var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
         Debug.Log($"Player team_id: {player.team_count}");
 
-        Debug.Log($"Current Burner: {currentBurner.Address.Hex()}");
-        Debug.Log($"dojoConfig: {dojoConfig.worldAddress}");
+        var txHash = await marketSystem.Equip(currentBurner, dojoConfig.worldAddress, player.team_count, character_id, index);
+        Debug.Log($"[Equip] Transaction Hash: {txHash.Hex()}");
+
+        transactionHashes.Add(txHash);
+    }
+
+    public async void TriggerHire(uint index)
+    {
+        Debug.Log("TriggerHire");
+        Account currentBurner = gameManager.burnerManager.CurrentBurner;
+
+        var playerEntity = PlayerData.Instance.playerEntity;
+        var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
+        Debug.Log($"Player team_id: {player.team_count}");
+
         var txHash = await marketSystem.Hire(currentBurner, dojoConfig.worldAddress, player.team_count, index);
         Debug.Log($"[Hire] Transaction Hash: {txHash.Hex()}");
+
+        transactionHashes.Add(txHash);
+    }
+
+    public async void TriggerReroll()
+    {
+        Debug.Log("TriggerReroll");
+        Account currentBurner = gameManager.burnerManager.CurrentBurner;
+
+        var playerEntity = PlayerData.Instance.playerEntity;
+        var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
+        Debug.Log($"Player team_id: {player.team_count}");
+
+        var txHash = await marketSystem.Reroll(currentBurner, dojoConfig.worldAddress, player.team_count);
+        Debug.Log($"[Reroll] Transaction Hash: {txHash.Hex()}");
+
+        transactionHashes.Add(txHash);
+    }
+
+    public async void TriggerMerge(uint from_id, uint to_id)
+    {
+        Debug.Log("TriggerMerge");
+        Account currentBurner = gameManager.burnerManager.CurrentBurner;
+
+        var playerEntity = PlayerData.Instance.playerEntity;
+        var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
+        Debug.Log($"Player team_id: {player.team_count}");
+
+        var txHash = await marketSystem.Merge(currentBurner, dojoConfig.worldAddress, player.team_count, from_id, to_id);
+        Debug.Log($"[Merge] Transaction Hash: {txHash.Hex()}");
+
+        transactionHashes.Add(txHash);
+    }
+
+    public async void TriggerMergeFromShop(uint character_id, uint index)
+    {
+        Debug.Log("TriggerMergeFromShop");
+        Account currentBurner = gameManager.burnerManager.CurrentBurner;
+
+        var playerEntity = PlayerData.Instance.playerEntity;
+        var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
+        Debug.Log($"Player team_id: {player.team_count}");
+
+        var txHash = await marketSystem.MergeFromShop(currentBurner, dojoConfig.worldAddress, player.team_count, character_id, index);
+        Debug.Log($"[MergeFromShop] Transaction Hash: {txHash.Hex()}");
+
+        transactionHashes.Add(txHash);
+    }
+
+    public async void TriggerSell(uint character_id)
+    {
+        Debug.Log("TriggerSell");
+        Account currentBurner = gameManager.burnerManager.CurrentBurner;
+
+        var playerEntity = PlayerData.Instance.playerEntity;
+        var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
+        Debug.Log($"Player team_id: {player.team_count}");
+
+        var txHash = await marketSystem.Sell(currentBurner, dojoConfig.worldAddress, player.team_count, character_id);
+        Debug.Log($"[Sell] Transaction Hash: {txHash.Hex()}");
+
+        transactionHashes.Add(txHash);
+    }
+
+    public IEnumerator WaitForAllTransactionsCoroutine()
+    {
+        yield return new WaitUntil(() => WaitForAllTransactions().IsCompleted);
+    }
+
+    public async Task WaitForAllTransactions()
+    {
+        Debug.Log("Waiting for all transactions to complete...");
+
+        // Wait for all transaction hashes
+        foreach (var txHash in transactionHashes)
+        {
+            await gameManager.provider.WaitForTransaction(txHash);
+        }
+
+        Debug.Log("All transactions are confirmed.");
+        transactionHashes.Clear(); // Clear the list after all transactions are processed
     }
 
     public static string RemoveLeadingZerosFromHex(string hex)

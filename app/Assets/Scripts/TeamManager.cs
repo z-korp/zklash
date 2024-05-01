@@ -8,13 +8,15 @@ public class TeamSpot
 {
     public bool IsAvailable;
     public Role Role;
-    public GameObject mob;
+    public GameObject Mob;
+    public string Entity;
 
     public TeamSpot(bool isAvailable, Role role = Role.None)
     {
         IsAvailable = isAvailable;
         Role = role;
-        mob = null;
+        Mob = null;
+        Entity = "";
     }
 }
 
@@ -46,18 +48,35 @@ public class TeamManager : MonoBehaviour
     {
         for (int i = 0; i < TeamSpots.Length; i++)
         {
-            if (TeamSpots[i].mob != null)
+            if (TeamSpots[i].Mob != null)
             {
-                HideXpCanvas(TeamSpots[i].mob);
-                TeamSpots[i].mob.GetComponent<MobMovement>().speed = 6;
-                TeamSpots[i].mob.GetComponent<MobMovement>().Move(targetsTeam[i]);
+                HideXpCanvas(TeamSpots[i].Mob);
+                TeamSpots[i].Mob.GetComponent<MobMovement>().speed = 6;
+                TeamSpots[i].Mob.GetComponent<MobMovement>().Move(targetsTeam[i]);
             }
         }
     }
 
     public GameObject GetMemberFromTeam(int index)
     {
-        return TeamSpots[index].mob;
+        return TeamSpots[index].Mob;
+    }
+
+    public string GetEntityFromTeam(int index)
+    {
+        return TeamSpots[index].Entity;
+    }
+
+    public string GetEntityFromTeam(GameObject mob)
+    {
+        foreach (var spot in TeamSpots)
+        {
+            if (spot.Mob == mob)
+            {
+                return spot.Entity;
+            }
+        }
+        return "";
     }
 
     // Call this method to fill a spot with an entity
@@ -69,7 +88,7 @@ public class TeamManager : MonoBehaviour
         }
 
         TeamSpots[spotIndex] = new TeamSpot(false, _role); // Fill the spot
-        TeamSpots[spotIndex].mob = mob;
+        TeamSpots[spotIndex].Mob = mob;
         Debug.Log($"Spot {spotIndex} filled with entity: {_role}");
         return true;
     }
@@ -126,6 +145,18 @@ public class TeamManager : MonoBehaviour
             {
                 spot.Role = _role; // Assign the entity to this spot
                 Debug.Log($"Spot updated with entity: {_role}");
+                return; // Exit the method after updating the first matching spot
+            }
+        }
+    }
+
+    public void UpdateMissingEntity(string _entity)
+    {
+        foreach (var spot in TeamSpots)
+        {
+            if (!spot.IsAvailable && spot.Entity == "")
+            {
+                spot.Entity = _entity;
                 return; // Exit the method after updating the first matching spot
             }
         }

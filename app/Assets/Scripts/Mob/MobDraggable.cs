@@ -111,6 +111,39 @@ public class MobDraggable : MonoBehaviour
 
             if (oldLevel != newLevel)
                 LevelUpAnimation(mobToUpdate);
+
+            // Merge in sc:
+            if (isFromShop)
+            {
+                string entity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+                if (entity == "")
+                {
+                    Debug.Log("Entity not found.");
+                    return;
+                }
+                Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
+                ContractActions.instance.TriggerMergeFromShop(character.id, (uint)index);
+            }
+            else
+            {
+                string fromEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+                if (fromEntity == "")
+                {
+                    Debug.Log("Entity not found.");
+                    return;
+                }
+                Character from = GameManager.Instance.worldManager.Entity(fromEntity).GetComponent<Character>();
+
+                string toEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+                if (toEntity == "")
+                {
+                    Debug.Log("Entity not found.");
+                    return;
+                }
+                Character to = GameManager.Instance.worldManager.Entity(toEntity).GetComponent<Character>();
+
+                ContractActions.instance.TriggerMerge(from.id, to.id);
+            }
         }
         else
         {
@@ -126,7 +159,7 @@ public class MobDraggable : MonoBehaviour
             if (isFromShop)
             {
                 isFromShop = false;
-                // ContractActions.instance.TriggerHire((uint)index);
+                ContractActions.instance.TriggerHire((uint)index);
             }
             else
             {

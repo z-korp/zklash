@@ -15,6 +15,10 @@ namespace zKlash.Game
 
         private int _xp;
         private int _lvl;
+
+        private Role _role;
+        private Item _item;
+
         private const int MaxLevel = 3;  // Max level limit
 
         public int XP
@@ -25,6 +29,20 @@ namespace zKlash.Game
                 _xp = value;
                 CheckLevelUp();
             }
+        }
+
+        public Role RoleInterface
+        {
+            get => _role;
+            private set => _role = value;
+
+        }
+
+        public Item ItemInterface
+        {
+            get => _item;
+            private set => _item = value;
+
         }
 
         public int Level
@@ -70,18 +88,21 @@ namespace zKlash.Game
         public IRole Role { get; private set; }
         public IItem Item { get; private set; }
 
-        public Character(Role roleType, int lvl, ItemEnum item)
+        public Character(Role roleType, int lvl, ItemEnum item, int xp = 0)
         {
             Item = ItemFactory.GetItem(ItemEnum.None);
             Role = RoleFactory.GetRole(roleType);
 
             _lvl = lvl;
-            _xp = 0;
+            _xp = xp;
 
             _health = Role.Health(Phase.OnHire, lvl);
             _attack = Role.Attack(Phase.OnHire, lvl);
             _absorb = Role.Absorb(Phase.OnHire, lvl);
             _stun = 0;
+
+            _role = roleType;
+            _item = item;
 
             Equip(item);
         }

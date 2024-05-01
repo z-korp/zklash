@@ -12,9 +12,9 @@ public class MobController : MonoBehaviour
     {
     }
 
-    public void ConfigureCharacter(Role role, int level, Item item)
+    public void ConfigureCharacter(Role role, int level, Item item, int xp = 0)
     {
-        Character = new GameCharacter(role, level, item);
+        Character = new GameCharacter(role, level, item, xp);
     }
 
 
@@ -22,4 +22,5 @@ public class MobController : MonoBehaviour
     {
         Character = character;
     }
+
 }

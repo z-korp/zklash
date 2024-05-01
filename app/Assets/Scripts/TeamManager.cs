@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using zKlash.Game.Items;
 using zKlash.Game.Roles;
+using GameCharacter = zKlash.Game.Character;
 
 [System.Serializable] // Makes the struct visible in the Unity Inspector, allowing for easier debugging and setup
 public class TeamSpot
@@ -79,6 +81,24 @@ public class TeamManager : MonoBehaviour
                 TeamSpots[i].Mob.SetActive(true);
             }
         }
+    }
+
+    public void ResetStatCharacter()
+    {
+        for (int i = 0; i < TeamSpots.Length; i++)
+        {
+            if (TeamSpots[i].Mob != null)
+            {
+                MobController mobController = TeamSpots[i].Mob.GetComponent<MobController>();
+                if (mobController != null && mobController.Character != null)
+                {
+                    GameCharacter character = mobController.Character;
+                    mobController.ConfigureCharacter(character.RoleInterface, character.Level, character.ItemInterface, character.XP);
+                }
+
+            }
+        }
+
     }
 
 

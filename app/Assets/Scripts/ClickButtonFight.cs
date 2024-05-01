@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using System.Linq;
 using System;
 
@@ -12,6 +10,9 @@ public class ClickButtonFight : MonoBehaviour
         CameraMovement.instance.MoveCameraToFight();
         CanvasManager.instance.ToggleCanvases();
         TeamManager.instance.MoveTeam();
+
+        // Empty allies list from previous battle
+        BattleManager.instance.allies.Clear();
 
         if (BattleManager.instance.allies.Count == 0)
         {
@@ -30,10 +31,9 @@ public class ClickButtonFight : MonoBehaviour
 
             // Now allies is sorted by the descending order of keys from the original dictionary
             // You can debug or work with 'allies' list now
-            foreach (var ally in BattleManager.instance.allies)
-            {
-                Debug.Log(ally.name);
-            }
         }
+
+        BattleManager.instance.InstanciatePlayerTeam();
+        BattleManager.instance.InstantiateEnemyTeam();
     }
 }

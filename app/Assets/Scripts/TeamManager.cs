@@ -65,18 +65,18 @@ public class TeamManager : MonoBehaviour
     {
         for (int i = 0; i < TeamSpots.Length; i++)
         {
-            if (TeamSpots[i].mob != null)
+            if (TeamSpots[i].Mob != null)
             {
                 // Hide team still alive
-                HideXpCanvas(TeamSpots[i].mob);
-                TeamSpots[i].mob.SetActive(false);
+                HideXpCanvas(TeamSpots[i].Mob);
+                TeamSpots[i].Mob.SetActive(false);
 
                 // Move Team to shop
-                TeamSpots[i].mob.transform.position = targetsShopTeam[i].position + offset;
-                HideXpCanvas(TeamSpots[i].mob, false);
+                TeamSpots[i].Mob.transform.position = targetsShopTeam[i].position + offset;
+                HideXpCanvas(TeamSpots[i].Mob, false);
 
                 // Show team again
-                TeamSpots[i].mob.SetActive(true);
+                TeamSpots[i].Mob.SetActive(true);
             }
         }
     }

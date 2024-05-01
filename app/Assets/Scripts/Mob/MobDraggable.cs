@@ -94,6 +94,8 @@ public class MobDraggable : MonoBehaviour
             return;
         }
 
+        uint teamId = PlayerData.Instance.GetTeamId();
+
         // Manage the merge case
         if (TeamManager.instance.RoleAtIndex(zoneIndex) == gameObject.GetComponent<MobController>().Character.Role.GetRole)
         {
@@ -122,7 +124,8 @@ public class MobDraggable : MonoBehaviour
                     return;
                 }
                 Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
-                ContractActions.instance.TriggerMergeFromShop(character.id, (uint)index);
+                //ContractActions.instance.TriggerMergeFromShop(character.id, (uint)index);
+                StartCoroutine(TxCoroutines.Instance.ExecuteMergeFromShop(teamId, character.id, (uint)index));
             }
             else
             {
@@ -142,7 +145,8 @@ public class MobDraggable : MonoBehaviour
                 }
                 Character to = GameManager.Instance.worldManager.Entity(toEntity).GetComponent<Character>();
 
-                ContractActions.instance.TriggerMerge(from.id, to.id);
+                //ContractActions.instance.TriggerMerge(from.id, to.id);
+                StartCoroutine(TxCoroutines.Instance.ExecuteMerge(teamId, from.id, to.id));
             }
         }
         else
@@ -159,7 +163,8 @@ public class MobDraggable : MonoBehaviour
             if (isFromShop)
             {
                 isFromShop = false;
-                ContractActions.instance.TriggerHire((uint)index);
+                //ContractActions.instance.TriggerHire((uint)index);
+                StartCoroutine(TxCoroutines.Instance.ExecuteHire(teamId, (uint)index));
             }
             else
             {

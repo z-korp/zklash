@@ -98,4 +98,15 @@ public class PlayerData : MonoBehaviour
 
         return roleList.ToArray();
     }
+
+    public uint GetTeamId()
+    {
+        if (string.IsNullOrEmpty(teamEntity))
+        {
+            Debug.LogError("Team entity not set");
+            return 0;
+        }
+        var team = GameManager.Instance.worldManager.Entity(teamEntity).GetComponent<Team>();
+        return team.id;
+    }
 }

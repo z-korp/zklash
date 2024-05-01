@@ -67,7 +67,9 @@ public class ItemDraggable : MonoBehaviour
                 return;
             }
             Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
-            ContractActions.instance.TriggerEquip(character.id, (uint)index);
+            //ContractActions.instance.TriggerEquip(character.id, (uint)index);
+            uint teamId = PlayerData.Instance.GetTeamId();
+            StartCoroutine(TxCoroutines.Instance.ExecuteEquip(teamId, character.id, (uint)index));
 
             Destroy(gameObject);
         }

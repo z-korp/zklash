@@ -11,9 +11,9 @@ public class TxCoroutines : MonoBehaviour
 {
     public static TxCoroutines Instance { get; private set; }
 
-    public AccountSystem accountSystem;
-    public MarketSystem marketSystem;
-    public BattleSystem battleSystem;
+    [SerializeField] AccountSystem accountSystem;
+    [SerializeField] MarketSystem marketSystem;
+    [SerializeField] BattleSystem battleSystem;
 
     void Awake()
     {
@@ -85,7 +85,7 @@ public class TxCoroutines : MonoBehaviour
     // Account System
     public IEnumerator ExecuteCreateAndSpawn(string name)
     {
-        Debug.Log("ExecuteCreateAndSpawn");
+        Debug.Log("[[[[[[[[[[[  ExecuteCreateAndSpawn  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
         var nameHex = StringToHexString(name);
@@ -102,7 +102,7 @@ public class TxCoroutines : MonoBehaviour
     // Market System
     public IEnumerator ExecuteEquip(uint team_id, byte character_id, uint index)
     {
-        Debug.Log("ExecuteEquip");
+        Debug.Log("[[[[[[[[[[[  ExecuteEquip  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
@@ -118,7 +118,7 @@ public class TxCoroutines : MonoBehaviour
 
     public IEnumerator ExecuteHire(uint team_id, uint index)
     {
-        Debug.Log("ExecuteHire");
+        Debug.Log("[[[[[[[[[[[  ExecuteHire  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
@@ -134,7 +134,7 @@ public class TxCoroutines : MonoBehaviour
 
     public IEnumerator ExecuteReroll(uint team_id)
     {
-        Debug.Log("ExecuteReroll");
+        Debug.Log("[[[[[[[[[[[  ExecuteReroll  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
@@ -150,7 +150,7 @@ public class TxCoroutines : MonoBehaviour
 
     public IEnumerator ExecuteMerge(uint team_id, uint from_id, uint to_id)
     {
-        Debug.Log("ExecuteMerge");
+        Debug.Log("[[[[[[[[[[[  ExecuteMerge  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
@@ -166,7 +166,7 @@ public class TxCoroutines : MonoBehaviour
 
     public IEnumerator ExecuteMergeFromShop(uint team_id, uint character_id, uint index)
     {
-        Debug.Log("ExecuteMergeFromShop");
+        Debug.Log("[[[[[[[[[[[  ExecuteMergeFromShop  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
@@ -182,7 +182,7 @@ public class TxCoroutines : MonoBehaviour
 
     public IEnumerator ExecuteSell(uint team_id, uint character_id)
     {
-        Debug.Log("ExecuteSell");
+        Debug.Log("[[[[[[[[[[[  ExecuteSell  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
@@ -199,7 +199,7 @@ public class TxCoroutines : MonoBehaviour
     // Battle System
     public IEnumerator ExecuteStartBattle(uint team_id, uint order)
     {
-        Debug.Log("ExecuteStartBattle");
+        Debug.Log("[[[[[[[[[[[  ExecuteStartBattle  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 

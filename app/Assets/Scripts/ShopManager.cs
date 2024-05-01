@@ -65,6 +65,8 @@ public class ShopManager : MonoBehaviour
 
     public void Reroll()
     {
+        uint teamId = PlayerData.Instance.GetTeamId();
+        StartCoroutine(TxCoroutines.Instance.ExecuteReroll(teamId));
         isShopOpen = false;
     }
 

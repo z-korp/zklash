@@ -15,8 +15,11 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         Debug.Log("En fait non!");
     }
-    public void OnClickSell(uint character_id)
+
+    public void OnClickSell()
     {
-        //ContractActions.instance.TriggerSell(character_id);
+        uint teamId = PlayerData.Instance.GetTeamId();
+        uint character_id = 0; // TBD
+        StartCoroutine(TxCoroutines.Instance.ExecuteSell(teamId, character_id));
     }
 }

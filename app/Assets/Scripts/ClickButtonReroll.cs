@@ -8,13 +8,8 @@ public class ClickButtonReroll : MonoBehaviour
 {
     public void OnClickReroll()
     {
-        if (ContractActions.instance != null)
-        {
-            StartCoroutine(ContractActions.instance.WaitForAllTransactionsCoroutine());
-        }
-        else
-        {
-            Debug.LogError("ContractActions instance is not available.");
-        }
+        //StartCoroutine(ContractActions.instance.WaitForAllTransactionsCoroutine());
+        uint teamId = PlayerData.Instance.GetTeamId();
+        StartCoroutine(TxCoroutines.Instance.ExecuteReroll(teamId));
     }
 }

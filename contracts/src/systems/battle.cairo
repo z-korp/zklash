@@ -159,7 +159,8 @@ mod battle {
 
             // [Effect] Create squad
             let mut registry = store.registry(team.registry_id);
-            let mut team_squad = registry.create_squad(team.level, team.size);
+            let team_size: u8 = characters.len().try_into().unwrap();
+            let mut team_squad = registry.create_squad(team.level, team_size);
 
             // [Effect] Create foes
             store.set_character_foes(registry.id, team_squad.id, characters.span());

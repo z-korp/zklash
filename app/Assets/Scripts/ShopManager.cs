@@ -4,13 +4,15 @@ using zKlash.Game.Items;
 
 public class ShopManager : MonoBehaviour
 {
-    private GameObject[] shopMobs;
-    private GameObject[] shopItems;
     public static ShopManager instance;
 
-    private bool isShopOpen = false;
+    public GameObject[] shopMobs;
+    public GameObject[] shopItems;
+
     public uint rolesUint;
     public uint itemUint;
+
+    private bool isShopOpen = false;
 
     void Awake()
     {
@@ -24,9 +26,6 @@ public class ShopManager : MonoBehaviour
 
     void Start()
     {
-        shopMobs = GameObject.FindGameObjectsWithTag("ShopMob");
-        shopItems = GameObject.FindGameObjectsWithTag("ShopItem");
-
         rolesUint = 66051;
         itemUint = 1;
     }
@@ -47,7 +46,7 @@ public class ShopManager : MonoBehaviour
         }
 
         // This is to avoid contract init
-        if (!isShopOpen)
+        /*if (!isShopOpen)
         {
             isShopOpen = true;
             Role[] roles = PlayerData.Instance.SplitRoles(rolesUint);
@@ -60,12 +59,24 @@ public class ShopManager : MonoBehaviour
 
             ItemSpawn itemSpawn = shopItems[0].GetComponent<ItemSpawn>();
             itemSpawn.SetItem((Item)itemUint);
-        }
+        }*/
     }
 
     public void Reroll()
     {
+        if (PlayerData.Instance.Gold < PlayerData.Instance.rerollCost)
+        {
+            Debug.LogWarning("Not enough gold to reroll.");
+            return;
+        }
+        uint teamId = PlayerData.Instance.GetTeamId();
+        StartCoroutine(TxCoroutines.Instance.ExecuteReroll(teamId, OnRerollComplete));
+    }
+
+    private void OnRerollComplete()
+    {
         isShopOpen = false;
+        PlayerData.Instance.isShopSet = false;
     }
 
     public int IndexOfMobSpawn(MobSpawn _spawn)

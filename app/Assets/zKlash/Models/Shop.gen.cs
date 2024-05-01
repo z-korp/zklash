@@ -17,10 +17,10 @@ public class Shop : ModelInstance
     public uint team_id;
 
     [ModelField("purchase_cost")]
-    public byte purchase_cost;
+    public uint purchase_cost;
 
     [ModelField("reroll_cost")]
-    public byte reroll_cost;
+    public uint reroll_cost;
 
     [ModelField("item_count")]
     public byte item_count;
@@ -47,7 +47,7 @@ public class Shop : ModelInstance
 
     public override void OnUpdate(Model model)
     {
-        //Debug.Log($"Shop updated: {model}");
+        Debug.Log($"Shop updated: {model}");
         base.OnUpdate(model);
     }
 }

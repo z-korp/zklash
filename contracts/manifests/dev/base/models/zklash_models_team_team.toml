@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x24628b332c866377696fe3a77ede95047bc2c5eed82d16088e97a945a270c41"
-original_class_hash = "0x24628b332c866377696fe3a77ede95047bc2c5eed82d16088e97a945a270c41"
+class_hash = "0x1ddf0fd4d7d9c7ef9cb8d4667cad1508bb76908822f532a023b4cc8f18c7260"
+original_class_hash = "0x1ddf0fd4d7d9c7ef9cb8d4667cad1508bb76908822f532a023b4cc8f18c7260"
 abi = "manifests/dev/abis/base/models/zklash_models_team_team.json"
 name = "zklash::models::team::team"
 
@@ -17,16 +17,6 @@ key = true
 [[members]]
 name = "registry_id"
 type = "u32"
-key = false
-
-[[members]]
-name = "seed"
-type = "felt252"
-key = false
-
-[[members]]
-name = "nonce"
-type = "felt252"
 key = false
 
 [[members]]
@@ -57,4 +47,9 @@ key = false
 [[members]]
 name = "battle_id"
 type = "u8"
+key = false
+
+[[members]]
+name = "foe_squad_id"
+type = "u32"
 key = false

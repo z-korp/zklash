@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x239eb51ece58e989c5aa738e76c3bc01ebdc5ab1162a63a6aa5b7dbb78ab560"
-original_class_hash = "0x239eb51ece58e989c5aa738e76c3bc01ebdc5ab1162a63a6aa5b7dbb78ab560"
+class_hash = "0x1127423dd0e0309646a039aee5c69a8723fb2defabeefeb2a565c0e5235a488"
+original_class_hash = "0x1127423dd0e0309646a039aee5c69a8723fb2defabeefeb2a565c0e5235a488"
 abi = "manifests/dev/abis/base/models/zklash_models_registry_registry.json"
 name = "zklash::models::registry::registry"
 
@@ -16,5 +16,10 @@ key = false
 
 [[members]]
 name = "leagues"
+type = "felt252"
+key = false
+
+[[members]]
+name = "seed"
 type = "felt252"
 key = false

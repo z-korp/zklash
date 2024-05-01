@@ -15,15 +15,6 @@ public class Team : ModelInstance
     [ModelField("id")]
     public uint id;
 
-    [ModelField("registry_id")]
-    public uint registry_id;
-
-    [ModelField("seed")]
-    public FieldElement seed;
-
-    [ModelField("nonce")]
-    public FieldElement nonce;
-
     [ModelField("gold")]
     public uint gold;
 
@@ -42,9 +33,12 @@ public class Team : ModelInstance
     [ModelField("battle_id")]
     public byte battle_id;
 
+    [ModelField("foe_squad_id")]
+    public byte foe_squad_id;
+
     public override string ToString()
     {
-        return $"Player ID: {player_id.Hex()}, Gold: {gold}, Level: {level} Health: {health} Battle ID: {battle_id}";
+        return $"Player ID: {player_id.Hex()}, Gold: {gold}, Level: {level} Health: {health} Size: {size} Battle ID: {battle_id} Foe Squad ID: {foe_squad_id}";
     }
 
     // Start is called before the first frame update

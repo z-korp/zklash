@@ -1,6 +1,6 @@
 {
   "world": {
-    "kind": "Contract",
+    "kind": "WorldContract",
     "class_hash": "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd",
     "original_class_hash": "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd",
     "abi": [
@@ -664,6 +664,10 @@
     "transaction_hash": "0x5be0af36841d33273a0466f5a92bf2f5ddaf15daf07cf0c12c419547b90f21",
     "block_number": 3,
     "seed": "zklash",
+    "metadata": {
+      "profile_name": "dev",
+      "rpc_url": "http://localhost:5050/"
+    },
     "name": "dojo::world::world"
   },
   "base": {
@@ -677,8 +681,8 @@
     {
       "kind": "DojoContract",
       "address": "0x6b3db511167c6c2291697a02e7ed9a162f115ac6a6c114bf99afa6547b3f90c",
-      "class_hash": "0x6bd21b6f3870b2a8b77c97db5a26822cc98ddda79b98e3051e14922f361f9a5",
-      "original_class_hash": "0x6bd21b6f3870b2a8b77c97db5a26822cc98ddda79b98e3051e14922f361f9a5",
+      "class_hash": "0x6cf94a078369d320ff752ec0cfdb5e2ec88e04a80385f6c83e57876a0edb361",
+      "original_class_hash": "0x6cf94a078369d320ff752ec0cfdb5e2ec88e04a80385f6c83e57876a0edb361",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -789,8 +793,8 @@
     {
       "kind": "DojoContract",
       "address": "0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1",
-      "class_hash": "0x21137e8805d511c37c4f717d9f13a2c926cd9d25addcc9e6c0455e34773098e",
-      "original_class_hash": "0x21137e8805d511c37c4f717d9f13a2c926cd9d25addcc9e6c0455e34773098e",
+      "class_hash": "0x2cfdfe3b0a009d5365bc5139dae2078f61dd8ad989fc8dc497a07caffb088c6",
+      "original_class_hash": "0x2cfdfe3b0a009d5365bc5139dae2078f61dd8ad989fc8dc497a07caffb088c6",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -905,8 +909,8 @@
     {
       "kind": "DojoContract",
       "address": "0x53fb59cc9aab03983033de799d10c9a0d3e4475e19224a661cefeacb0577871",
-      "class_hash": "0x645d8b24ae04bdadebcc0e8d371f904d9704299b2bc9151915830d6acce35be",
-      "original_class_hash": "0x645d8b24ae04bdadebcc0e8d371f904d9704299b2bc9151915830d6acce35be",
+      "class_hash": "0x29dfaa4b09b0ecfffcc6be0138eb10ae961f496c9eca1dde2b2445a9c0129bb",
+      "original_class_hash": "0x29dfaa4b09b0ecfffcc6be0138eb10ae961f496c9eca1dde2b2445a9c0129bb",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -1988,10 +1992,15 @@
           "name": "team_count",
           "type": "u32",
           "key": false
+        },
+        {
+          "name": "win_count",
+          "type": "u32",
+          "key": false
         }
       ],
-      "class_hash": "0x22b755bbed6cbd4279862602b16e83153cdb896aaac1ee3dce2c11eaa76190a",
-      "original_class_hash": "0x22b755bbed6cbd4279862602b16e83153cdb896aaac1ee3dce2c11eaa76190a",
+      "class_hash": "0x68cc0f944b1326c0bdf633d7e6c5e74032d5cb161fce04c727ce55c93607413",
+      "original_class_hash": "0x68cc0f944b1326c0bdf633d7e6c5e74032d5cb161fce04c727ce55c93607413",
       "abi": [
         {
           "type": "impl",
@@ -2181,6 +2190,10 @@
             {
               "name": "team_count",
               "type": "core::integer::u32"
+            },
+            {
+              "name": "win_count",
+              "type": "core::integer::u32"
             }
           ]
         },
@@ -2228,10 +2241,15 @@
           "name": "leagues",
           "type": "felt252",
           "key": false
+        },
+        {
+          "name": "seed",
+          "type": "felt252",
+          "key": false
         }
       ],
-      "class_hash": "0x239eb51ece58e989c5aa738e76c3bc01ebdc5ab1162a63a6aa5b7dbb78ab560",
-      "original_class_hash": "0x239eb51ece58e989c5aa738e76c3bc01ebdc5ab1162a63a6aa5b7dbb78ab560",
+      "class_hash": "0x1127423dd0e0309646a039aee5c69a8723fb2defabeefeb2a565c0e5235a488",
+      "original_class_hash": "0x1127423dd0e0309646a039aee5c69a8723fb2defabeefeb2a565c0e5235a488",
       "abi": [
         {
           "type": "impl",
@@ -2420,6 +2438,10 @@
             },
             {
               "name": "leagues",
+              "type": "core::felt252"
+            },
+            {
+              "name": "seed",
               "type": "core::felt252"
             }
           ]
@@ -3271,16 +3293,6 @@
           "key": false
         },
         {
-          "name": "seed",
-          "type": "felt252",
-          "key": false
-        },
-        {
-          "name": "nonce",
-          "type": "felt252",
-          "key": false
-        },
-        {
           "name": "gold",
           "type": "u32",
           "key": false
@@ -3309,10 +3321,15 @@
           "name": "battle_id",
           "type": "u8",
           "key": false
+        },
+        {
+          "name": "foe_squad_id",
+          "type": "u32",
+          "key": false
         }
       ],
-      "class_hash": "0x24628b332c866377696fe3a77ede95047bc2c5eed82d16088e97a945a270c41",
-      "original_class_hash": "0x24628b332c866377696fe3a77ede95047bc2c5eed82d16088e97a945a270c41",
+      "class_hash": "0x1ddf0fd4d7d9c7ef9cb8d4667cad1508bb76908822f532a023b4cc8f18c7260",
+      "original_class_hash": "0x1ddf0fd4d7d9c7ef9cb8d4667cad1508bb76908822f532a023b4cc8f18c7260",
       "abi": [
         {
           "type": "impl",
@@ -3504,14 +3521,6 @@
               "type": "core::integer::u32"
             },
             {
-              "name": "seed",
-              "type": "core::felt252"
-            },
-            {
-              "name": "nonce",
-              "type": "core::felt252"
-            },
-            {
               "name": "gold",
               "type": "core::integer::u32"
             },
@@ -3534,6 +3543,10 @@
             {
               "name": "battle_id",
               "type": "core::integer::u8"
+            },
+            {
+              "name": "foe_squad_id",
+              "type": "core::integer::u32"
             }
           ]
         },

@@ -69,7 +69,7 @@ fn test_battle_start_win() {
 
     // [Start]
     let intiial_team = store.team(context.player_id, player.team_id());
-    systems.battle.start(world, player.team_id(), 0x010203);
+    systems.battle.start(world, player.team_id(), 0x030201);
 
     // [Assert] Team
     let team = store.team(context.player_id, player.team_id());
@@ -103,5 +103,5 @@ fn test_battle_start_with_item() {
     // [Assert] Team
     let team = store.team(context.player_id, player.team_id());
     assert(intiial_team.gold < team.gold, 'Item: wrong team gold');
-    assert(intiial_team.health == team.health, 'Item: wrong team health');
+    assert(intiial_team.health > team.health, 'Item: wrong team health');
 }

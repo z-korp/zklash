@@ -18,6 +18,9 @@ public class Player : ModelInstance
     [ModelField("team_count")]
     public uint team_count;
 
+    [ModelField("win_count")]
+    public uint win_count;
+
     // Start is called before the first frame update
     void Start()
     {

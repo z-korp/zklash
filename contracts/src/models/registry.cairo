@@ -1,3 +1,7 @@
+// Core imports
+
+use core::poseidon::hades_permutation;
+
 // Starknet imports
 
 use starknet::ContractAddress;
@@ -25,36 +29,57 @@ struct Registry {
     id: u32,
     squad_count: u32,
     leagues: felt252,
+    seed: felt252,
 }
 
 #[generate_trait]
 impl RegistryImpl of RegistryTrait {
     #[inline(always)]
     fn new(id: u32) -> Registry {
-        Registry { id, squad_count: 0, leagues: 0 }
+        Registry { id, squad_count: 0, leagues: 0, seed: 0 }
+    }
+
+    #[inline(always)]
+    fn reseed(ref self: Registry) {
+        let (new_seed, _, _) = hades_permutation(self.seed, self.leagues, self.squad_count.into());
+        self.seed = new_seed;
     }
 
     #[inline(always)]
     fn create_squad(ref self: Registry, level: u8, size: u8) -> Squad {
+        // [Effect] Create new squad
         self.squad_count += 1;
+        // [Effect] Update seed
+        let (new_seed, _, _) = hades_permutation(self.seed, self.leagues, self.squad_count.into());
+        self.seed = new_seed;
+        // [Return] Squad
         SquadTrait::new(self.id, self.squad_count, level, size)
     }
 
     #[inline(always)]
     fn subscribe(ref self: Registry, ref league: League, ref squad: Squad) -> Slot {
+        // [Effect] Subscribe to league
         let slot = league.subscribe(ref squad);
         Private::update(ref self, league.id, league.size);
+        // [Effect] Update seed
+        let (new_seed, _, _) = hades_permutation(self.seed, self.leagues, self.squad_count.into());
+        self.seed = new_seed;
+        // [Return] Slot
         slot
     }
 
     #[inline(always)]
     fn unsubscribe(ref self: Registry, ref league: League, ref squad: Squad) {
+        // [Effect] Unsubscribe to league
         league.unsubscribe(ref squad);
         Private::update(ref self, league.id, league.size);
+        // [Effect] Update seed
+        let (new_seed, _, _) = hades_permutation(self.seed, self.leagues, self.squad_count.into());
+        self.seed = new_seed;
     }
 
     #[inline(always)]
-    fn search_league(ref self: Registry, league: League) -> u8 {
+    fn search_league(self: Registry, league: League) -> u8 {
         // [Check] Registry is not empty
         RegistryAssert::assert_not_empty(self);
         // [Compute] Loop over the bitmap to find the nearest league with at least 1 squad

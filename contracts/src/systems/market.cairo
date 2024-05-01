@@ -42,11 +42,12 @@ mod market {
     // Internal imports
 
     use zklash::constants::{WORLD, DEFAULT_SHOP_REROLL_COST};
-    use zklash::store::{Store, StoreImpl};
-    use zklash::models::player::{Player, PlayerImpl, PlayerAssert};
-    use zklash::models::team::{Team, TeamImpl, TeamAssert};
-    use zklash::models::shop::{Shop, ShopImpl, ShopAssert};
-    use zklash::models::character::{Character, CharacterImpl, CharacterAssert};
+    use zklash::store::{Store, StoreTrait};
+    use zklash::models::registry::{Registry, RegistryTrait};
+    use zklash::models::player::{Player, PlayerTrait, PlayerAssert};
+    use zklash::models::team::{Team, TeamTrait, TeamAssert};
+    use zklash::models::shop::{Shop, ShopTrait, ShopAssert};
+    use zklash::models::character::{Character, CharacterTrait, CharacterAssert};
 
     // Local imports
 
@@ -83,7 +84,7 @@ mod market {
             index: u8,
         ) {
             // [Setup] Datastore
-            let store: Store = StoreImpl::new(world);
+            let store: Store = StoreTrait::new(world);
 
             // [Check] Player exists
             let caller = get_caller_address();
@@ -117,7 +118,7 @@ mod market {
 
         fn hire(self: @ContractState, world: IWorldDispatcher, team_id: u32, index: u8,) {
             // [Setup] Datastore
-            let store: Store = StoreImpl::new(world);
+            let store: Store = StoreTrait::new(world);
 
             // [Check] Player exists
             let caller = get_caller_address();
@@ -132,7 +133,7 @@ mod market {
             let mut shop = store.shop(player.id, team_id);
             shop.assert_exists();
 
-            // [Effect] Purchase item
+            // [Effect] Hide mob
             let character = team.hire(ref shop, index);
 
             // [Effect] Update character
@@ -153,7 +154,7 @@ mod market {
             index: u8,
         ) {
             // [Setup] Datastore
-            let store: Store = StoreImpl::new(world);
+            let store: Store = StoreTrait::new(world);
 
             // [Check] Player exists
             let caller = get_caller_address();
@@ -172,7 +173,7 @@ mod market {
             let mut character = store.character(player.id, team_id, character_id);
             character.assert_exists();
 
-            // [Effect] Purchase item
+            // [Effect] Purchase mob
             team.xp(ref shop, ref character, index);
 
             // [Effect] Update character
@@ -189,7 +190,7 @@ mod market {
             self: @ContractState, world: IWorldDispatcher, team_id: u32, from_id: u8, to_id: u8,
         ) {
             // [Setup] Datastore
-            let store: Store = StoreImpl::new(world);
+            let store: Store = StoreTrait::new(world);
 
             // [Check] Player exists
             let caller = get_caller_address();
@@ -197,7 +198,7 @@ mod market {
             player.assert_exists();
 
             // [Check] Team exists
-            let team = store.team(player.id, team_id);
+            let mut team = store.team(player.id, team_id);
             team.assert_exists();
 
             // [Check] From Character exists
@@ -208,17 +209,20 @@ mod market {
             let mut to = store.character(player.id, team_id, to_id);
             to.assert_exists();
 
-            // [Effect] Purchase item
-            from.merge(ref to);
+            // [Effect] Merge characters
+            team.merge(ref from, ref to);
 
             // [Effect] Update characters
             store.set_character(from);
             store.set_character(to);
+
+            // [Effect] Update team
+            store.set_team(team);
         }
 
         fn sell(self: @ContractState, world: IWorldDispatcher, team_id: u32, character_id: u8,) {
             // [Setup] Datastore
-            let store: Store = StoreImpl::new(world);
+            let store: Store = StoreTrait::new(world);
 
             // [Check] Player exists
             let caller = get_caller_address();
@@ -245,7 +249,7 @@ mod market {
 
         fn reroll(self: @ContractState, world: IWorldDispatcher, team_id: u32,) {
             // [Setup] Datastore
-            let store: Store = StoreImpl::new(world);
+            let store: Store = StoreTrait::new(world);
 
             // [Check] Player exists
             let caller = get_caller_address();
@@ -261,13 +265,18 @@ mod market {
             shop.assert_exists();
 
             // [Effect] Reroll shop
-            team.reroll(ref shop);
+            let mut registry = store.registry(team.registry_id);
+            registry.reseed();
+            team.reroll(ref shop, registry.seed);
 
             // [Effect] Update shop
             store.set_shop(shop);
 
             // [Effect] Update team
             store.set_team(team);
+
+            // [Effect] Update registry
+            store.set_registry(registry);
         }
     }
 }

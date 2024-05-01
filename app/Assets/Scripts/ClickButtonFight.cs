@@ -6,20 +6,11 @@ using System;
 
 public class ClickButtonFight : MonoBehaviour
 {
-    public GameObject canvasInfo;
-    public GameObject canvasShopInfo;
-
-    public void ToggleCanvases()
-    {
-        canvasInfo.SetActive(!canvasInfo.activeSelf);
-        canvasShopInfo.SetActive(!canvasShopInfo.activeSelf);
-    }
-
     public void OnClickFight()
     {
         //ContractActions.instance.TriggerStartBattle();
         CameraMovement.instance.MoveCameraToFight();
-        ToggleCanvases();
+        CanvasManager.instance.ToggleCanvases();
         TeamManager.instance.MoveTeam();
 
         if (BattleManager.instance.allies.Count == 0)

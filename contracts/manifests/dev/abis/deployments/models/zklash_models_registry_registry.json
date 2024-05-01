@@ -187,6 +187,10 @@
       {
         "name": "leagues",
         "type": "core::felt252"
+      },
+      {
+        "name": "seed",
+        "type": "core::felt252"
       }
     ]
   },

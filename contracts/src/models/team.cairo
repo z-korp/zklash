@@ -1,7 +1,6 @@
 // Core imports
 
 use core::debug::PrintTrait;
-use core::poseidon::hades_permutation;
 
 // Starknet imports
 
@@ -28,14 +27,13 @@ struct Team {
     #[key]
     id: u32,
     registry_id: u32,
-    seed: felt252,
-    nonce: felt252,
     gold: u32,
     health: u32,
     level: u8,
     character_uuid: u8,
     size: u8,
     battle_id: u8,
+    foe_squad_id: u32,
 }
 
 mod errors {
@@ -46,43 +44,35 @@ mod errors {
     const TEAM_NOT_AFFORDABLE: felt252 = 'Team: not affordable';
     const TEAM_IS_DEFEATED: felt252 = 'Team: is defeated';
     const TEAM_XP_INVALID_ROLE: felt252 = 'Team: invalid role for xp';
-    const TEAM_CANNOT_FIGHT: felt252 = 'Team: cannot fight';
+    const TEAM_ALREADY_WON: felt252 = 'Team: has already won';
+    const TEAM_INVALID_TEAM: felt252 = 'Team: invalid team';
+    const TEAM_INVALID_ROLE: felt252 = 'Team: invalid role';
 }
 
 #[generate_trait]
 impl TeamImpl of TeamTrait {
     #[inline(always)]
-    fn new(player_id: ContractAddress, id: u32, salt: felt252) -> Team {
-        // [Check] Seed is valid
-        let (seed, _, _) = hades_permutation(id.into(), salt, 0);
+    fn new(player_id: ContractAddress, id: u32) -> Team {
         // [Return] Team
         Team {
             player_id,
             id,
             registry_id: constants::DEFAULT_REGISTRY_ID,
-            seed,
-            nonce: 0,
             gold: constants::DEFAULT_GOLD,
             health: constants::DEFAULT_HEALTH,
             level: 1,
             character_uuid: 0,
             size: 0,
             battle_id: 0,
+            foe_squad_id: 0,
         }
     }
 
     #[inline(always)]
-    fn spawn_shop(ref self: Team) -> Shop {
+    fn spawn_shop(self: Team, seed: felt252) -> Shop {
         // [Return] Shop
-        let shop: Shop = ShopTrait::new(self.player_id, self.id, self.seed());
-        self.nonce += 1;
+        let shop: Shop = ShopTrait::new(self.player_id, self.id, seed);
         shop
-    }
-
-    #[inline(always)]
-    fn seed(self: Team) -> felt252 {
-        let (seed, _, _) = hades_permutation(self.seed, self.nonce, 0);
-        seed
     }
 
     #[inline(always)]
@@ -130,7 +120,19 @@ impl TeamImpl of TeamTrait {
         assert(role == purchased_role, errors::TEAM_XP_INVALID_ROLE);
         // [Effect] Update Character
         character.xp();
-        // [Effect] Update Team size
+    }
+
+    #[inline(always)]
+    fn merge(ref self: Team, ref from: Character, ref to: Character) {
+        // [Check] Not defeated
+        self.assert_not_defeated();
+        // [Check] Roles match
+        let from_role: Role = from.role.into();
+        let to_role: Role = to.role.into();
+        assert(from_role == to_role, errors::TEAM_XP_INVALID_ROLE);
+        // [Effect] Update Character
+        from.merge(ref to);
+        // [Effect] Update team size
         self.size -= 1;
     }
 
@@ -147,7 +149,7 @@ impl TeamImpl of TeamTrait {
     }
 
     #[inline(always)]
-    fn reroll(ref self: Team, ref shop: Shop) {
+    fn reroll(ref self: Team, ref shop: Shop, seed: felt252) {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Affordable
@@ -155,8 +157,7 @@ impl TeamImpl of TeamTrait {
         // [Effect] Update Gold
         self.gold -= shop.reroll_cost.into();
         // [Effect] Reroll Shop
-        shop.shuffle(self.seed());
-        self.nonce += 1;
+        shop.shuffle(seed);
     }
 
     #[inline(always)]
@@ -166,8 +167,9 @@ impl TeamImpl of TeamTrait {
         ref team_squad: Squad,
         ref chars: Array<Character>,
         ref foe_squad: Squad,
-        ref foes: Array<Character>
-    ) {
+        ref foes: Array<Character>,
+        seed: felt252,
+    ) -> bool {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Not empty
@@ -179,14 +181,22 @@ impl TeamImpl of TeamTrait {
             self.level += 1;
         } else {
             self.health -= 1;
-        }
+        };
         // [Effect] Reset gold
         self.gold = constants::DEFAULT_GOLD;
         // [Effect] Reroll Shop
-        shop.shuffle(self.seed());
-        self.nonce += 1;
+        shop.shuffle(seed);
+        // [Effect] Update foe squad id for client purpose
+        self.foe_squad_id = foe_squad.id;
         // [Effect] Increase battle id
         self.battle_id += 1;
+        // [Return] Won status
+        if self.level == constants::TEAM_MAX_LEVEL {
+            // [Effect] Game over
+            self.health = 0;
+            return true;
+        };
+        false
     }
 }
 
@@ -211,11 +221,6 @@ impl TeamAssert of AssertTrait {
     fn assert_not_defeated(self: Team) {
         assert(self.health > 0, errors::TEAM_IS_DEFEATED);
     }
-
-    #[inline(always)]
-    fn assert_can_fight(self: Team) {
-        assert(self.level < 10, errors::TEAM_CANNOT_FIGHT);
-    }
 }
 
 impl ZeroableTeam of core::Zeroable<Team> {
@@ -225,20 +230,19 @@ impl ZeroableTeam of core::Zeroable<Team> {
             player_id: Zeroable::zero(),
             id: 0,
             registry_id: 0,
-            seed: 0,
-            nonce: 0,
             gold: 0,
             health: 0,
             level: 0,
             character_uuid: 0,
             size: 0,
             battle_id: 0,
+            foe_squad_id: 0,
         }
     }
 
     #[inline(always)]
     fn is_zero(self: Team) -> bool {
-        0 == self.seed
+        0 == self.battle_id && 0 == self.health
     }
 
     #[inline(always)]

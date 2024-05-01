@@ -102,7 +102,7 @@ public class TxCoroutines : MonoBehaviour
     // Market System
     public IEnumerator ExecuteEquip(uint team_id, byte character_id, uint index)
     {
-        Debug.Log("[[[[[[[[[[[  ExecuteEquip  ]]]]]]]]]]]");
+        Debug.Log("[[[[[[[[[[[  ExecuteEquip  ]]]]]]]]]]] " + team_id + " " + character_id + " " + index);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
@@ -118,7 +118,7 @@ public class TxCoroutines : MonoBehaviour
 
     public IEnumerator ExecuteHire(uint team_id, uint index)
     {
-        Debug.Log("[[[[[[[[[[[  ExecuteHire  ]]]]]]]]]]]");
+        Debug.Log("[[[[[[[[[[[  ExecuteHire  ]]]]]]]]]]] " + team_id + " " + index);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
@@ -132,7 +132,7 @@ public class TxCoroutines : MonoBehaviour
         yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
     }
 
-    public IEnumerator ExecuteReroll(uint team_id)
+    public IEnumerator ExecuteReroll(uint team_id, Action onFinish = null)
     {
         Debug.Log("[[[[[[[[[[[  ExecuteReroll  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
@@ -146,6 +146,10 @@ public class TxCoroutines : MonoBehaviour
             )
         );
         yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        yield return new WaitForSeconds(1f); // to be sure Torii has indexed (TODO: remove this when Torii is fixed)
+
+        onFinish?.Invoke();  // Call the callback if it's provided
+        Debug.Log("[[[[[[[[[[[ END ExecuteReroll ]]]]]]]]]]]");
     }
 
     public IEnumerator ExecuteMerge(uint team_id, uint from_id, uint to_id)
@@ -166,7 +170,7 @@ public class TxCoroutines : MonoBehaviour
 
     public IEnumerator ExecuteMergeFromShop(uint team_id, uint character_id, uint index)
     {
-        Debug.Log("[[[[[[[[[[[  ExecuteMergeFromShop  ]]]]]]]]]]]");
+        Debug.Log("[[[[[[[[[[[  ExecuteMergeFromShop  ]]]]]]]]]]] " + team_id + " " + character_id + " " + index);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 

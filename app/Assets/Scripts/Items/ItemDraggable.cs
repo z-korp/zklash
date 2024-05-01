@@ -51,6 +51,13 @@ public class ItemDraggable : MonoBehaviour
 
         if (canDropItem)
         {
+            if (PlayerData.Instance.Gold < PlayerData.Instance.purchaseCost)
+            {
+                Debug.LogWarning("Not enough gold to purchase item.");
+                rb.MovePosition(initPos);
+                return;
+            }
+
             isFromShop = false;
             //GameObject itemOrbiterGO = Instantiate(orbitObjectPrefab, mob.transform.position, Quaternion.identity);
             //OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();

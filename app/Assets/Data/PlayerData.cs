@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using zKlash.Game.Roles;
 using System;
 using zKlash.Game.Items;
+using System.Linq;
 
 public class PlayerData : MonoBehaviour
 {
@@ -38,7 +39,30 @@ public class PlayerData : MonoBehaviour
     public bool isShopSet = false;
     public Role[] shopRoles = new Role[3];
 
+    public uint rerollCost;
+    public uint purchaseCost;
+
     public Item shopItem = Item.None;
+
+    public uint Gold
+    {
+        get
+        {
+            if (!string.IsNullOrEmpty(teamEntity))
+            {
+                var team = GameManager.Instance.worldManager.Entity(teamEntity)?.GetComponent<Team>();
+                if (team != null)
+                    return team.gold;
+                else
+                {
+                    Debug.LogError("Team component not found on team entity.");
+                    return 0;
+                }
+            }
+            Debug.LogError("Team entity not set or empty.");
+            return 0;
+        }
+    }
 
     void Awake()
     {
@@ -61,6 +85,7 @@ public class PlayerData : MonoBehaviour
 
             // Roles
             Role[] roles = SplitRoles(shop.roles);
+            Debug.Log("XXXXX Roles: " + roles[0] + " " + roles[1] + " " + roles[2] + " XXXXX");
             for (int i = 0; i < shopRoles.Length; i++)
             {
                 shopRoles[i] = roles[i];
@@ -69,34 +94,33 @@ public class PlayerData : MonoBehaviour
             // Item
             shopItem = (Item)shop.items;
 
+            rerollCost = shop.reroll_cost;
+            purchaseCost = shop.purchase_cost;
+
             isShopSet = true;
+        }
+    }
+
+    public void RefreshShopRolls() {
+        var shop = GameManager.Instance.worldManager.Entity(shopEntity).GetComponent<Shop>();
+        // Roles
+        Role[] roles = SplitRoles(shop.roles);
+        for (int i = 0; i < shopRoles.Length; i++)
+        {
+            shopRoles[i] = roles[i];
         }
     }
 
     public Role[] SplitRoles(uint roles)
     {
         string hexStr = roles.ToString("X6");
-        List<Role> roleList = new List<Role>();
 
-        for (int i = 0; i < hexStr.Length; i += 2)
-        {
-            // Extract two characters at a time
-            string hexPart = hexStr.Substring(i, 2);
-
-            // Convert hex to uint
-            uint decimalValue = Convert.ToUInt32(hexPart, 16);
-
-            if (Enum.IsDefined(typeof(Role), (int)decimalValue))
-            {
-                roleList.Add((Role)decimalValue);
-            }
-            else
-            {
-                roleList.Add(Role.None);
-            }
-        }
-
-        return roleList.ToArray();
+        return Enumerable.Range(0, hexStr.Length / 2)
+            .Select(i => hexStr.Substring(i * 2, 2))
+            .Select(hexPart => Convert.ToUInt32(hexPart, 16))
+            .Select(decimalValue => Enum.IsDefined(typeof(Role), (int)decimalValue) ? (Role)decimalValue : Role.None)
+            .Reverse()  // Perform the reversal here
+            .ToArray();
     }
 
     public uint GetTeamId()

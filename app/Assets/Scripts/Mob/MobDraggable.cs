@@ -115,6 +115,13 @@ public class MobDraggable : MonoBehaviour
         if (TeamManager.instance.RoleAtIndex(zoneIndex) == gameObject.GetComponent<MobController>().Character.Role.GetRole)
         {
             Debug.Log("Merge case");
+            if(isFromShop && PlayerData.Instance.purchaseCost > PlayerData.Instance.Gold)
+            {
+                Debug.LogWarning("Not enough balance");
+                rb.MovePosition(initPos);
+                return;
+            }
+            
             GameObject mobToUpdate = TeamManager.instance.GetMemberFromTeam(zoneIndex);
             GameObject mobToRemove = gameObject;
 
@@ -174,9 +181,17 @@ public class MobDraggable : MonoBehaviour
                 return;
             }
 
+
             // Manage the case where the mob is dropped in a valid zone and come from the shop
             if (isFromShop)
             {
+                if (PlayerData.Instance.purchaseCost > PlayerData.Instance.Gold)
+                {
+                    Debug.LogWarning("Not enough balance");
+                    rb.MovePosition(initPos);
+                    return;
+                }
+
                 isFromShop = false;
                 //ContractActions.instance.TriggerHire((uint)index);
                 StartCoroutine(TxCoroutines.Instance.ExecuteHire(teamId, (uint)index));

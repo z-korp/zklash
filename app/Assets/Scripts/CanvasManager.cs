@@ -31,6 +31,15 @@ public class CanvasManager : MonoBehaviour
     {
         ToggleCanvasInfo();
         ToggleCanvasShopInfo();
+    }
 
+    public void ToggleSellRerollButton()
+    {
+        Transform btnReroll = canvasInfo.transform.Find("BtnReroll");
+        Transform btnSell = canvasInfo.transform.Find("BtnSell");
+        if (btnReroll != null)
+            btnReroll.gameObject.SetActive(!btnReroll.gameObject.activeSelf);
+        if (btnSell != null)
+            btnSell.gameObject.SetActive(!btnSell.gameObject.activeSelf);
     }
 }

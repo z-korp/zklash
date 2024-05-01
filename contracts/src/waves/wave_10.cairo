@@ -13,10 +13,10 @@ impl WaveImpl of WaveTrait {
     #[inline(always)]
     fn foes(registry_id: u32, squad_id: u32) -> Array<Foe> {
         array![
-            FoeTrait::new(registry_id, squad_id, 1, Role::Bomboblin, 3, Item::None),
-            FoeTrait::new(registry_id, squad_id, 2, Role::Bomboblin, 3, Item::None),
-            FoeTrait::new(registry_id, squad_id, 3, Role::Bomboblin, 3, Item::None),
-            FoeTrait::new(registry_id, squad_id, 4, Role::Bomboblin, 3, Item::None),
+            FoeTrait::new(registry_id, squad_id, 1, Role::Bomboblin, 3, Item::PumpkinMedium),
+            FoeTrait::new(registry_id, squad_id, 2, Role::Bomboblin, 3, Item::PumpkinMedium),
+            FoeTrait::new(registry_id, squad_id, 3, Role::Bomboblin, 3, Item::PumpkinMedium),
+            FoeTrait::new(registry_id, squad_id, 4, Role::Bomboblin, 3, Item::PumpkinMedium),
         ]
     }
 

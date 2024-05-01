@@ -222,13 +222,16 @@ namespace zKlash.Game
             };
             ApplyDebuff(buff);
             Item = ItemFactory.GetItem(ItemEnum.None);
+            _item = ItemEnum.None;
         }
 
         public void Equip(ItemEnum item)
         {
             // [Effect] Remove the previous item's effect
             Unequip();
+
             Item = ItemFactory.GetItem(item);
+            _item = item;
 
             if (item != ItemEnum.None)
             {

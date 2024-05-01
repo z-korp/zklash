@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 9111147648791226674}
   - component: {fileID: 4906835282287542503}
   - component: {fileID: 6988183314920880423}
-  - component: {fileID: 3392931733623893266}
+  - component: {fileID: 7505167648612704204}
   m_Layer: 5
-  m_Name: BtnClick
+  m_Name: BtnSell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ab0f4cf3911f76a40858f9295fcfc2c2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f99f0ca26a7d835468c528760d48047f, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -121,20 +121,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4906835282287542503}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3392931733623893266}
-        m_TargetAssemblyTypeName: ClickButtonFight, Assembly-CSharp
-        m_MethodName: OnClickFight
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &3392931733623893266
+      m_Calls: []
+--- !u!114 &7505167648612704204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,7 +131,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 834543797220072754}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e0adbc70bdf24be386948f3575a4473, type: 3}
+  m_Script: {fileID: 11500000, guid: f567ac10d6c1446dc98d6d3c1c8abc40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5842045040947590279
@@ -211,7 +199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: FIGHT
+  m_text: SELL
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

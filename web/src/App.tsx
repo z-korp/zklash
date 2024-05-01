@@ -158,7 +158,6 @@ function App() {
         dragOverItem.current === null
       )
         return;
-      console.log("dropMob", index);
       xp(account, team.id, parseInt(dragOverItem.current.id), index);
       dragOverItem.current = null;
       dragItem.current = null;
@@ -240,7 +239,6 @@ function App() {
           {team && <p>{`Health: ${team.health}`}</p>}
           {team && <p>{`Level: ${team.level}`}</p>}
           {team && <p>{`Character UUID: ${team.character_uuid}`}</p>}
-          {team && <p>{`Size: ${team.size}`}</p>}
           {team && <p>{`Battle ID: ${team.battle_id}`}</p>}
           {team && <p>{`Foe Squad ID: ${team.foe_squad_id}`}</p>}
           {team && characters && (

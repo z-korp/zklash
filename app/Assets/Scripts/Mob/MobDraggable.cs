@@ -27,6 +27,8 @@ public class MobDraggable : MonoBehaviour
     private GameObject[] droppableZones;
     private Vector3 offset = new(0, 0.5f, 0);
 
+    private bool togglingButton = false;
+
     public MouseHoverDetector mouseHoverDetector;
 
 
@@ -47,10 +49,23 @@ public class MobDraggable : MonoBehaviour
             GetComponent<SpriteRenderer>().sortingOrder = 1000;
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             rb.MovePosition(mousePos);
+
+            if (!isFromShop && !togglingButton)
+            {
+                togglingButton = true;
+                CanvasManager.instance.ToggleSellRerollButton();
+            }
+
+
             // UpdateArrows();
         }
         else
         {
+            if (togglingButton)
+            {
+                togglingButton = false;
+                CanvasManager.instance.ToggleSellRerollButton();
+            }
             GetComponent<SpriteRenderer>().sortingOrder = 999;
         }
     }

@@ -64,6 +64,7 @@ public class ItemDraggable : MonoBehaviour
             if (entity == "")
             {
                 Debug.Log("Entity not found.");
+                Destroy(gameObject);
                 return;
             }
             Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();

@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 {
     public WorldManager worldManager;
 
-    [SerializeField] WorldManagerData dojoConfig;
+    public WorldManagerData dojoConfig;
     [SerializeField] GameManagerData gameManagerData;
 
     public BurnerManager burnerManager;
@@ -43,16 +43,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    public static string StringToHexString(string input)
-    {
-        string hexOutput = "";
-        foreach (char c in input)
-        {
-            hexOutput += String.Format("{0:X2}", (int)c);
-        }
-        return hexOutput;
     }
 
 
@@ -171,91 +161,4 @@ public class GameManager : MonoBehaviour
             Debug.Log($"Error: {e.Message}");
         }
     }*/
-
-    public IEnumerator TriggerCreateAndSpawn(string name)
-    {
-        Debug.Log("TriggerCreateAndSpawn");
-        Account currentBurner = burnerManager.CurrentBurner;
-        var nameHex = StringToHexString(name);
-
-        // Call the async method and wait for it to complete
-        string createTxHash = "";
-        yield return StartCoroutine(AwaitTask(CreateTransaction(currentBurner, nameHex), (result) => createTxHash = result));
-        yield return StartCoroutine(AwaitTask(AwaitTransaction(createTxHash))); ;
-
-        // Repeat for the spawning process
-        string spawnTxHash = "";
-        yield return StartCoroutine(AwaitTask(SpawnTransaction(currentBurner), (result) => spawnTxHash = result));
-        yield return StartCoroutine(AwaitTask(AwaitTransaction(spawnTxHash)));
-    }
-
-    // For tasks that return a value
-    private IEnumerator AwaitTask<T>(Task<T> task, Action<T> continuation)
-    {
-        while (!task.IsCompleted)
-        {
-            yield return null;
-        }
-
-        if (task.IsFaulted)
-        {
-            Debug.LogError("Task Failed: " + task.Exception.Flatten());
-        }
-        else if (task.IsCompleted)
-        {
-            try
-            {
-                continuation(task.Result);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error within continuation: " + ex);
-            }
-        }
-    }
-
-    // For tasks that do not return a value
-    private IEnumerator AwaitTask(Task task)
-    {
-        while (!task.IsCompleted)
-            yield return null;
-
-        if (task.IsFaulted)
-        {
-            Debug.LogError("Task Failed: " + task.Exception.Flatten());
-        }
-    }
-
-    public async Task<string> CreateTransaction(Account currentBurner, string nameHex)
-    {
-        try
-        {
-            var txHash = await accountSystem.Create(currentBurner, dojoConfig.worldAddress, nameHex);
-            return txHash.Hex();
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"CreateTransaction failed: {ex.Message}");
-            return null;
-        }
-    }
-
-    public async Task<string> SpawnTransaction(Account currentBurner)
-    {
-        try
-        {
-            var txHash = await accountSystem.Spawn(currentBurner, dojoConfig.worldAddress);
-            return txHash.Hex();
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"CreateTransaction failed: {ex.Message}");
-            return null;
-        }
-    }
-
-    public async Task AwaitTransaction(string txHash)
-    {
-        await provider.WaitForTransaction(new FieldElement(txHash));
-    }
 }

@@ -185,6 +185,10 @@
         "type": "core::integer::u32"
       },
       {
+        "name": "registry_id",
+        "type": "core::integer::u32"
+      },
+      {
         "name": "seed",
         "type": "core::felt252"
       },
@@ -205,7 +209,11 @@
         "type": "core::integer::u8"
       },
       {
-        "name": "character_count",
+        "name": "character_uuid",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "size",
         "type": "core::integer::u8"
       },
       {

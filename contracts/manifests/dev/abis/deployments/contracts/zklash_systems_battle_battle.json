@@ -64,6 +64,18 @@
     "items": [
       {
         "type": "function",
+        "name": "hydrate",
+        "inputs": [
+          {
+            "name": "world",
+            "type": "dojo::world::IWorldDispatcher"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
         "name": "start",
         "inputs": [
           {

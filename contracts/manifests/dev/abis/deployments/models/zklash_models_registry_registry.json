@@ -169,62 +169,30 @@
   },
   {
     "type": "impl",
-    "name": "teamImpl",
-    "interface_name": "zklash::models::team::Iteam"
+    "name": "registryImpl",
+    "interface_name": "zklash::models::registry::Iregistry"
   },
   {
     "type": "struct",
-    "name": "zklash::models::team::Team",
+    "name": "zklash::models::registry::Registry",
     "members": [
-      {
-        "name": "player_id",
-        "type": "core::starknet::contract_address::ContractAddress"
-      },
       {
         "name": "id",
         "type": "core::integer::u32"
       },
       {
-        "name": "registry_id",
+        "name": "squad_count",
         "type": "core::integer::u32"
       },
       {
-        "name": "seed",
+        "name": "leagues",
         "type": "core::felt252"
-      },
-      {
-        "name": "nonce",
-        "type": "core::felt252"
-      },
-      {
-        "name": "gold",
-        "type": "core::integer::u32"
-      },
-      {
-        "name": "health",
-        "type": "core::integer::u32"
-      },
-      {
-        "name": "level",
-        "type": "core::integer::u8"
-      },
-      {
-        "name": "character_uuid",
-        "type": "core::integer::u8"
-      },
-      {
-        "name": "size",
-        "type": "core::integer::u8"
-      },
-      {
-        "name": "battle_id",
-        "type": "core::integer::u8"
       }
     ]
   },
   {
     "type": "interface",
-    "name": "zklash::models::team::Iteam",
+    "name": "zklash::models::registry::Iregistry",
     "items": [
       {
         "type": "function",
@@ -232,7 +200,7 @@
         "inputs": [
           {
             "name": "model",
-            "type": "zklash::models::team::Team"
+            "type": "zklash::models::registry::Registry"
           }
         ],
         "outputs": [],
@@ -242,7 +210,7 @@
   },
   {
     "type": "event",
-    "name": "zklash::models::team::team::Event",
+    "name": "zklash::models::registry::registry::Event",
     "kind": "enum",
     "variants": []
   }

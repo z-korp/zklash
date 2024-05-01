@@ -21,8 +21,8 @@ public class NewGame : MonoBehaviour
 
     private IEnumerator CreateSpawnAndLoadScene(string playerName)
     {
-        // Start the game creation process using the GameManager's TriggerCreatePlay coroutine
-        yield return StartCoroutine(GameManager.Instance.TriggerCreateAndSpawn(playerName));
+        // Start the game creation process using the GameManager's ExecuteCreateAndSpawn coroutine
+        yield return StartCoroutine(TxCoroutines.Instance.ExecuteCreateAndSpawn(playerName));
 
         // After creation is complete, load the next scene
         SceneManager.LoadScene("Shop");

@@ -681,8 +681,8 @@
     {
       "kind": "DojoContract",
       "address": "0x6b3db511167c6c2291697a02e7ed9a162f115ac6a6c114bf99afa6547b3f90c",
-      "class_hash": "0x6cf94a078369d320ff752ec0cfdb5e2ec88e04a80385f6c83e57876a0edb361",
-      "original_class_hash": "0x6cf94a078369d320ff752ec0cfdb5e2ec88e04a80385f6c83e57876a0edb361",
+      "class_hash": "0x471a6c61ad82a916976bae86c3a7ebdaf920845a5610224b2e36d846bbf09ac",
+      "original_class_hash": "0x471a6c61ad82a916976bae86c3a7ebdaf920845a5610224b2e36d846bbf09ac",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -793,8 +793,8 @@
     {
       "kind": "DojoContract",
       "address": "0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1",
-      "class_hash": "0x2cfdfe3b0a009d5365bc5139dae2078f61dd8ad989fc8dc497a07caffb088c6",
-      "original_class_hash": "0x2cfdfe3b0a009d5365bc5139dae2078f61dd8ad989fc8dc497a07caffb088c6",
+      "class_hash": "0x614c8389be72137e289a1e8415a4685326947bdb197b6a2d31d37569c4e4a71",
+      "original_class_hash": "0x614c8389be72137e289a1e8415a4685326947bdb197b6a2d31d37569c4e4a71",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -909,8 +909,8 @@
     {
       "kind": "DojoContract",
       "address": "0x53fb59cc9aab03983033de799d10c9a0d3e4475e19224a661cefeacb0577871",
-      "class_hash": "0x29dfaa4b09b0ecfffcc6be0138eb10ae961f496c9eca1dde2b2445a9c0129bb",
-      "original_class_hash": "0x29dfaa4b09b0ecfffcc6be0138eb10ae961f496c9eca1dde2b2445a9c0129bb",
+      "class_hash": "0x36670d26fdcd56a6f9d9385198a9f2cef98641af0ab26f14b95db6c1839bac0",
+      "original_class_hash": "0x36670d26fdcd56a6f9d9385198a9f2cef98641af0ab26f14b95db6c1839bac0",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -3313,11 +3313,6 @@
           "key": false
         },
         {
-          "name": "size",
-          "type": "u8",
-          "key": false
-        },
-        {
           "name": "battle_id",
           "type": "u8",
           "key": false
@@ -3328,8 +3323,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x1ddf0fd4d7d9c7ef9cb8d4667cad1508bb76908822f532a023b4cc8f18c7260",
-      "original_class_hash": "0x1ddf0fd4d7d9c7ef9cb8d4667cad1508bb76908822f532a023b4cc8f18c7260",
+      "class_hash": "0x731fbfcb0f28a432e2d3337c826d0c7322aa5d35cbc05d74d04b3641d9e7676",
+      "original_class_hash": "0x731fbfcb0f28a432e2d3337c826d0c7322aa5d35cbc05d74d04b3641d9e7676",
       "abi": [
         {
           "type": "impl",
@@ -3534,10 +3529,6 @@
             },
             {
               "name": "character_uuid",
-              "type": "core::integer::u8"
-            },
-            {
-              "name": "size",
               "type": "core::integer::u8"
             },
             {

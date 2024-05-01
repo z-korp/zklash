@@ -90,15 +90,15 @@ impl StoreImpl of StoreTrait {
 
     fn characters(self: Store, squad: Squad) -> Array<Character> {
         let mut foes: Array<Character> = array![];
-        let mut index = squad.size;
+        let mut index: u8 = 0;
         loop {
-            if index == 0 {
+            if index == squad.size {
                 break;
             }
+            index += 1;
             let foe: Foe = self.foe(squad.registry_id, squad.id, index);
             let character: Character = foe.into();
             foes.append(character);
-            index -= 1;
         };
         foes
     }
@@ -182,10 +182,12 @@ impl StoreImpl of StoreTrait {
     fn set_character_foes(
         self: Store, registry_id: u32, squad_id: u32, mut characters: Span<Character>
     ) {
+        let mut index: u8 = 0;
         loop {
             match characters.pop_front() {
                 Option::Some(character) => {
-                    let foe: Foe = FoeTrait::from(*character, registry_id, squad_id);
+                    index += 1;
+                    let foe: Foe = FoeTrait::from(*character, registry_id, squad_id, index);
                     self.set_foe(foe);
                 },
                 Option::None => { break; },

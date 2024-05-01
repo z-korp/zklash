@@ -61,11 +61,11 @@ impl FoeImpl of FoeTrait {
     }
 
     #[inline(always)]
-    fn from(character: Character, registry_id: u32, squad_id: u32) -> Foe {
+    fn from(character: Character, registry_id: u32, squad_id: u32, id: u8) -> Foe {
         Foe {
             registry_id,
             squad_id,
-            id: character.id,
+            id,
             role: character.role,
             item: character.item,
             level: character.level,

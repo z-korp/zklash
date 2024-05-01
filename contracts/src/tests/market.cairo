@@ -38,7 +38,6 @@ fn test_market_hire_one() {
     // [Assert] Team
     let team = store.team(context.player_id, player.team_id());
     assert(intiial_team.gold >= team.gold, 'Hire: wrong team gold');
-    assert(team.size > 0, 'Hire: wrong team char count');
     assert(team.character_uuid > 0, 'Hire: wrong team char count');
 
     // [Assert] Character

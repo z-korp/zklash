@@ -31,7 +31,6 @@ struct Team {
     health: u32,
     level: u8,
     character_uuid: u8,
-    size: u8,
     battle_id: u8,
     foe_squad_id: u32,
 }
@@ -62,7 +61,6 @@ impl TeamImpl of TeamTrait {
             health: constants::DEFAULT_HEALTH,
             level: 1,
             character_uuid: 0,
-            size: 0,
             battle_id: 0,
             foe_squad_id: 0,
         }
@@ -99,7 +97,6 @@ impl TeamImpl of TeamTrait {
         self.gold -= shop.purchase_cost.into();
         // [Effect] Hire Character
         let role: Role = shop.purchase_role(index);
-        self.size += 1;
         self.character_uuid += 1;
         let character_id = self.character_uuid;
         let character: Character = CharacterTrait::new(self.player_id, self.id, character_id, role);
@@ -132,8 +129,6 @@ impl TeamImpl of TeamTrait {
         assert(from_role == to_role, errors::TEAM_XP_INVALID_ROLE);
         // [Effect] Update Character
         from.merge(ref to);
-        // [Effect] Update team size
-        self.size -= 1;
     }
 
     #[inline(always)]
@@ -144,8 +139,6 @@ impl TeamImpl of TeamTrait {
         self.gold += character.level.into();
         // [Effect] Update Character
         character.nullify();
-        // [Effect] Update Team size
-        self.size -= 1;
     }
 
     #[inline(always)]
@@ -183,7 +176,7 @@ impl TeamImpl of TeamTrait {
             self.health -= 1;
         };
         // [Effect] Reset gold
-        self.gold = constants::DEFAULT_GOLD;
+        self.gold += constants::DEFAULT_GOLD;
         // [Effect] Reroll Shop
         shop.shuffle(seed);
         // [Effect] Update foe squad id for client purpose
@@ -234,7 +227,6 @@ impl ZeroableTeam of core::Zeroable<Team> {
             health: 0,
             level: 0,
             character_uuid: 0,
-            size: 0,
             battle_id: 0,
             foe_squad_id: 0,
         }

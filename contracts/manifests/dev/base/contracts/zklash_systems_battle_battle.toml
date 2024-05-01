@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0x2cfdfe3b0a009d5365bc5139dae2078f61dd8ad989fc8dc497a07caffb088c6"
-original_class_hash = "0x2cfdfe3b0a009d5365bc5139dae2078f61dd8ad989fc8dc497a07caffb088c6"
+class_hash = "0x614c8389be72137e289a1e8415a4685326947bdb197b6a2d31d37569c4e4a71"
+original_class_hash = "0x614c8389be72137e289a1e8415a4685326947bdb197b6a2d31d37569c4e4a71"
 base_class_hash = "0x0"
 abi = "manifests/dev/abis/base/contracts/zklash_systems_battle_battle.json"
 reads = []

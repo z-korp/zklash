@@ -87,9 +87,9 @@ public class TeamManager : MonoBehaviour
     {
         for (int i = 0; i < TeamSpots.Length; i++)
         {
-            if (TeamSpots[i].mob != null)
+            if (TeamSpots[i].Mob != null)
             {
-                MobController mobController = TeamSpots[i].mob.GetComponent<MobController>();
+                MobController mobController = TeamSpots[i].Mob.GetComponent<MobController>();
                 if (mobController != null && mobController.Character != null)
                 {
                     GameCharacter character = mobController.Character;

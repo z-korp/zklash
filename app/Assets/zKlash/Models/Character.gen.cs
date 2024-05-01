@@ -39,7 +39,7 @@ public class Character : ModelInstance
     public byte absorb;
 
     [ModelField("stun")]
-    public bool stun;
+    public byte stun;
 
     // Start is called before the first frame update
     void Start()

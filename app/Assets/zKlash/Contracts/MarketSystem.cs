@@ -7,14 +7,13 @@ using UnityEngine;
 using dojo_bindings;
 
 // System definitions for `zklash::systems::market::market` contract
-public class MarketSystem : MonoBehaviour {
+public class MarketSystem : MonoBehaviour
+{
     // The address of this contract
     public string contractAddress;
 
-    
-    // Call the `equip` system with the specified Account and calldata
-    // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> Equip(Account account, string world, uint team_id, uint character_id, uint index) {
+    public async Task<FieldElement> Equip(Account account, string world, uint team_id, byte character_id, uint index)
+    {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
                 to = contractAddress,
@@ -28,12 +27,9 @@ public class MarketSystem : MonoBehaviour {
             }
         });
     }
-            
 
-    
-    // Call the `hire` system with the specified Account and calldata
-    // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> Hire(Account account, string world, uint team_id, uint index) {
+    public async Task<FieldElement> Hire(Account account, string world, uint team_id, uint index)
+    {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
                 to = contractAddress,
@@ -46,12 +42,9 @@ public class MarketSystem : MonoBehaviour {
             }
         });
     }
-            
 
-    
-    // Call the `reroll` system with the specified Account and calldata
-    // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> Reroll(Account account, string world, uint team_id) {
+    public async Task<FieldElement> Reroll(Account account, string world, uint team_id)
+    {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
                 to = contractAddress,
@@ -63,22 +56,66 @@ public class MarketSystem : MonoBehaviour {
             }
         });
     }
-            
 
-    
+    public async Task<FieldElement> Merge(Account account, string world, uint team_id, uint from_id, uint to_id)
+    {
+        return await account.ExecuteRaw(new dojo.Call[] {
+            new dojo.Call{
+                to = contractAddress,
+                selector = "merge",
+                calldata = new dojo.FieldElement[] {
+                    new FieldElement(world).Inner,
+                    new FieldElement(team_id).Inner,
+                    new FieldElement(from_id).Inner,
+                    new FieldElement(to_id).Inner
+                }
+            }
+        });
+    }
+
+    public async Task<FieldElement> MergeFromShop(Account account, string world, uint team_id, uint character_id, uint index)
+    {
+        return await account.ExecuteRaw(new dojo.Call[] {
+            new dojo.Call{
+                to = contractAddress,
+                selector = "xp",
+                calldata = new dojo.FieldElement[] {
+                    new FieldElement(world).Inner,
+                    new FieldElement(team_id).Inner,
+                    new FieldElement(character_id).Inner,
+                    new FieldElement(index).Inner
+                }
+            }
+        });
+    }
+
+    public async Task<FieldElement> Sell(Account account, string world, uint team_id, uint character_id)
+    {
+        return await account.ExecuteRaw(new dojo.Call[] {
+            new dojo.Call{
+                to = contractAddress,
+                selector = "sell",
+                calldata = new dojo.FieldElement[] {
+                    new FieldElement(world).Inner,
+                new FieldElement(team_id).Inner,
+                new FieldElement(character_id).Inner
+                }
+            }
+        });
+    }
+
     // Call the `dojo_resource` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> DojoResource(Account account) {
+    public async Task<FieldElement> DojoResource(Account account)
+    {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
                 to = contractAddress,
                 selector = "dojo_resource",
                 calldata = new dojo.FieldElement[] {
-                    
+
                 }
             }
         });
     }
-            
 }
-        

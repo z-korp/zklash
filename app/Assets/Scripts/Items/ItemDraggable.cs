@@ -58,6 +58,17 @@ public class ItemDraggable : MonoBehaviour
             //itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
             mob.GetComponent<MobItem>().item = item;
             mob.GetComponent<MobController>().Character.Equip(item.type);
+
+            // Smart contract call
+            string entity = TeamManager.instance.GetEntityFromTeam(mob);
+            if (entity == "")
+            {
+                Debug.Log("Entity not found.");
+                return;
+            }
+            Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
+            ContractActions.instance.TriggerEquip(character.id, (uint)index);
+
             Destroy(gameObject);
         }
         else

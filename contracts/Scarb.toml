@@ -7,8 +7,7 @@ version = "0.6.0"
 sierra-replace-ids = true
 
 [scripts]
-migrate = "sozo build && sozo migrate && ./scripts/default_auth.sh"
-spawn = "./scripts/spawn.sh"
+deploy = "sozo build && sozo migrate plan && sozo migrate apply && ./scripts/katana.sh"
 
 [dependencies]
 origami = { git = "https://github.com/dojoengine/origami", rev = "501dcd4" }
@@ -20,7 +19,7 @@ dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.6.0" }
 initializer_class_hash = "0xbeef"
 
 [tool.dojo.env]
-# Local
+# Katana
 rpc_url = "http://localhost:5050/"
 account_address = "0xb3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca"
 private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
@@ -32,8 +31,8 @@ private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a
 [tool.dojo.world]
 name = "zKlash"
 description = "Autobattler where you hire creatures and improve them to defeat waves of enemies."
-cover_uri = "file://assets/cover.png"
-icon_uri = "file://assets/icon.png"
+# cover_uri = "file://assets/cover.png"
+# icon_uri = "file://assets/icon.png"
 website = "https://github.com/dojoengine/dojo-starter"
 
 [tool.dojo.world.socials]

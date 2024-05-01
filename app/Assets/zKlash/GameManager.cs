@@ -13,6 +13,7 @@ using UnityEngine.UI;
 using Object = System.Object;
 using Random = UnityEngine.Random;
 using zKlash.Game.Roles;
+using System.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -129,7 +130,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        /*Character characterComponent = entity.GetComponent<Character>();
+        Character characterComponent = entity.GetComponent<Character>();
         if (characterComponent != null)
         {
             Debug.Log($"-> Character entity spawned");
@@ -137,25 +138,124 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log(">>>>>>>>>>>> Current character information stored.");
                 PlayerData.Instance.characterEntities.Add(entity.name);
-                VillageData.Instance.UpdateFirstAvailableSpot((Role)characterComponent.role);
+                var character = worldManager.Entity(entity.name).GetComponent<Character>();
+                Debug.Log($"Character entity spawned with id: {entity.name}");
+                TeamManager.instance.UpdateMissingEntity(entity.name);
             }
-            //PlayerData.Instance.teamEntity = entity.name;
-        }*/
+        }
 
         Debug.Log($"---------------------------------");
     }
 
-    public async void TriggerCreatePlayAsync(string name)
+    // not working in webgl
+    /*public async void TriggerCreateAndSpawnAsync(string name)
     {
-        Debug.Log("TriggerCreatePlayAsync");
+        Debug.Log("TriggerCreateAndSpawnAsync");
         Account currentBurner = burnerManager.CurrentBurner;
         var nameHex = StringToHexString(name);
-        var txHash = await accountSystem.Create(currentBurner, dojoConfig.worldAddress, nameHex);
-        // Do something with txHash, like logging it
-        Debug.Log($"[Create] Transaction Hash: {txHash.Hex()}");
 
+        try
+        {
+            var txHash = await accountSystem.Create(currentBurner, dojoConfig.worldAddress, nameHex);
+            Debug.Log($"[Create] Transaction Hash: {txHash.Hex()}");
+            await provider.WaitForTransaction(txHash);
+            //await Task.Delay(500);
 
-        txHash = await accountSystem.Spawn(currentBurner, dojoConfig.worldAddress);
-        Debug.Log($"[Spawn] Transaction Hash: {txHash.Hex()}");
+            txHash = await accountSystem.Spawn(currentBurner, dojoConfig.worldAddress);
+            Debug.Log($"[Spawn] Transaction Hash: {txHash.Hex()}");
+            await provider.WaitForTransaction(txHash);
+            //await Task.Delay(500);
+        }
+        catch (Exception e)
+        {
+            Debug.Log($"Error: {e.Message}");
+        }
+    }*/
+
+    public IEnumerator TriggerCreateAndSpawn(string name)
+    {
+        Debug.Log("TriggerCreateAndSpawn");
+        Account currentBurner = burnerManager.CurrentBurner;
+        var nameHex = StringToHexString(name);
+
+        // Call the async method and wait for it to complete
+        string createTxHash = "";
+        yield return StartCoroutine(AwaitTask(CreateTransaction(currentBurner, nameHex), (result) => createTxHash = result));
+        yield return StartCoroutine(AwaitTask(AwaitTransaction(createTxHash))); ;
+
+        // Repeat for the spawning process
+        string spawnTxHash = "";
+        yield return StartCoroutine(AwaitTask(SpawnTransaction(currentBurner), (result) => spawnTxHash = result));
+        yield return StartCoroutine(AwaitTask(AwaitTransaction(spawnTxHash)));
+    }
+
+    // For tasks that return a value
+    private IEnumerator AwaitTask<T>(Task<T> task, Action<T> continuation)
+    {
+        while (!task.IsCompleted)
+        {
+            yield return null;
+        }
+
+        if (task.IsFaulted)
+        {
+            Debug.LogError("Task Failed: " + task.Exception.Flatten());
+        }
+        else if (task.IsCompleted)
+        {
+            try
+            {
+                continuation(task.Result);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error within continuation: " + ex);
+            }
+        }
+    }
+
+    // For tasks that do not return a value
+    private IEnumerator AwaitTask(Task task)
+    {
+        while (!task.IsCompleted)
+            yield return null;
+
+        if (task.IsFaulted)
+        {
+            Debug.LogError("Task Failed: " + task.Exception.Flatten());
+        }
+    }
+
+    public async Task<string> CreateTransaction(Account currentBurner, string nameHex)
+    {
+        try
+        {
+            var txHash = await accountSystem.Create(currentBurner, dojoConfig.worldAddress, nameHex);
+            return txHash.Hex();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"CreateTransaction failed: {ex.Message}");
+            return null;
+        }
+    }
+
+    public async Task<string> SpawnTransaction(Account currentBurner)
+    {
+        try
+        {
+            var txHash = await accountSystem.Spawn(currentBurner, dojoConfig.worldAddress);
+            return txHash.Hex();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"CreateTransaction failed: {ex.Message}");
+            return null;
+        }
+    }
+
+    public async Task AwaitTransaction(string txHash)
+    {
+        await provider.WaitForTransaction(new FieldElement(txHash));
     }
 }

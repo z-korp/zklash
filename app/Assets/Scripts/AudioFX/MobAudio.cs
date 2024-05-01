@@ -24,7 +24,10 @@ public class MobAudio : MonoBehaviour
     {
         if (attackSound != null)
         {
-            AudioManager.instance.PlayClipAt(attackSound, transform.position);
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.PlayClipAt(attackSound, transform.position);
+            }
         }
 
     }
@@ -33,7 +36,10 @@ public class MobAudio : MonoBehaviour
     {
         if (deathSound != null)
         {
-            AudioManager.instance.PlayClipAt(deathSound, transform.position);
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.PlayClipAt(deathSound, transform.position);
+            }
         }
 
     }

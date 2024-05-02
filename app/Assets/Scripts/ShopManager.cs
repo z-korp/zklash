@@ -46,7 +46,7 @@ public class ShopManager : MonoBehaviour
         }
 
         // This is to avoid contract init
-        /*if (!isShopOpen)
+        if (!isShopOpen)
         {
             isShopOpen = true;
             Role[] roles = PlayerData.Instance.SplitRoles(rolesUint);
@@ -59,7 +59,7 @@ public class ShopManager : MonoBehaviour
 
             ItemSpawn itemSpawn = shopItems[0].GetComponent<ItemSpawn>();
             itemSpawn.SetItem((Item)itemUint);
-        }*/
+        }
     }
 
     public void Reroll()

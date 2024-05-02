@@ -31,7 +31,13 @@ public class CanvasManager : MonoBehaviour
     public void ToggleCanvasInterStep(bool victory = true)
     {
         canvasInterStep.SetActive(!canvasInterStep.activeSelf);
-        canvasInterStep.GetComponent<CanvasInterStep>().ToggleRibbonVictoryDefeat(victory);
+        // TBD : Update is good value
+        if (canvasInterStep.activeSelf)
+        {
+            canvasInterStep.GetComponent<CanvasInterStep>().UpdateTrophysDisplay(3);
+            canvasInterStep.GetComponent<CanvasInterStep>().UpdateHeartsDisplay(7);
+            canvasInterStep.GetComponent<CanvasInterStep>().ToggleRibbonVictoryDefeat(victory);
+        }
     }
 
     public void ToggleCanvases()

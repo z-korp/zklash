@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using zKlash.Game.Roles;
 using zKlash.Game.Items;
 
-public class ClickButtonFight : MonoBehaviour
+public class ClickButtonFightCopy : MonoBehaviour
 {
     public void OnClickFight()
     {
@@ -98,9 +98,5 @@ public class ClickButtonFight : MonoBehaviour
         CameraMovement.instance.MoveCameraToFight();
         CanvasManager.instance.ToggleCanvases();
         TeamManager.instance.MoveTeam();
-
-        // refresh shop
-        PlayerData.Instance.isShopSet = false;
-        ShopManager.instance.isShopOpen = false;
     }
 }

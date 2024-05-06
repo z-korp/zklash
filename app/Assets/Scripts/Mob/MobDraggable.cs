@@ -8,6 +8,7 @@ public class MobDraggable : MonoBehaviour
     //public GameObject indicatorPrefab; // Référence au préfab de la flèche
     //public Transform[] targets; // Les cibles vers lesquelles les flèches vont pointer
     //private List<GameObject> indicators = new List<GameObject>();
+    public static GameObject DraggedInstance;
 
     bool drag;
     public Vector3 initPos = Vector3.zero;
@@ -72,6 +73,7 @@ public class MobDraggable : MonoBehaviour
 
     private void OnMouseDown()
     {
+        DraggedInstance = gameObject;
         drag = true;
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
@@ -83,6 +85,7 @@ public class MobDraggable : MonoBehaviour
 
     private void OnMouseUp()
     {
+        DraggedInstance = null;
         drag = false;
         animator.SetBool("IsWalking", false);
         DestroyAllIndicators();
@@ -115,13 +118,13 @@ public class MobDraggable : MonoBehaviour
         if (TeamManager.instance.RoleAtIndex(zoneIndex) == gameObject.GetComponent<MobController>().Character.Role.GetRole)
         {
             Debug.Log("Merge case");
-            if(isFromShop && PlayerData.Instance.purchaseCost > PlayerData.Instance.Gold)
+            if (isFromShop && PlayerData.Instance.purchaseCost > PlayerData.Instance.Gold)
             {
                 Debug.LogWarning("Not enough balance");
                 rb.MovePosition(initPos);
                 return;
             }
-            
+
             GameObject mobToUpdate = TeamManager.instance.GetMemberFromTeam(zoneIndex);
             GameObject mobToRemove = gameObject;
 

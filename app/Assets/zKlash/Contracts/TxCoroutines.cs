@@ -4,7 +4,6 @@ using Dojo;
 using Dojo.Starknet;
 using UnityEngine;
 using dojo_bindings;
-using System.Threading.Tasks;
 using System.Collections;
 
 public class TxCoroutines : MonoBehaviour
@@ -30,9 +29,11 @@ public class TxCoroutines : MonoBehaviour
     // For tasks that return a value
     private IEnumerator AwaitTask<T>(Task<T> task, Action<T> continuation)
     {
+        WaitForSeconds waitTime = new WaitForSeconds(0.2f); // every 0.02 seconds
+
         while (!task.IsCompleted)
         {
-            yield return null;
+            yield return waitTime;
         }
 
         if (task.IsFaulted)
@@ -55,8 +56,10 @@ public class TxCoroutines : MonoBehaviour
     // For tasks that do not return a value
     private IEnumerator AwaitTask(Task task)
     {
+        WaitForSeconds waitTime = new WaitForSeconds(0.2f); // every 0.02 seconds
+
         while (!task.IsCompleted)
-            yield return null;
+            yield return waitTime;
 
         if (task.IsFaulted)
         {
@@ -97,6 +100,7 @@ public class TxCoroutines : MonoBehaviour
         string spawnTxHash = "";
         yield return StartCoroutine(AwaitTask(accountSystem.Spawn(account, world), (result) => spawnTxHash = result.Hex()));
         yield return StartCoroutine(AwaitTask(AwaitTransaction(spawnTxHash)));
+        Debug.Log("[[[[[[[[[[[ END ExecuteCreateAndSpawn ]]]]]]]]]]]");
     }
 
     // Market System
@@ -114,6 +118,7 @@ public class TxCoroutines : MonoBehaviour
             )
         );
         yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        Debug.Log("[[[[[[[[[[[ END ExecuteEquip ]]]]]]]]]]]");
     }
 
     public IEnumerator ExecuteHire(uint team_id, uint index)
@@ -130,6 +135,7 @@ public class TxCoroutines : MonoBehaviour
             )
         );
         yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        Debug.Log("[[[[[[[[[[[ END ExecuteHire ]]]]]]]]]]]");
     }
 
     public IEnumerator ExecuteReroll(uint team_id, Action onFinish = null)
@@ -166,6 +172,7 @@ public class TxCoroutines : MonoBehaviour
             )
         );
         yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        Debug.Log("[[[[[[[[[[[ END ExecuteMerge ]]]]]]]]]]]");
     }
 
     public IEnumerator ExecuteMergeFromShop(uint team_id, uint character_id, uint index)
@@ -182,6 +189,7 @@ public class TxCoroutines : MonoBehaviour
             )
         );
         yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        Debug.Log("[[[[[[[[[[[ END ExecuteMergeFromShop ]]]]]]]]]]]");
     }
 
     public IEnumerator ExecuteSell(uint team_id, uint character_id)
@@ -198,6 +206,7 @@ public class TxCoroutines : MonoBehaviour
             )
         );
         yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        Debug.Log("[[[[[[[[[[[ END ExecuteSell ]]]]]]]]]]]");
     }
 
     // Battle System
@@ -215,5 +224,6 @@ public class TxCoroutines : MonoBehaviour
             )
         );
         yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        Debug.Log("[[[[[[[[[[[ END ExecuteStartBattle ]]]]]]]]]]]");
     }
 }

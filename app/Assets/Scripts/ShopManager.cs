@@ -12,7 +12,7 @@ public class ShopManager : MonoBehaviour
     public uint rolesUint;
     public uint itemUint;
 
-    private bool isShopOpen = false;
+    public bool isShopOpen = false;
 
     void Awake()
     {

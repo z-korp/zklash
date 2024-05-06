@@ -810,6 +810,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4477060482053654553, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      propertyPath: limit
+      value: 10000
+      objectReference: {fileID: 0}
     - target: {fileID: 4900589733936057544, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
       propertyPath: m_Name
       value: WorldManager

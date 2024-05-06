@@ -18,9 +18,6 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
-    public List<CharacterSetup> alliesSetup;
-    public List<CharacterSetup> enemiesSetup;
-
     public GameObject[] unitPrefabs;
 
     public ItemData[] itemData;
@@ -28,10 +25,11 @@ public class BattleManager : MonoBehaviour
     public List<GameObject> allySpots = new List<GameObject>();
     public List<GameObject> enemySpots = new List<GameObject>();
 
+    public List<CharacterSetup> alliesSetup;
+    public List<CharacterSetup> enemiesSetup;
+
     public List<GameObject> allies = new List<GameObject>();
-    private List<GameCharacter> allyCharacters = new List<GameCharacter>();
-    private List<GameObject> enemies = new List<GameObject>();
-    private List<GameCharacter> enemyCharacters = new List<GameCharacter>();
+    public List<GameObject> enemies = new List<GameObject>();
 
     private bool isBattleStarted = false;
 
@@ -124,51 +122,49 @@ public class BattleManager : MonoBehaviour
         {
             StartCoroutine(Battle(allies, enemies));
             isBattleStarted = true;
-            Debug.Log("----------------------------> Lets fight !!!!");
-
         }
     }
 
-    public void InstanciatePlayerTeam()
+    private GameObject CreateMob(CharacterSetup setup, GameObject spot, Orientation orientation)
     {
-        // Check if there is a team or not
-        if (allies.Count == 0)
+        if (setup.role == Role.None || setup.role.ToString() == "None")
+            return null;
+
+        string roleName = PrefabMappings.NameToRoleMap[setup.role];
+        GameObject prefab = PrefabUtils.FindPrefabByName(unitPrefabs, roleName);
+        if (prefab == null || spot == null)
+            return null;
+
+        GameObject mobObject = Instantiate(prefab, spot.transform.position, Quaternion.identity);
+        mobObject.GetComponent<MobOrientation>().SetOrientation(orientation);
+
+        GameCharacter character = new GameCharacter(setup.role, setup.level, setup.item);
+        mobObject.GetComponent<MobController>().ConfigureCharacter(character);
+
+        string itemName = PrefabMappings.NameToItemDataMap[setup.item];
+        if (itemName != "None")
         {
+            ItemData item = PrefabUtils.FindScriptableByName(itemData, itemName);
+            mobObject.GetComponent<MobController>().Character.Equip(item.type);
+            mobObject.GetComponent<MobItem>().item = item;
 
-            // Instanciate Player Team
-            for (int i = 0; i < alliesSetup.Count; i++)
-            {
-                var ally = alliesSetup[i];
+        }
 
-                GameCharacter character = new GameCharacter(ally.role, ally.level, ally.item);
-                allyCharacters.Add(character);
+        HideXpCanvas(mobObject);
 
-                if (ally.role == Role.None)
-                {
-                    continue;
-                }
+        return mobObject;
+    }
 
-                var name = PrefabMappings.NameToRoleMap[ally.role];
-                var prefab = PrefabUtils.FindPrefabByName(unitPrefabs, name);
+    public void InstanciateTeam(List<GameObject> mobs, List<CharacterSetup> mobSetups, List<GameObject> spots, Orientation orientation)
+    {
+        if (mobs.Count > 0)
+            return;
 
-                if (prefab != null && allySpots[i] != null && name != "None")
-                {
-                    GameObject allyObject = Instantiate(prefab, allySpots[i].transform.position, Quaternion.identity);
-                    allyObject.GetComponent<MobOrientation>().SetOrientation(MobOrientation.Orientation.Right);
-                    allyObject.GetComponent<MobController>().ConfigureCharacter(character);
-
-                    var itemName = PrefabMappings.NameToItemDataMap[ally.item];
-                    if (itemName != "None")
-                    {
-                        var item = PrefabUtils.FindScriptableByName(itemData, itemName);
-                        allyObject.GetComponent<MobItem>().item = item;
-                    }
-
-                    HideXpCanvas(allyObject);
-
-                    allies.Add(allyObject);
-                }
-            }
+        for (int i = 0; i < mobSetups.Count; i++)
+        {
+            GameObject mob = CreateMob(mobSetups[i], spots[i], orientation);
+            if (mob != null)
+                mobs.Add(mob);
         }
     }
 
@@ -182,50 +178,6 @@ public class BattleManager : MonoBehaviour
 
         // Clear the list after destroying all GameObjects
         gameObjectsList.Clear();
-    }
-
-    public void InstantiateEnemyTeam()
-    {
-        DestroyGameObjectFromList(enemies);
-        // Clear team 
-        enemies.Clear();
-
-        // Instanciate new team
-        for (int i = 0; i < enemiesSetup.Count; i++)
-        {
-            var enemy = enemiesSetup[i];
-
-            GameCharacter character = new GameCharacter(enemy.role, enemy.level, enemy.item);
-            enemyCharacters.Add(character);
-
-            if (enemy.role == Role.None)
-            {
-                continue;
-            }
-
-            var name = PrefabMappings.NameToRoleMap[enemy.role];
-            var prefab = PrefabUtils.FindPrefabByName(unitPrefabs, name);
-
-            if (prefab != null && enemySpots[i] != null)
-            {
-                GameObject enemyObject = Instantiate(prefab, enemySpots[i].transform.position, Quaternion.identity);
-                enemyObject.GetComponent<MobOrientation>().SetOrientation(MobOrientation.Orientation.Left);
-                enemyObject.GetComponent<MobController>().ConfigureCharacter(character);
-
-                var itemName = PrefabMappings.NameToItemDataMap[enemy.item];
-                if (itemName != "None")
-                {
-                    var item = PrefabUtils.FindScriptableByName(itemData, itemName);
-                    enemyObject.GetComponent<MobController>().Character.Equip(item.type);
-                    enemyObject.GetComponent<MobItem>().item = item;
-                }
-
-                HideXpCanvas(enemyObject);
-
-                enemies.Add(enemyObject);
-            }
-        }
-
     }
 
     void HideXpCanvas(GameObject go)
@@ -252,20 +204,26 @@ public class BattleManager : MonoBehaviour
     private Buff next_buff1 = new Buff();
     private Buff next_buff2 = new Buff();
 
+    private void ExecuteAfterBattle(bool victory)
+    {
+        CameraMovement.instance.MoveCameraToShop();
+        TeamManager.instance.ResetStatCharacter();
+        TeamManager.instance.TPTeamToShop();
+        CanvasManager.instance.ToggleCanvases();
+        CanvasManager.instance.ToggleCanvasInterStep(victory);
+        isBattleStarted = false;
+    }
+
     IEnumerator Battle(List<GameObject> team1, List<GameObject> team2)
     {
+        Debug.Log("Team 1: " + team1.Count + " --- Team 2: " + team2.Count);
         if (team1[0].GetComponent<MobHealth>().Health <= 0)
         {
             team1.RemoveAt(0);
             if (team1.Count == 0)
             {
                 Debug.Log("Team 1 has lost");
-                CameraMovement.instance.MoveCameraToShop();
-                TeamManager.instance.ResetStatCharacter();
-                TeamManager.instance.TPTeamToShop();
-                CanvasManager.instance.ToggleCanvases();
-                CanvasManager.instance.ToggleCanvasInterStep(false);
-                isBattleStarted = false;
+                ExecuteAfterBattle(false);
                 yield break;
             }
 
@@ -283,12 +241,7 @@ public class BattleManager : MonoBehaviour
             if (team2.Count == 0)
             {
                 Debug.Log("Team 2 has lost");
-                CameraMovement.instance.MoveCameraToShop();
-                TeamManager.instance.ResetStatCharacter();
-                TeamManager.instance.TPTeamToShop();
-                CanvasManager.instance.ToggleCanvases();
-                CanvasManager.instance.ToggleCanvasInterStep(true);
-                isBattleStarted = false;
+                ExecuteAfterBattle(true);
                 yield break;
             }
 
@@ -484,7 +437,6 @@ public class BattleManager : MonoBehaviour
             Debug.Log("MobAttack component not found on attacker or MobHealth component not found on defender.");
         }
     }
-
 
     (int, Buff) postMortem(GameObject character, GameObject foe)
     {

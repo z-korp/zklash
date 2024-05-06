@@ -46,6 +46,5 @@ Happy coding!
 ## Deployment
 
 - `katana --disable-fee --seed 0 --invoke-max-steps 1000000000`
-- `sozo build && sozo migrate plan && sozo migrate apply`
-- `./scripts/default_auth.sh` 
-- `torii --world 0x11aa9b474f093e27b773aaec3c0bae571140e825d27ac433698d3584c8d4af9`
+- `scarb run deploy`
+- `torii --world 0x11aa9b474f093e27b773aaec3c0bae571140e825d27ac433698d3584c8d4af9 --allowed-origins "*"`

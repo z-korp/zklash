@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Orientation
+{
+    Right,
+    Left,
+}
+
 public class MobOrientation : MonoBehaviour
 {
-    public enum Orientation
-    {
-        Right,
-        Left,
-    }
-
     public Orientation orientation;
 
     private SpriteRenderer spriteRenderer;

@@ -15,6 +15,9 @@ public class Team : ModelInstance
     [ModelField("id")]
     public uint id;
 
+    [ModelField("registry_id")]
+    public uint registry_id;
+
     [ModelField("gold")]
     public uint gold;
 
@@ -31,7 +34,7 @@ public class Team : ModelInstance
     public byte battle_id;
 
     [ModelField("foe_squad_id")]
-    public byte foe_squad_id;
+    public uint foe_squad_id;
 
     public override string ToString()
     {

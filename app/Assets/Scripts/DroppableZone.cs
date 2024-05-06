@@ -15,7 +15,6 @@ public class DroppableZone : MonoBehaviour
         MobDraggable draggable = collision.gameObject.GetComponent<MobDraggable>();
         if (draggable != null)
         {
-            Debug.Log("Player entered droppable zone");
             isDroppable = true;
         }
 

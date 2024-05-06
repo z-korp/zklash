@@ -47,7 +47,7 @@ public class Shop : ModelInstance
 
     public override void OnUpdate(Model model)
     {
-        Debug.Log($"Shop updated: {model}");
+        //Debug.Log($"Shop updated: {model}");
         base.OnUpdate(model);
     }
 }

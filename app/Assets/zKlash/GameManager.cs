@@ -134,6 +134,42 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        /*Team teamComponent = entity.GetComponent<Team>();
+        if (teamComponent != null)
+        {
+            Debug.Log($"-> Team entity spawned");
+            if (teamComponent.player_id.Hex() == currentBurner.Address.Hex())
+            {
+                Debug.Log(">>>>>>>>>>>> Current team information stored.");
+                PlayerData.Instance.teamEntity = entity.name;
+            }
+        }
+
+        Foe foeComponent = entity.GetComponent<Foe>();
+        if (foeComponent != null)
+        {
+            Debug.Log($"-> Foe entity spawned");
+            if (foeComponent.player_id.Hex() == currentBurner.Address.Hex())
+            {
+                Debug.Log(">>>>>>>>>>>> Current foe information stored.");
+                PlayerData.Instance.foeEntities.Add(entity.name);
+                var foe = worldManager.Entity(entity.name).GetComponent<Foe>();
+                Debug.Log($"Foe entity spawned with id: {entity.name}");
+                TeamManager.instance.UpdateMissingEntity(entity.name);
+            }
+        }
+
+        Squad squadComponent = entity.GetComponent<Squad>();
+        if (squadComponent != null)
+        {
+            Debug.Log($"-> Squad entity spawned");
+            if (squadComponent.player_id.Hex() == currentBurner.Address.Hex())
+            {
+                Debug.Log(">>>>>>>>>>>> Current squad information stored.");
+                PlayerData.Instance.squadEntity = entity.name;
+            }
+        }*/
+
         Debug.Log($"---------------------------------");
     }
 
@@ -161,4 +197,33 @@ public class GameManager : MonoBehaviour
             Debug.Log($"Error: {e.Message}");
         }
     }*/
+
+    public string GetSquadEntity(uint registryId, uint squadId)
+    {
+        foreach (var entity in worldManager.Entities())
+        {
+            Squad squadComponent = entity.GetComponent<Squad>();
+            if (squadComponent != null)
+            {
+                if(squadComponent.registry_id == registryId && squadComponent.id == squadId)
+                    return entity.name;
+            }
+        }
+        return "";
+    }
+
+    public List<string> GetFoeEntities(uint registryId, uint squadId)
+    {
+        List<string> foeEntities = new List<string>();
+        foreach (var entity in worldManager.Entities())
+        {
+            Foe foeComponent = entity.GetComponent<Foe>();
+            if (foeComponent != null)
+            {
+                if(foeComponent.registry_id == registryId && foeComponent.squad_id == squadId)
+                    foeEntities.Add(entity.name);
+            }
+        }
+        return foeEntities;
+    }
 }

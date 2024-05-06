@@ -16,15 +16,6 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
         Debug.Log("En fait non!");
     }
 
-    public void OnDrop(PointerEventData eventData)
-    {
-        if (MobDraggable.DraggedInstance)
-        {
-            Debug.Log("Mob Dropped for selling: " + MobDraggable.DraggedInstance.name);
-            OnClickSell(MobDraggable.DraggedInstance);
-        }
-    }
-
     public void OnClickSell(GameObject draggedObject)
     {
         Debug.Log("Selling mob: " + draggedObject.name);

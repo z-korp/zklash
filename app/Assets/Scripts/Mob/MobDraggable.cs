@@ -8,7 +8,6 @@ public class MobDraggable : MonoBehaviour
     //public GameObject indicatorPrefab; // Référence au préfab de la flèche
     //public Transform[] targets; // Les cibles vers lesquelles les flèches vont pointer
     //private List<GameObject> indicators = new List<GameObject>();
-    public static GameObject DraggedInstance;
 
     bool drag;
     public Vector3 initPos = Vector3.zero;
@@ -73,7 +72,6 @@ public class MobDraggable : MonoBehaviour
 
     private void OnMouseDown()
     {
-        DraggedInstance = gameObject;
         drag = true;
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
@@ -85,7 +83,6 @@ public class MobDraggable : MonoBehaviour
 
     private void OnMouseUp()
     {
-        DraggedInstance = null;
         drag = false;
         animator.SetBool("IsWalking", false);
         DestroyAllIndicators();

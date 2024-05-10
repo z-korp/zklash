@@ -90,6 +90,12 @@ public class MobDraggable : MonoBehaviour
         if (mouseHoverDetector != null)
             mouseHoverDetector.OnMouseUpCanvas();
 
+        //TBD: SELL MOB, better solution ?
+        // Check need to be done because we hide and show btn so the instance may not exist
+        if (ClickButtonSell.instance != null)
+            if (ClickButtonSell.instance.isDraggingSellMob)
+                ClickButtonSell.instance.SellMob(gameObject);
+
         // Cancel the drag if the mob is not dropped in a valid zone
         if (!currentDroppableZone || !currentDroppableZone.CanBeDropped())
         {

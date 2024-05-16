@@ -7,33 +7,34 @@ using UnityEngine;
 using dojo_bindings;
 
 // System definitions for `zklash::systems::account::account` contract
-public class AccountSystem : MonoBehaviour {
-    // The address of this contract
-    public string contractAddress;
+public class AccountSystem : MonoBehaviour
+{
+    public GameManagerData data;
 
-    
     // Call the `dojo_resource` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> DojoResource(Account account) {
+    public async Task<FieldElement> DojoResource(Account account)
+    {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.accountContractAddress,
                 selector = "dojo_resource",
                 calldata = new dojo.FieldElement[] {
-                    
+
                 }
             }
         });
     }
-            
 
-    
+
+
     // Call the `create` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> Create(Account account, string world, string name) {
+    public async Task<FieldElement> Create(Account account, string world, string name)
+    {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.accountContractAddress,
                 selector = "create",
                 calldata = new dojo.FieldElement[] {
                     new FieldElement(world).Inner,
@@ -45,10 +46,11 @@ public class AccountSystem : MonoBehaviour {
 
     // Call the `spawn` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> Spawn(Account account, string world) {
+    public async Task<FieldElement> Spawn(Account account, string world)
+    {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.accountContractAddress,
                 selector = "spawn",
                 calldata = new dojo.FieldElement[] {
                     new FieldElement(world).Inner
@@ -56,6 +58,5 @@ public class AccountSystem : MonoBehaviour {
             }
         });
     }
-            
+
 }
-        

@@ -9,14 +9,13 @@ using dojo_bindings;
 // System definitions for `zklash::systems::market::market` contract
 public class MarketSystem : MonoBehaviour
 {
-    // The address of this contract
-    public string contractAddress;
+    public GameManagerData data;
 
     public async Task<FieldElement> Equip(Account account, string world, uint team_id, byte character_id, uint index)
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.marketContractAddress,
                 selector = "equip",
                 calldata = new dojo.FieldElement[] {
                     new FieldElement(world).Inner,
@@ -32,7 +31,7 @@ public class MarketSystem : MonoBehaviour
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.marketContractAddress,
                 selector = "hire",
                 calldata = new dojo.FieldElement[] {
                     new FieldElement(world).Inner,
@@ -47,7 +46,7 @@ public class MarketSystem : MonoBehaviour
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.marketContractAddress,
                 selector = "reroll",
                 calldata = new dojo.FieldElement[] {
                     new FieldElement(world).Inner,
@@ -61,7 +60,7 @@ public class MarketSystem : MonoBehaviour
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.marketContractAddress,
                 selector = "merge",
                 calldata = new dojo.FieldElement[] {
                     new FieldElement(world).Inner,
@@ -77,7 +76,7 @@ public class MarketSystem : MonoBehaviour
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.marketContractAddress,
                 selector = "xp",
                 calldata = new dojo.FieldElement[] {
                     new FieldElement(world).Inner,
@@ -93,12 +92,12 @@ public class MarketSystem : MonoBehaviour
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.marketContractAddress,
                 selector = "sell",
                 calldata = new dojo.FieldElement[] {
                     new FieldElement(world).Inner,
-                new FieldElement(team_id).Inner,
-                new FieldElement(character_id).Inner
+                    new FieldElement(team_id).Inner,
+                    new FieldElement(character_id).Inner
                 }
             }
         });
@@ -110,10 +109,9 @@ public class MarketSystem : MonoBehaviour
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.marketContractAddress,
                 selector = "dojo_resource",
                 calldata = new dojo.FieldElement[] {
-
                 }
             }
         });

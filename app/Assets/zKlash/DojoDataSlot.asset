@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4621fae92654b429788caf8031b18615, type: 3}
+  m_Name: DojoDataSlot
+  m_EditorClassIdentifier: 
+  masterPrivateKey: 0x76165bfb2708ab726999aa73d95d9a0bbaa94f9ced060dc5393ecdd020f9079
+  masterAddress: 0x7fb5fb8033b9f199ba9347c2f8c1bdbbd47d8a22c09d25b5a29c183ddb47252
+  worldContractAddress: 0x7da33b5f9f052d95f3a7df0f6f883839769136fbd41f26a9293c339c121ed3e
+  accountContractAddress: 0x3fccc51332ee92af68697a43db75661e7cb2825b7dd14d92f1440d1efcb0e24
+  battleContractAddress: 0x5d3136d5d0d31f947f2009b41e9bc8df5f99c71efd4eaca8e12a68fb0877c3b
+  marketContractAddress: 0x3f16c18eb723913b54ac05ccf90880db45a5a865e8d332a2817bce74995bd6a

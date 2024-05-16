@@ -770,6 +770,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1648136030876143075, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      propertyPath: dojoConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 82a750fe7502b4a6abd45852352f1bfc, type: 2}
     - target: {fileID: 3269270482660702203, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -818,6 +822,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorldManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5092250449725577079, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 9c805addede434c01895792abf7903c3, type: 2}
+    - target: {fileID: 5092250449725577079, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      propertyPath: contractAddress
+      value: 0x6b3db511167c6c2291697a02e7ed9a162f115ac6a6c114bf99afa6547b3f90c
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749844122583930820, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 9c805addede434c01895792abf7903c3, type: 2}
+    - target: {fileID: 5749844122583930820, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      propertyPath: contractAddress
+      value: 0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7222211533816142911, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 9c805addede434c01895792abf7903c3, type: 2}
+    - target: {fileID: 7222211533816142911, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      propertyPath: contractAddress
+      value: 0x53fb59cc9aab03983033de799d10c9a0d3e4475e19224a661cefeacb0577871
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723665640022367611, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      propertyPath: dojoConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 82a750fe7502b4a6abd45852352f1bfc, type: 2}
+    - target: {fileID: 7723665640022367611, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
+      propertyPath: gameManagerData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9c805addede434c01895792abf7903c3, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

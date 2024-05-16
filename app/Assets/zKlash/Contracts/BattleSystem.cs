@@ -10,8 +10,7 @@ using System.Numerics;
 // System definitions for `zklash::systems::battle::battle` contract
 public class BattleSystem : MonoBehaviour
 {
-    // The address of this contract
-    public string contractAddress;
+    public GameManagerData data;
 
     // Call the `dojo_resource` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
@@ -19,7 +18,7 @@ public class BattleSystem : MonoBehaviour
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.battleContractAddress,
                 selector = "dojo_resource",
                 calldata = new dojo.FieldElement[] {
                 }
@@ -33,7 +32,7 @@ public class BattleSystem : MonoBehaviour
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = contractAddress,
+                to = data.battleContractAddress,
                 selector = "start",
                 calldata = new dojo.FieldElement[] {
                     new FieldElement(world).Inner,

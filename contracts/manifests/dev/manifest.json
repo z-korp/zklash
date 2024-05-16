@@ -1,6 +1,6 @@
 {
   "world": {
-    "kind": "Contract",
+    "kind": "WorldContract",
     "class_hash": "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd",
     "original_class_hash": "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd",
     "abi": [
@@ -664,6 +664,10 @@
     "transaction_hash": "0x5be0af36841d33273a0466f5a92bf2f5ddaf15daf07cf0c12c419547b90f21",
     "block_number": 3,
     "seed": "zklash",
+    "metadata": {
+      "profile_name": "dev",
+      "rpc_url": "http://localhost:5050/"
+    },
     "name": "dojo::world::world"
   },
   "base": {

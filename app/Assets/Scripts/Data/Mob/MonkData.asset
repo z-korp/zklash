@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9bb301c2336430592323a918e1e00d, type: 3}
+  m_Name: MonkData
+  m_EditorClassIdentifier: 
+  title: Monk
+  powerLV1: At death, heal +1.
+  powerLV2: At death, heal +2.
+  powerLV3: At death, heal +3.
+  image: {fileID: 1444620675, guid: b81a1f348576e42da958991ec67ec009, type: 3}
+  role: 0

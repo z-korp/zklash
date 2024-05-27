@@ -56,10 +56,7 @@ public class TxCoroutines : MonoBehaviour
     // For tasks that do not return a value
     private IEnumerator AwaitTask(Task task)
     {
-        WaitForSeconds waitTime = new WaitForSeconds(0.2f); // every 0.02 seconds
-
-        while (!task.IsCompleted)
-            yield return waitTime;
+        yield return new WaitUntil(() => task.IsCompleted);
 
         if (task.IsFaulted)
         {
@@ -95,11 +92,12 @@ public class TxCoroutines : MonoBehaviour
 
         string createTxHash = "";
         yield return StartCoroutine(AwaitTask(accountSystem.Create(account, world, nameHex), (result) => createTxHash = result.Hex()));
-        yield return StartCoroutine(AwaitTask(AwaitTransaction(createTxHash))); ;
+        //yield return StartCoroutine(AwaitTask(AwaitTransaction(createTxHash))); ;
 
         string spawnTxHash = "";
         yield return StartCoroutine(AwaitTask(accountSystem.Spawn(account, world), (result) => spawnTxHash = result.Hex()));
-        yield return StartCoroutine(AwaitTask(AwaitTransaction(spawnTxHash)));
+        //yield return StartCoroutine(AwaitTask(AwaitTransaction(spawnTxHash)));
+
         Debug.Log("[[[[[[[[[[[ END ExecuteCreateAndSpawn ]]]]]]]]]]]");
     }
 
@@ -117,7 +115,7 @@ public class TxCoroutines : MonoBehaviour
                 (result) => txHash = result.Hex()
             )
         );
-        yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
         Debug.Log("[[[[[[[[[[[ END ExecuteEquip ]]]]]]]]]]]");
     }
 
@@ -134,7 +132,7 @@ public class TxCoroutines : MonoBehaviour
                 (result) => txHash = result.Hex()
             )
         );
-        yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
         Debug.Log("[[[[[[[[[[[ END ExecuteHire ]]]]]]]]]]]");
     }
 
@@ -151,7 +149,7 @@ public class TxCoroutines : MonoBehaviour
                 (result) => txHash = result.Hex()
             )
         );
-        yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
         yield return new WaitForSeconds(1f); // to be sure Torii has indexed (TODO: remove this when Torii is fixed)
 
         onFinish?.Invoke();  // Call the callback if it's provided
@@ -171,7 +169,7 @@ public class TxCoroutines : MonoBehaviour
                 (result) => txHash = result.Hex()
             )
         );
-        yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
         Debug.Log("[[[[[[[[[[[ END ExecuteMerge ]]]]]]]]]]]");
     }
 
@@ -188,7 +186,7 @@ public class TxCoroutines : MonoBehaviour
                 (result) => txHash = result.Hex()
             )
         );
-        yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
         Debug.Log("[[[[[[[[[[[ END ExecuteMergeFromShop ]]]]]]]]]]]");
     }
 
@@ -205,7 +203,7 @@ public class TxCoroutines : MonoBehaviour
                 (result) => txHash = result.Hex()
             )
         );
-        yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
         Debug.Log("[[[[[[[[[[[ END ExecuteSell ]]]]]]]]]]]");
     }
 
@@ -223,7 +221,8 @@ public class TxCoroutines : MonoBehaviour
                 (result) => txHash = result.Hex()
             )
         );
-        yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        yield return new WaitForSeconds(1f); // to be sure Torii has indexed (TODO: remove this when Torii is fixed)
         Debug.Log("[[[[[[[[[[[ END ExecuteStartBattle ]]]]]]]]]]]");
     }
 }

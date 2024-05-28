@@ -40,6 +40,18 @@ public class Comparer : IComparer<GameObject>
 {
     public int Compare(GameObject a, GameObject b)
     {
-        return a.transform.position.x.CompareTo(b.transform.position.x);
+
+        if (a.transform.position.x < b.transform.position.x)
+        {
+            return 1;
+        }
+        else if (a.transform.position.x > b.transform.position.x)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }

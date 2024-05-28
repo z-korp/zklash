@@ -101,6 +101,33 @@ public class TeamManager : MonoBehaviour
 
     }
 
+    public void ReorganizeTeamSpots()
+    {
+        for (int i = 0; i < TeamSpots.Length; i++)
+        {
+            if (!TeamSpots[i].IsAvailable)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if (TeamSpots[j].IsAvailable)
+                    {
+                        TeamSpots[j].Mob = TeamSpots[i].Mob;
+                        TeamSpots[j].Role = TeamSpots[i].Role;
+                        TeamSpots[j].Entity = TeamSpots[i].Entity;
+                        TeamSpots[j].IsAvailable = false;
+
+                        // Marquer l'emplacement original comme disponible
+                        TeamSpots[i].Mob = null;
+                        TeamSpots[i].Role = Role.None;
+                        TeamSpots[i].Entity = null;
+                        TeamSpots[i].IsAvailable = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
 
     public GameObject GetMemberFromTeam(int index)
     {

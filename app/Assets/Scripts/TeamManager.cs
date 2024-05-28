@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Dojo.Torii;
 using UnityEngine;
 using zKlash.Game.Items;
 using zKlash.Game.Roles;
@@ -152,7 +153,7 @@ public class TeamManager : MonoBehaviour
     }
 
     // Call this method to fill a spot with an entity
-    public bool FillSpot(int spotIndex, Role _role, GameObject mob)
+    public bool FillSpot(int spotIndex, Role _role, GameObject mob, string entity = "")
     {
         if (spotIndex < 0 || spotIndex >= TeamSpots.Length || !TeamSpots[spotIndex].IsAvailable)
         {
@@ -161,6 +162,7 @@ public class TeamManager : MonoBehaviour
 
         TeamSpots[spotIndex] = new TeamSpot(false, _role); // Fill the spot
         TeamSpots[spotIndex].Mob = mob;
+        TeamSpots[spotIndex].Entity = entity;
         Debug.Log($"Spot {spotIndex} filled with entity: {_role}");
         return true;
     }

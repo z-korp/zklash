@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Dojo.Torii;
 using UnityEngine;
 using zKlash.Game.Roles;
 
@@ -157,6 +158,7 @@ public class MobDraggable : MonoBehaviour
             }
             else
             {
+
                 string fromEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
                 if (fromEntity == "")
                 {
@@ -175,6 +177,10 @@ public class MobDraggable : MonoBehaviour
 
                 //ContractActions.instance.TriggerMerge(from.id, to.id);
                 StartCoroutine(TxCoroutines.Instance.ExecuteMerge(teamId, from.id, to.id));
+
+                // Reset Team spot after merge
+                TeamManager.instance.FreeSpot(index);
+
             }
         }
         else
@@ -201,16 +207,20 @@ public class MobDraggable : MonoBehaviour
                 isFromShop = false;
                 //ContractActions.instance.TriggerHire((uint)index);
                 StartCoroutine(TxCoroutines.Instance.ExecuteHire(teamId, (uint)index));
+
+                Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
+                TeamManager.instance.FillSpot(zoneIndex, role, gameObject);
+                rb.MovePosition(currentDroppableZone.transform.position + offset);
             }
             else
             {
+                string entity = TeamManager.instance.TeamSpots[index].Entity;
+                Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
+                TeamManager.instance.FillSpot(zoneIndex, role, gameObject, entity);
+                rb.MovePosition(currentDroppableZone.transform.position + offset);
                 TeamManager.instance.FreeSpot(index);
             }
 
-            // Fill the spot with the mob
-            Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
-            TeamManager.instance.FillSpot(zoneIndex, role, gameObject);
-            rb.MovePosition(currentDroppableZone.transform.position + offset);
 
             // Update the team with new member
             //TeamManager.instance.AddTeamMember(zoneIndex, gameObject);

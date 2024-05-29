@@ -34,8 +34,8 @@ public class CanvasManager : MonoBehaviour
         // TBD : Update is good value
         if (canvasInterStep.activeSelf)
         {
-            canvasInterStep.GetComponent<CanvasInterStep>().UpdateTrophysDisplay(3);
-            canvasInterStep.GetComponent<CanvasInterStep>().UpdateHeartsDisplay(7);
+            canvasInterStep.GetComponent<CanvasInterStep>().UpdateTrophysDisplay((int)PlayerInfoUI.instance.getTrophies());
+            canvasInterStep.GetComponent<CanvasInterStep>().UpdateHeartsDisplay((int)PlayerInfoUI.instance.getLifes());
             canvasInterStep.GetComponent<CanvasInterStep>().ToggleRibbonVictoryDefeat(victory);
         }
     }

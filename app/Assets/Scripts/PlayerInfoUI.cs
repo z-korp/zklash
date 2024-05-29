@@ -12,6 +12,18 @@ public class PlayerInfoUI : MonoBehaviour
     private uint playerGold;
     private uint playerTrophies;
 
+    public static PlayerInfoUI instance;
+
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("More than one instance of PlayerInfo found!");
+            return;
+        }
+        instance = this;
+    }
+
     void Start()
     {
         playerLives = 0;
@@ -71,5 +83,15 @@ public class PlayerInfoUI : MonoBehaviour
     {
         playerTrophies += amount;
         UpdateUI();
+    }
+
+    public uint getLifes()
+    {
+        return playerLives;
+    }
+
+    public uint getTrophies()
+    {
+        return playerTrophies;
     }
 }

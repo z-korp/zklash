@@ -214,7 +214,7 @@ MonoBehaviour:
   initPos: {x: 0, y: 0, z: 0}
   isFromShop: 1
   index: 0
-  item: {fileID: 11400000, guid: 7cc435beaf5d34c4e897caab24263325, type: 2}
+  item: {fileID: 11400000, guid: 0cc7f62b8401e460ead0dd2ecb5f86ea, type: 2}
   canDropItem: 0
   orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
 --- !u!61 &4652637701810973935

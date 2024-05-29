@@ -1,6 +1,7 @@
 using UnityEngine;
 using zKlash.Game.Roles;
 using zKlash.Game.Items;
+using System.Collections.Generic;
 
 public class ShopManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class ShopManager : MonoBehaviour
 
     public GameObject[] shopMobs;
     public GameObject[] shopItems;
+
+    public List<Role> roles;
 
     public uint rolesUint;
     public uint itemUint;
@@ -39,6 +42,7 @@ public class ShopManager : MonoBehaviour
             {
                 MobSpawn spawn = shopMobs[i].GetComponent<MobSpawn>();
                 spawn.SetRole(PlayerData.Instance.shopRoles[i]);
+                roles.Add(PlayerData.Instance.shopRoles[i]);
             }
 
             ItemSpawn itemSpawn = shopItems[0].GetComponent<ItemSpawn>();

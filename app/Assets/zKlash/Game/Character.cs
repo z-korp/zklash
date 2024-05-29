@@ -28,6 +28,7 @@ namespace zKlash.Game
             {
                 _xp = value;
                 CheckLevelUp();
+                CheckMaxLevel();
             }
         }
 
@@ -117,9 +118,20 @@ namespace zKlash.Game
             }
         }
 
+        private void CheckMaxLevel()
+        {
+            if (_lvl == MaxLevel)
+                _xp = 100;
+        }
+
         public void AddExperience(int amount)
         {
             XP += amount; // Setter handles level checking
+        }
+
+        public bool IsMobMaxLevel()
+        {
+            return _lvl == MaxLevel;
         }
 
         private void UpdateStats()

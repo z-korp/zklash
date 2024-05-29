@@ -32,6 +32,8 @@ public class MobDraggable : MonoBehaviour
 
     public MouseHoverDetector mouseHoverDetector;
 
+    private const int maxLevel = 3;
+
 
     private void Awake()
     {
@@ -134,6 +136,14 @@ public class MobDraggable : MonoBehaviour
 
             int oldLevel = mobToUpdate.GetComponent<MobController>().Character.Level;
 
+            if (mobToUpdate.GetComponent<MobController>().Character.IsMobMaxLevel() || mobToRemove.GetComponent<MobController>().Character.IsMobMaxLevel())
+            {
+                Debug.LogWarning("Mob is already Max Level");
+                rb.MovePosition(initPos);
+                return;
+            }
+
+
             // Merge the mob
             mobToUpdate.GetComponent<MobController>().Character.Merge(mobToRemove.GetComponent<MobController>().Character);
             Destroy(mobToRemove);
@@ -188,9 +198,44 @@ public class MobDraggable : MonoBehaviour
             // Cancel the drag if the mob is dropped in a zone that is not available
             if (zoneIndex > TeamManager.instance.TeamSpots.Length || !TeamManager.instance.TeamSpots[zoneIndex].IsAvailable)
             {
-                Debug.Log("Drop in unavailable zone");
-                rb.MovePosition(initPos);
-                return;
+
+                // Spot is already taken in teamManager but don't come from shop that's mean
+                // we want to invert both pos when we drag mob on top of another mob
+                if (!isFromShop)
+                {
+                    // Get data from drag mob to populate teamManager spot
+                    string entity1 = TeamManager.instance.TeamSpots[index].Entity;
+                    Role role1 = gameObject.GetComponent<MobController>().Character.Role.GetRole;
+
+                    // Get data from standing mob to populate teamManager spot
+                    GameObject mob2 = TeamManager.instance.GetMemberFromTeam(zoneIndex);
+                    Role role2 = mob2.GetComponent<MobController>().Character.Role.GetRole;
+                    string entity2 = TeamManager.instance.TeamSpots[zoneIndex].Entity;
+
+                    // Free spots so we can fill them with new data
+                    TeamManager.instance.FreeSpot(index);
+                    TeamManager.instance.FreeSpot(zoneIndex);
+
+                    // Update spots in teamManager 
+                    TeamManager.instance.FillSpot(zoneIndex, role1, gameObject, entity1);
+                    TeamManager.instance.FillSpot(index, role2, mob2, entity2);
+
+                    // Update UI pos of entity
+                    rb.MovePosition(currentDroppableZone.transform.position + offset);
+                    mob2.GetComponent<Rigidbody2D>().MovePosition(initPos);
+
+                    // Update index of the spot they are in battle deck
+                    mob2.GetComponent<MobDraggable>().index = index;
+                    index = zoneIndex;
+                    return;
+                }
+                else
+                {
+                    Debug.Log("Drop in unavailable zone");
+                    rb.MovePosition(initPos);
+                    return;
+                }
+
             }
 
 

@@ -112,10 +112,12 @@ public class TeamManager : MonoBehaviour
                 {
                     if (TeamSpots[j].IsAvailable)
                     {
+
                         TeamSpots[j].Mob = TeamSpots[i].Mob;
                         TeamSpots[j].Role = TeamSpots[i].Role;
                         TeamSpots[j].Entity = TeamSpots[i].Entity;
                         TeamSpots[j].IsAvailable = false;
+                        TeamSpots[j].Mob.GetComponent<MobDraggable>().index = j;
 
                         // Marquer l'emplacement original comme disponible
                         TeamSpots[i].Mob = null;
@@ -157,9 +159,19 @@ public class TeamManager : MonoBehaviour
     {
         if (spotIndex < 0 || spotIndex >= TeamSpots.Length || !TeamSpots[spotIndex].IsAvailable)
         {
+            Debug.Log("Coco nope");
             return false; // Spot index is out of range or spot is not available
         }
 
+        TeamSpots[spotIndex] = new TeamSpot(false, _role); // Fill the spot
+        TeamSpots[spotIndex].Mob = mob;
+        TeamSpots[spotIndex].Entity = entity;
+        Debug.Log($"Spot {spotIndex} filled with entity: {_role}");
+        return true;
+    }
+
+    public bool UpdateSpot(int spotIndex, Role _role, GameObject mob, string entity = "")
+    {
         TeamSpots[spotIndex] = new TeamSpot(false, _role); // Fill the spot
         TeamSpots[spotIndex].Mob = mob;
         TeamSpots[spotIndex].Entity = entity;

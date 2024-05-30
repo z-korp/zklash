@@ -33,15 +33,23 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void SellMob(GameObject draggedObject)
     {
         Debug.Log("Selling mob: ------------------>");
-        //Debug.Log("Selling mob: " + draggedObject.name);
-        // uint teamId = PlayerData.Instance.GetTeamId();
-        // string entity = TeamManager.instance.GetEntityFromTeam(draggedObject);
-        // if (entity == "")
-        // {
-        //     Debug.Log("Entity not found.");
-        //     return;
-        // }
-        // Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
-        // StartCoroutine(TxCoroutines.Instance.ExecuteSell(teamId, character.id));
+        Debug.Log("Selling mob: " + draggedObject.name);
+        uint teamId = PlayerData.Instance.GetTeamId();
+        string entity = TeamManager.instance.GetEntityFromTeam(draggedObject);
+        if (entity == "")
+        {
+            Debug.Log("Entity not found.");
+            return;
+        }
+        Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
+        StartCoroutine(TxCoroutines.Instance.ExecuteSell(teamId, character.id));
+
+        // Get index to free spot in team and destroy gameObject
+        int index = draggedObject.GetComponent<MobDraggable>().index;
+        Destroy(draggedObject);
+        TeamManager.instance.FreeSpot(index);
+        CanvasManager.instance.ToggleSellRerollButton();
+        isDraggingSellMob = false;
+
     }
 }

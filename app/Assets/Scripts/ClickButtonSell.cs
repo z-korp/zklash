@@ -7,6 +7,9 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public bool isDraggingSellMob = false;
 
+    public GameObject imageCoin;
+
+
     public void Awake()
     {
         if (instance != null)
@@ -50,6 +53,8 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
         TeamManager.instance.FreeSpot(index);
         CanvasManager.instance.ToggleSellRerollButton();
         isDraggingSellMob = false;
+        imageCoin.SetActive(true);
+        imageCoin.GetComponent<Animator>().SetTrigger("makeCoinPop");
 
     }
 }

@@ -190,6 +190,7 @@ public class MobDraggable : MonoBehaviour
 
                 // Reset Team spot after merge
                 TeamManager.instance.FreeSpot(index);
+                CanvasManager.instance.ToggleSellRerollButton();
 
             }
         }

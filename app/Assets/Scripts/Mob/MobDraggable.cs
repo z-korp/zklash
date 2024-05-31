@@ -138,9 +138,18 @@ public class MobDraggable : MonoBehaviour
 
             if (mobToUpdate.GetComponent<MobController>().Character.IsMobMaxLevel() || mobToRemove.GetComponent<MobController>().Character.IsMobMaxLevel())
             {
-                Debug.LogWarning("Mob is already Max Level");
-                rb.MovePosition(initPos);
+                if (isFromShop)
+                {
+                    Debug.LogWarning("Mob is already Max Level");
+                    rb.MovePosition(initPos);
+                    return;
+                }
+
+                // Mob is max level and we are in deck so you probably want to swap position
+                swapUnit(index, zoneIndex);
+                index = zoneIndex;
                 return;
+
             }
 
 
@@ -190,6 +199,8 @@ public class MobDraggable : MonoBehaviour
 
                 // Reset Team spot after merge
                 TeamManager.instance.FreeSpot(index);
+
+                // Reset sell btn to reroll
                 CanvasManager.instance.ToggleSellRerollButton();
 
             }
@@ -204,29 +215,8 @@ public class MobDraggable : MonoBehaviour
                 // we want to invert both pos when we drag mob on top of another mob
                 if (!isFromShop)
                 {
-                    // Get data from drag mob to populate teamManager spot
-                    string entity1 = TeamManager.instance.TeamSpots[index].Entity;
-                    Role role1 = gameObject.GetComponent<MobController>().Character.Role.GetRole;
-
-                    // Get data from standing mob to populate teamManager spot
-                    GameObject mob2 = TeamManager.instance.GetMemberFromTeam(zoneIndex);
-                    Role role2 = mob2.GetComponent<MobController>().Character.Role.GetRole;
-                    string entity2 = TeamManager.instance.TeamSpots[zoneIndex].Entity;
-
-                    // Free spots so we can fill them with new data
-                    TeamManager.instance.FreeSpot(index);
-                    TeamManager.instance.FreeSpot(zoneIndex);
-
-                    // Update spots in teamManager 
-                    TeamManager.instance.FillSpot(zoneIndex, role1, gameObject, entity1);
-                    TeamManager.instance.FillSpot(index, role2, mob2, entity2);
-
-                    // Update UI pos of entity
-                    rb.MovePosition(currentDroppableZone.transform.position + offset);
-                    mob2.GetComponent<Rigidbody2D>().MovePosition(initPos);
-
-                    // Update index of the spot they are in battle deck
-                    mob2.GetComponent<MobDraggable>().index = index;
+                    // Swap function
+                    swapUnit(index, zoneIndex);
                     index = zoneIndex;
                     return;
                 }
@@ -274,6 +264,33 @@ public class MobDraggable : MonoBehaviour
             // Update the index of the mob with the new index
             index = zoneIndex;
         }
+    }
+
+    private void swapUnit(int index, int zoneIndex)
+    {
+        // Get data from drag mob to populate teamManager spot
+        string entity1 = TeamManager.instance.TeamSpots[index].Entity;
+        Role role1 = gameObject.GetComponent<MobController>().Character.Role.GetRole;
+
+        // Get data from standing mob to populate teamManager spot
+        GameObject mob2 = TeamManager.instance.GetMemberFromTeam(zoneIndex);
+        Role role2 = mob2.GetComponent<MobController>().Character.Role.GetRole;
+        string entity2 = TeamManager.instance.TeamSpots[zoneIndex].Entity;
+
+        // Free spots so we can fill them with new data
+        TeamManager.instance.FreeSpot(index);
+        TeamManager.instance.FreeSpot(zoneIndex);
+
+        // Update spots in teamManager 
+        TeamManager.instance.FillSpot(zoneIndex, role1, gameObject, entity1);
+        TeamManager.instance.FillSpot(index, role2, mob2, entity2);
+
+        // Update UI pos of entity
+        rb.MovePosition(currentDroppableZone.transform.position + offset);
+        mob2.GetComponent<Rigidbody2D>().MovePosition(initPos);
+
+        // Update index of the spot they are in battle deck
+        mob2.GetComponent<MobDraggable>().index = index;
     }
 
     private void LevelUpAnimation(GameObject mob)

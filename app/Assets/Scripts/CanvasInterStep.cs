@@ -5,6 +5,7 @@ public class CanvasInterStep : MonoBehaviour
 {
     public GameObject ribbonVictory;
     public GameObject ribbonDefeat;
+    public GameObject btnNext;
     public Transform heartsContainer;
     public Transform trophysContainer;
     public Image heartPrefab;
@@ -51,5 +52,9 @@ public class CanvasInterStep : MonoBehaviour
         }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)trophysContainer);
+    }
+
+    public void onClickNext() {
+        CameraMovement.instance.MoveCameraToShop();
     }
 }

@@ -31,8 +31,6 @@ public class BattleManager : MonoBehaviour
     public List<GameObject> allies = new List<GameObject>();
     public List<GameObject> enemies = new List<GameObject>();
 
-    private bool isBattleStarted = false;
-
     void Awake()
     {
         if (instance != null)
@@ -41,6 +39,16 @@ public class BattleManager : MonoBehaviour
             return;
         }
         instance = this;
+    }
+
+    private void OnEnable()
+    {
+        EventManager.OnStartBattle += StartBattle;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnStartBattle -= StartBattle;
     }
 
     void Start()
@@ -118,11 +126,11 @@ public class BattleManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isBattleStarted)
-        {
-            StartCoroutine(Battle(allies, enemies));
-            isBattleStarted = true;
-        }
+    }
+
+    private void StartBattle() {
+        Debug.Log("hahahahaah StartBattle");
+        StartCoroutine(Battle(allies, enemies));
     }
 
     private GameObject CreateMob(CharacterSetup setup, GameObject spot, Orientation orientation)
@@ -206,12 +214,11 @@ public class BattleManager : MonoBehaviour
 
     private void ExecuteAfterBattle(bool victory)
     {
-        CameraMovement.instance.MoveCameraToShop();
+        //CameraMovement.instance.MoveCameraToShop();
         TeamManager.instance.ResetStatCharacter();
         TeamManager.instance.TPTeamToShop();
         CanvasManager.instance.ToggleCanvases();
         CanvasManager.instance.ToggleCanvasInterStep(victory);
-        isBattleStarted = false;
     }
 
     IEnumerator Battle(List<GameObject> team1, List<GameObject> team2)
@@ -350,12 +357,12 @@ public class BattleManager : MonoBehaviour
 
         if (isChar1Dead || isChar2Dead)
         {
-            yield return WaitForKey();
+            //yield return WaitForKey();
             Debug.Log("[END DUEL]============================================================");
             yield break;
         }
 
-        yield return WaitForKey();
+        //yield return WaitForKey();
         Debug.Log("[END CONTINUE DUEL]============================================================");
 
         yield return Duel(char1, char2);
@@ -363,6 +370,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator WaitForKey()
     {
+        yield return null;
         while (!Input.GetKeyDown(KeyCode.Space))
         {
             yield return null;

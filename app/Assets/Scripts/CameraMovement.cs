@@ -38,6 +38,7 @@ public class CameraMovement : MonoBehaviour
             yield return null;
         }
         moveToFight = false;
+        EventManager.StartBattle();
     }
 
     private IEnumerator MoveToShopPositionCoroutine()

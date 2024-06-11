@@ -15,8 +15,6 @@ public class ShopManager : MonoBehaviour
     public uint rolesUint;
     public uint itemUint;
 
-    public bool isShopOpen = false;
-
     void Awake()
     {
         if (instance != null)
@@ -31,39 +29,28 @@ public class ShopManager : MonoBehaviour
     {
         rolesUint = 66051;
         itemUint = 1;
+
+        EventManager.OnShopUpdated += RefreshShop;
     }
 
-    void Update()
+    void OnDestroy()
     {
-        if (PlayerData.Instance.isShopSet && !isShopOpen)
-        {
-            isShopOpen = true;
-            for (int i = 0; i < PlayerData.Instance.shopRoles.Length; i++)
-            {
-                MobSpawn spawn = shopMobs[i].GetComponent<MobSpawn>();
-                spawn.SetRole(PlayerData.Instance.shopRoles[i]);
-                roles.Add(PlayerData.Instance.shopRoles[i]);
-            }
+        EventManager.OnShopUpdated -= RefreshShop;
+    }
 
-            ItemSpawn itemSpawn = shopItems[0].GetComponent<ItemSpawn>();
-            itemSpawn.SetItem(PlayerData.Instance.shopItem);
+    private void RefreshShop()
+    {
+        Debug.Log("QQQQQQQQQQQ -> Shop Refreshed");
+        for (int i = 0; i < PlayerData.Instance.shopRoles.Length; i++)
+        {
+            MobSpawn spawn = shopMobs[i].GetComponent<MobSpawn>();
+            Role role = PlayerData.Instance.shopRoles[i];
+            spawn.SetRole(role);
+            roles.Add(role);
         }
 
-        // This is to avoid contract init
-        if (!isShopOpen)
-        {
-            isShopOpen = true;
-            Role[] roles = PlayerData.Instance.SplitRoles(rolesUint);
-
-            for (int i = 0; i < shopMobs.Length; i++)
-            {
-                MobSpawn spawn = shopMobs[i].GetComponent<MobSpawn>();
-                spawn.SetRole(roles[i]);
-            }
-
-            ItemSpawn itemSpawn = shopItems[0].GetComponent<ItemSpawn>();
-            itemSpawn.SetItem((Item)itemUint);
-        }
+        ItemSpawn itemSpawn = shopItems[0].GetComponent<ItemSpawn>();
+        itemSpawn.SetItem(PlayerData.Instance.shopItem);
     }
 
     public void Reroll()
@@ -79,8 +66,7 @@ public class ShopManager : MonoBehaviour
 
     private void OnRerollComplete()
     {
-        isShopOpen = false;
-        PlayerData.Instance.isShopSet = false;
+        EventManager.RefreshShop();
     }
 
     public int IndexOfMobSpawn(MobSpawn _spawn)

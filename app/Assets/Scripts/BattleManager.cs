@@ -323,7 +323,7 @@ public class BattleManager : MonoBehaviour
             next_buff1 = buff1;
             next_buff2 = buff2;
         }
-        else if (isChar2Dead)
+        if (isChar2Dead)
         {
             var (dmg2, buff2) = postMortem(char2, char1);
             if (dmg2 > 0)
@@ -358,12 +358,12 @@ public class BattleManager : MonoBehaviour
 
         if (isChar1Dead || isChar2Dead)
         {
-            //yield return WaitForKey();
+            yield return WaitForKey();
             Debug.Log("[END DUEL]============================================================");
             yield break;
         }
 
-        //yield return WaitForKey();
+        yield return WaitForKey();
         Debug.Log("[END CONTINUE DUEL]============================================================");
 
         yield return Duel(char1, char2);
@@ -381,9 +381,14 @@ public class BattleManager : MonoBehaviour
     IEnumerator Attack(GameObject attacker, GameObject defender, int additionalDamage)
     {
         // Get the damage of the attacker
-        int dmg = attacker.GetComponent<MobController>().Character.getAttackInBattle();
+        int dmg = attacker.GetComponent<MobController>().Character.Damage;
         // and add the additional damage from the talent
         int totalDamage = dmg + additionalDamage;
+
+        if (totalDamage <= 0)
+        {
+            yield return null;
+        }
 
         //yield return new WaitForSeconds(5f);
         MobAttack attackerAttack = attacker.GetComponent<MobAttack>();

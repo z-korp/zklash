@@ -101,8 +101,7 @@ public class ClickButtonFight : MonoBehaviour
         CanvasManager.instance.ToggleCanvases();
         TeamManager.instance.MoveTeam();
 
-        // refresh shop
-        PlayerData.Instance.isShopSet = false;
-        ShopManager.instance.isShopOpen = false;
+        // Refresh shop
+        EventManager.RefreshShop();
     }
 }

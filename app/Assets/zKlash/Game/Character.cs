@@ -36,14 +36,12 @@ namespace zKlash.Game
         {
             get => _role;
             private set => _role = value;
-
         }
 
         public Item ItemInterface
         {
             get => _item;
             private set => _item = value;
-
         }
 
         public int Level
@@ -58,23 +56,25 @@ namespace zKlash.Game
             private set => _health = value;
         }
 
+        public int Damage // Attack value during combat
+        {
+            get
+            {
+                if (_stun > 0)
+                {
+                    _stun--;  // Decrease stun count and return 0 attack
+                    return 0;
+                }
+                return _attack;  // Return normal attack if not stunned
+            }
+            private set => _attack = value;
+        }
+
         public int Attack
         {
             get => _attack;
             private set => _attack = value;
         }
-
-        public int getAttackInBattle()
-        {
-            if (_stun > 0)
-            {
-                _stun--;  // Decrease stun count and return 0 attack
-                return 0;
-            }
-            return _attack;
-        }
-
-        public int Damage => _attack;
 
         public int Absorb
         {

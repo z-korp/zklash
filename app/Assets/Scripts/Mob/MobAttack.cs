@@ -9,9 +9,9 @@ public class MobAttack : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
-    private int _damage;
+    private int _attack;
 
-    public int Damage
+    public int Attack
     {
         get
         {
@@ -21,11 +21,11 @@ public class MobAttack : MonoBehaviour
                 return 0;
             }
 
-            return mobController.Character != null ? mobController.Character.Damage : 0;
+            return mobController.Character != null ? mobController.Character.Attack : 0;
         }
         private set
         {
-            _damage = value;
+            _attack = value;
         }
     }
 
@@ -65,12 +65,12 @@ public class MobAttack : MonoBehaviour
             return;
         }
 
-        SetTextAttack(Damage);
+        SetTextAttack(Attack);
     }
 
     void Update()
     {
-        SetTextAttack(Damage);
+        SetTextAttack(Attack);
     }
 
     public IEnumerator TriggerAttackCoroutine(int dmg)

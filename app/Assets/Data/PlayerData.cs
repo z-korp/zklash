@@ -77,38 +77,40 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        EventManager.OnRefreshShop += UpdateShop;
+    }
+
     void Update()
     {
         if (!string.IsNullOrEmpty(shopEntity) && !isShopSet)
         {
-            var shop = GameManager.Instance.worldManager.Entity(shopEntity).GetComponent<Shop>();
-
-            // Roles
-            Role[] roles = SplitRoles(shop.roles);
-            Debug.Log("XXXXX Roles: " + roles[0] + " " + roles[1] + " " + roles[2] + " XXXXX");
-            for (int i = 0; i < shopRoles.Length; i++)
-            {
-                shopRoles[i] = roles[i];
-            }
-
-            // Item
-            shopItem = (Item)shop.items;
-
-            rerollCost = shop.reroll_cost;
-            purchaseCost = shop.purchase_cost;
-
+            UpdateShop();
             isShopSet = true;
         }
     }
 
-    public void RefreshShopRolls() {
+    private void UpdateShop()
+    {
+        Debug.Log("UpdateShop");
         var shop = GameManager.Instance.worldManager.Entity(shopEntity).GetComponent<Shop>();
+
         // Roles
         Role[] roles = SplitRoles(shop.roles);
+        Debug.Log("XXXXX Roles: " + roles[0] + " " + roles[1] + " " + roles[2] + " XXXXX");
         for (int i = 0; i < shopRoles.Length; i++)
         {
             shopRoles[i] = roles[i];
         }
+
+        // Item
+        shopItem = (Item)shop.items;
+
+        rerollCost = shop.reroll_cost;
+        purchaseCost = shop.purchase_cost;
+
+        EventManager.ShopUpdated();
     }
 
     public Role[] SplitRoles(uint roles)
@@ -119,7 +121,7 @@ public class PlayerData : MonoBehaviour
             .Select(i => hexStr.Substring(i * 2, 2))
             .Select(hexPart => Convert.ToUInt32(hexPart, 16))
             .Select(decimalValue => Enum.IsDefined(typeof(Role), (int)decimalValue) ? (Role)decimalValue : Role.None)
-            .Reverse()  // Perform the reversal here
+            .Reverse()
             .ToArray();
     }
 

@@ -196,4 +196,50 @@ mod tests {
         let win = Battler::start(ref characters, ref foes);
         assert(win, 'Battler: invalid win status');
     }
+
+    #[test]
+    fn test_battle_dual_stun() {
+        let mut characters: Array<Character> = array![
+            CharacterTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
+            CharacterTrait::from(2, Role::Pawn, 1, Item::None),
+        ];
+        let mut foes: Array<Character> = array![
+            CharacterTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
+        ];
+        let mut tick: u32 = 0;
+        let win = Battler::battle(
+            ref characters,
+            ref foes,
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            ref tick,
+        );
+        assert(win, 'Battler: invalid win status');
+        assert(tick == 6, 'Battler: invalid tick count');
+    }
+
+    #[test]
+    fn test_battle_dual_stun_reverse() {
+        let mut characters: Array<Character> = array![
+            CharacterTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
+        ];
+        let mut foes: Array<Character> = array![
+            CharacterTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
+            CharacterTrait::from(2, Role::Pawn, 1, Item::None),
+        ];
+        let mut tick: u32 = 0;
+        let win = Battler::battle(
+            ref characters,
+            ref foes,
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            ref tick,
+        );
+        assert(!win, 'Battler: invalid win status');
+        assert(tick == 6, 'Battler: invalid tick count');
+    }
 }

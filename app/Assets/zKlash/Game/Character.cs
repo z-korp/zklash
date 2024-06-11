@@ -85,7 +85,7 @@ namespace zKlash.Game
         public int Stun
         {
             get => _stun;
-            set => _stun = value;
+            set => _stun += value;
         }
 
         public IRole Role { get; private set; }

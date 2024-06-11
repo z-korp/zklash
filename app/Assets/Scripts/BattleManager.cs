@@ -128,7 +128,8 @@ public class BattleManager : MonoBehaviour
     {
     }
 
-    private void StartBattle() {
+    private void StartBattle()
+    {
         Debug.Log("hahahahaah StartBattle");
         StartCoroutine(Battle(allies, enemies));
     }
@@ -380,7 +381,7 @@ public class BattleManager : MonoBehaviour
     IEnumerator Attack(GameObject attacker, GameObject defender, int additionalDamage)
     {
         // Get the damage of the attacker
-        int dmg = attacker.GetComponent<MobController>().Character.Attack;
+        int dmg = attacker.GetComponent<MobController>().Character.getAttackInBattle();
         // and add the additional damage from the talent
         int totalDamage = dmg + additionalDamage;
 

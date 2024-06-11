@@ -60,16 +60,18 @@ namespace zKlash.Game
 
         public int Attack
         {
-            get
-            {
-                if (_stun > 0)
-                {
-                    _stun--;  // Decrease stun count and return 0 attack
-                    return 0;
-                }
-                return _attack;  // Return normal attack if not stunned
-            }
+            get => _attack;
             private set => _attack = value;
+        }
+
+        public int getAttackInBattle()
+        {
+            if (_stun > 0)
+            {
+                _stun--;  // Decrease stun count and return 0 attack
+                return 0;
+            }
+            return _attack;
         }
 
         public int Damage => _attack;
@@ -83,7 +85,7 @@ namespace zKlash.Game
         public int Stun
         {
             get => _stun;
-            set => _stun += value;
+            set => _stun = value;
         }
 
         public IRole Role { get; private set; }

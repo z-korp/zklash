@@ -1,4 +1,5 @@
-import manifest from "../contracts/manifests/dev/manifest.json";
+import dev from "../contracts/manifests/dev/manifest.json";
+import slot from "../contracts/manifests/slot/manifest.json";
 import { createDojoConfig } from "@dojoengine/core";
 
 const {
@@ -8,6 +9,7 @@ const {
   VITE_PUBLIC_MASTER_PRIVATE_KEY,
   VITE_PUBLIC_ACCOUNT_CLASS_HASH,
   VITE_PUBLIC_FEE_TOKEN_ADDRESS,
+  VITE_PUBLIC_SLOT,
 } = import.meta.env;
 
 export const dojoConfig = createDojoConfig({
@@ -25,5 +27,5 @@ export const dojoConfig = createDojoConfig({
   feeTokenAddress:
     VITE_PUBLIC_FEE_TOKEN_ADDRESS ||
     "0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
-  manifest,
+  manifest: VITE_PUBLIC_SLOT ? slot : dev,
 });

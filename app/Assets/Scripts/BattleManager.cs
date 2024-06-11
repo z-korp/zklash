@@ -20,6 +20,8 @@ public class BattleManager : MonoBehaviour
 
     public GameObject[] unitPrefabs;
 
+    public GameObject dynamitePrefab;
+
     public ItemData[] itemData;
 
     public List<GameObject> allySpots = new List<GameObject>();
@@ -128,7 +130,8 @@ public class BattleManager : MonoBehaviour
     {
     }
 
-    private void StartBattle() {
+    private void StartBattle()
+    {
         Debug.Log("hahahahaah StartBattle");
         StartCoroutine(Battle(allies, enemies));
     }
@@ -221,6 +224,28 @@ public class BattleManager : MonoBehaviour
         CanvasManager.instance.ToggleCanvasInterStep(victory);
     }
 
+    private void LaunchDynamite(Vector3 position, Transform target)
+    {
+        var dynamite = Instantiate(dynamitePrefab, position, Quaternion.identity);
+        dynamite.GetComponent<ProjectileParabolic>().Initialize(target);
+    }
+
+    private void PlayDeathRattleEffects(Role role, Vector3 position, Transform target)
+    {
+        switch (role)
+        {
+            case Role.Pawn:
+                LaunchDynamite(position, target);
+                // TBD : add good death rattle
+                break;
+            case Role.Dynamoblin:
+                LaunchDynamite(position, target);
+                // TBD : add good death rattle
+                break;
+
+        }
+    }
+
     IEnumerator Battle(List<GameObject> team1, List<GameObject> team2)
     {
         Debug.Log("Team 1: " + team1.Count + " --- Team 2: " + team2.Count);
@@ -311,6 +336,12 @@ public class BattleManager : MonoBehaviour
 
         if (isChar1Dead)
         {
+            // Lancer la dynamite si le gobelin meurt
+            //if (char1.GetComponent<Unit>().deathRattleEffectIndex == -1)
+            //{
+            PlayDeathRattleEffects(char1.GetComponent<MobController>().Character.RoleInterface, char1.transform.position, char2.transform);
+            //}
+
             var (dmg1, buff1) = postMortem(char1, char2);
             if (dmg1 > 0)
                 yield return StartCoroutine(PostMortem(char1, char2, dmg1));
@@ -322,8 +353,16 @@ public class BattleManager : MonoBehaviour
             next_buff1 = buff1;
             next_buff2 = buff2;
         }
-        else if (isChar2Dead)
+        if (isChar2Dead)
         {
+
+            // Lancer la dynamite si l'ennemi meurt
+            //if (char2.GetComponent<Unit>().deathRattleEffectIndex == -1)
+            //{
+            PlayDeathRattleEffects(char2.GetComponent<MobController>().Character.RoleInterface, char2.transform.position, char1.transform);
+            //}
+
+
             var (dmg2, buff2) = postMortem(char2, char1);
             if (dmg2 > 0)
                 yield return StartCoroutine(PostMortem(char2, char1, dmg2));

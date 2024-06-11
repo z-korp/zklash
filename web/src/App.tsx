@@ -70,7 +70,7 @@ function App() {
   // Characters
   const characterKeys = useEntityQuery([
     Has(CharacterModel),
-    HasValue(CharacterModel, { team_id: team?.id || 0 }),
+    HasValue(CharacterModel, { player_id: player?.id, team_id: team?.id || 0 }),
   ]);
   useEffect(() => {
     if (!characterKeys) return;

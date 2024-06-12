@@ -21,6 +21,7 @@ public class BattleManager : MonoBehaviour
     public GameObject[] unitPrefabs;
 
     public GameObject dynamitePrefab;
+    public GameObject arrowPrefab;
 
     public ItemData[] itemData;
 
@@ -224,9 +225,9 @@ public class BattleManager : MonoBehaviour
         CanvasManager.instance.ToggleCanvasInterStep(victory);
     }
 
-    private void LaunchDynamite(Vector3 position, Transform target)
+    private void LaunchProjectile(Vector3 position, Transform target, GameObject projectilePrefab)
     {
-        var dynamite = Instantiate(dynamitePrefab, position, Quaternion.identity);
+        var dynamite = Instantiate(projectilePrefab, position, Quaternion.identity);
         dynamite.GetComponent<ProjectileParabolic>().Initialize(target);
     }
 
@@ -234,12 +235,12 @@ public class BattleManager : MonoBehaviour
     {
         switch (role)
         {
-            case Role.Pawn:
-                LaunchDynamite(position, target);
+            case Role.Dynamoblin:
+                LaunchProjectile(position, target, dynamitePrefab);
                 // TBD : add good death rattle
                 break;
-            case Role.Dynamoblin:
-                LaunchDynamite(position, target);
+            case Role.Bowman:
+                LaunchProjectile(position, target, arrowPrefab);
                 // TBD : add good death rattle
                 break;
 
@@ -336,11 +337,7 @@ public class BattleManager : MonoBehaviour
 
         if (isChar1Dead)
         {
-            // Lancer la dynamite si le gobelin meurt
-            //if (char1.GetComponent<Unit>().deathRattleEffectIndex == -1)
-            //{
             PlayDeathRattleEffects(char1.GetComponent<MobController>().Character.RoleInterface, char1.transform.position, char2.transform);
-            //}
 
             var (dmg1, buff1) = postMortem(char1, char2);
             if (dmg1 > 0)
@@ -356,12 +353,8 @@ public class BattleManager : MonoBehaviour
         if (isChar2Dead)
         {
 
-            // Lancer la dynamite si l'ennemi meurt
-            //if (char2.GetComponent<Unit>().deathRattleEffectIndex == -1)
-            //{
-            PlayDeathRattleEffects(char2.GetComponent<MobController>().Character.RoleInterface, char2.transform.position, char1.transform);
-            //}
 
+            PlayDeathRattleEffects(char2.GetComponent<MobController>().Character.RoleInterface, char2.transform.position, char1.transform);
 
             var (dmg2, buff2) = postMortem(char2, char1);
             if (dmg2 > 0)

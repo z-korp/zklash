@@ -154,6 +154,17 @@ public class MobHealth : MonoBehaviour
         }
     }
 
+    public IEnumerator BlinkPowerUpFlash()
+    {
+        while (isBlinking)
+        {
+            spriteRenderer.color = new Color(0f, 0f, 1f, 1f);
+            yield return new WaitForSeconds(blinkDuration);
+            spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+            yield return new WaitForSeconds(blinkDuration);
+        }
+    }
+
     public IEnumerator HandleBlinkDelay()
     {
         yield return new WaitForSeconds(blinkTimeAfterHit);

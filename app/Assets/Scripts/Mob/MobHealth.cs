@@ -106,12 +106,25 @@ public class MobHealth : MonoBehaviour
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Dead"));
         yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f);
 
+        // Trigger DeathRattle effects
+        //TriggerDeathRattleEffects();
+
         gameObject.SetActive(false);
     }
 
     public IEnumerator TriggerDeathEffect()
     {
         yield return null;
+    }
+
+
+    private void TriggerDeathRattleEffects()
+    {
+        DeathRattleEffect[] deathRattles = GetComponents<DeathRattleEffect>();
+        foreach (var effect in deathRattles)
+        {
+            effect.Trigger(gameObject);
+        }
     }
 
     public void SetTextHealth(int amount)

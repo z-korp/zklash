@@ -10,6 +10,7 @@ public class ClickButtonFight : MonoBehaviour
 {
     public void OnClickFight()
     {
+        CanvasManager.instance.HideOrShowUserStatsInfo(false);
         StartCoroutine(FightSequence());
     }
 
@@ -97,6 +98,7 @@ public class ClickButtonFight : MonoBehaviour
 
     private void FinalizeSetup()
     {
+        CanvasManager.instance.HideOrShowUserStatsInfo(true);
         CameraMovement.instance.MoveCameraToFight();
         CanvasManager.instance.ToggleCanvases();
         TeamManager.instance.MoveTeam();

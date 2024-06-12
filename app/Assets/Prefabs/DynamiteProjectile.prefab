@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 1958893423836779918}
   - component: {fileID: 4112190574808116743}
   - component: {fileID: 4391977550958218725}
+  - component: {fileID: -2370175885921957531}
   m_Layer: 0
-  m_Name: Dynamite
+  m_Name: DynamiteProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,3 +107,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-2370175885921957531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4487817848020293432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde46c94e1811414d86e60595e9339a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

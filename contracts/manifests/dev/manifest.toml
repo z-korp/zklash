@@ -1,5 +1,5 @@
 [world]
-kind = "WorldContract"
+kind = "Contract"
 class_hash = "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd"
 original_class_hash = "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd"
 abi = "abis/deployments/dojo_world_world.json"
@@ -8,10 +8,6 @@ transaction_hash = "0x5be0af36841d33273a0466f5a92bf2f5ddaf15daf07cf0c12c419547b9
 block_number = 3
 seed = "zklash"
 name = "dojo::world::world"
-
-[world.metadata]
-profile_name = "dev"
-rpc_url = "http://localhost:5050/"
 
 [base]
 kind = "Class"

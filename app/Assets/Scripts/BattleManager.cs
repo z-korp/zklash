@@ -20,6 +20,9 @@ public class BattleManager : MonoBehaviour
 
     public GameObject[] unitPrefabs;
 
+    public GameObject dynamitePrefab;
+    public GameObject arrowPrefab;
+
     public ItemData[] itemData;
 
     public List<GameObject> allySpots = new List<GameObject>();
@@ -222,6 +225,28 @@ public class BattleManager : MonoBehaviour
         CanvasManager.instance.ToggleCanvasInterStep(victory);
     }
 
+    private void LaunchProjectile(Vector3 position, Transform target, GameObject projectilePrefab)
+    {
+        var dynamite = Instantiate(projectilePrefab, position, Quaternion.identity);
+        dynamite.GetComponent<ProjectileParabolic>().Initialize(target);
+    }
+
+    private void PlayDeathRattleEffects(Role role, Vector3 position, Transform target)
+    {
+        switch (role)
+        {
+            case Role.Dynamoblin:
+                LaunchProjectile(position, target, dynamitePrefab);
+                // TBD : add good death rattle
+                break;
+            case Role.Bowman:
+                LaunchProjectile(position, target, arrowPrefab);
+                // TBD : add good death rattle
+                break;
+
+        }
+    }
+
     IEnumerator Battle(List<GameObject> team1, List<GameObject> team2)
     {
         Debug.Log("Team 1: " + team1.Count + " --- Team 2: " + team2.Count);
@@ -312,6 +337,8 @@ public class BattleManager : MonoBehaviour
 
         if (isChar1Dead)
         {
+            PlayDeathRattleEffects(char1.GetComponent<MobController>().Character.RoleInterface, char1.transform.position, char2.transform);
+
             var (dmg1, buff1) = postMortem(char1, char2);
             if (dmg1 > 0)
                 yield return StartCoroutine(PostMortem(char1, char2, dmg1));
@@ -325,6 +352,10 @@ public class BattleManager : MonoBehaviour
         }
         if (isChar2Dead)
         {
+
+
+            PlayDeathRattleEffects(char2.GetComponent<MobController>().Character.RoleInterface, char2.transform.position, char1.transform);
+
             var (dmg2, buff2) = postMortem(char2, char1);
             if (dmg2 > 0)
                 yield return StartCoroutine(PostMortem(char2, char1, dmg2));

@@ -26,7 +26,6 @@ GameObject:
   - component: {fileID: 4962763978797303551}
   - component: {fileID: 206987725946559450}
   - component: {fileID: 5731635283803301629}
-  - component: {fileID: 1413661692286007249}
   - component: {fileID: 810529499969138913}
   m_Layer: 0
   m_Name: Pawn
@@ -411,7 +410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791b1c631898d489092a6b0319f25e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1413661692286007249
 --- !u!114 &810529499969138913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,17 +422,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d8685cb37344d24bb101edd995e133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mob: {fileID: 0}
   stunMob: {fileID: 7930726209101446712}
   absorbMob: {fileID: 8115596680121202804}
   stun: 0
   absorb: 0
-  m_Script: {fileID: 11500000, guid: cc9b52c07aeb941afa1c95bc7b2f7f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dynamitePrefab: {fileID: 4487817848020293432, guid: c48b17cf2243d400a932df37f6b921cd, type: 3}
-  spawnOffset: {x: 0, y: 0, z: 0}
-  explosionAnimationName: 
 --- !u!1001 &799712522235122783
 PrefabInstance:
   m_ObjectHideFlags: 0

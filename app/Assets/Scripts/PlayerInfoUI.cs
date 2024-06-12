@@ -29,9 +29,21 @@ public class PlayerInfoUI : MonoBehaviour
         playerLives = 0;
         playerGold = 0;
         playerTrophies = 0;
+
+        EventManager.OnRefreshPlayerStats += RefreshPlayerStats;
+    }
+
+    void OnDestroy()
+    {
+        EventManager.OnRefreshPlayerStats -= RefreshPlayerStats;
     }
 
     void Update()
+    {
+        RefreshPlayerStats();
+    }
+
+    public void RefreshPlayerStats()
     {
         if (GameManager.Instance != null)
         {
@@ -43,17 +55,15 @@ public class PlayerInfoUI : MonoBehaviour
                 {
                     UpdatePlayerStats(team.health, team.gold, team.level);
                 }
-
             }
         }
     }
 
-    // Méthode pour mettre à jour les valeurs du joueur et l'interface utilisateur
     public void UpdatePlayerStats(uint lives, uint gold, uint trophies)
     {
         playerLives = lives;
         playerGold = gold;
-        playerTrophies = trophies;
+        playerTrophies = trophies - 1;
 
         UpdateUI();
     }

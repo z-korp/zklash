@@ -153,6 +153,7 @@ public class TxCoroutines : MonoBehaviour
         yield return new WaitForSeconds(1f); // to be sure Torii has indexed (TODO: remove this when Torii is fixed)
 
         onFinish?.Invoke();  // Call the callback if it's provided
+
         Debug.Log("[[[[[[[[[[[ END ExecuteReroll ]]]]]]]]]]]");
     }
 
@@ -170,6 +171,7 @@ public class TxCoroutines : MonoBehaviour
             )
         );
         //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+
         Debug.Log("[[[[[[[[[[[ END ExecuteMerge ]]]]]]]]]]]");
     }
 

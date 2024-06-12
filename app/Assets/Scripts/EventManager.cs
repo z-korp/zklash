@@ -22,4 +22,11 @@ public static class EventManager
         Debug.Log("[[[[ ShopUpdated ]]]]");
         OnShopUpdated?.Invoke();
     }
+
+    public static event Action OnRefreshPlayerStats;
+    public static void RefreshPlayerStats()
+    {
+        Debug.Log("[[[[ RefreshPlayerStats ]]]]");
+        OnRefreshPlayerStats?.Invoke();
+    }
 }

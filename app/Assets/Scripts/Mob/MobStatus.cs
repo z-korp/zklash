@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MobStatus : MonoBehaviour
@@ -5,11 +6,15 @@ public class MobStatus : MonoBehaviour
     private MobController mobController;
     public GameObject stunEffectPrefab;
 
+    public List<GameObject> stunAnimationList;
+
     public int stunDuration = 1;
     public int stun;
     public int absorb;
 
     public bool isPlaying = false;
+
+
 
     public void Start()
     {
@@ -38,9 +43,13 @@ public class MobStatus : MonoBehaviour
             absorb = mobController.Character.Absorb;
         }
 
-        if (stun != 0 && isPlaying == false)
+        if (stun != 0 && !isPlaying)
         {
             ApplyStunEffect();
+        }
+        if (stun == 0 && isPlaying)
+        {
+            DestroyStunEffect();
         }
     }
 
@@ -63,8 +72,18 @@ public class MobStatus : MonoBehaviour
             sheepOrbiter.SetInitialAngle(angleOffset);
 
             // Optionnel: Détruire l'effet après la durée de stun
-            //Destroy(stunEffect, stunDuration);
+            stunAnimationList.Add(stunEffect);
         }
         isPlaying = true;
+    }
+
+    void DestroyStunEffect()
+    {
+        foreach (GameObject stunEffect in stunAnimationList)
+        {
+            Destroy(stunEffect);
+        }
+        stunAnimationList.Clear();
+        isPlaying = false;
     }
 }

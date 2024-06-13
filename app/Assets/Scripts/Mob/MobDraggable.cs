@@ -126,6 +126,7 @@ public class MobDraggable : MonoBehaviour
             Debug.Log("Merge case");
             if (isFromShop && PlayerData.Instance.purchaseCost > PlayerData.Instance.Gold)
             {
+                DialogueManager.Instance.ShowDialogue("Your broke mate !");
                 Debug.LogWarning("Not enough balance");
                 rb.MovePosition(initPos);
                 return;
@@ -235,6 +236,7 @@ public class MobDraggable : MonoBehaviour
             {
                 if (PlayerData.Instance.purchaseCost > PlayerData.Instance.Gold)
                 {
+                    DialogueManager.Instance.ShowDialogue("Your broke mate !");
                     Debug.LogWarning("Not enough balance");
                     rb.MovePosition(initPos);
                     return;

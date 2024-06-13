@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 7787966755507272248}
   - component: {fileID: 6585578203993930059}
   - component: {fileID: 309095655659129397}
+  - component: {fileID: 1321165032734162177}
   m_Layer: 0
   m_Name: Bomboblin
   m_TagString: Enemy
@@ -394,9 +395,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d8685cb37344d24bb101edd995e133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mob: {fileID: 11400000, guid: cff437dfa5e264d538aba8f1dae03d0a, type: 2}
   stunMob: {fileID: 764159375897410907}
   absorbMob: {fileID: 1456118150013631255}
+  stun: 0
+  absorb: 0
+--- !u!114 &1321165032734162177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565273498285202334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434fa7cbd22804c71b84143ba5f93e37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunEffectPrefab: {fileID: 7012804776566669157, guid: 5593375fb27d944838de8ad8c4e94b70, type: 3}
+  stunDuration: 1
   stun: 0
   absorb: 0
 --- !u!1001 &1200794786517939930

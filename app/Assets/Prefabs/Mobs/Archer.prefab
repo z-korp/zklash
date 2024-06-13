@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 7323098220767229983}
   - component: {fileID: 2215707457893609956}
   - component: {fileID: 8191565077712251747}
+  - component: {fileID: -7827220813203485491}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Mob
@@ -424,6 +425,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stunMob: {fileID: 7310894583414050770}
   absorbMob: {fileID: 8924584952273652126}
+  stun: 0
+  absorb: 0
+--- !u!114 &-7827220813203485491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434fa7cbd22804c71b84143ba5f93e37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunEffectPrefab: {fileID: 7012804776566669157, guid: 5593375fb27d944838de8ad8c4e94b70, type: 3}
+  stunDuration: 1
   stun: 0
   absorb: 0
 --- !u!1001 &2221828353912884239

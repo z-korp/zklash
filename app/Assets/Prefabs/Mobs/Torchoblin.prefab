@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 4511937055904262526}
   - component: {fileID: 1785214618669547368}
   - component: {fileID: 941274038713493374}
+  - component: {fileID: -5705849812587389446}
   m_Layer: 0
   m_Name: Torchoblin
   m_TagString: Enemy
@@ -404,9 +405,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d8685cb37344d24bb101edd995e133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mob: {fileID: 0}
   stunMob: {fileID: 2272487114515748590}
   absorbMob: {fileID: 82898387106828450}
+  stun: 0
+  absorb: 0
+--- !u!114 &-5705849812587389446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971632552838307129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434fa7cbd22804c71b84143ba5f93e37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunEffectPrefab: {fileID: 7012804776566669157, guid: 5593375fb27d944838de8ad8c4e94b70, type: 3}
+  stunDuration: 1
   stun: 0
   absorb: 0
 --- !u!1001 &371192795962761803

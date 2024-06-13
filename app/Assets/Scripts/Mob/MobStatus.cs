@@ -1,0 +1,70 @@
+using UnityEngine;
+
+public class MobStatus : MonoBehaviour
+{
+    private MobController mobController;
+    public GameObject stunEffectPrefab;
+
+    public int stunDuration = 1;
+    public int stun;
+    public int absorb;
+
+    public bool isPlaying = false;
+
+    public void Start()
+    {
+        // Get the MobController component from the GameObject
+        mobController = GetComponent<MobController>();
+
+        if (mobController == null)
+        {
+            Debug.LogError("MobController component not found on the GameObject.", this);
+            return;
+        }
+
+        UpdateStatusAnimation();
+    }
+
+    public void Update()
+    {
+        UpdateStatusAnimation();
+    }
+
+    private void UpdateStatusAnimation()
+    {
+        if (mobController != null && mobController.Character != null)
+        {
+            stun = mobController.Character.Stun;
+            absorb = mobController.Character.Absorb;
+        }
+
+        if (stun != 0 && isPlaying == false)
+        {
+            ApplyStunEffect();
+        }
+    }
+
+    void ApplyStunEffect()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject stunEffect = Instantiate(stunEffectPrefab, transform.position, Quaternion.identity);
+            stunEffect.transform.parent = transform; // Follow parent
+            stunEffect.GetComponent<Renderer>().sortingOrder = gameObject.GetComponent<Renderer>().sortingOrder;
+
+            OrbitObject sheepOrbiter = stunEffect.GetComponent<OrbitObject>();
+            sheepOrbiter.target = transform;
+
+            // Offset de position initial pour chaque orbiteur (ajuste selon tes besoins)
+            sheepOrbiter.positionOffset = new Vector3(0, 0.5f, 0);
+
+            // Définir un angle initial différent pour chaque orbiteur
+            float angleOffset = (360f / 3f) * i; // Diviser l'orbite en 3 segments
+            sheepOrbiter.SetInitialAngle(angleOffset);
+
+            // Optionnel: Détruire l'effet après la durée de stun
+            //Destroy(stunEffect, stunDuration);
+        }
+        isPlaying = true;
+    }
+}

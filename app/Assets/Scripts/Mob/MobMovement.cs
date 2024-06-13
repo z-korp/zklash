@@ -43,6 +43,18 @@ public class MobMovement : MonoBehaviour
 
     void Update()
     {
+        IsMoving();
+    }
+
+    public void Move(Transform _target)
+    {
+        targets.Add(_target);
+    }
+
+
+
+    public bool IsMoving()
+    {
         // If the target transform position is not close to the current position then
         // Translate from the current transform position to the target transform position at a specified speed
         // Aplly an easing effect to the movement In and Out
@@ -58,6 +70,7 @@ public class MobMovement : MonoBehaviour
                 // rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, Time.deltaTime);
                 characterAnimatorController.Walk(true);
                 transform.Translate(speed * Time.deltaTime * direction.normalized, Space.World);
+                return true;
             }
             else
             {
@@ -65,13 +78,11 @@ public class MobMovement : MonoBehaviour
                 //animator.SetBool("IsWalking", false);
                 rb.velocity = Vector3.zero;
                 targets.RemoveAt(0);
+                return false;
             }
         }
-    }
 
-    public void Move(Transform _target)
-    {
-        targets.Add(_target);
+        return false;
     }
 
     void Flip(float _movement)
@@ -84,5 +95,10 @@ public class MobMovement : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
+    }
+
+    public void ResetTarget()
+    {
+        targets.Clear();
     }
 }

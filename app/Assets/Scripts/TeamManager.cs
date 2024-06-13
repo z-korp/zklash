@@ -76,6 +76,7 @@ public class TeamManager : MonoBehaviour
 
                 // Move Team to shop
                 TeamSpots[i].Mob.transform.position = targetsShopTeam[i].position + offset;
+                TeamSpots[i].Mob.GetComponent<MobMovement>().ResetTarget();
                 HideXpCanvas(TeamSpots[i].Mob, false);
 
                 // Show team again

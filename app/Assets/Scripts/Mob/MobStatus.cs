@@ -55,11 +55,11 @@ public class MobStatus : MonoBehaviour
             OrbitObject sheepOrbiter = stunEffect.GetComponent<OrbitObject>();
             sheepOrbiter.target = transform;
 
-            // Offset de position initial pour chaque orbiteur (ajuste selon tes besoins)
+            // Offset pos of orbiter object
             sheepOrbiter.positionOffset = new Vector3(0, 0.5f, 0);
 
-            // Définir un angle initial différent pour chaque orbiteur
-            float angleOffset = (360f / 3f) * i; // Diviser l'orbite en 3 segments
+            // Init angle of each orbiter object
+            float angleOffset = (360f / 3f) * i; // Divide orbit in 3
             sheepOrbiter.SetInitialAngle(angleOffset);
 
             // Optionnel: Détruire l'effet après la durée de stun

@@ -2,6 +2,11 @@
 version = 1
 
 [[package]]
+name = "cubit"
+version = "1.3.0"
+source = "git+https://github.com/influenceth/cubit.git#09cb8c2af6c0216315e0a880fd7198381c7b911c"
+
+[[package]]
 name = "dojo"
 version = "0.6.0"
 source = "git+https://github.com/dojoengine/dojo?tag=v0.6.0#fc5ad790c1993713e59f3fc65739160f132f29f0"
@@ -15,8 +20,18 @@ version = "0.3.11"
 source = "git+https://github.com/dojoengine/dojo?tag=v0.3.11#1e651b5d4d3b79b14a7d8aa29a92062fcb9e6659"
 
 [[package]]
+name = "origami"
+version = "0.6.0"
+source = "git+https://github.com/dojoengine/origami?rev=501dcd4#501dcd41c010af3f2c3842d42b8c3d19a6ec5056"
+dependencies = [
+ "cubit",
+ "dojo",
+]
+
+[[package]]
 name = "zklash"
 version = "0.6.0"
 dependencies = [
  "dojo",
+ "origami",
 ]

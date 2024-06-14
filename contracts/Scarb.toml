@@ -7,10 +7,11 @@ version = "0.6.0"
 sierra-replace-ids = true
 
 [scripts]
-migrate = "sozo build && sozo migrate && ./scripts/default_auth.sh"
-spawn = "./scripts/spawn.sh"
+deploy = "sozo --profile dev build && sozo --profile dev migrate plan && sozo --profile dev migrate apply && ./scripts/authorize.sh dev"
+deploy-slot = "sozo --profile slot build && sozo --profile slot migrate plan --name v0 && sozo --profile slot migrate apply --name v0 && ./scripts/authorize.sh slot"
 
 [dependencies]
+origami = { git = "https://github.com/dojoengine/origami", rev = "501dcd4" }
 dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.6.0" }
 
 [[target.dojo]]
@@ -18,21 +19,27 @@ dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.6.0" }
 [tool.dojo]
 initializer_class_hash = "0xbeef"
 
-[tool.dojo.env]
-# Local
-rpc_url = "http://localhost:5050/"
+[profile.dev.tool.dojo.env]
+rpc_url = "http://localhost:5050"
 account_address = "0xb3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca"
 private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
-# Slot
-# rpc_url = "https://api.cartridge.gg/x/zklash/katana/"
-# account_address = "0x66255c6d2608992faca247fbe10036ec0b9b854bc769878f1322d0b1ed0155d"
-# private_key = "0x2597f270936b6dbc73ef40a0ff6069aa308ce47e831847585ba047be68beae6"
+
+[profile.slot.tool.dojo.env]
+rpc_url = "https://api.cartridge.gg/x/zklash-matthias/katana" 
+#"https://api.cartridge.gg/x/zklash/katana/"
+account_address = "0x7e96018773540ca5516f6ba96b506ae271642bbe0c2740b521f51ddd36bce79"
+private_key = "0x178ad5a5c691af01e60232a8b7ad79899279fb4fa4bf3e9f492db0255381d69"
+
+[profile.sepolia.tool.dojo.env]
+rpc_url = "https://starknet-sepolia.public.blastapi.io/rpc/v0_6"
+account_address = "0x063fd4be5b4df3068e3c4ae4062e999609b96a569e69628d6ba3331bf56e826c"
+private_key = "0x05c38e8a5fe551d71755d7c4c77ea8aa7083479b222b413fef3772205fefec00"
 
 [tool.dojo.world]
-name = "Dojo starter"
-description = "The official Dojo Starter guide, the quickest and most streamlined way to get your Dojo Autonomous World up and running. This guide will assist you with the initial setup, from cloning the repository to deploying your world."
-cover_uri = "file://assets/cover.png"
-icon_uri = "file://assets/icon.png"
+name = "zKlash"
+description = "Autobattler where you hire creatures and improve them to defeat waves of enemies."
+# cover_uri = "file://assets/cover.png"
+# icon_uri = "file://assets/icon.png"
 website = "https://github.com/dojoengine/dojo-starter"
 
 [tool.dojo.world.socials]

@@ -1,7 +1,6 @@
 // Core imports
 
 use core::debug::PrintTrait;
-use core::poseidon::hades_permutation;
 
 // Starknet imports
 
@@ -10,7 +9,6 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::constants;
-use zklash::events::{Fighter, Usage, UsageTrait, Talent, TalentTrait};
 use zklash::helpers::math::Math;
 use zklash::types::item::{Item, ItemTrait};
 use zklash::types::role::{Role, RoleTrait};
@@ -150,9 +148,7 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn talent(
-        ref self: Character, phase: Phase, battle_id: u8, tick: u32
-    ) -> (u8, u8, Buff, Talent) {
+    fn talent(ref self: Character, phase: Phase, tick: u32) -> (u8, u8, Buff) {
         // [Effect] Update the item's effect
         let role: Role = self.role.into();
         let buff = Buff {
@@ -168,24 +164,11 @@ impl CharacterImpl of CharacterTrait {
             attack: role.next_attack(phase, self.level),
             absorb: role.next_absorb(phase, self.level),
         };
-        let talent = TalentTrait::new(
-            battle_id,
-            tick,
-            self,
-            buff.health,
-            buff.attack,
-            buff.absorb,
-            damage,
-            stun,
-            next_buff.health,
-            next_buff.attack,
-            next_buff.absorb,
-        );
-        (damage, stun, next_buff, talent)
+        (damage, stun, next_buff)
     }
 
     #[inline(always)]
-    fn usage(ref self: Character, phase: Phase, battle_id: u8, tick: u32) -> (u8, Usage) {
+    fn usage(ref self: Character, phase: Phase, tick: u32) -> u8 {
         // [Effect] Update the item's effect
         let item: Item = self.item.into();
         let buff = Buff {
@@ -195,18 +178,7 @@ impl CharacterImpl of CharacterTrait {
         self.item = item.usage(phase).into();
         // [Effect] Return the item damage
         let damage = item.damage(phase);
-        let usage = UsageTrait::new(
-            battle_id,
-            tick,
-            self,
-            item.into(),
-            self.item,
-            buff.health,
-            buff.attack,
-            buff.absorb,
-            damage,
-        );
-        (damage, usage)
+        damage
     }
 
     #[inline(always)]
@@ -258,25 +230,6 @@ impl CharacterImpl of CharacterTrait {
     fn merge(ref self: Character, ref to: Character) {
         to.xp();
         self.nullify();
-    }
-
-    #[inline(always)]
-    fn to_fighter(self: Character, battle_id: u8, index: u8) -> Fighter {
-        Fighter {
-            player_id: self.player_id.into(),
-            team_id: self.team_id,
-            battle_id,
-            character_id: self.id,
-            index,
-            role: self.role,
-            item: self.item,
-            xp: self.xp,
-            level: self.level,
-            health: self.health,
-            attack: self.attack,
-            absorb: self.absorb,
-            stun: self.stun,
-        }
     }
 }
 

@@ -35,6 +35,9 @@ fn test_battle_start_lose() {
     let player: Player = store.player(context.player_id);
     systems.market.hire(world, player.team_id(), 0);
 
+    // [Hydrate]
+    systems.battle.hydrate(world);
+
     // [Start]
     let intiial_team = store.team(context.player_id, player.team_id());
     systems.battle.start(world, player.team_id(), 0x01);
@@ -61,9 +64,12 @@ fn test_battle_start_win() {
     systems.market.hire(world, player.team_id(), 1);
     systems.market.hire(world, player.team_id(), 0);
 
+    // [Hydrate]
+    systems.battle.hydrate(world);
+
     // [Start]
     let intiial_team = store.team(context.player_id, player.team_id());
-    systems.battle.start(world, player.team_id(), 0x010203);
+    systems.battle.start(world, player.team_id(), 0x030201);
 
     // [Assert] Team
     let team = store.team(context.player_id, player.team_id());
@@ -86,6 +92,9 @@ fn test_battle_start_with_item() {
     systems.market.hire(world, player.team_id(), 2);
     systems.market.hire(world, player.team_id(), 1);
     systems.market.equip(world, player.team_id(), 0x1, 0);
+
+    // [Hydrate]
+    systems.battle.hydrate(world);
 
     // [Start]
     let intiial_team = store.team(context.player_id, player.team_id());

@@ -16,7 +16,6 @@ trait IAccount<TContractState> {
 mod account {
     // Core imports
 
-    use zklash::models::player::PlayerTrait;
     use core::debug::PrintTrait;
 
     // Starknet imports
@@ -35,10 +34,11 @@ mod account {
     // Internal imports
 
     use zklash::constants::WORLD;
-    use zklash::store::{Store, StoreImpl};
-    use zklash::models::player::{Player, PlayerImpl, PlayerAssert};
-    use zklash::models::team::{Team, TeamImpl, TeamAssert};
-    use zklash::models::shop::{Shop, ShopImpl, ShopAssert};
+    use zklash::store::{Store, StoreTrait};
+    use zklash::models::registry::{Registry, RegistryTrait};
+    use zklash::models::player::{Player, PlayerTrait, PlayerAssert};
+    use zklash::models::team::{Team, TeamTrait, TeamAssert};
+    use zklash::models::shop::{Shop, ShopTrait, ShopAssert};
 
     // Local imports
 
@@ -69,7 +69,7 @@ mod account {
     impl AccountImpl of IAccount<ContractState> {
         fn create(self: @ContractState, world: IWorldDispatcher, name: felt252,) {
             // [Setup] Datastore
-            let store: Store = StoreImpl::new(world);
+            let store: Store = StoreTrait::new(world);
 
             // [Check] Player not already exists
             let caller = get_caller_address();
@@ -77,13 +77,13 @@ mod account {
             player.assert_not_exists();
 
             // [Effect] Create a new player
-            let player = PlayerImpl::new(caller, name);
+            let player = PlayerTrait::new(caller, name);
             store.set_player(player);
         }
 
         fn spawn(self: @ContractState, world: IWorldDispatcher) {
             // [Setup] Datastore
-            let store: Store = StoreImpl::new(world);
+            let store: Store = StoreTrait::new(world);
 
             // [Check] Player exists
             let caller = get_caller_address();
@@ -91,11 +91,12 @@ mod account {
             player.assert_exists();
 
             // [Effect] Spawn a new team
-            let salt: felt252 = get_block_number().into();
-            let mut team = player.spawn_team(salt);
+            let team = player.spawn_team();
 
             // [Effect] Spawn a new shop
-            let shop = team.spawn_shop();
+            let mut registry = store.registry(team.registry_id);
+            registry.reseed();
+            let shop = team.spawn_shop(registry.seed);
 
             // [Effect] Store the shop
             store.set_shop(shop);
@@ -105,6 +106,9 @@ mod account {
 
             // [Effect] Update the player
             store.set_player(player);
+
+            // [Effect] Update the registry
+            store.set_registry(registry);
         }
     }
 }

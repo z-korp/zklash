@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Rocks3_1
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 60479421, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
+  - {fileID: 1067252121, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
+  - {fileID: -2061189287, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
+  - {fileID: -1388990209, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
+  - {fileID: 1787835144, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
+  - {fileID: -935363233, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
+  - {fileID: -403315721, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
+  - {fileID: -1164164611, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
+  m_MinSpeed: 10
+  m_MaxSpeed: 10
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0

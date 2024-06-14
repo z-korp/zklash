@@ -53,7 +53,7 @@ public class ItemDraggable : MonoBehaviour
         {
             if (PlayerData.Instance.Gold < PlayerData.Instance.purchaseCost)
             {
-                DialogueManager.Instance.ShowDialogue("Your broke mate !");
+                DialogueManager.Instance.ShowDialogueForDuration("Your broke mate !", 2f);
                 Debug.LogWarning("Not enough gold to purchase item.");
                 rb.MovePosition(initPos);
                 return;

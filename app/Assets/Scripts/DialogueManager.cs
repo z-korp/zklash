@@ -29,7 +29,7 @@ public class DialogueManager : MonoBehaviour
         if (npc != null)
         {
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(npc.position); // Follow NPC
-            dialogueBubble.transform.position = screenPosition + new Vector3(0, 50, 0); // Offset
+            dialogueBubble.transform.position = screenPosition + new Vector3(0, 120, 0); // Offset
         }
     }
 

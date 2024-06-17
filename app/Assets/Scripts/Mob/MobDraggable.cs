@@ -100,109 +100,75 @@ public class MobDraggable : MonoBehaviour
                 ClickButtonSell.instance.SellMob(gameObject);
 
         // Cancel the drag if the mob is not dropped in a valid zone
-        if (!currentDroppableZone || !currentDroppableZone.CanBeDropped())
-        {
-            Debug.Log("Drop in invalid zone");
-            rb.MovePosition(initPos);
-            return;
-        }
+        if (InvalidDropZoneResetPosition()) return;
 
         // Get the index of the zone where the mob is dropped
         int zoneIndex = currentDroppableZone.index;
 
         // Manage the case where the mob is dropped at the same place when it doesn't come from the shop
-        if (!isFromShop && zoneIndex == index)
-        {
-            Debug.Log("Drop at the same place");
-            rb.MovePosition(initPos);
-            return;
-        }
+        if (MobNotFromShopDropAtSamePlace(zoneIndex)) return;
 
         uint teamId = PlayerData.Instance.GetTeamId();
 
-        // Manage the merge case
+        // Manage the merge or swap case
+        MergeOrSwapMob(zoneIndex, teamId);
+
+    }
+
+    private void ResetPosition()
+    {
+        rb.MovePosition(initPos);
+    }
+
+    private bool InvalidDropZoneResetPosition()
+    {
+        if (!currentDroppableZone || !currentDroppableZone.CanBeDropped())
+        {
+            Debug.Log("Drop in invalid zone");
+            ResetPosition();
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool MobNotFromShopDropAtSamePlace(int zoneIndex)
+    {
+        if (!isFromShop && zoneIndex == index)
+        {
+            Debug.Log("Drop at the same place");
+            ResetPosition();
+            return true;
+        }
+
+        return false;
+    }
+
+
+    private void MergeOrSwapMob(int zoneIndex, uint teamId)
+    {
         if (TeamManager.instance.RoleAtIndex(zoneIndex) == gameObject.GetComponent<MobController>().Character.Role.GetRole)
         {
-            Debug.Log("Merge case");
-            if (isFromShop && PlayerData.Instance.purchaseCost > PlayerData.Instance.Gold)
-            {
-                DialogueManager.Instance.ShowDialogueForDuration("Your broke mate !", 2f);
-                Debug.LogWarning("Not enough balance");
-                rb.MovePosition(initPos);
-                return;
-            }
+            if (NotEnoughMoney()) return;
 
             GameObject mobToUpdate = TeamManager.instance.GetMemberFromTeam(zoneIndex);
             GameObject mobToRemove = gameObject;
 
             int oldLevel = mobToUpdate.GetComponent<MobController>().Character.Level;
 
-            if (mobToUpdate.GetComponent<MobController>().Character.IsMobMaxLevel() || mobToRemove.GetComponent<MobController>().Character.IsMobMaxLevel())
-            {
-                if (isFromShop)
-                {
-                    Debug.LogWarning("Mob is already Max Level");
-                    rb.MovePosition(initPos);
-                    return;
-                }
-
-                // Mob is max level and we are in deck so you probably want to swap position
-                swapUnit(index, zoneIndex);
-                index = zoneIndex;
-                return;
-
-            }
-
+            if (MobIsMaxLevel(zoneIndex, mobToUpdate, mobToRemove)) return;
 
             // Merge the mob
-            mobToUpdate.GetComponent<MobController>().Character.Merge(mobToRemove.GetComponent<MobController>().Character);
-            Destroy(mobToRemove);
+            MergeMobThatCanLevelUpUI(mobToUpdate, mobToRemove, oldLevel);
 
-            int newLevel = mobToUpdate.GetComponent<MobController>().Character.Level;
-
-            if (oldLevel != newLevel)
-                LevelUpAnimation(mobToUpdate);
-
-            // Merge in sc:
             if (isFromShop)
             {
-                string entity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
-                if (entity == "")
-                {
-                    Debug.Log("Entity not found.");
-                    return;
-                }
-                Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
-                //ContractActions.instance.TriggerMergeFromShop(character.id, (uint)index);
-                StartCoroutine(TxCoroutines.Instance.ExecuteMergeFromShop(teamId, character.id, (uint)index));
+                if (!MergeMobFromShopContract(mobToUpdate, teamId)) return;
+
             }
             else
             {
-
-                string fromEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
-                if (fromEntity == "")
-                {
-                    Debug.Log("Entity not found.");
-                    return;
-                }
-                Character from = GameManager.Instance.worldManager.Entity(fromEntity).GetComponent<Character>();
-
-                string toEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
-                if (toEntity == "")
-                {
-                    Debug.Log("Entity not found.");
-                    return;
-                }
-                Character to = GameManager.Instance.worldManager.Entity(toEntity).GetComponent<Character>();
-
-                //ContractActions.instance.TriggerMerge(from.id, to.id);
-                StartCoroutine(TxCoroutines.Instance.ExecuteMerge(teamId, from.id, to.id));
-
-                // Reset Team spot after merge
-                TeamManager.instance.FreeSpot(index);
-
-                // Reset sell btn to reroll
-                CanvasManager.instance.ToggleSellRerollButton();
+                if (!MergeMobNotFromShopContract(mobToUpdate, teamId)) return;
 
             }
         }
@@ -224,7 +190,7 @@ public class MobDraggable : MonoBehaviour
                 else
                 {
                     Debug.Log("Drop in unavailable zone");
-                    rb.MovePosition(initPos);
+                    ResetPosition();
                     return;
                 }
 
@@ -236,36 +202,59 @@ public class MobDraggable : MonoBehaviour
             {
                 if (PlayerData.Instance.purchaseCost > PlayerData.Instance.Gold)
                 {
-                    DialogueManager.Instance.ShowDialogueForDuration("Your broke mate !", 2f);
-                    Debug.LogWarning("Not enough balance");
-                    rb.MovePosition(initPos);
+                    NoMoneyMessageResetPosition();
                     return;
                 }
 
                 isFromShop = false;
-                //ContractActions.instance.TriggerHire((uint)index);
                 StartCoroutine(TxCoroutines.Instance.ExecuteHire(teamId, (uint)index));
-
-                Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
-                TeamManager.instance.FillSpot(zoneIndex, role, gameObject);
-                rb.MovePosition(currentDroppableZone.transform.position + offset);
+                CreateMobForTeam(zoneIndex);
             }
             else
             {
-                string entity = TeamManager.instance.TeamSpots[index].Entity;
-                Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
-                TeamManager.instance.FillSpot(zoneIndex, role, gameObject, entity);
-                rb.MovePosition(currentDroppableZone.transform.position + offset);
-                TeamManager.instance.FreeSpot(index);
+                SwapMobPositionInFreeSpotTeam(zoneIndex);
             }
 
-
-            // Update the team with new member
-            //TeamManager.instance.AddTeamMember(zoneIndex, gameObject);
-
-            // Update the index of the mob with the new index
             index = zoneIndex;
         }
+
+    }
+
+    private void NoMoneyMessageResetPosition()
+    {
+        DialogueManager.Instance.ShowDialogueForDuration("Your broke mate !", 2f);
+        Debug.LogWarning("Not enough balance");
+        ResetPosition();
+    }
+
+    private bool NotEnoughMoney()
+    {
+        if (isFromShop && PlayerData.Instance.purchaseCost > PlayerData.Instance.Gold)
+        {
+            NoMoneyMessageResetPosition();
+            return true;
+        }
+        return false;
+    }
+
+    private bool MobIsMaxLevel(int zoneIndex, GameObject mobToUpdate, GameObject mobToRemove)
+    {
+        if (mobToUpdate.GetComponent<MobController>().Character.IsMobMaxLevel() || mobToRemove.GetComponent<MobController>().Character.IsMobMaxLevel())
+        {
+            if (isFromShop)
+            {
+                Debug.LogWarning("Mob is already Max Level");
+                ResetPosition();
+                return true;
+            }
+
+            // Mob is max level and we are in deck so you probably want to swap position
+            swapUnit(index, zoneIndex);
+            index = zoneIndex;
+            return true;
+        }
+
+        return false;
     }
 
     private void swapUnit(int index, int zoneIndex)
@@ -293,6 +282,67 @@ public class MobDraggable : MonoBehaviour
 
         // Update index of the spot they are in battle deck
         mob2.GetComponent<MobDraggable>().index = index;
+    }
+
+    private void MergeMobThatCanLevelUpUI(GameObject mobToUpdate, GameObject mobToRemove, int oldLevel)
+    {
+        mobToUpdate.GetComponent<MobController>().Character.Merge(mobToRemove.GetComponent<MobController>().Character);
+        Destroy(mobToRemove);
+
+        int newLevel = mobToUpdate.GetComponent<MobController>().Character.Level;
+
+        if (oldLevel != newLevel)
+            LevelUpAnimation(mobToUpdate);
+    }
+
+    private bool MergeMobFromShopContract(GameObject mobToUpdate, uint teamId)
+    {
+        string entity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+        if (entity == "")
+            return false;
+        Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
+        StartCoroutine(TxCoroutines.Instance.ExecuteMergeFromShop(teamId, character.id, (uint)index));
+        return true;
+    }
+
+    private bool MergeMobNotFromShopContract(GameObject mobToUpdate, uint teamId)
+    {
+        string fromEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+        if (fromEntity == "")
+            return false;
+
+        Character from = GameManager.Instance.worldManager.Entity(fromEntity).GetComponent<Character>();
+
+        string toEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+        if (toEntity == "")
+            return false;
+        Character to = GameManager.Instance.worldManager.Entity(toEntity).GetComponent<Character>();
+
+        StartCoroutine(TxCoroutines.Instance.ExecuteMerge(teamId, from.id, to.id));
+
+        // Reset Team spot after merge
+        TeamManager.instance.FreeSpot(index);
+
+        // Reset sell btn to reroll
+        CanvasManager.instance.ToggleSellRerollButton();
+
+        return true;
+    }
+
+    private void CreateMobForTeam(int zoneIndex)
+    {
+        Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
+        TeamManager.instance.FillSpot(zoneIndex, role, gameObject);
+        rb.MovePosition(currentDroppableZone.transform.position + offset);
+    }
+
+    private void SwapMobPositionInFreeSpotTeam(int zoneIndex)
+    {
+        string entity = TeamManager.instance.TeamSpots[index].Entity;
+        Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
+        TeamManager.instance.FillSpot(zoneIndex, role, gameObject, entity);
+        rb.MovePosition(currentDroppableZone.transform.position + offset);
+        TeamManager.instance.FreeSpot(index);
     }
 
     private void LevelUpAnimation(GameObject mob)

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ItemDraggable : MonoBehaviour
@@ -13,6 +14,9 @@ public class ItemDraggable : MonoBehaviour
     public GameObject orbitObjectPrefab;
 
     private GameObject mob;
+
+    public delegate void ItemHoveredHandler(bool isHovered);
+    public event ItemHoveredHandler OnItemHovered;
 
     void Awake()
     {
@@ -102,5 +106,16 @@ public class ItemDraggable : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         canDropItem = false;
+    }
+
+    private void OnMouseEnter()
+    {
+        Debug.Log("Mouse enter");
+        OnItemHovered?.Invoke(true);
+    }
+    private void OnMouseExit()
+    {
+        Debug.Log("Mouse exit");
+        OnItemHovered?.Invoke(false);
     }
 }

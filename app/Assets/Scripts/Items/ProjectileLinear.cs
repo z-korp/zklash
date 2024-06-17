@@ -14,14 +14,26 @@ public class ProjectileLinear : MonoBehaviour
     {
         if (target != null)
         {
-            Vector3 direction = (target.position - transform.position).normalized;
-            transform.position += direction * speed * Time.deltaTime;
-
-            if (Vector3.Distance(transform.position, target.position) < 0.1f)
+            MoveTowardTarget();
+            if (targetIsReach())
             {
                 // Ajoutez des effets d'explosion ici
                 Destroy(gameObject);
             }
         }
+    }
+
+    private void MoveTowardTarget()
+    {
+        Vector3 direction = (target.position - transform.position).normalized;
+        transform.position += direction * speed * Time.deltaTime;
+    }
+
+    private bool targetIsReach()
+    {
+        if (Vector3.Distance(transform.position, target.position) < 0.1f)
+            return true;
+        return false;
+
     }
 }

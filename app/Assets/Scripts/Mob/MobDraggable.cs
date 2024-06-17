@@ -10,7 +10,7 @@ public class MobDraggable : MonoBehaviour
     //public Transform[] targets; // Les cibles vers lesquelles les flèches vont pointer
     //private List<GameObject> indicators = new List<GameObject>();
 
-    bool drag;
+
     public Vector3 initPos = Vector3.zero;
 
     public bool isFromShop = true;
@@ -18,10 +18,13 @@ public class MobDraggable : MonoBehaviour
 
     public GameObject mobFxPrefab;
 
-    private Rigidbody2D rb;
-    private DroppableZone currentDroppableZone;
+    private Rigidbody2D _rb;
+    private SpriteRenderer _sp;
 
-    private CharacterAnimatorController characterAnimatorController;
+    private bool _drag;
+
+    private int _maxOrderValue = 1000;
+    private DroppableZone currentDroppableZone;
 
     public Animator animator;
 
@@ -37,7 +40,8 @@ public class MobDraggable : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
+        _sp = GetComponent<SpriteRenderer>();
         UpdateDropTargets();
 
         droppableZones = GameObject.FindGameObjectsWithTag("DroppableZone");
@@ -46,21 +50,19 @@ public class MobDraggable : MonoBehaviour
 
     private void Update()
     {
-        if (drag)
+        if (_drag)
         {
             // TBD: Magic numbers for z-order to change
-            GetComponent<SpriteRenderer>().sortingOrder = 1000;
+            SetMobOrderVisual(_maxOrderValue);
+
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            rb.MovePosition(mousePos);
+            _rb.MovePosition(mousePos);
 
             if (!isFromShop && !togglingButton)
             {
                 togglingButton = true;
                 CanvasManager.instance.ToggleSellRerollButton();
             }
-
-
-            // UpdateArrows();
         }
         else
         {
@@ -69,13 +71,13 @@ public class MobDraggable : MonoBehaviour
                 togglingButton = false;
                 CanvasManager.instance.ToggleSellRerollButton();
             }
-            GetComponent<SpriteRenderer>().sortingOrder = 999;
+            SetMobOrderVisual(_maxOrderValue - 1);
         }
     }
 
     private void OnMouseDown()
     {
-        drag = true;
+        _drag = true;
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
         if (mouseHoverDetector != null)
@@ -86,7 +88,7 @@ public class MobDraggable : MonoBehaviour
 
     private void OnMouseUp()
     {
-        drag = false;
+        _drag = false;
         animator.SetBool("IsWalking", false);
         DestroyAllIndicators();
 
@@ -115,9 +117,14 @@ public class MobDraggable : MonoBehaviour
 
     }
 
+    private void SetMobOrderVisual(int spOrder)
+    {
+        _sp.sortingOrder = spOrder;
+    }
+
     private void ResetPosition()
     {
-        rb.MovePosition(initPos);
+        _rb.MovePosition(initPos);
     }
 
     private bool InvalidDropZoneResetPosition()
@@ -277,7 +284,7 @@ public class MobDraggable : MonoBehaviour
         TeamManager.instance.FillSpot(index, role2, mob2, entity2);
 
         // Update UI pos of entity
-        rb.MovePosition(currentDroppableZone.transform.position + offset);
+        _rb.MovePosition(currentDroppableZone.transform.position + offset);
         mob2.GetComponent<Rigidbody2D>().MovePosition(initPos);
 
         // Update index of the spot they are in battle deck
@@ -333,7 +340,7 @@ public class MobDraggable : MonoBehaviour
     {
         Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
         TeamManager.instance.FillSpot(zoneIndex, role, gameObject);
-        rb.MovePosition(currentDroppableZone.transform.position + offset);
+        _rb.MovePosition(currentDroppableZone.transform.position + offset);
     }
 
     private void SwapMobPositionInFreeSpotTeam(int zoneIndex)
@@ -341,7 +348,7 @@ public class MobDraggable : MonoBehaviour
         string entity = TeamManager.instance.TeamSpots[index].Entity;
         Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
         TeamManager.instance.FillSpot(zoneIndex, role, gameObject, entity);
-        rb.MovePosition(currentDroppableZone.transform.position + offset);
+        _rb.MovePosition(currentDroppableZone.transform.position + offset);
         TeamManager.instance.FreeSpot(index);
     }
 

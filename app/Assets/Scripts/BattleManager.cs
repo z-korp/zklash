@@ -23,7 +23,7 @@ public class BattleManager : MonoBehaviour
     public GameObject dynamitePrefab;
     public GameObject arrowPrefab;
 
-    public ItemData[] itemData;
+    public ItemData[] itemDataArray;
 
     public List<GameObject> allySpots = new List<GameObject>();
     public List<GameObject> enemySpots = new List<GameObject>();
@@ -80,7 +80,7 @@ public class BattleManager : MonoBehaviour
                 var itemName = PrefabMappings.NameToItemDataMap[ally.item];
                 if (itemName != "None")
                 {
-                    var item = PrefabUtils.FindScriptableByName(itemData, itemName);
+                    var item = PrefabUtils.FindScriptableByName(itemDataArray, itemName);
                     allyObject.GetComponent<MobItem>().item = item;
                 }
 
@@ -115,7 +115,7 @@ public class BattleManager : MonoBehaviour
                 var itemName = PrefabMappings.NameToItemDataMap[enemy.item];
                 if (itemName != "None")
                 {
-                    var item = PrefabUtils.FindScriptableByName(itemData, itemName);
+                    var item = PrefabUtils.FindScriptableByName(itemDataArray, itemName);
                     enemyObject.GetComponent<MobController>().Character.Equip(item.type);
                     enemyObject.GetComponent<MobItem>().item = item;
                 }
@@ -155,7 +155,7 @@ public class BattleManager : MonoBehaviour
         string itemName = PrefabMappings.NameToItemDataMap[setup.item];
         if (itemName != "None")
         {
-            ItemData item = PrefabUtils.FindScriptableByName(itemData, itemName);
+            ItemData item = PrefabUtils.FindScriptableByName(itemDataArray, itemName);
             mobObject.GetComponent<MobController>().Character.Equip(item.type);
             mobObject.GetComponent<MobItem>().item = item;
         }
@@ -418,7 +418,7 @@ public class BattleManager : MonoBehaviour
 
         if (totalDamage <= 0 || stun > 0)
         {
-            yield return null;
+            yield break;
         }
 
         //yield return new WaitForSeconds(5f);
@@ -459,8 +459,34 @@ public class BattleManager : MonoBehaviour
 
         // Item buff
         var item_dmg = c.Usage(phase);
+
+        string itemName = PrefabMappings.NameToItemDataMap[c.Item.GetItemType()];
+        if (itemName != "None")
+        {
+            ItemData item = PrefabUtils.FindScriptableByName(itemDataArray, itemName);
+            //c.Equip(item.type);
+            character.GetComponent<MobItem>().item = item;
+        }
+        else
+        {
+            character.GetComponent<MobItem>().item = null;
+        }
+
         Debug.Log("----> " + "item_dmg: " + item_dmg);
         return (talent_damage, item_dmg, stun, next_buff);
+    }
+
+    private void EquipItem(GameObject character, Item itemEnum)
+    {
+        Debug.Log("Equip item: " + itemEnum);
+        GameCharacter c = character.GetComponent<MobController>().Character;
+        string itemName = PrefabMappings.NameToItemDataMap[itemEnum];
+        if (itemName != "None")
+        {
+            ItemData item = PrefabUtils.FindScriptableByName(itemDataArray, itemName);
+            c.Equip(item.type);
+            character.GetComponent<MobItem>().item = item;
+        }
     }
 
     IEnumerator PostMortem(GameObject attacker, GameObject defender, int dmg)

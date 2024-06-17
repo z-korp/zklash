@@ -62,12 +62,15 @@ public class MobItem : MonoBehaviour
             Debug.Log("Item changed");
             Destroy(itemOrbiterGO);
             previousItem = item;
-            UpdateGameObjectWithItemData();
-            UpdateItemBannerUI(description, title, size);
-            itemOrbiterGO = Instantiate(orbitObjectPrefab, gameObject.transform.position, Quaternion.identity);
-            OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
-            itemOrbiter.target = gameObject.transform;
-            itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
+            if (item != null)
+            {
+                UpdateGameObjectWithItemData();
+                UpdateItemBannerUI(description, title, size);
+                itemOrbiterGO = Instantiate(orbitObjectPrefab, gameObject.transform.position, Quaternion.identity);
+                OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
+                itemOrbiter.target = gameObject.transform;
+                itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
+            }
         }
 
         if (canvasUnitUpdater != null)

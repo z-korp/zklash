@@ -90,13 +90,21 @@ public class TeamManager : MonoBehaviour
         {
             if (TeamSpots[i].Mob != null)
             {
-                MobController mobController = TeamSpots[i].Mob.GetComponent<MobController>();
+                GameObject mobObject = TeamSpots[i].Mob;
+                MobController mobController = mobObject.GetComponent<MobController>();
                 if (mobController != null && mobController.Character != null)
                 {
                     GameCharacter character = mobController.Character;
                     mobController.ConfigureCharacter(character.RoleInterface, character.Level, character.ItemInterface, character.XP);
-                }
 
+                    string itemName = PrefabMappings.NameToItemDataMap[character.Item.GetItemType()];
+                    if (itemName != "None")
+                    {
+                        ItemData item = PrefabUtils.FindScriptableByName(BattleManager.instance.itemDataArray, itemName);
+                        mobObject.GetComponent<MobController>().Character.Equip(item.type);
+                        mobObject.GetComponent<MobItem>().item = item;
+                    }
+                }
             }
         }
 

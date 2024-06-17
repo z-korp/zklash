@@ -1,6 +1,5 @@
 using UnityEngine;
 using zKlash.Game.Roles;
-using zKlash.Game.Items;
 using System.Collections.Generic;
 
 public class ShopManager : MonoBehaviour
@@ -57,6 +56,7 @@ public class ShopManager : MonoBehaviour
     {
         if (PlayerData.Instance.Gold < PlayerData.Instance.rerollCost)
         {
+            DialogueManager.Instance.ShowDialogueForDuration("Your broke mate !", 2f);
             Debug.LogWarning("Not enough gold to reroll.");
             return;
         }

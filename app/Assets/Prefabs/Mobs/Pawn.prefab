@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 206987725946559450}
   - component: {fileID: 5731635283803301629}
   - component: {fileID: 810529499969138913}
+  - component: {fileID: 800664332688784089}
   m_Layer: 0
   m_Name: Pawn
   m_TagString: Mob
@@ -424,6 +425,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stunMob: {fileID: 7930726209101446712}
   absorbMob: {fileID: 8115596680121202804}
+  stun: 0
+  absorb: 0
+--- !u!114 &800664332688784089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434fa7cbd22804c71b84143ba5f93e37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunEffectPrefab: {fileID: 7012804776566669157, guid: 5593375fb27d944838de8ad8c4e94b70, type: 3}
+  stunDuration: 1
   stun: 0
   absorb: 0
 --- !u!1001 &799712522235122783

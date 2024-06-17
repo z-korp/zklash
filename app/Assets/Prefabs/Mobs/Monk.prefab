@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 2665120738802177697}
   - component: {fileID: 7323098220767229983}
   - component: {fileID: 2215707457893609956}
+  - component: {fileID: 7939735241781412106}
   m_Layer: 0
   m_Name: Monk
   m_TagString: Mob
@@ -395,7 +396,7 @@ MonoBehaviour:
   powerLV2: 
   powerLV3: 
   health: 0
-  damage: 0
+  attack: 0
 --- !u!114 &2215707457893609956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +409,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791b1c631898d489092a6b0319f25e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7939735241781412106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526038476407582817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434fa7cbd22804c71b84143ba5f93e37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunEffectPrefab: {fileID: 7012804776566669157, guid: 5593375fb27d944838de8ad8c4e94b70, type: 3}
+  stunDuration: 1
+  stun: 0
+  absorb: 0
 --- !u!1001 &3644808349410388790
 PrefabInstance:
   m_ObjectHideFlags: 0

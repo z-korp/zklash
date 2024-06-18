@@ -85,6 +85,25 @@ public class TeamManager : MonoBehaviour
         }
     }
 
+    public void SaveInfoMobBeforeFight()
+    {
+        for (int i = 0; i < TeamSpots.Length; i++)
+        {
+            if (TeamSpots[i].Mob != null)
+            {
+                var mobItem = TeamSpots[i].Mob.GetComponent<MobItem>();
+                SaveItemBeforeFight(mobItem);
+            }
+        }
+    }
+
+    private void SaveItemBeforeFight(MobItem mobItem)
+    {
+        var itemToSave = mobItem.item;
+        mobItem.SaveItemDataBeforeBattle(itemToSave);
+    }
+
+
     public void ResetStatCharacter()
     {
         for (int i = 0; i < TeamSpots.Length; i++)
@@ -98,12 +117,16 @@ public class TeamManager : MonoBehaviour
                     GameCharacter character = mobController.Character;
                     mobController.ConfigureCharacter(character.RoleInterface, character.Level, character.ItemInterface, character.XP);
 
+                    ItemData battleItem = mobObject.GetComponent<MobItem>().GetBattleItemData();
                     string itemName = PrefabMappings.NameToItemDataMap[character.Item.GetItemType()];
-                    if (itemName != "None")
+
+                    if (battleItem != null)
                     {
-                        ItemData item = PrefabUtils.FindScriptableByName(BattleManager.instance.itemDataArray, itemName);
-                        mobObject.GetComponent<MobController>().Character.Equip(item.type);
-                        mobObject.GetComponent<MobItem>().item = item;
+                        //ItemData item = PrefabUtils.FindScriptableByName(BattleManager.instance.itemDataArray, itemName);
+                        var mobItem = mobObject.GetComponent<MobItem>();
+                        mobItem.ResetItemDataAfterBattle();
+                        mobObject.GetComponent<MobController>().Character.Equip(battleItem.type);
+
                     }
                 }
             }

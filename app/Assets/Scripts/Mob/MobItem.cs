@@ -1,9 +1,7 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using zKlash.Game;
-using zKlash.Game.Items;
 
 public class MobItem : MonoBehaviour
 {
@@ -11,11 +9,14 @@ public class MobItem : MonoBehaviour
 
     private CanvasUnitUpdater canvasUnitUpdater;
 
+    private bool _resetAfterBattle = false;
+    private ItemData _battleItem;
+
     public ItemData item;
     public TextMeshProUGUI titleItem;
     public TextMeshProUGUI sizeItem;
     public TextMeshProUGUI descriptionItem;
-    private ItemData previousItem;
+    private ItemData _previousItem;
     public Image itemImage;
 
     public GameObject orbitObjectPrefab;
@@ -57,20 +58,27 @@ public class MobItem : MonoBehaviour
 
     private void Update()
     {
-        if (item != previousItem)
+        if (item != _previousItem)
         {
             Debug.Log("Item changed");
             Destroy(itemOrbiterGO);
-            previousItem = item;
+            _previousItem = item;
             if (item != null)
             {
-                UpdateGameObjectWithItemData();
-                UpdateItemBannerUI(description, title, size);
-                itemOrbiterGO = Instantiate(orbitObjectPrefab, gameObject.transform.position, Quaternion.identity);
-                OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
-                itemOrbiter.target = gameObject.transform;
-                itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
+                CreateItemAndOrbiter();
             }
+        }
+
+        if (_resetAfterBattle)
+        {
+            item = _battleItem;
+            _previousItem = _battleItem;
+            Destroy(itemOrbiterGO);
+            if (item != null)
+            {
+                CreateItemAndOrbiter();
+            }
+            _resetAfterBattle = false;
         }
 
         if (canvasUnitUpdater != null)
@@ -114,5 +122,33 @@ public class MobItem : MonoBehaviour
             titleItem.text = title;
         if (sizeItem != null && size != null)
             sizeItem.text = size.ToString();
+    }
+
+    private void CreateItemAndOrbiter()
+    {
+        UpdateGameObjectWithItemData();
+        UpdateItemBannerUI(description, title, size);
+        itemOrbiterGO = Instantiate(orbitObjectPrefab, gameObject.transform.position, Quaternion.identity);
+        OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
+        itemOrbiter.target = gameObject.transform;
+        itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
+    }
+
+    public void SaveItemDataBeforeBattle(ItemData itemToSave)
+    {
+        if (itemToSave != null)
+        {
+            _battleItem = itemToSave;
+        }
+    }
+
+    public ItemData GetBattleItemData()
+    {
+        return _battleItem;
+    }
+
+    public void ResetItemDataAfterBattle()
+    {
+        _resetAfterBattle = true;
     }
 }

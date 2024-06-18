@@ -45,9 +45,30 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Top
-    uniqueID: 1938707395
+  - name: Background 2
+    uniqueID: 3272276567
+    locked: 0
+  - name: Background 1
+    uniqueID: 1913730115
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: ForeGround 1
+    uniqueID: 2655718965
+    locked: 0
+  - name: ForeGround 2
+    uniqueID: 1295503735
+    locked: 0
+  - name: Mob
+    uniqueID: 1938707395
+    locked: 0
+  - name: Item
+    uniqueID: 127817291
+    locked: 0
+  - name: FX
+    uniqueID: 2440450471
+    locked: 0
+  - name: UI
+    uniqueID: 3481410623
     locked: 0

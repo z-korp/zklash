@@ -75,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 127817291
+  m_SortingLayer: 4
   m_SortingOrder: 31
   m_Sprite: {fileID: 21300000, guid: 43dd7817ce84a430a8e7df3f0109f3c4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 3170976324366677212}
   - component: {fileID: 4224698844560796338}
   m_Layer: 0
-  m_Name: Button_Blue
+  m_Name: Bkg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,8 +249,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 127817291
+  m_SortingLayer: 4
   m_SortingOrder: 30
   m_Sprite: {fileID: 21300000, guid: 0855c69b4d04c46cea3d28ab8d5ec4d0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

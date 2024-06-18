@@ -93,8 +93,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1938707395
+  m_SortingLayer: 3
   m_SortingOrder: 5
   m_Sprite: {fileID: 1343856753, guid: 3725583d287c04219b4e8be418adbe39, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -422,9 +422,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stunEffectPrefab: {fileID: 7012804776566669157, guid: 5593375fb27d944838de8ad8c4e94b70, type: 3}
+  stunAnimationList: []
   stunDuration: 1
   stun: 0
   absorb: 0
+  isPlaying: 0
 --- !u!1001 &371192795962761803
 PrefabInstance:
   m_ObjectHideFlags: 0

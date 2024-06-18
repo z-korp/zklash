@@ -98,8 +98,14 @@ public class ItemDraggable : MonoBehaviour
         if (collision.CompareTag("Mob"))
         {
             Debug.Log("Mob detected");
-            canDropItem = true;
+
             mob = collision.gameObject;
+            var mobFromShop = mob.GetComponent<MobDraggable>().isFromShop;
+            if (!mobFromShop)
+            {
+                canDropItem = true;
+            }
+
         }
     }
 

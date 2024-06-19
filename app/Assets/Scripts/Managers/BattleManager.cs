@@ -24,6 +24,8 @@ public class BattleManager : MonoBehaviour
     public GameObject arrowPrefab;
     public GameObject powerUpPrefab;
 
+    public GameObject attackUpPrefab;
+
     public ItemData[] itemDataArray;
 
     public List<GameObject> allySpots = new List<GameObject>();
@@ -149,6 +151,7 @@ public class BattleManager : MonoBehaviour
 
         GameObject mobObject = Instantiate(prefab, spot.transform.position, Quaternion.identity);
         mobObject.GetComponent<MobOrientation>().SetOrientation(orientation);
+        TimeScaleController.Instance.AddAnimator(mobObject.GetComponent<Animator>());
 
         GameCharacter character = new GameCharacter(setup.role, setup.level, setup.item);
         mobObject.GetComponent<MobController>().ConfigureCharacter(character);
@@ -222,17 +225,31 @@ public class BattleManager : MonoBehaviour
         TeamManager.instance.TPTeamToShop();
         CanvasManager.instance.ToggleCanvases();
         CanvasManager.instance.ToggleCanvasInterStep(result);
+        TimeScaleController.Instance.UpdateAnimatorList();
+        TimeScaleController.Instance.ResetTimeScale();
+        TimeScaleController.Instance.ApplySpeed();
     }
 
     private void LaunchProjectile(Vector3 position, Transform target, GameObject projectilePrefab)
     {
         var dynamite = Instantiate(projectilePrefab, position, Quaternion.identity);
         dynamite.GetComponent<ProjectileParabolic>().Initialize(target);
+        TimeScaleController.Instance.AddAnimator(dynamite.GetComponent<Animator>());
+
     }
 
     private void PlayPowerUp(Vector3 position)
     {
-        Instantiate(powerUpPrefab, position, Quaternion.identity);
+        var powerUp = Instantiate(powerUpPrefab, position, Quaternion.identity);
+        TimeScaleController.Instance.AddAnimator(powerUp.GetComponentInChildren<Animator>());
+
+    }
+
+    private void PlayAttachUp(Vector3 position)
+    {
+        var attackUp = Instantiate(attackUpPrefab, position, Quaternion.identity);
+        TimeScaleController.Instance.AddAnimator(attackUp.GetComponentInChildren<Animator>());
+
     }
 
     private void PlayDeathRattleEffects(Role role, Vector3 position, Transform target)
@@ -257,6 +274,9 @@ public class BattleManager : MonoBehaviour
             case Role.Pawn:
                 PlayPowerUp(position);
                 break;
+            case Role.Torchoblin:
+                PlayAttachUp(position);
+                break;
         }
     }
 
@@ -279,7 +299,6 @@ public class BattleManager : MonoBehaviour
             applyEffect(team1[0], Phase.OnDispatch);
             // [Effect] Apply floating buff
             team1[0].GetComponent<MobController>().Character.ApplyBuff(next_buff1);
-            //PlayBuffEffects(team1[0].GetComponent<MobController>().Character.RoleInterface, team1[0].transform.position);
             next_buff1 = new Buff(); // reinit buff for next character
 
         }
@@ -300,7 +319,6 @@ public class BattleManager : MonoBehaviour
             applyEffect(team2[0], Phase.OnDispatch);
             // [Effect] Apply floating buff
             team2[0].GetComponent<MobController>().Character.ApplyBuff(next_buff2);
-            //PlayBuffEffects(team2[0].GetComponent<MobController>().Character.RoleInterface, team2[0].transform.position);
             next_buff2 = new Buff(); // reinit buff for next character
 
         }

@@ -33,7 +33,7 @@ public class CameraMovement : MonoBehaviour
     {
         while (Vector3.Distance(transform.position, targetPosition.position) > 0.1f)
         {
-            float step = speedToBattleArea * Time.deltaTime;
+            float step = speedToBattleArea * Time.deltaTime * TimeScaleController.Instance.speedGame;
             transform.position = Vector3.MoveTowards(transform.position, targetPosition.position, step);
             yield return null;
         }

@@ -1,8 +1,6 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using Dojo.Torii;
 using UnityEngine;
-using zKlash.Game.Items;
 using zKlash.Game.Roles;
 using GameCharacter = zKlash.Game.Character;
 
@@ -58,7 +56,7 @@ public class TeamManager : MonoBehaviour
             if (TeamSpots[i].Mob != null)
             {
                 HideXpCanvas(TeamSpots[i].Mob);
-                TeamSpots[i].Mob.GetComponent<MobMovement>().speed = 6;
+                TeamSpots[i].Mob.GetComponent<MobMovement>().speed = 6f * TimeScaleController.Instance.speedGame;
                 TeamSpots[i].Mob.GetComponent<MobMovement>().Move(targetsTeam[i]);
             }
         }

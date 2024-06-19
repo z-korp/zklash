@@ -34,7 +34,9 @@ public class ItemDraggable : MonoBehaviour
             GetComponent<SpriteRenderer>().sortingOrder = 1000;
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             rb.MovePosition(mousePos);
-            // UpdateArrows();
+
+            // On Drag hide HUD
+            OnItemHovered?.Invoke(false);
         }
         else
         {

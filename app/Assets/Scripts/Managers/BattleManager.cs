@@ -22,6 +22,7 @@ public class BattleManager : MonoBehaviour
 
     public GameObject dynamitePrefab;
     public GameObject arrowPrefab;
+    public GameObject powerUpPrefab;
 
     public ItemData[] itemDataArray;
 
@@ -229,6 +230,11 @@ public class BattleManager : MonoBehaviour
         dynamite.GetComponent<ProjectileParabolic>().Initialize(target);
     }
 
+    private void PlayPowerUp(Vector3 position)
+    {
+        Instantiate(powerUpPrefab, position, Quaternion.identity);
+    }
+
     private void PlayDeathRattleEffects(Role role, Vector3 position, Transform target)
     {
         switch (role)
@@ -241,7 +247,16 @@ public class BattleManager : MonoBehaviour
                 LaunchProjectile(position, target, arrowPrefab);
                 // TBD : add good death rattle
                 break;
+        }
+    }
 
+    private void PlayBuffEffects(Role role, Vector3 position)
+    {
+        switch (role)
+        {
+            case Role.Pawn:
+                PlayPowerUp(position);
+                break;
         }
     }
 
@@ -250,6 +265,7 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Team 1: " + team1.Count + " --- Team 2: " + team2.Count);
         if (team1[0].GetComponent<MobHealth>().Health <= 0)
         {
+            RepositionAllies();
             team1.RemoveAt(0);
             if (team1.Count == 0)
             {
@@ -263,11 +279,14 @@ public class BattleManager : MonoBehaviour
             applyEffect(team1[0], Phase.OnDispatch);
             // [Effect] Apply floating buff
             team1[0].GetComponent<MobController>().Character.ApplyBuff(next_buff1);
+            //PlayBuffEffects(team1[0].GetComponent<MobController>().Character.RoleInterface, team1[0].transform.position);
             next_buff1 = new Buff(); // reinit buff for next character
+
         }
 
         if (team2[0].GetComponent<MobHealth>().Health <= 0)
         {
+            RepositionEnnemies();
             team2.RemoveAt(0);
             if (team2.Count == 0)
             {
@@ -281,21 +300,24 @@ public class BattleManager : MonoBehaviour
             applyEffect(team2[0], Phase.OnDispatch);
             // [Effect] Apply floating buff
             team2[0].GetComponent<MobController>().Character.ApplyBuff(next_buff2);
+            //PlayBuffEffects(team2[0].GetComponent<MobController>().Character.RoleInterface, team2[0].transform.position);
             next_buff2 = new Buff(); // reinit buff for next character
+
         }
 
         GameObject char1 = team1[0];
         GameObject char2 = team2[0];
 
-        yield return Duel(char1, char2);
-
-        yield return RepositionTeams();
         yield return new WaitForSeconds(2f);
+        yield return Duel(char1, char2, team1, team2);
+
+        //yield return RepositionTeams();
+        //yield return new WaitForSeconds(2f);
 
         yield return Battle(team1, team2);
     }
 
-    IEnumerator Duel(GameObject char1, GameObject char2)
+    IEnumerator Duel(GameObject char1, GameObject char2, List<GameObject> team1, List<GameObject> team2)
     {
         GameCharacter c1 = char1.GetComponent<MobController>().Character;
         GameCharacter c2 = char2.GetComponent<MobController>().Character;
@@ -336,6 +358,8 @@ public class BattleManager : MonoBehaviour
         if (isChar1Dead)
         {
             PlayDeathRattleEffects(char1.GetComponent<MobController>().Character.RoleInterface, char1.transform.position, char2.transform);
+            if (team1.Count > 1)
+                PlayBuffEffects(char1.GetComponent<MobController>().Character.RoleInterface, team1[1].transform.position);
 
             var (dmg1, buff1) = postMortem(char1, char2);
             if (dmg1 > 0)
@@ -353,6 +377,8 @@ public class BattleManager : MonoBehaviour
 
 
             PlayDeathRattleEffects(char2.GetComponent<MobController>().Character.RoleInterface, char2.transform.position, char1.transform);
+            if (team2.Count > 1)
+                PlayBuffEffects(char2.GetComponent<MobController>().Character.RoleInterface, team2[1].transform.position);
 
             var (dmg2, buff2) = postMortem(char2, char1);
             if (dmg2 > 0)
@@ -387,15 +413,15 @@ public class BattleManager : MonoBehaviour
 
         if (isChar1Dead || isChar2Dead)
         {
-            yield return WaitForKey();
+            //yield return WaitForKey();
             Debug.Log("[END DUEL]============================================================");
             yield break;
         }
 
-        yield return WaitForKey();
+        //yield return WaitForKey();
         Debug.Log("[END CONTINUE DUEL]============================================================");
 
-        yield return Duel(char1, char2);
+        yield return Duel(char1, char2, team1, team2);
     }
 
     IEnumerator WaitForKey()
@@ -532,38 +558,41 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Repositioning teams");
         if (IsFirstMobDead(allies))
         {
-            for (int i = 1; i < allies.Count; i++)
-            {
-                GameObject ally = allies[i]; // Access the ally at index i
-                MobMovement mobMovement = ally.GetComponent<MobMovement>();
-                if (mobMovement != null)
-                {
-                    mobMovement.speed = 1;
-                    mobMovement.Move(allySpots[i - 1].transform);
-                }
-            }
-
-            // Remove the first mob and update the list, shifting all others down by one
-            //allies.RemoveAt(0);
+            RepositionAllies();
         }
 
         if (IsFirstMobDead(enemies))
         {
-            for (int i = 1; i < enemies.Count; i++)
-            {
-                GameObject ally = enemies[i]; // Access the ally at index i
-                MobMovement mobMovement = ally.GetComponent<MobMovement>();
-                if (mobMovement != null)
-                {
-                    mobMovement.Move(enemySpots[i - 1].transform);
-                }
-            }
-
-            // Remove the first mob and update the list, shifting all others down by one
-            //enemies.RemoveAt(0);
+            RepositionEnnemies();
         }
 
         yield return null;
+    }
+
+    private void RepositionAllies()
+    {
+        for (int i = 1; i < allies.Count; i++)
+        {
+            GameObject ally = allies[i]; // Access the ally at index i
+            MobMovement mobMovement = ally.GetComponent<MobMovement>();
+            if (mobMovement != null)
+            {
+                mobMovement.speed = 1;
+                mobMovement.Move(allySpots[i - 1].transform);
+            }
+        }
+    }
+    private void RepositionEnnemies()
+    {
+        for (int i = 1; i < enemies.Count; i++)
+        {
+            GameObject ennemy = enemies[i]; // Access the ally at index i
+            MobMovement mobMovement = ennemy.GetComponent<MobMovement>();
+            if (mobMovement != null)
+            {
+                mobMovement.Move(enemySpots[i - 1].transform);
+            }
+        }
     }
 
     bool IsFirstMobDead(List<GameObject> mobs)

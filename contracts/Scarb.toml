@@ -7,11 +7,11 @@ version = "0.6.0"
 sierra-replace-ids = true
 
 [scripts]
-deploy = "sozo --profile dev build && sozo --profile dev migrate plan && sozo --profile dev migrate apply && ./scripts/authorize.sh dev"
-deploy-slot = "sozo --profile slot build && sozo --profile slot migrate plan --name v0 && sozo --profile slot migrate apply --name v0 && ./scripts/authorize.sh slot"
+dev = "sozo --profile dev build && sozo --profile dev migrate plan && sozo --profile dev migrate apply && ./scripts/authorize.sh dev"
+slot = "sozo --profile slot build && sozo --profile slot migrate plan --name v0 && sozo --profile slot migrate apply --name v0 && ./scripts/authorize.sh slot"
 
 [dependencies]
-origami = { git = "https://github.com/dojoengine/origami", rev = "501dcd4" }
+origami = { git = "https://github.com/dojoengine/origami", rev = "84f9b24" }
 dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.6.0" }
 
 [[target.dojo]]
@@ -25,10 +25,10 @@ account_address = "0xb3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e582
 private_key = "0x2bbf4f9fd0bbb2e60b0316c1fe0b76cf7a4d0198bd493ced9b8df2a3a24d68a"
 
 [profile.slot.tool.dojo.env]
-rpc_url = "https://api.cartridge.gg/x/zklash-matthias/katana" 
+rpc_url = "https://api.cartridge.gg/x/zklash-matthias-3/katana" 
 #"https://api.cartridge.gg/x/zklash/katana/"
-account_address = "0x7e96018773540ca5516f6ba96b506ae271642bbe0c2740b521f51ddd36bce79"
-private_key = "0x178ad5a5c691af01e60232a8b7ad79899279fb4fa4bf3e9f492db0255381d69"
+account_address = "0x7fb5fb8033b9f199ba9347c2f8c1bdbbd47d8a22c09d25b5a29c183ddb47252"
+private_key = "0x76165bfb2708ab726999aa73d95d9a0bbaa94f9ced060dc5393ecdd020f9079"
 
 [profile.sepolia.tool.dojo.env]
 rpc_url = "https://starknet-sepolia.public.blastapi.io/rpc/v0_6"

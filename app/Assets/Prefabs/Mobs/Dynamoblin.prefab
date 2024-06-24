@@ -93,8 +93,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1938707395
+  m_SortingLayer: 3
   m_SortingOrder: 5
   m_Sprite: {fileID: -925582985, guid: b57af6dc1ec37440e937340076e3d1a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -422,9 +422,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stunEffectPrefab: {fileID: 7012804776566669157, guid: 5593375fb27d944838de8ad8c4e94b70, type: 3}
+  stunAnimationList: []
   stunDuration: 1
   stun: 0
   absorb: 0
+  isPlaying: 0
 --- !u!1001 &935669558014768611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -824,7 +826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3196840196865663314, guid: 23f1e67bab4ca46ba845e750e5875d81, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8476826900991160219, guid: 23f1e67bab4ca46ba845e750e5875d81, type: 3}
       propertyPath: m_Pivot.x
@@ -857,14 +859,6 @@ PrefabInstance:
     - target: {fileID: 8476826900991160219, guid: 23f1e67bab4ca46ba845e750e5875d81, type: 3}
       propertyPath: m_SizeDelta.y
       value: 2.1368
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476826900991160219, guid: 23f1e67bab4ca46ba845e750e5875d81, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.007063572
-      objectReference: {fileID: 0}
-    - target: {fileID: 8476826900991160219, guid: 23f1e67bab4ca46ba845e750e5875d81, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.0069999998
       objectReference: {fileID: 0}
     - target: {fileID: 8476826900991160219, guid: 23f1e67bab4ca46ba845e750e5875d81, type: 3}
       propertyPath: m_LocalPosition.x

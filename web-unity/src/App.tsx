@@ -1,20 +1,27 @@
-import { useDojo } from './dojo/useDojo';
-import './App.css';
-import UnityLoader from './ui/components/UnityLoader';
-import Connect from './ui/components/Connect';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Toaster } from "./ui/elements/sonner";
+import { ThemeProvider } from "./ui/elements/theme-provider";
+import Rules from "./ui/screens/Rules";
+import Home from "./ui/screens/Home";
+import { Header } from "./ui/containers/Header"; // Adjust the import path if needed
 
-function App() {
-  const {
-    account: { account },
-  } = useDojo();
-
+const App = () => {
   return (
-    <div className="flex flex-col gap-4 w-full items-center mt-20">
-      {/*<Connect />*/}
-
-      <UnityLoader />
-    </div>
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <Router>
+        <div className="relative flex flex-col w-screen">
+          <Header />
+          <div className="relative flex flex-col gap-8 grow items-center justify-start">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/rules" element={<Rules />} />
+            </Routes>
+          </div>
+        </div>
+        <Toaster position="bottom-right" />
+      </Router>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

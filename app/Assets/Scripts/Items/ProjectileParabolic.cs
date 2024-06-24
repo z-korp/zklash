@@ -12,7 +12,7 @@ public class ProjectileParabolic : MonoBehaviour
 
     private bool hitted = false;
 
-    private Animator animator;
+    private Animator _animator;
 
 
 
@@ -32,30 +32,35 @@ public class ProjectileParabolic : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     void Update()
     {
         if (target != null && !hitted)
         {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / timeToTarget;
+            MoveTowardTargetCurve();
+        }
+    }
 
-            // Calculate the new position
-            Vector3 currentPosition = Vector3.Lerp(startPosition, targetPosition, t);
+    private void MoveTowardTargetCurve()
+    {
+        elapsedTime += Time.deltaTime;
+        float t = elapsedTime / timeToTarget;
 
-            // Add the arc height
-            currentPosition.y += arcHeight * Mathf.Sin(Mathf.PI * t);
+        // Calculate the new position
+        Vector3 currentPosition = Vector3.Lerp(startPosition, targetPosition, t);
 
-            // Update the projectile position
-            transform.position = currentPosition;
+        // Add the arc height
+        currentPosition.y += arcHeight * Mathf.Sin(Mathf.PI * t);
 
-            // Check if the projectile has reached the target
-            if (t >= 1f)
-            {
-                OnProjectileHit();
-            }
+        // Update the projectile position
+        transform.position = currentPosition;
+
+        // Check if the projectile has reached the target
+        if (t >= 1f)
+        {
+            OnProjectileHit();
         }
     }
 
@@ -63,7 +68,7 @@ public class ProjectileParabolic : MonoBehaviour
     {
         hitted = true;
         // Here you can add logic for when the projectile hits the target, such as applying damage.
-        animator.SetTrigger("explode");
+        _animator.SetTrigger("explode");
         //Destroy(gameObject);
     }
 

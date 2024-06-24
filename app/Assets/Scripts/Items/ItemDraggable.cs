@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ItemDraggable : MonoBehaviour
@@ -13,6 +14,9 @@ public class ItemDraggable : MonoBehaviour
     public GameObject orbitObjectPrefab;
 
     private GameObject mob;
+
+    public delegate void ItemHoveredHandler(bool isHovered);
+    public event ItemHoveredHandler OnItemHovered;
 
     void Awake()
     {
@@ -30,7 +34,9 @@ public class ItemDraggable : MonoBehaviour
             GetComponent<SpriteRenderer>().sortingOrder = 1000;
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             rb.MovePosition(mousePos);
-            // UpdateArrows();
+
+            // On Drag hide HUD
+            OnItemHovered?.Invoke(false);
         }
         else
         {
@@ -53,7 +59,7 @@ public class ItemDraggable : MonoBehaviour
         {
             if (PlayerData.Instance.Gold < PlayerData.Instance.purchaseCost)
             {
-                DialogueManager.Instance.ShowDialogue("Your broke mate !");
+                DialogueManager.Instance.ShowDialogueForDuration("You're broke mate !", 2f);
                 Debug.LogWarning("Not enough gold to purchase item.");
                 rb.MovePosition(initPos);
                 return;
@@ -79,6 +85,7 @@ public class ItemDraggable : MonoBehaviour
             //ContractActions.instance.TriggerEquip(character.id, (uint)index);
             uint teamId = PlayerData.Instance.GetTeamId();
             StartCoroutine(TxCoroutines.Instance.ExecuteEquip(teamId, character.id, (uint)index));
+            CanvasManager.instance.ToggleCanvasForDuration(2.0f);
 
             Destroy(gameObject);
         }
@@ -94,13 +101,30 @@ public class ItemDraggable : MonoBehaviour
         if (collision.CompareTag("Mob"))
         {
             Debug.Log("Mob detected");
-            canDropItem = true;
+
             mob = collision.gameObject;
+            var mobFromShop = mob.GetComponent<MobDraggable>().isFromShop;
+            if (!mobFromShop)
+            {
+                canDropItem = true;
+            }
+
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         canDropItem = false;
+    }
+
+    private void OnMouseEnter()
+    {
+        Debug.Log("Mouse enter");
+        OnItemHovered?.Invoke(true);
+    }
+    private void OnMouseExit()
+    {
+        Debug.Log("Mouse exit");
+        OnItemHovered?.Invoke(false);
     }
 }

@@ -8,7 +8,7 @@ public class MobMovement : MonoBehaviour
     private Rigidbody2D rb;
     private CharacterAnimatorController characterAnimatorController;
 
-    public int speed;
+    public float speed;
     private readonly List<Transform> targets = new();
 
 

@@ -49,6 +49,7 @@ MonoBehaviour:
   target: {fileID: 0}
   orbitDistance: 0.5
   orbitSpeed: 150
+  positionOffset: {x: 0, y: 0, z: 0}
 --- !u!212 &7932389837159861662
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -87,8 +88,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1938707395
+  m_SortingLayer: 3
   m_SortingOrder: 5
   m_Sprite: {fileID: 991831408, guid: 9d123d7d0bc564cbaa50033cbf702fa9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -116,3 +117,4 @@ MonoBehaviour:
   target: {fileID: 0}
   orbitDistance: 0.5
   orbitSpeed: 130
+  positionOffset: {x: 0, y: 0, z: 0}

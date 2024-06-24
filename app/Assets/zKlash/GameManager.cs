@@ -1,19 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using bottlenoselabs.C2CS.Runtime;
 using Dojo;
 using Dojo.Starknet;
-using dojo_bindings;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
-using Object = System.Object;
-using Random = UnityEngine.Random;
-using zKlash.Game.Roles;
-using System.Threading.Tasks;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -205,7 +194,7 @@ public class GameManager : MonoBehaviour
             Squad squadComponent = entity.GetComponent<Squad>();
             if (squadComponent != null)
             {
-                if(squadComponent.registry_id == registryId && squadComponent.id == squadId)
+                if (squadComponent.registry_id == registryId && squadComponent.id == squadId)
                     return entity.name;
             }
         }
@@ -220,8 +209,13 @@ public class GameManager : MonoBehaviour
             Foe foeComponent = entity.GetComponent<Foe>();
             if (foeComponent != null)
             {
-                if(foeComponent.registry_id == registryId && foeComponent.squad_id == squadId)
-                    foeEntities.Add(entity.name);
+                if (foeComponent.registry_id == registryId && foeComponent.squad_id == squadId)
+                {
+                    //foeEntities.Add(entity.name);
+                    foeEntities.Insert(0, entity.name);
+                }
+
+
             }
         }
         return foeEntities;

@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x1127423dd0e0309646a039aee5c69a8723fb2defabeefeb2a565c0e5235a488"
-original_class_hash = "0x1127423dd0e0309646a039aee5c69a8723fb2defabeefeb2a565c0e5235a488"
+class_hash = "0x28b3d16a5d67d1f41c5d99eacd780309ac6909da04e5989632c5e8fccea7608"
+original_class_hash = "0x28b3d16a5d67d1f41c5d99eacd780309ac6909da04e5989632c5e8fccea7608"
 abi = "manifests/dev/abis/base/models/zklash_models_registry_registry.json"
 name = "zklash::models::registry::registry"
 

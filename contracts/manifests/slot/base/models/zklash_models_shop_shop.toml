@@ -1,7 +1,7 @@
 kind = "DojoModel"
 class_hash = "0x16670cac95fa5c929e489fd538ba6e05baad53a27fac3a8dfe286e7a59ded55"
 original_class_hash = "0x16670cac95fa5c929e489fd538ba6e05baad53a27fac3a8dfe286e7a59ded55"
-abi = "manifests/dev/abis/base/models/zklash_models_shop_shop.json"
+abi = "manifests/slot/abis/base/models/zklash_models_shop_shop.json"
 name = "zklash::models::shop::shop"
 
 [[members]]

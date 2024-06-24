@@ -169,34 +169,34 @@
   },
   {
     "type": "impl",
-    "name": "playerImpl",
-    "interface_name": "zklash::models::player::Iplayer"
+    "name": "slotImpl",
+    "interface_name": "zklash::models::slot::Islot"
   },
   {
     "type": "struct",
-    "name": "zklash::models::player::Player",
+    "name": "zklash::models::slot::Slot",
     "members": [
       {
-        "name": "id",
-        "type": "core::starknet::contract_address::ContractAddress"
-      },
-      {
-        "name": "name",
-        "type": "core::felt252"
-      },
-      {
-        "name": "team_count",
+        "name": "registry_id",
         "type": "core::integer::u32"
       },
       {
-        "name": "win_count",
+        "name": "league_id",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "index",
+        "type": "core::integer::u32"
+      },
+      {
+        "name": "squad_id",
         "type": "core::integer::u32"
       }
     ]
   },
   {
     "type": "interface",
-    "name": "zklash::models::player::Iplayer",
+    "name": "zklash::models::slot::Islot",
     "items": [
       {
         "type": "function",
@@ -204,7 +204,7 @@
         "inputs": [
           {
             "name": "model",
-            "type": "zklash::models::player::Player"
+            "type": "zklash::models::slot::Slot"
           }
         ],
         "outputs": [],
@@ -214,7 +214,7 @@
   },
   {
     "type": "event",
-    "name": "zklash::models::player::player::Event",
+    "name": "zklash::models::slot::slot::Event",
     "kind": "enum",
     "variants": []
   }

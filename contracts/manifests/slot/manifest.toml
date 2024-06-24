@@ -4,14 +4,14 @@ class_hash = "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd"
 original_class_hash = "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd"
 abi = "abis/deployments/dojo_world_world.json"
 address = "0x7da33b5f9f052d95f3a7df0f6f883839769136fbd41f26a9293c339c121ed3e"
-transaction_hash = "0x3ea227bacf4a939125346ddaf3b0f6a82e1bdb23ecc1b47c30e5f010d7edc4"
+transaction_hash = "0x9dfc199d7fa151b5650218ab1f402aac030cf40b263f23701ec83944fb4ec3"
 block_number = 3
 seed = "v0"
 name = "dojo::world::world"
 
 [world.metadata]
 profile_name = "slot"
-rpc_url = "https://api.cartridge.gg/x/zklash-matthias/katana"
+rpc_url = "https://api.cartridge.gg/x/zklash-matthias-3/katana"
 
 [base]
 kind = "Class"

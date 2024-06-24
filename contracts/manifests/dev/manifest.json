@@ -664,6 +664,10 @@
     "transaction_hash": "0x38cf77f0e66a4e737761922ef53d7cfb84e86e7ed8726bbb9728b51c87bab4",
     "block_number": 3,
     "seed": "zklash",
+    "metadata": {
+      "profile_name": "dev",
+      "rpc_url": "http://localhost:5050/"
+    },
     "name": "dojo::world::world"
   },
   "base": {
@@ -784,6 +788,7 @@
       "reads": [],
       "writes": [],
       "computed": [],
+      "init_calldata": [],
       "name": "zklash::systems::account::account"
     },
     {
@@ -900,6 +905,7 @@
       "reads": [],
       "writes": [],
       "computed": [],
+      "init_calldata": [],
       "name": "zklash::systems::battle::battle"
     },
     {
@@ -1112,6 +1118,7 @@
       "reads": [],
       "writes": [],
       "computed": [],
+      "init_calldata": [],
       "name": "zklash::systems::market::market"
     }
   ],

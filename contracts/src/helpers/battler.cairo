@@ -242,4 +242,29 @@ mod tests {
         assert(!win, 'Battler: invalid win status');
         assert(tick == 6, 'Battler: invalid tick count');
     }
+
+    #[test]
+    fn test_battle_knights_with_stone() {
+        let mut characters: Array<Character> = array![
+            CharacterTrait::from(1, Role::Knight, 1, Item::RockLarge),
+            CharacterTrait::from(2, Role::Knight, 1, Item::None),
+            CharacterTrait::from(3, Role::Knight, 1, Item::None),
+        ];
+        let mut foes: Array<Character> = array![
+            CharacterTrait::from(1, Role::Dynamoblin, 1, Item::None),
+            CharacterTrait::from(2, Role::Bomboblin, 1, Item::None),
+        ];
+
+        let mut tick: u32 = 0;
+        let win = Battler::battle(
+            ref characters,
+            ref foes,
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            ref tick,
+        );
+        assert(win, 'Battler: invalid win status');
+    }
 }

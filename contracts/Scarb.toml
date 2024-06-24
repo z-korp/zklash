@@ -11,7 +11,7 @@ dev = "sozo --profile dev build && sozo --profile dev migrate plan && sozo --pro
 slot = "sozo --profile slot build && sozo --profile slot migrate plan --name v0 && sozo --profile slot migrate apply --name v0 && ./scripts/authorize.sh slot"
 
 [dependencies]
-origami = { git = "https://github.com/dojoengine/origami", rev = "501dcd4" }
+origami = { git = "https://github.com/dojoengine/origami", rev = "84f9b24" }
 dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.6.0" }
 
 [[target.dojo]]

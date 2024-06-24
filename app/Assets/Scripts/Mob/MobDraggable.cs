@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Dojo.Torii;
 using UnityEngine;
 using zKlash.Game.Roles;
 
@@ -9,7 +7,6 @@ public class MobDraggable : MonoBehaviour
     //public GameObject indicatorPrefab; // Référence au préfab de la flèche
     //public Transform[] targets; // Les cibles vers lesquelles les flèches vont pointer
     //private List<GameObject> indicators = new List<GameObject>();
-
 
     public Vector3 initPos = Vector3.zero;
 
@@ -229,7 +226,7 @@ public class MobDraggable : MonoBehaviour
 
     private void NoMoneyMessageResetPosition()
     {
-        DialogueManager.Instance.ShowDialogueForDuration("Your broke mate !", 2f);
+        DialogueManager.Instance.ShowDialogueForDuration("You're broke mate !", 2f);
         Debug.LogWarning("Not enough balance");
         ResetPosition();
     }

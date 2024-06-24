@@ -46,7 +46,7 @@ export const Header = () => {
         </div>
 
         <div className="flex flex-col gap-4 items-center md:flex-row">
-          <Connect />
+          {/*<Connect />*
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Button variant="outline" size="icon">
@@ -59,7 +59,7 @@ export const Header = () => {
               <DropdownMenuLabel>Account</DropdownMenuLabel>
               <DropdownMenuItem></DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu>/*/}
           <ModeToggle />
         </div>
       </div>
@@ -93,7 +93,7 @@ export const Header = () => {
         </Drawer>
         <div className="w-full flex justify-between items-center">
           <p className="text-4xl font-bold">zKlash</p>
-          {!!account.address ? (
+          {/*{!!account.address ? (
             <div className="flex gap-2 items-center">
               <Balance
                 address={account.address}
@@ -102,7 +102,7 @@ export const Header = () => {
             </div>
           ) : (
             <Connect />
-          )}
+          )}*/}
         </div>
       </div>
       <Separator />

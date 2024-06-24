@@ -24,8 +24,10 @@ import { KATANA_ETH_CONTRACT_ADDRESS } from "@dojoengine/core";
 import Balance from "../components/Balance";
 import { useAccount } from "@starknet-react/core";
 import { Button } from "../elements/button";
+import { ModeToggle } from "../components/Theme";
 
 export const Header = () => {
+  const navigate = useNavigate();
   const account = useAccount();
 
   const isMdOrLarger = useMediaQuery({ query: "(min-width: 768px)" });
@@ -34,24 +36,31 @@ export const Header = () => {
     <div>
       <div className="flex justify-center items-center p-4 flex-wrap md:justify-between">
         <div className="flex gap-8 items-center">
-          <p className="text-4xl font-bold">zKlash</p>
-          <Button>How to play?</Button>
+          <p
+            onClick={() => navigate("/")}
+            className="cursor-pointer text-4xl font-bold"
+          >
+            zKlash
+          </p>
+          <Button onClick={() => navigate("/rules")}>How to play?</Button>
         </div>
 
         <div className="flex flex-col gap-4 items-center md:flex-row">
           <Connect />
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <FontAwesomeIcon icon={faGear} />
+              <Button variant="outline" size="icon">
+                <FontAwesomeIcon icon={faGear} />
+              </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent sideOffset={24}>
+            <DropdownMenuContent>
               <DropdownMenuLabel>Sound</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuLabel>Account</DropdownMenuLabel>
               <DropdownMenuItem></DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <div className="flex gap-2"></div>
+          <ModeToggle />
         </div>
       </div>
       <Separator />

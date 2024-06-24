@@ -18,7 +18,7 @@ const Connect = () => {
     return (
       <div className="flex gap-3 items-center flex-col">
         <div className="flex items-center gap-3 w-full">
-          <div className="flex items-center gap-1 md:gap-2 rounded-lg px-2 md:px-3 py-1 justify-between border">
+          <div className="flex items-center gap-1 md:gap-2 rounded-lg px-2 md:px-3 py-1 justify-between">
             <p className="text-sm">
               {shortAddress(address, isMdOrLarger ? 4 : 3)}
             </p>
@@ -26,11 +26,7 @@ const Connect = () => {
               address={address}
               token_address={KATANA_ETH_CONTRACT_ADDRESS}
             />
-            <Button
-              className="h-[32px]"
-              variant="destructive"
-              onClick={() => disconnect()}
-            >
+            <Button className="h-[32px]" onClick={() => disconnect()}>
               Disconnect
             </Button>
           </div>

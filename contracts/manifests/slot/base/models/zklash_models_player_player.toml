@@ -1,7 +1,7 @@
 kind = "DojoModel"
-class_hash = "0x22b755bbed6cbd4279862602b16e83153cdb896aaac1ee3dce2c11eaa76190a"
-original_class_hash = "0x22b755bbed6cbd4279862602b16e83153cdb896aaac1ee3dce2c11eaa76190a"
-abi = "manifests/dev/abis/base/models/zklash_models_player_player.json"
+class_hash = "0x68cc0f944b1326c0bdf633d7e6c5e74032d5cb161fce04c727ce55c93607413"
+original_class_hash = "0x68cc0f944b1326c0bdf633d7e6c5e74032d5cb161fce04c727ce55c93607413"
+abi = "manifests/slot/abis/base/models/zklash_models_player_player.json"
 name = "zklash::models::player::player"
 
 [[members]]
@@ -16,5 +16,10 @@ key = false
 
 [[members]]
 name = "team_count"
+type = "u32"
+key = false
+
+[[members]]
+name = "win_count"
 type = "u32"
 key = false

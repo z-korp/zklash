@@ -9,6 +9,10 @@ block_number = 3
 seed = "zklash"
 name = "dojo::world::world"
 
+[world.metadata]
+profile_name = "dev"
+rpc_url = "http://localhost:5050/"
+
 [base]
 kind = "Class"
 class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
@@ -25,6 +29,7 @@ abi = "manifests/dev/abis/deployments/contracts/zklash_systems_account_account.j
 reads = []
 writes = []
 computed = []
+init_calldata = []
 name = "zklash::systems::account::account"
 
 [[contracts]]
@@ -37,6 +42,7 @@ abi = "manifests/dev/abis/deployments/contracts/zklash_systems_battle_battle.jso
 reads = []
 writes = []
 computed = []
+init_calldata = []
 name = "zklash::systems::battle::battle"
 
 [[contracts]]
@@ -49,6 +55,7 @@ abi = "manifests/dev/abis/deployments/contracts/zklash_systems_market_market.jso
 reads = []
 writes = []
 computed = []
+init_calldata = []
 name = "zklash::systems::market::market"
 
 [[models]]

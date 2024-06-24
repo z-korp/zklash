@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
             Squad squadComponent = entity.GetComponent<Squad>();
             if (squadComponent != null)
             {
-                if(squadComponent.registry_id == registryId && squadComponent.id == squadId)
+                if (squadComponent.registry_id == registryId && squadComponent.id == squadId)
                     return entity.name;
             }
         }
@@ -220,8 +220,13 @@ public class GameManager : MonoBehaviour
             Foe foeComponent = entity.GetComponent<Foe>();
             if (foeComponent != null)
             {
-                if(foeComponent.registry_id == registryId && foeComponent.squad_id == squadId)
-                    foeEntities.Add(entity.name);
+                if (foeComponent.registry_id == registryId && foeComponent.squad_id == squadId)
+                {
+                    //foeEntities.Add(entity.name);
+                    foeEntities.Insert(0, entity.name);
+                }
+
+
             }
         }
         return foeEntities;

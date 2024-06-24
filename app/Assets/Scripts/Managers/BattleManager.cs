@@ -225,9 +225,6 @@ public class BattleManager : MonoBehaviour
         TeamManager.instance.TPTeamToShop();
         CanvasManager.instance.ToggleCanvases();
         CanvasManager.instance.ToggleCanvasInterStep(result);
-        TimeScaleController.Instance.UpdateAnimatorList();
-        TimeScaleController.Instance.ResetTimeScale();
-        TimeScaleController.Instance.ApplySpeed();
     }
 
     private void LaunchProjectile(Vector3 position, Transform target, GameObject projectilePrefab)
@@ -326,7 +323,7 @@ public class BattleManager : MonoBehaviour
         GameObject char1 = team1[0];
         GameObject char2 = team2[0];
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f / TimeScaleController.Instance.speedGame);
         yield return Duel(char1, char2, team1, team2);
 
         //yield return RepositionTeams();

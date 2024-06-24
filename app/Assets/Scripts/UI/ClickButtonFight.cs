@@ -12,7 +12,6 @@ public class ClickButtonFight : MonoBehaviour
     {
         CanvasManager.instance.HideOrShowUserStatsInfo(false);
         StartCoroutine(FightSequence());
-        TimeScaleController.Instance.SetTimeScale(1.0f);
         TimeScaleController.Instance.UpdateAnimatorList();
         TimeScaleController.Instance.ApplySpeed();
     }

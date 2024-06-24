@@ -7,6 +7,9 @@ public class TimeScaleController : MonoBehaviour
     private List<Animator> animators;
     public float speedGame = 1f;
 
+    public GameObject ImgSpeed1;
+    public GameObject ImgSpeed2;
+
     private void Awake()
     {
         Instance = this;
@@ -41,9 +44,24 @@ public class TimeScaleController : MonoBehaviour
         Time.timeScale = newTimeScale;
     }
 
+    public void SetTimeScale2X()
+    {
+        Time.timeScale = 2f;
+        ImgSpeed2.SetActive(true);
+        ImgSpeed1.SetActive(false);
+        ApplySpeed();
+    }
+
+    public void SetTimeScale1X()
+    {
+        Time.timeScale = 1f;
+        ApplySpeed();
+    }
+
     public void ResetTimeScale()
     {
         Time.timeScale = 1f;
+        ApplySpeed();
     }
 
     public void ApplySpeed()
@@ -52,6 +70,15 @@ public class TimeScaleController : MonoBehaviour
         {
             animator.speed = Time.timeScale * speedGame;
         }
+    }
+
+    public void PlayNormalSpeed()
+    {
+        foreach (var animator in animators)
+        {
+            animator.speed = Time.timeScale * 1f;
+        }
+
     }
 
 }

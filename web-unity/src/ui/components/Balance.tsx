@@ -1,6 +1,7 @@
-import { erc20ABI } from '@/utils/erc20';
-import { useContractRead } from '@starknet-react/core';
-import { BlockTag } from 'starknet';
+import { erc20ABI } from "@/utils/erc20";
+import { useContractRead } from "@starknet-react/core";
+import { useMediaQuery } from "react-responsive";
+import { BlockTag } from "starknet";
 
 interface BalanceProps {
   address: string;
@@ -14,9 +15,11 @@ interface BalanceData {
 }
 
 const Balance = ({ address, token_address }: BalanceProps) => {
+  const isMdOrLarger = useMediaQuery({ query: "(min-width: 768px)" });
+
   // useBalance doesn't work on Katana, don't know why
   const { data, isError, isLoading, error } = useContractRead({
-    functionName: 'balanceOf',
+    functionName: "balanceOf",
     args: [address as string],
     abi: erc20ABI,
     address: token_address,
@@ -30,9 +33,9 @@ const Balance = ({ address, token_address }: BalanceProps) => {
   const balanceData = data as BalanceData; // Type assertion here
 
   return (
-    <div className="font-joystix text-xs">{`${parseFloat(
-      formatUnits(balanceData.balance.low, 18)
-    ).toFixed(7)} ETH`}</div>
+    <div className="text-sm">{`${parseFloat(
+      formatUnits(balanceData.balance.low, 18),
+    ).toFixed(isMdOrLarger ? 5 : 2)} ETH`}</div>
   );
 };
 
@@ -75,16 +78,16 @@ https://github.com/wevm/viem/blob/main/src/utils/unit/formatUnits.ts
 function formatUnits(value: bigint, decimals: number) {
   let display = value.toString();
 
-  const negative = display.startsWith('-');
+  const negative = display.startsWith("-");
   if (negative) display = display.slice(1);
 
-  display = display.padStart(decimals, '0');
+  display = display.padStart(decimals, "0");
 
   // eslint-disable-next-line prefer-const
   let [integer, fraction] = [
     display.slice(0, display.length - decimals),
     display.slice(display.length - decimals),
   ];
-  fraction = fraction.replace(/(0+)$/, '');
-  return `${negative ? '-' : ''}${integer || '0'}${fraction ? `.${fraction}` : ''}`;
+  fraction = fraction.replace(/(0+)$/, "");
+  return `${negative ? "-" : ""}${integer || "0"}${fraction ? `.${fraction}` : ""}`;
 }

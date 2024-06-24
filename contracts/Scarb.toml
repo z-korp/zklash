@@ -7,8 +7,8 @@ version = "0.6.0"
 sierra-replace-ids = true
 
 [scripts]
-deploy-dev = "sozo --profile dev build && sozo --profile dev migrate plan && sozo --profile dev migrate apply && ./scripts/authorize.sh dev"
-deploy-slot = "sozo --profile slot build && sozo --profile slot migrate plan --name v0 && sozo --profile slot migrate apply --name v0 && ./scripts/authorize.sh slot"
+dev = "sozo --profile dev build && sozo --profile dev migrate plan && sozo --profile dev migrate apply && ./scripts/authorize.sh dev"
+slot = "sozo --profile slot build && sozo --profile slot migrate plan --name v0 && sozo --profile slot migrate apply --name v0 && ./scripts/authorize.sh slot"
 
 [dependencies]
 origami = { git = "https://github.com/dojoengine/origami", rev = "501dcd4" }

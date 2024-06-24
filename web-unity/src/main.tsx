@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import { Toaster } from "@/ui/elements/sonner.tsx";
 import {
   StarknetConfig,
   argent,

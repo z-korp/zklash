@@ -213,6 +213,7 @@ public class MobDraggable : MonoBehaviour
                 isFromShop = false;
                 StartCoroutine(TxCoroutines.Instance.ExecuteHire(teamId, (uint)index));
                 CreateMobForTeam(zoneIndex);
+                CanvasManager.instance.ToggleCanvasForDuration(2.0f);
             }
             else
             {
@@ -306,6 +307,7 @@ public class MobDraggable : MonoBehaviour
             return false;
         Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
         StartCoroutine(TxCoroutines.Instance.ExecuteMergeFromShop(teamId, character.id, (uint)index));
+        CanvasManager.instance.ToggleCanvasForDuration(2.0f);
         return true;
     }
 
@@ -323,6 +325,7 @@ public class MobDraggable : MonoBehaviour
         Character to = GameManager.Instance.worldManager.Entity(toEntity).GetComponent<Character>();
 
         StartCoroutine(TxCoroutines.Instance.ExecuteMerge(teamId, from.id, to.id));
+        CanvasManager.instance.ToggleCanvasForDuration(2.0f);
 
         // Reset Team spot after merge
         TeamManager.instance.FreeSpot(index);

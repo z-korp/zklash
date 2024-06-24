@@ -1,14 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Dojo;
 using Dojo.Starknet;
-using Dojo.Torii;
-using dojo_bindings;
-using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ChatManager : MonoBehaviour
 {
@@ -65,7 +58,8 @@ public class ChatManager : MonoBehaviour
     {
         var account = gameManager.burnerManager.CurrentBurner ?? gameManager.masterAccount;
 
-        var typed_data = TypedData.From(new EmoteMessage {
+        var typed_data = TypedData.From(new EmoteMessage
+        {
             identity = account.Address,
             emote = emote,
         });

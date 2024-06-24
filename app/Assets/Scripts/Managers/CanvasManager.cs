@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CanvasManager : MonoBehaviour
@@ -7,6 +8,9 @@ public class CanvasManager : MonoBehaviour
     public GameObject canvasInfo;
     public GameObject canvasShopInfo;
     public GameObject canvasInterStep;
+    public GameObject canvasWaitForTransaction;
+
+    public bool debugOn = true;
 
     void Awake()
     {
@@ -59,5 +63,18 @@ public class CanvasManager : MonoBehaviour
             btnReroll.gameObject.SetActive(!btnReroll.gameObject.activeSelf);
         if (btnSell != null)
             btnSell.gameObject.SetActive(!btnSell.gameObject.activeSelf);
+    }
+
+    public void ToggleCanvasForDuration(float duration)
+    {
+        if (!debugOn)
+            StartCoroutine(ToggleCanvasCoroutine(duration));
+    }
+
+    private IEnumerator ToggleCanvasCoroutine(float duration)
+    {
+        canvasWaitForTransaction.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        canvasWaitForTransaction.SetActive(false);
     }
 }

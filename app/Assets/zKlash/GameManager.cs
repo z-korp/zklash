@@ -1,19 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using bottlenoselabs.C2CS.Runtime;
 using Dojo;
 using Dojo.Starknet;
-using dojo_bindings;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
-using Object = System.Object;
-using Random = UnityEngine.Random;
-using zKlash.Game.Roles;
-using System.Threading.Tasks;
+
 
 public class GameManager : MonoBehaviour
 {

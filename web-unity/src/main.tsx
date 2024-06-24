@@ -12,6 +12,7 @@ import {
 import { mainnet } from "@starknet-react/chains";
 
 import "./index.css";
+import { ThemeProvider } from "./ui/elements/theme-provider.tsx";
 
 function rpc() {
   return {
@@ -36,8 +37,9 @@ async function init() {
         explorer={voyager}
         autoConnect
       >
-        <App />
-        <Toaster position="top-center" />
+        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme-zklash">
+          <App />
+        </ThemeProvider>
       </StarknetConfig>
     </React.StrictMode>,
   );

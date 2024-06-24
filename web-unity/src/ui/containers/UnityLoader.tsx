@@ -3,16 +3,16 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 
 const UnityLoader: React.FC = () => {
   const { unityProvider } = useUnityContext({
-    loaderUrl: "Build/zKlash_webgl.loader.js",
-    dataUrl: "Build/zKlash_webgl.data",
-    frameworkUrl: "Build/zKlash_webgl.framework.js",
-    codeUrl: "Build/zKlash_webgl.wasm",
+    loaderUrl: "/unity/Build/zKlash_webgl.loader.js",
+    dataUrl: "/unity/Build/zKlash_webgl.data",
+    frameworkUrl: "/unity/Build/zKlash_webgl.framework.js",
+    codeUrl: "/unity/Build/zKlash_webgl.wasm",
   });
 
   useEffect(() => {
     const loadDojoScript = async () => {
       const script = document.createElement("script");
-      script.src = "TemplateData/dojo.js/dojo_c.js";
+      script.src = "/unity/TemplateData/dojo.js/dojo_c.js";
       script.onload = async () => {
         if (typeof wasm_bindgen !== "undefined") {
           try {
@@ -46,6 +46,7 @@ const UnityLoader: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
       }}
+      className="border rounded-lg"
     >
       <Unity
         unityProvider={unityProvider}

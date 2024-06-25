@@ -1,5 +1,13 @@
 {
-    "cairo1.enableLanguageServer": true,
-    "cairo1.enableScarb": true,
-    "cairo1.languageServerPath": "${userHome}/.dojo/bin/dojo-language-server"
+  "cairo1.enableLanguageServer": true,
+  "cairo1.enableScarb": true,
+  "cairo1.languageServerPath": "${userHome}/.dojo/bin/dojo-language-server",
+  "[csharp]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "editor.detectIndentation": false,
+  "[html]": {
+    "editor.formatOnSave": false
+  }
 }

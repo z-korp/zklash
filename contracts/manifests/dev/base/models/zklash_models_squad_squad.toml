@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x44f619ed3148fd30dacfc8e2dce38b1b7e66e680bc405b830def5359c7368b2"
-original_class_hash = "0x44f619ed3148fd30dacfc8e2dce38b1b7e66e680bc405b830def5359c7368b2"
+class_hash = "0x5a508a5c5918e923e4b9279b9e1a0e06e37f9a6ed35135d16d607522498a0af"
+original_class_hash = "0x5a508a5c5918e923e4b9279b9e1a0e06e37f9a6ed35135d16d607522498a0af"
 abi = "manifests/dev/abis/base/models/zklash_models_squad_squad.json"
 name = "zklash::models::squad::squad"
 

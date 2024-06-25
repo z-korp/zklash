@@ -234,7 +234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 42882510}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Skulls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 57684960}
   - component: {fileID: 57684962}
   - component: {fileID: 57684961}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TxtBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -718,7 +718,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 142270604}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mobs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1223,7 +1223,7 @@ GameObject:
   - component: {fileID: 303186772}
   - component: {fileID: 303186771}
   - component: {fileID: 303186770}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mob (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2255,7 +2255,7 @@ GameObject:
   - component: {fileID: 510881480}
   - component: {fileID: 510881479}
   - component: {fileID: 510881478}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mob (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2572,7 +2572,7 @@ GameObject:
   - component: {fileID: 578270747}
   - component: {fileID: 578270746}
   - component: {fileID: 578270745}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Death (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4123,7 +4123,7 @@ Tilemap:
       - {fileID: -935363233, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -403315721, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -1164164611, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -10, y: -6, z: 0}
@@ -4258,7 +4258,7 @@ Tilemap:
       - {fileID: 863402807, guid: 044e040abb170471d88cd2bd01387f73, type: 3}
       - {fileID: 1535485821, guid: 044e040abb170471d88cd2bd01387f73, type: 3}
       - {fileID: -1799188338, guid: 044e040abb170471d88cd2bd01387f73, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 1, y: -5, z: 0}
@@ -4460,7 +4460,7 @@ Tilemap:
       - {fileID: 1016165236, guid: 400a1574152c443e8853079f18de99e3, type: 3}
       - {fileID: 16299205, guid: 400a1574152c443e8853079f18de99e3, type: 3}
       - {fileID: 1136504481, guid: 400a1574152c443e8853079f18de99e3, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: 3, z: 0}
@@ -32018,7 +32018,8 @@ GameObject:
   - component: {fileID: 719071523}
   - component: {fileID: 719071522}
   - component: {fileID: 719071521}
-  m_Layer: 0
+  - component: {fileID: 719071524}
+  m_Layer: 5
   m_Name: CanvasWinLooseGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32109,6 +32110,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &719071524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719071519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d664fdccda1473bb6ffc6c64c04e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _winPanel: {fileID: 1571638841}
+  _loosePanel: {fileID: 1564041561}
 --- !u!1 &721218775
 GameObject:
   m_ObjectHideFlags: 0
@@ -33106,7 +33121,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3067253937845214436, guid: 1cdb1655fd8c5499fac64e22ed1e9c7c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -36086,7 +36102,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 1, y: -3, z: 0}
@@ -36356,7 +36372,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: 0, z: 0}
@@ -36401,7 +36417,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 6, y: 1, z: 0}
@@ -36671,7 +36687,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: 4, z: 0}
@@ -36941,7 +36957,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 1, y: 9, z: 0}
@@ -37106,7 +37122,7 @@ GameObject:
   - component: {fileID: 1388645114}
   - component: {fileID: 1388645113}
   - component: {fileID: 1388645112}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Death (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37203,7 +37219,7 @@ GameObject:
   - component: {fileID: 1395548870}
   - component: {fileID: 1395548869}
   - component: {fileID: 1395548868}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mob (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37423,7 +37439,7 @@ GameObject:
   - component: {fileID: 1518991116}
   - component: {fileID: 1518991118}
   - component: {fileID: 1518991117}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: txtWin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39607,13 +39623,13 @@ GameObject:
   - component: {fileID: 1564041562}
   - component: {fileID: 1564041564}
   - component: {fileID: 1564041563}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LoosePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1564041562
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39685,13 +39701,13 @@ GameObject:
   - component: {fileID: 1571638842}
   - component: {fileID: 1571638844}
   - component: {fileID: 1571638843}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: WinPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1571638842
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39797,7 +39813,7 @@ GameObject:
   - component: {fileID: 1607815096}
   - component: {fileID: 1607815098}
   - component: {fileID: 1607815097}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Ribbon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44626,7 +44642,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: -4, z: 0}
@@ -44896,7 +44912,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 7, y: -1, z: 0}
@@ -45611,7 +45627,7 @@ GameObject:
   - component: {fileID: 1716648666}
   - component: {fileID: 1716648668}
   - component: {fileID: 1716648667}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: txtLoose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46006,7 +46022,7 @@ GameObject:
   - component: {fileID: 1823757625}
   - component: {fileID: 1823757627}
   - component: {fileID: 1823757626}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Ribbon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52144,7 +52160,7 @@ GameObject:
   - component: {fileID: 1969351776}
   - component: {fileID: 1969351775}
   - component: {fileID: 1969351774}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Death (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52980,7 +52996,7 @@ Tilemap:
       - {fileID: -935363233, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -403315721, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -1164164611, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: -1, z: 0}
@@ -52995,7 +53011,7 @@ Tilemap:
       - {fileID: 1598050016, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -1541784968, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -659013487, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 1, y: -1, z: 0}
@@ -53010,7 +53026,7 @@ Tilemap:
       - {fileID: 454987624, guid: 9d123d7d0bc564cbaa50033cbf702fa9, type: 3}
       - {fileID: -1468410212, guid: 9d123d7d0bc564cbaa50033cbf702fa9, type: 3}
       - {fileID: -2111091026, guid: 9d123d7d0bc564cbaa50033cbf702fa9, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 15, y: 0, z: 0}
@@ -53055,7 +53071,7 @@ Tilemap:
       - {fileID: 863402807, guid: 044e040abb170471d88cd2bd01387f73, type: 3}
       - {fileID: 1535485821, guid: 044e040abb170471d88cd2bd01387f73, type: 3}
       - {fileID: -1799188338, guid: 044e040abb170471d88cd2bd01387f73, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -8, y: 4, z: 0}
@@ -53313,7 +53329,7 @@ GameObject:
   - component: {fileID: 2030644453}
   - component: {fileID: 2030644452}
   - component: {fileID: 2030644451}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BtnBackMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53383,7 +53399,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2030644452}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 719071524}
+        m_TargetAssemblyTypeName: CanvasWinLoose, Assembly-CSharp
+        m_MethodName: OnClickGoBackToMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2030644452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53465,7 +53493,7 @@ GameObject:
   - component: {fileID: 2040005796}
   - component: {fileID: 2040005795}
   - component: {fileID: 2040005794}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Death
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53696,7 +53724,7 @@ GameObject:
   - component: {fileID: 2047976189}
   - component: {fileID: 2047976188}
   - component: {fileID: 2047976187}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BtnBackMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53766,7 +53794,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2047976188}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 719071524}
+        m_TargetAssemblyTypeName: CanvasWinLoose, Assembly-CSharp
+        m_MethodName: OnClickGoBackToMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2047976188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53816,7 +53856,7 @@ GameObject:
   - component: {fileID: 2056873530}
   - component: {fileID: 2056873532}
   - component: {fileID: 2056873531}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TxtBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54000,7 +54040,6 @@ GameObject:
   - component: {fileID: 2099338311}
   - component: {fileID: 2099338313}
   - component: {fileID: 2099338312}
-  - component: {fileID: 2099338314}
   m_Layer: 0
   m_Name: GroundFloorShop
   m_TagString: Untagged
@@ -54260,18 +54299,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &2099338314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2099338310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 653421f6b4c8df04a9fa6c75d0614372, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2104012629
 GameObject:
   m_ObjectHideFlags: 0
@@ -54406,7 +54433,7 @@ GameObject:
   - component: {fileID: 2140742212}
   - component: {fileID: 2140742211}
   - component: {fileID: 2140742210}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54718,6 +54745,10 @@ PrefabInstance:
       propertyPath: canvasShopInfo
       value: 
       objectReference: {fileID: 27889339}
+    - target: {fileID: 8584780967130662978, guid: 690a6055e43c64d21b084cd0eb3574d7, type: 3}
+      propertyPath: canvasWinLoose
+      value: 
+      objectReference: {fileID: 719071519}
     - target: {fileID: 8584780967130662978, guid: 690a6055e43c64d21b084cd0eb3574d7, type: 3}
       propertyPath: canvasInterStep
       value: 

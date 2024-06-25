@@ -22,7 +22,8 @@ public class TxCoroutines : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Multiple instances of TxCoroutines found");
+            Destroy(gameObject);
+            //Debug.LogError("Multiple instances of TxCoroutines found");
         }
     }
 

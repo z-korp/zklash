@@ -10,6 +10,8 @@ public class CanvasManager : MonoBehaviour
     public GameObject canvasInterStep;
     public GameObject canvasWaitForTransaction;
 
+    public GameObject canvasWinLoose;
+
     public bool debugOn = true;
 
     void Awake()
@@ -64,6 +66,15 @@ public class CanvasManager : MonoBehaviour
         if (btnSell != null)
             btnSell.gameObject.SetActive(!btnSell.gameObject.activeSelf);
     }
+
+    public void ShowCanvasWinOrLoose(bool victory = true)
+    {
+        if (victory)
+            canvasWinLoose.GetComponent<CanvasWinLoose>().ToggleWinPanel();
+        else
+            canvasWinLoose.GetComponent<CanvasWinLoose>().ToggleLoosePanel();
+    }
+
 
     public void ToggleCanvasForDuration(float duration)
     {

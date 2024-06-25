@@ -65,7 +65,7 @@ namespace zKlash.Game.Items
             {
                 case Size.Small: return Item.MushroomSmall;
                 case Size.Medium: return Item.MushroomMedium;
-                case Size.Large: return Item.BushLarge;
+                case Size.Large: return Item.MushroomLarge;
                 default: return Item.None;
             }
         }

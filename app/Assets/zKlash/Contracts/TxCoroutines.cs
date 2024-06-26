@@ -89,17 +89,32 @@ public class TxCoroutines : MonoBehaviour
         Debug.Log("[[[[[[[[[[[  ExecuteCreateAndSpawn  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
-        var nameHex = StringToHexString(name);
 
+        yield return StartCoroutine(ExecuteCreate(name));
+        yield return StartCoroutine(ExecuteSpawn());
+
+        Debug.Log("[[[[[[[[[[[ END ExecuteCreateAndSpawn ]]]]]]]]]]]");
+    }
+
+    public IEnumerator ExecuteCreate(string name)
+    {
+        Account account = GameManager.Instance.burnerManager.CurrentBurner;
+        string world = GameManager.Instance.dojoConfig.worldAddress;
+
+        var nameHex = StringToHexString(name);
         string createTxHash = "";
         yield return StartCoroutine(AwaitTask(accountSystem.Create(account, world, nameHex), (result) => createTxHash = result.Hex()));
-        //yield return StartCoroutine(AwaitTask(AwaitTransaction(createTxHash))); ;
+        //yield return StartCoroutine(AwaitTask(AwaitTransaction(createTxHash)));
+    }
+
+    public IEnumerator ExecuteSpawn()
+    {
+        Account account = GameManager.Instance.burnerManager.CurrentBurner;
+        string world = GameManager.Instance.dojoConfig.worldAddress;
 
         string spawnTxHash = "";
         yield return StartCoroutine(AwaitTask(accountSystem.Spawn(account, world), (result) => spawnTxHash = result.Hex()));
         //yield return StartCoroutine(AwaitTask(AwaitTransaction(spawnTxHash)));
-
-        Debug.Log("[[[[[[[[[[[ END ExecuteCreateAndSpawn ]]]]]]]]]]]");
     }
 
     // Market System

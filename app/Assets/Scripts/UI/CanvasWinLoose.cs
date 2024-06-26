@@ -7,7 +7,7 @@ public class CanvasWinLoose : MonoBehaviour
     private GameObject _winPanel, _loosePanel;
     public void OnClickGoBackToMenu()
     {
-        SceneManager.LoadScene("menu");
+        SceneManager.LoadScene("ProfileScene");
     }
 
     public void ToggleWinPanel()

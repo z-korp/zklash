@@ -285,5 +285,20 @@ public class TeamManager : MonoBehaviour
             }
         }
     }
+
+    public bool IsMoreThanOneMobInTeam()
+    {
+        var countTeamSpot = 0;
+        foreach (var spot in TeamSpots)
+        {
+            if (!spot.IsAvailable)
+            {
+                countTeamSpot++;
+            }
+        }
+
+        return countTeamSpot > 1;
+
+    }
 }
 

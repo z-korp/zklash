@@ -13,7 +13,6 @@ public class ShopManager : MonoBehaviour
 
     public uint rolesUint;
     public uint itemUint;
-
     void Awake()
     {
         if (instance != null)

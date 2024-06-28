@@ -35,6 +35,12 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void SellMob(GameObject draggedObject)
     {
+        if (!TeamManager.instance.IsMoreThanOneMobInTeam())
+        {
+            DialogueManager.Instance.ShowDialogueForDuration("Even heroes need an army!", 2f);
+            return;
+        }
+
         Debug.Log("Selling mob: ------------------>");
         Debug.Log("Selling mob: " + draggedObject.name);
         uint teamId = PlayerData.Instance.GetTeamId();

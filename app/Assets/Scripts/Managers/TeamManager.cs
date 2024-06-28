@@ -286,7 +286,7 @@ public class TeamManager : MonoBehaviour
         }
     }
 
-    public bool IsMoreThanOneMobInTeam()
+    public int CountMobInTeam()
     {
         var countTeamSpot = 0;
         foreach (var spot in TeamSpots)
@@ -297,7 +297,7 @@ public class TeamManager : MonoBehaviour
             }
         }
 
-        return countTeamSpot > 1;
+        return countTeamSpot;
 
     }
 }

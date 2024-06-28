@@ -10,7 +10,7 @@ public class ClickButtonFight : MonoBehaviour
 {
     public void OnClickFight()
     {
-        if (!TeamManager.instance.IsMoreThanOneMobInTeam())
+        if (TeamManager.instance.CountMobInTeam() < 1)
         {
             DialogueManager.Instance.ShowDialogueForDuration("Even heroes need an army!", 2f);
             return;

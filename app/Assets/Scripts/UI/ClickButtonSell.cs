@@ -35,8 +35,9 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void SellMob(GameObject draggedObject)
     {
-        if (!TeamManager.instance.IsMoreThanOneMobInTeam())
+        if (TeamManager.instance.CountMobInTeam() <= 1)
         {
+            isDraggingSellMob = false;
             DialogueManager.Instance.ShowDialogueForDuration("Even heroes need an army!", 2f);
             return;
         }

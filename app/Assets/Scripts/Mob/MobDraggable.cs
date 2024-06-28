@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using zKlash.Game.Items;
 using zKlash.Game.Roles;
 
 public class MobDraggable : MonoBehaviour
@@ -318,11 +319,20 @@ public class MobDraggable : MonoBehaviour
             return false;
 
         Character from = GameManager.Instance.worldManager.Entity(fromEntity).GetComponent<Character>();
+        var itemFrom = gameObject.GetComponent<MobItem>().item;
 
         string toEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
         if (toEntity == "")
             return false;
         Character to = GameManager.Instance.worldManager.Entity(toEntity).GetComponent<Character>();
+        var mobItemTo = mobToUpdate.GetComponent<MobItem>();
+        var itemTo = mobItemTo.item;
+
+        if (itemFrom != null && itemTo == null)
+        {
+            mobItemTo.item = itemFrom;
+            mobToUpdate.GetComponent<MobController>().Character.Equip(itemFrom.type);
+        }
 
         StartCoroutine(TxCoroutines.Instance.ExecuteMerge(teamId, from.id, to.id));
         CanvasManager.instance.ToggleCanvasForDuration(2.0f);

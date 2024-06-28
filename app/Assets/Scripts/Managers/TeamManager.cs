@@ -123,7 +123,7 @@ public class TeamManager : MonoBehaviour
                         //ItemData item = PrefabUtils.FindScriptableByName(BattleManager.instance.itemDataArray, itemName);
                         var mobItem = mobObject.GetComponent<MobItem>();
                         mobItem.ResetItemDataAfterBattle();
-                        mobObject.GetComponent<MobController>().Character.Equip(battleItem.type);
+                        //mobObject.GetComponent<MobController>().Character.Equip(battleItem.type);
 
                     }
                 }

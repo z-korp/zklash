@@ -11,6 +11,7 @@ namespace zKlash.Game
     {
         OnHire,
         OnEquip,
+        OnUnequip,
         OnDispatch,
         OnFight,
         OnDeath,

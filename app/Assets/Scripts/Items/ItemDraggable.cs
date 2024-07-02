@@ -85,7 +85,6 @@ public class ItemDraggable : MonoBehaviour
             //ContractActions.instance.TriggerEquip(character.id, (uint)index);
             uint teamId = PlayerData.Instance.GetTeamId();
             StartCoroutine(TxCoroutines.Instance.ExecuteEquip(teamId, character.id, (uint)index));
-            CanvasManager.instance.ToggleCanvasForDuration(2.0f);
 
             Destroy(gameObject);
         }

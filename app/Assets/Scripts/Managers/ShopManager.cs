@@ -61,7 +61,6 @@ public class ShopManager : MonoBehaviour
         }
         uint teamId = PlayerData.Instance.GetTeamId();
         StartCoroutine(TxCoroutines.Instance.ExecuteReroll(teamId, OnRerollComplete));
-        CanvasManager.instance.ToggleCanvasForDuration(2.0f);
     }
 
     private void OnRerollComplete()

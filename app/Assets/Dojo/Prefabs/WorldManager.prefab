@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   synchronizationMaster: {fileID: 4477060482053654553}
-  dojoConfig: {fileID: 11400000, guid: c08312eaea6864270b382299ed183121, type: 2}
+  dojoConfig: {fileID: 11400000, guid: 82a750fe7502b4a6abd45852352f1bfc, type: 2}
 --- !u!114 &4477060482053654553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,8 +86,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldManager: {fileID: 1648136030876143075}
-  dojoConfig: {fileID: 11400000, guid: c08312eaea6864270b382299ed183121, type: 2}
-  gameManagerData: {fileID: 11400000, guid: 95b8b74d019db46d68cf33a2eaa9c33f, type: 2}
+  dojoConfig: {fileID: 11400000, guid: 82a750fe7502b4a6abd45852352f1bfc, type: 2}
+  gameManagerData: {fileID: 11400000, guid: 9c805addede434c01895792abf7903c3, type: 2}
   accountSystem: {fileID: 5092250449725577079}
 --- !u!114 &7292808613231702937
 MonoBehaviour:
@@ -104,6 +104,7 @@ MonoBehaviour:
   accountSystem: {fileID: 5092250449725577079}
   marketSystem: {fileID: 7222211533816142911}
   battleSystem: {fileID: 5749844122583930820}
+  dojoConfig: {fileID: 11400000, guid: 82a750fe7502b4a6abd45852352f1bfc, type: 2}
 --- !u!114 &2921955955469925862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9191964756d504078856d3392fcbb0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 95b8b74d019db46d68cf33a2eaa9c33f, type: 2}
+  data: {fileID: 11400000, guid: 9c805addede434c01895792abf7903c3, type: 2}
 --- !u!114 &5749844122583930820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39578118dd2dc4b9d96c74aefbe677c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 95b8b74d019db46d68cf33a2eaa9c33f, type: 2}
+  data: {fileID: 11400000, guid: 9c805addede434c01895792abf7903c3, type: 2}
 --- !u!114 &7222211533816142911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,4 +155,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef932abc54f77425b9c404e29d3500f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 95b8b74d019db46d68cf33a2eaa9c33f, type: 2}
+  data: {fileID: 11400000, guid: 9c805addede434c01895792abf7903c3, type: 2}

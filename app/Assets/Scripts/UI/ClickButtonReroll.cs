@@ -11,6 +11,5 @@ public class ClickButtonReroll : MonoBehaviour
         //StartCoroutine(ContractActions.instance.WaitForAllTransactionsCoroutine());
         uint teamId = PlayerData.Instance.GetTeamId();
         StartCoroutine(TxCoroutines.Instance.ExecuteReroll(teamId));
-        CanvasManager.instance.ToggleCanvasForDuration(2.0f);
     }
 }

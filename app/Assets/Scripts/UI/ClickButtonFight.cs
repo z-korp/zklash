@@ -64,7 +64,6 @@ public class ClickButtonFight : MonoBehaviour
         Debug.Log($"Team id: {team.id}, Registry id: {team.registry_id}");
         yield return StartCoroutine(TxCoroutines.Instance.ExecuteStartBattle(team.id, order));
         yield return new WaitForSeconds(1.0f);
-        CanvasManager.instance.ToggleCanvasForDuration(2.0f);
         Debug.Log($"Foe squad id: {team.foe_squad_id}, Registry id: {team.registry_id}");
     }
 

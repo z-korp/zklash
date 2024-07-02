@@ -512,6 +512,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _worldManagerPrefab: {fileID: 4900589733936057544, guid: d2e25933f4d69473a8994ee7470b2610, type: 3}
   _unityMainThreadDispatcherPrefab: {fileID: 184210, guid: c3c54c612cab04d86ab0ee8c4125943d, type: 3}
+  _starknetJsInteropPrefab: {fileID: 7334224928016131396, guid: cf49484f56a194e3eb3a9962ce5b168a, type: 3}
+  _canvasWaitForTransactionPrefab: {fileID: 2820816497328329681, guid: 80817d4f5ed494907a1b4605e0c94be4, type: 3}
 --- !u!4 &161716092
 Transform:
   m_ObjectHideFlags: 0

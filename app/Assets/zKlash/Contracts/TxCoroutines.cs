@@ -13,6 +13,7 @@ public class TxCoroutines : MonoBehaviour
     [SerializeField] AccountSystem accountSystem;
     [SerializeField] MarketSystem marketSystem;
     [SerializeField] BattleSystem battleSystem;
+    [SerializeField] WorldManagerData dojoConfig;
 
     void Awake()
     {
@@ -30,11 +31,9 @@ public class TxCoroutines : MonoBehaviour
     // For tasks that return a value
     private IEnumerator AwaitTask<T>(Task<T> task, Action<T> continuation)
     {
-        WaitForSeconds waitTime = new WaitForSeconds(0.2f); // every 0.02 seconds
-
         while (!task.IsCompleted)
         {
-            yield return waitTime;
+            yield return new WaitForSeconds(0.2f); // every 0.2 seconds
         }
 
         if (task.IsFaulted)
@@ -65,11 +64,6 @@ public class TxCoroutines : MonoBehaviour
         }
     }
 
-    public async Task AwaitTransaction(string txHash)
-    {
-        await GameManager.Instance.provider.WaitForTransaction(new FieldElement(txHash));
-    }
-
     public static string StringToHexString(string input)
     {
         string hexOutput = "";
@@ -80,15 +74,56 @@ public class TxCoroutines : MonoBehaviour
         return hexOutput;
     }
 
-    // ------------------------------------------------
-    // Tx from all systems
+    private IEnumerator ExecuteTransaction(Func<Task<FieldElement>> transactionFunc, Action onSuccess = null, Action<string> onError = null)
+    {
+        string txHash = "";
+        CanvasWaitForTransaction.Instance.ToggleCanvas(true);
+        yield return StartCoroutine(AwaitTask(transactionFunc(), (result) => txHash = result.Hex()));
+
+        if (!string.IsNullOrEmpty(txHash))
+        {
+            CanvasWaitForTransaction.Instance.setTxHash(txHash);
+            string optionsJson = "{ \"nodeUrl\": \"" + dojoConfig.rpcUrl + "\", \"retryInterval\": 100 }";
+
+            Task<StarknetJsInterop.TransactionResult> waitTask = StarknetJsInterop.Instance.WaitForTransactionWrapper(txHash, optionsJson);
+            yield return new WaitUntil(() => waitTask.IsCompleted);
+
+            if (waitTask.IsCompletedSuccessfully)
+            {
+                StarknetJsInterop.TransactionResult result = waitTask.Result;
+                Debug.Log("Transaction Status: " + result.executionStatus);
+                if (result.executionStatus == "SUCCEEDED")
+                {
+                    onSuccess?.Invoke();
+                }
+                else
+                {
+                    string errorMessage = "Transaction failed with status: " + result.executionStatus;
+                    Debug.LogError(errorMessage);
+                    onError?.Invoke(errorMessage);
+                }
+            }
+            else if (waitTask.IsFaulted)
+            {
+                string error = waitTask.Exception?.InnerException?.Message ?? "Unknown error";
+                Debug.LogError("Error waiting for transaction: " + error);
+                onError?.Invoke(error);
+            }
+        }
+        else
+        {
+            string error = "Create transaction hash is empty or null.";
+            Debug.LogError(error);
+            onError?.Invoke(error);
+        }
+        CanvasWaitForTransaction.Instance.setTxHash("");
+        CanvasWaitForTransaction.Instance.ToggleCanvas(false);
+    }
 
     // Account System
     public IEnumerator ExecuteCreateAndSpawn(string name)
     {
         Debug.Log("[[[[[[[[[[[  ExecuteCreateAndSpawn  ]]]]]]]]]]]");
-        Account account = GameManager.Instance.burnerManager.CurrentBurner;
-        string world = GameManager.Instance.dojoConfig.worldAddress;
 
         yield return StartCoroutine(ExecuteCreate(name));
         yield return StartCoroutine(ExecuteSpawn());
@@ -100,11 +135,13 @@ public class TxCoroutines : MonoBehaviour
     {
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
-
         var nameHex = StringToHexString(name);
-        string createTxHash = "";
-        yield return StartCoroutine(AwaitTask(accountSystem.Create(account, world, nameHex), (result) => createTxHash = result.Hex()));
-        //yield return StartCoroutine(AwaitTask(AwaitTransaction(createTxHash)));
+
+        yield return StartCoroutine(ExecuteTransaction(
+            () => accountSystem.Create(account, world, nameHex),
+            onSuccess: () => Debug.Log("Create transaction was successful."),
+            onError: (error) => Debug.LogError("Create transaction failed: " + error)
+        ));
     }
 
     public IEnumerator ExecuteSpawn()
@@ -112,9 +149,11 @@ public class TxCoroutines : MonoBehaviour
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
-        string spawnTxHash = "";
-        yield return StartCoroutine(AwaitTask(accountSystem.Spawn(account, world), (result) => spawnTxHash = result.Hex()));
-        //yield return StartCoroutine(AwaitTask(AwaitTransaction(spawnTxHash)));
+        yield return StartCoroutine(ExecuteTransaction(
+            () => accountSystem.Spawn(account, world),
+            onSuccess: () => Debug.Log("Spawn transaction was successful."),
+            onError: (error) => Debug.LogError("Spawn transaction failed: " + error)
+        ));
     }
 
     // Market System
@@ -124,14 +163,12 @@ public class TxCoroutines : MonoBehaviour
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
-        string txHash = "";
-        yield return StartCoroutine(
-            AwaitTask(
-                marketSystem.Equip(account, world, team_id, character_id, index),
-                (result) => txHash = result.Hex()
-            )
-        );
-        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        yield return StartCoroutine(ExecuteTransaction(
+            () => marketSystem.Equip(account, world, team_id, character_id, index),
+            onSuccess: () => Debug.Log("Equip transaction was successful."),
+            onError: (error) => Debug.LogError("Equip transaction failed: " + error)
+        ));
+
         Debug.Log("[[[[[[[[[[[ END ExecuteEquip ]]]]]]]]]]]");
     }
 
@@ -141,14 +178,12 @@ public class TxCoroutines : MonoBehaviour
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
-        string txHash = "";
-        yield return StartCoroutine(
-            AwaitTask(
-                marketSystem.Hire(account, world, team_id, index),
-                (result) => txHash = result.Hex()
-            )
-        );
-        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        yield return StartCoroutine(ExecuteTransaction(
+            () => marketSystem.Hire(account, world, team_id, index),
+            onSuccess: () => Debug.Log("Hire transaction was successful."),
+            onError: (error) => Debug.LogError("Hire transaction failed: " + error)
+        ));
+
         Debug.Log("[[[[[[[[[[[ END ExecuteHire ]]]]]]]]]]]");
     }
 
@@ -158,14 +193,12 @@ public class TxCoroutines : MonoBehaviour
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
-        string txHash = "";
-        yield return StartCoroutine(
-            AwaitTask(
-                marketSystem.Reroll(account, world, team_id),
-                (result) => txHash = result.Hex()
-            )
-        );
-        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        yield return StartCoroutine(ExecuteTransaction(
+            () => marketSystem.Reroll(account, world, team_id),
+            onSuccess: () => Debug.Log("Reroll transaction was successful."),
+            onError: (error) => Debug.LogError("Reroll transaction failed: " + error)
+        ));
+
         yield return new WaitForSeconds(1f); // to be sure Torii has indexed (TODO: remove this when Torii is fixed)
 
         onFinish?.Invoke();  // Call the callback if it's provided
@@ -179,14 +212,11 @@ public class TxCoroutines : MonoBehaviour
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
-        string txHash = "";
-        yield return StartCoroutine(
-            AwaitTask(
-                marketSystem.Merge(account, world, team_id, from_id, to_id),
-                (result) => txHash = result.Hex()
-            )
-        );
-        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        yield return StartCoroutine(ExecuteTransaction(
+            () => marketSystem.Merge(account, world, team_id, from_id, to_id),
+            onSuccess: () => Debug.Log("Merge transaction was successful."),
+            onError: (error) => Debug.LogError("Merge transaction failed: " + error)
+        ));
 
         Debug.Log("[[[[[[[[[[[ END ExecuteMerge ]]]]]]]]]]]");
     }
@@ -197,14 +227,12 @@ public class TxCoroutines : MonoBehaviour
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
-        string txHash = "";
-        yield return StartCoroutine(
-            AwaitTask(
-                marketSystem.MergeFromShop(account, world, team_id, character_id, index),
-                (result) => txHash = result.Hex()
-            )
-        );
-        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        yield return StartCoroutine(ExecuteTransaction(
+            () => marketSystem.MergeFromShop(account, world, team_id, character_id, index),
+            onSuccess: () => Debug.Log("Merge from shop transaction was successful."),
+            onError: (error) => Debug.LogError("Merge from shop transaction failed: " + error)
+        ));
+
         Debug.Log("[[[[[[[[[[[ END ExecuteMergeFromShop ]]]]]]]]]]]");
     }
 
@@ -212,16 +240,12 @@ public class TxCoroutines : MonoBehaviour
     {
         Debug.Log("[[[[[[[[[[[  ExecuteSell  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
-        string world = GameManager.Instance.dojoConfig.worldAddress;
+        string world = GameManager.Instance.dojoConfig.worldAddress; yield return StartCoroutine(ExecuteTransaction(
+        () => marketSystem.Sell(account, world, team_id, character_id),
+        onSuccess: () => Debug.Log("Sell transaction was successful."),
+        onError: (error) => Debug.LogError("Sell transaction failed: " + error)
+    ));
 
-        string txHash = "";
-        yield return StartCoroutine(
-            AwaitTask(
-                marketSystem.Sell(account, world, team_id, character_id),
-                (result) => txHash = result.Hex()
-            )
-        );
-        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
         Debug.Log("[[[[[[[[[[[ END ExecuteSell ]]]]]]]]]]]");
     }
 
@@ -232,14 +256,12 @@ public class TxCoroutines : MonoBehaviour
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress;
 
-        string txHash = "";
-        yield return StartCoroutine(
-            AwaitTask(
-                battleSystem.StartBattle(account, world, team_id, order),
-                (result) => txHash = result.Hex()
-            )
-        );
-        //yield return StartCoroutine(AwaitTask(AwaitTransaction(txHash)));
+        yield return StartCoroutine(ExecuteTransaction(
+            () => battleSystem.StartBattle(account, world, team_id, order),
+            onSuccess: () => Debug.Log("Start battle transaction was successful."),
+            onError: (error) => Debug.LogError("Start battle transaction failed: " + error)
+        ));
+
         yield return new WaitForSeconds(1f); // to be sure Torii has indexed (TODO: remove this when Torii is fixed)
         Debug.Log("[[[[[[[[[[[ END ExecuteStartBattle ]]]]]]]]]]]");
     }

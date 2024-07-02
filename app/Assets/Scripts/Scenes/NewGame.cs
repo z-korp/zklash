@@ -49,10 +49,11 @@ public class NewGame : MonoBehaviour
 
     private IEnumerator SpawnAndLoadScene(string playerName)
     {
-        // Start the game creation process using the GameManager's ExecuteCreateAndSpawn coroutine
-        yield return StartCoroutine(TxCoroutines.Instance.ExecuteSpawn());
-        yield return new WaitForSeconds(1.0f);
         // After creation is complete, load the next scene
         SceneManager.LoadScene("Shop");
+
+        // Start the game creation process using the GameManager's ExecuteCreateAndSpawn coroutine
+        yield return StartCoroutine(TxCoroutines.Instance.ExecuteSpawn());
+
     }
 }

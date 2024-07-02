@@ -53,7 +53,6 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
         Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
         StartCoroutine(TxCoroutines.Instance.ExecuteSell(teamId, character.id));
-        CanvasManager.instance.ToggleCanvasForDuration(2.0f);
 
         // Get index to free spot in team and destroy gameObject
         int index = draggedObject.GetComponent<MobDraggable>().index;

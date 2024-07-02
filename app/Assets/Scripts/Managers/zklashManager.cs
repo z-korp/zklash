@@ -4,10 +4,11 @@ using UnityEngine;
 public class zklashManager : MonoBehaviour
 {
     public static zklashManager instance;
-    [SerializeField]
-    private GameObject _worldManagerPrefab;
-    [SerializeField]
-    private GameObject _unityMainThreadDispatcherPrefab;
+
+    [SerializeField] private GameObject _worldManagerPrefab;
+    [SerializeField] private GameObject _unityMainThreadDispatcherPrefab;
+    [SerializeField] private GameObject _starknetJsInteropPrefab;
+    [SerializeField] private GameObject _canvasWaitForTransactionPrefab;
 
     void Awake()
     {
@@ -28,7 +29,7 @@ public class zklashManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Prefab is not assigned in PrefabManager.");
+            Debug.LogError("worldManagerPrefab is not assigned in PrefabManager.");
         }
         if (_unityMainThreadDispatcherPrefab != null)
         {
@@ -36,7 +37,25 @@ public class zklashManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Prefab is not assigned in PrefabManager.");
+            Debug.LogError("unityMainThreadDispatcherPrefab is not assigned in PrefabManager.");
+        }
+
+        if (_starknetJsInteropPrefab != null)
+        {
+            Instantiate(_starknetJsInteropPrefab, Vector3.zero, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogError("starknetJsInteropPrefab is not assigned in PrefabManager.");
+        }
+
+        if (_canvasWaitForTransactionPrefab != null)
+        {
+            Instantiate(_canvasWaitForTransactionPrefab, Vector3.zero, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogError("canvasWaitForTransactionPrefab is not assigned in PrefabManager.");
         }
     }
 }

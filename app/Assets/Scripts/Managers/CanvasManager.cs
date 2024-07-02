@@ -8,11 +8,8 @@ public class CanvasManager : MonoBehaviour
     public GameObject canvasInfo;
     public GameObject canvasShopInfo;
     public GameObject canvasInterStep;
-    public GameObject canvasWaitForTransaction;
 
     public GameObject canvasWinLoose;
-
-    public bool debugOn = true;
 
     void Awake()
     {
@@ -73,19 +70,5 @@ public class CanvasManager : MonoBehaviour
             canvasWinLoose.GetComponent<CanvasWinLoose>().ToggleWinPanel();
         else
             canvasWinLoose.GetComponent<CanvasWinLoose>().ToggleLoosePanel();
-    }
-
-
-    public void ToggleCanvasForDuration(float duration)
-    {
-        if (!debugOn)
-            StartCoroutine(ToggleCanvasCoroutine(duration));
-    }
-
-    private IEnumerator ToggleCanvasCoroutine(float duration)
-    {
-        canvasWaitForTransaction.SetActive(true);
-        yield return new WaitForSeconds(duration);
-        canvasWaitForTransaction.SetActive(false);
     }
 }

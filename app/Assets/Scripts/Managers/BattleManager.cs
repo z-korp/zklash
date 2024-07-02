@@ -23,8 +23,8 @@ public class BattleManager : MonoBehaviour
     public GameObject dynamitePrefab;
     public GameObject arrowPrefab;
     public GameObject powerUpPrefab;
-
     public GameObject attackUpPrefab;
+    public GameObject healthUpPrefab;
 
     public ItemData[] itemDataArray;
 
@@ -185,9 +185,16 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    private void PlayAttachUp(Vector3 position)
+    private void PlayAttackUp(Vector3 position)
     {
         var attackUp = Instantiate(attackUpPrefab, position, Quaternion.identity);
+        TimeScaleController.Instance.AddAnimator(attackUp.GetComponentInChildren<Animator>());
+
+    }
+
+    private void PlayHealthUp(Vector3 position)
+    {
+        var attackUp = Instantiate(healthUpPrefab, position, Quaternion.identity);
         TimeScaleController.Instance.AddAnimator(attackUp.GetComponentInChildren<Animator>());
 
     }
@@ -215,7 +222,10 @@ public class BattleManager : MonoBehaviour
                 PlayPowerUp(position);
                 break;
             case Role.Torchoblin:
-                PlayAttachUp(position);
+                PlayAttackUp(position);
+                break;
+            case Role.Bomboblin:
+                PlayHealthUp(position);
                 break;
         }
     }

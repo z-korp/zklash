@@ -80,6 +80,7 @@ public class TxCoroutines : MonoBehaviour
         CanvasWaitForTransaction.Instance.ToggleCanvas(true);
         yield return StartCoroutine(AwaitTask(transactionFunc(), (result) => txHash = result.Hex()));
 
+#if UNITY_WEBGL && !UNITY_EDITOR
         if (!string.IsNullOrEmpty(txHash))
         {
             CanvasWaitForTransaction.Instance.setTxHash(txHash);
@@ -116,6 +117,9 @@ public class TxCoroutines : MonoBehaviour
             Debug.LogError(error);
             onError?.Invoke(error);
         }
+#else
+        yield return new WaitForSeconds(1.0f);
+#endif
         CanvasWaitForTransaction.Instance.setTxHash("");
         CanvasWaitForTransaction.Instance.ToggleCanvas(false);
     }

@@ -75,6 +75,8 @@ public class MobDraggable : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (CanvasWaitForTransaction.Instance.IsCanvasActive()) return;
+
         _drag = true;
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
@@ -86,6 +88,8 @@ public class MobDraggable : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (CanvasWaitForTransaction.Instance.IsCanvasActive()) return;
+
         _drag = false;
         animator.SetBool("IsWalking", false);
         DestroyAllIndicators();

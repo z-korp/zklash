@@ -25,9 +25,9 @@ public class CanvasWaitForTransaction : MonoBehaviour
 
     public void setTxHash(string txHash)
     {
-        if (txHash.Length > 24)
+        if (txHash.Length > 16)
         {
-            string shortenedTxHash = $"{txHash.Substring(0, 12)}...{txHash.Substring(txHash.Length - 12)}";
+            string shortenedTxHash = $"{txHash.Substring(0, 8)}...{txHash.Substring(txHash.Length - 8)}";
             txtHashText.text = shortenedTxHash;
         }
         else
@@ -38,7 +38,11 @@ public class CanvasWaitForTransaction : MonoBehaviour
 
     public void ToggleCanvas(bool isActive)
     {
-        Debug.Log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ToggleCanvasCoroutine");
         waitForTransactionPanel.SetActive(isActive);
+    }
+
+    public bool IsCanvasActive()
+    {
+        return waitForTransactionPanel.activeSelf;
     }
 }

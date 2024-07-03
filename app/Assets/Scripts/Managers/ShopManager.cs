@@ -29,6 +29,9 @@ public class ShopManager : MonoBehaviour
         itemUint = 1;
 
         EventManager.OnShopUpdated += RefreshShop;
+
+        RefreshShop(); // When the second scene load, the shop has already been updated
+        // don't wait for event this time
     }
 
     void OnDestroy()

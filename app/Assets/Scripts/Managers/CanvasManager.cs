@@ -26,9 +26,14 @@ public class CanvasManager : MonoBehaviour
         canvasInfo.SetActive(!canvasInfo.activeSelf);
     }
 
-    public void HideOrShowUserStatsInfo(bool show)
+    public void HideUserStatsInfo()
     {
-        canvasInfo.transform.Find("PanelRibbon").gameObject.SetActive(show);
+        canvasInfo.transform.Find("PanelRibbon").gameObject.SetActive(false);
+    }
+
+    public void ShowUserStatsInfo()
+    {
+        canvasInfo.transform.Find("PanelRibbon").gameObject.SetActive(true);
     }
 
     public void ToggleCanvasShopInfo()

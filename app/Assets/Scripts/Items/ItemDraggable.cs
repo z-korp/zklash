@@ -118,12 +118,10 @@ public class ItemDraggable : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        Debug.Log("Mouse enter");
         OnItemHovered?.Invoke(true);
     }
     private void OnMouseExit()
     {
-        Debug.Log("Mouse exit");
         OnItemHovered?.Invoke(false);
     }
 }

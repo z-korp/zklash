@@ -163,7 +163,6 @@ public class BattleManager : MonoBehaviour
             //CameraMovement.instance.MoveCameraToShop();
             TeamManager.instance.ResetStatCharacter();
             TeamManager.instance.TPTeamToShop();
-            CanvasManager.instance.ToggleCanvases();
             CanvasManager.instance.ToggleCanvasInterStep(result);
         }
 

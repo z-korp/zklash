@@ -15,7 +15,7 @@ public class ClickButtonFight : MonoBehaviour
             DialogueManager.Instance.ShowDialogueForDuration("Even heroes need an army!", 2f);
             return;
         }
-        CanvasManager.instance.HideOrShowUserStatsInfo(false);
+        CanvasManager.instance.HideUserStatsInfo(); // otherwise the user see the new stats (health, gold) from contract
         StartCoroutine(FightSequence());
         TimeScaleController.Instance.UpdateAnimatorList();
         TimeScaleController.Instance.ApplySpeed();
@@ -106,8 +106,8 @@ public class ClickButtonFight : MonoBehaviour
 
     private void FinalizeSetup()
     {
-        CanvasManager.instance.HideOrShowUserStatsInfo(true);
         CameraMovement.instance.MoveCameraToFight();
+        CanvasManager.instance.ShowUserStatsInfo();
         CanvasManager.instance.ToggleCanvases();
         TeamManager.instance.MoveTeam();
 

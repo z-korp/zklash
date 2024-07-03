@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using zKlash.Game.Items;
 using zKlash.Game.Roles;
 
 public class MobDraggable : MonoBehaviour
@@ -74,6 +75,8 @@ public class MobDraggable : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (CanvasWaitForTransaction.Instance.IsCanvasActive()) return;
+
         _drag = true;
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
@@ -85,6 +88,8 @@ public class MobDraggable : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (CanvasWaitForTransaction.Instance.IsCanvasActive()) return;
+
         _drag = false;
         animator.SetBool("IsWalking", false);
         DestroyAllIndicators();
@@ -213,7 +218,6 @@ public class MobDraggable : MonoBehaviour
                 isFromShop = false;
                 StartCoroutine(TxCoroutines.Instance.ExecuteHire(teamId, (uint)index));
                 CreateMobForTeam(zoneIndex);
-                CanvasManager.instance.ToggleCanvasForDuration(2.0f);
             }
             else
             {
@@ -307,7 +311,6 @@ public class MobDraggable : MonoBehaviour
             return false;
         Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
         StartCoroutine(TxCoroutines.Instance.ExecuteMergeFromShop(teamId, character.id, (uint)index));
-        CanvasManager.instance.ToggleCanvasForDuration(2.0f);
         return true;
     }
 
@@ -318,14 +321,22 @@ public class MobDraggable : MonoBehaviour
             return false;
 
         Character from = GameManager.Instance.worldManager.Entity(fromEntity).GetComponent<Character>();
+        var itemFrom = gameObject.GetComponent<MobItem>().item;
 
         string toEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
         if (toEntity == "")
             return false;
         Character to = GameManager.Instance.worldManager.Entity(toEntity).GetComponent<Character>();
+        var mobItemTo = mobToUpdate.GetComponent<MobItem>();
+        var itemTo = mobItemTo.item;
+
+        if (itemFrom != null && itemTo == null)
+        {
+            mobItemTo.item = itemFrom;
+            mobToUpdate.GetComponent<MobController>().Character.Equip(itemFrom.type);
+        }
 
         StartCoroutine(TxCoroutines.Instance.ExecuteMerge(teamId, from.id, to.id));
-        CanvasManager.instance.ToggleCanvasForDuration(2.0f);
 
         // Reset Team spot after merge
         TeamManager.instance.FreeSpot(index);

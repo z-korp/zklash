@@ -2,7 +2,9 @@ namespace zKlash.Game.Roles
 {
     public class Knight : IRole
     {
+
         public Role GetRole => Role.Knight;
+        private bool _firstTimeInOnUnequip = true;
 
         public int Health(Phase phase, int level)
         {
@@ -12,6 +14,16 @@ namespace zKlash.Game.Roles
                     return 3;
                 case Phase.OnEquip:
                     return level;
+                case Phase.OnUnequip:
+                    if (_firstTimeInOnUnequip)
+                    {
+                        _firstTimeInOnUnequip = false;
+                        return 0;
+                    }
+                    else
+                    {
+                        return -level;
+                    }
                 default:
                     return 0;
             }

@@ -10,29 +10,47 @@ const UnityLoader: React.FC = () => {
   });
 
   useEffect(() => {
-    const loadDojoScript = async () => {
-      const script = document.createElement("script");
-      script.src = "/unity/TemplateData/dojo.js/dojo_c.js";
-      script.onload = async () => {
-        if (typeof wasm_bindgen !== "undefined") {
-          try {
-            await wasm_bindgen();
-            console.log("wasm_bindgen initialized");
-          } catch (error) {
-            console.error("Error initializing wasm_bindgen", error);
-          }
-        } else {
-          console.error("wasm_bindgen is not defined");
-        }
+    const loadScripts = async () => {
+      const loadScript = (src: string, onLoad: () => void) => {
+        return new Promise<void>((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = () => {
+            onLoad();
+            resolve();
+          };
+          script.onerror = (error) => reject(error);
+          document.body.appendChild(script);
+        });
       };
-      document.body.appendChild(script);
 
-      return () => {
-        document.body.removeChild(script);
-      };
+      try {
+        await loadScript("/unity/TemplateData/dojo.js/dojo_c.js", async () => {
+          if (typeof wasm_bindgen !== "undefined") {
+            try {
+              await wasm_bindgen();
+              console.log("wasm_bindgen initialized");
+            } catch (error) {
+              console.error("Error initializing wasm_bindgen", error);
+            }
+          } else {
+            console.error("wasm_bindgen is not defined");
+          }
+        });
+
+        await loadScript("/unity/TemplateData/starknet-5.24.3.js", () => {
+          if (typeof starknetJs !== "undefined") {
+            console.log("starknet-5.24.3.js loaded");
+          } else {
+            console.error("starknetJs is not defined");
+          }
+        });
+      } catch (error) {
+        console.error("Error loading scripts", error);
+      }
     };
 
-    loadDojoScript();
+    loadScripts();
   }, []);
 
   return (

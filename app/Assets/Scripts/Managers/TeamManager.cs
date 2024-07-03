@@ -123,7 +123,7 @@ public class TeamManager : MonoBehaviour
                         //ItemData item = PrefabUtils.FindScriptableByName(BattleManager.instance.itemDataArray, itemName);
                         var mobItem = mobObject.GetComponent<MobItem>();
                         mobItem.ResetItemDataAfterBattle();
-                        mobObject.GetComponent<MobController>().Character.Equip(battleItem.type);
+                        //mobObject.GetComponent<MobController>().Character.Equip(battleItem.type);
 
                     }
                 }
@@ -284,6 +284,21 @@ public class TeamManager : MonoBehaviour
                 return; // Exit the method after updating the first matching spot
             }
         }
+    }
+
+    public int CountMobInTeam()
+    {
+        var countTeamSpot = 0;
+        foreach (var spot in TeamSpots)
+        {
+            if (!spot.IsAvailable)
+            {
+                countTeamSpot++;
+            }
+        }
+
+        return countTeamSpot;
+
     }
 }
 

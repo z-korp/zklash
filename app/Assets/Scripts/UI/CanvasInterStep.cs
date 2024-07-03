@@ -10,6 +10,7 @@ public class CanvasInterStep : MonoBehaviour
     public Transform trophysContainer;
     public Image heartPrefab;
     public Image trophyPrefab;
+    public Material grayscaleMaterial;
 
     private void Awake()
     {
@@ -29,10 +30,13 @@ public class CanvasInterStep : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        for (int i = 0; i < remainingLives; i++)
+        for (int i = 0; i < 10; i++)
         {
             Image heart = Instantiate(heartPrefab, heartsContainer);
-            //heart.gameObject.SetActive(i < remainingLives);
+            if (i >= remainingLives)
+            {
+                heart.material = grayscaleMaterial;
+            }
         }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)heartsContainer);
@@ -45,16 +49,21 @@ public class CanvasInterStep : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        for (int i = 0; i < trophyCount; i++)
+        for (int i = 0; i < 10; i++)
         {
             Image trophy = Instantiate(trophyPrefab, trophysContainer);
-            //trophy.gameObject.SetActive(i < remainingLives); // Active le cœur seulement s'il reste des vies
+            if (i >= trophyCount)
+            {
+                trophy.material = grayscaleMaterial;
+            }
         }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)trophysContainer);
     }
 
-    public void onClickNext() {
+    public void onClickNext()
+    {
         CameraMovement.instance.MoveCameraToShop();
+        CanvasManager.instance.ToggleCanvases();
     }
 }

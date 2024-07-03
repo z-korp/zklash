@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x76b46b423917e802e249949142e58415eec85c21b1c5ddf9907e7f91b71397c"
-original_class_hash = "0x76b46b423917e802e249949142e58415eec85c21b1c5ddf9907e7f91b71397c"
+class_hash = "0x75711fdb63543fe927a9c55c292a26cb72f10c250311a4e3e464d147eb4f938"
+original_class_hash = "0x75711fdb63543fe927a9c55c292a26cb72f10c250311a4e3e464d147eb4f938"
 abi = "manifests/dev/abis/base/models/zklash_models_slot_slot.json"
 name = "zklash::models::slot::slot"
 

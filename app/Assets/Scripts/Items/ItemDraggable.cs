@@ -85,7 +85,6 @@ public class ItemDraggable : MonoBehaviour
             //ContractActions.instance.TriggerEquip(character.id, (uint)index);
             uint teamId = PlayerData.Instance.GetTeamId();
             StartCoroutine(TxCoroutines.Instance.ExecuteEquip(teamId, character.id, (uint)index));
-            CanvasManager.instance.ToggleCanvasForDuration(2.0f);
 
             Destroy(gameObject);
         }
@@ -119,12 +118,10 @@ public class ItemDraggable : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        Debug.Log("Mouse enter");
         OnItemHovered?.Invoke(true);
     }
     private void OnMouseExit()
     {
-        Debug.Log("Mouse exit");
         OnItemHovered?.Invoke(false);
     }
 }

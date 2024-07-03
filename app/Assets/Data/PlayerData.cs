@@ -9,6 +9,7 @@ public class PlayerData : MonoBehaviour
 {
     // Static instance of PlayerData which allows it to be accessed by any other script.
     private static PlayerData _instance;
+    private string _playerName;
 
     // Public property to access instance
     public static PlayerData Instance
@@ -134,5 +135,15 @@ public class PlayerData : MonoBehaviour
         }
         var team = GameManager.Instance.worldManager.Entity(teamEntity).GetComponent<Team>();
         return team.id;
+    }
+
+    public void SetPlayerName(string name)
+    {
+        _playerName = name;
+    }
+
+    public string GetPlayerName()
+    {
+        return _playerName;
     }
 }

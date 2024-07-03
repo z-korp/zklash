@@ -13,7 +13,6 @@ public class ShopManager : MonoBehaviour
 
     public uint rolesUint;
     public uint itemUint;
-
     void Awake()
     {
         if (instance != null)
@@ -30,6 +29,9 @@ public class ShopManager : MonoBehaviour
         itemUint = 1;
 
         EventManager.OnShopUpdated += RefreshShop;
+
+        RefreshShop(); // When the second scene load, the shop has already been updated
+        // don't wait for event this time
     }
 
     void OnDestroy()
@@ -62,7 +64,6 @@ public class ShopManager : MonoBehaviour
         }
         uint teamId = PlayerData.Instance.GetTeamId();
         StartCoroutine(TxCoroutines.Instance.ExecuteReroll(teamId, OnRerollComplete));
-        CanvasManager.instance.ToggleCanvasForDuration(2.0f);
     }
 
     private void OnRerollComplete()

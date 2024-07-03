@@ -10,7 +10,12 @@ public class ClickButtonFight : MonoBehaviour
 {
     public void OnClickFight()
     {
-        CanvasManager.instance.HideOrShowUserStatsInfo(false);
+        if (TeamManager.instance.CountMobInTeam() < 1)
+        {
+            DialogueManager.Instance.ShowDialogueForDuration("Even heroes need an army!", 2f);
+            return;
+        }
+        CanvasManager.instance.HideUserStatsInfo(); // otherwise the user see the new stats (health, gold) from contract
         StartCoroutine(FightSequence());
         TimeScaleController.Instance.UpdateAnimatorList();
         TimeScaleController.Instance.ApplySpeed();
@@ -59,7 +64,6 @@ public class ClickButtonFight : MonoBehaviour
         Debug.Log($"Team id: {team.id}, Registry id: {team.registry_id}");
         yield return StartCoroutine(TxCoroutines.Instance.ExecuteStartBattle(team.id, order));
         yield return new WaitForSeconds(1.0f);
-        CanvasManager.instance.ToggleCanvasForDuration(2.0f);
         Debug.Log($"Foe squad id: {team.foe_squad_id}, Registry id: {team.registry_id}");
     }
 
@@ -102,8 +106,8 @@ public class ClickButtonFight : MonoBehaviour
 
     private void FinalizeSetup()
     {
-        CanvasManager.instance.HideOrShowUserStatsInfo(true);
         CameraMovement.instance.MoveCameraToFight();
+        CanvasManager.instance.ShowUserStatsInfo();
         CanvasManager.instance.ToggleCanvases();
         TeamManager.instance.MoveTeam();
 

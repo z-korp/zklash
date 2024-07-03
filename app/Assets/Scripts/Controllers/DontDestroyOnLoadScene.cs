@@ -13,7 +13,8 @@ public class DontDestroyOnLoadScene : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogWarning("More than one instance of DontDestroyOnLoadScene");
+            Destroy(gameObject);
+            //Debug.LogWarning("More than one instance of DontDestroyOnLoadScene");
             return;
         }
         instance = this;

@@ -35,6 +35,13 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void SellMob(GameObject draggedObject)
     {
+        if (TeamManager.instance.CountMobInTeam() <= 1)
+        {
+            isDraggingSellMob = false;
+            DialogueManager.Instance.ShowDialogueForDuration("Even heroes need an army!", 2f);
+            return;
+        }
+
         Debug.Log("Selling mob: ------------------>");
         Debug.Log("Selling mob: " + draggedObject.name);
         uint teamId = PlayerData.Instance.GetTeamId();
@@ -46,7 +53,6 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
         Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
         StartCoroutine(TxCoroutines.Instance.ExecuteSell(teamId, character.id));
-        CanvasManager.instance.ToggleCanvasForDuration(2.0f);
 
         // Get index to free spot in team and destroy gameObject
         int index = draggedObject.GetComponent<MobDraggable>().index;

@@ -23,8 +23,8 @@ public class BattleManager : MonoBehaviour
     public GameObject dynamitePrefab;
     public GameObject arrowPrefab;
     public GameObject powerUpPrefab;
-
     public GameObject attackUpPrefab;
+    public GameObject healthUpPrefab;
 
     public ItemData[] itemDataArray;
 
@@ -36,6 +36,9 @@ public class BattleManager : MonoBehaviour
 
     public List<GameObject> allies = new List<GameObject>();
     public List<GameObject> enemies = new List<GameObject>();
+
+    private int _maxTrophy = 10;
+    private int _minLife = 0;
 
     void Awake()
     {
@@ -59,75 +62,6 @@ public class BattleManager : MonoBehaviour
 
     void Start()
     {
-        /*for (int i = 0; i < alliesSetup.Count; i++)
-        {
-            var ally = alliesSetup[i];
-
-            GameCharacter character = new GameCharacter(ally.role, ally.level, ally.item);
-            allyCharacters.Add(character);
-
-            if (ally.role == Role.None)
-            {
-                continue;
-            }
-
-            var name = PrefabMappings.NameToRoleMap[ally.role];
-            var prefab = PrefabUtils.FindPrefabByName(unitPrefabs, name);
-
-            if (prefab != null && allySpots[i] != null && name != "None")
-            {
-                GameObject allyObject = Instantiate(prefab, allySpots[i].transform.position, Quaternion.identity);
-                allyObject.GetComponent<MobOrientation>().SetOrientation(Orientation.Right);
-                allyObject.GetComponent<MobController>().ConfigureCharacter(character);
-
-                var itemName = PrefabMappings.NameToItemDataMap[ally.item];
-                if (itemName != "None")
-                {
-                    var item = PrefabUtils.FindScriptableByName(itemDataArray, itemName);
-                    allyObject.GetComponent<MobItem>().item = item;
-                }
-
-                HideXpCanvas(allyObject);
-
-                allies.Add(allyObject);
-            }
-        }
-
-
-        for (int i = 0; i < enemiesSetup.Count; i++)
-        {
-            var enemy = enemiesSetup[i];
-
-            GameCharacter character = new GameCharacter(enemy.role, enemy.level, enemy.item);
-            enemyCharacters.Add(character);
-
-            if (enemy.role == Role.None)
-            {
-                continue;
-            }
-
-            var name = PrefabMappings.NameToRoleMap[enemy.role];
-            var prefab = PrefabUtils.FindPrefabByName(unitPrefabs, name);
-
-            if (prefab != null && enemySpots[i] != null)
-            {
-                GameObject enemyObject = Instantiate(prefab, enemySpots[i].transform.position, Quaternion.identity);
-                enemyObject.GetComponent<MobOrientation>().SetOrientation(Orientation.Left);
-                enemyObject.GetComponent<MobController>().ConfigureCharacter(character);
-
-                var itemName = PrefabMappings.NameToItemDataMap[enemy.item];
-                if (itemName != "None")
-                {
-                    var item = PrefabUtils.FindScriptableByName(itemDataArray, itemName);
-                    enemyObject.GetComponent<MobController>().Character.Equip(item.type);
-                    enemyObject.GetComponent<MobItem>().item = item;
-                }
-
-                HideXpCanvas(enemyObject);
-
-                enemies.Add(enemyObject);
-            }
-        }*/
     }
 
     void Update()
@@ -220,11 +154,19 @@ public class BattleManager : MonoBehaviour
 
     private void ExecuteAfterBattle(bool result)
     {
-        //CameraMovement.instance.MoveCameraToShop();
-        TeamManager.instance.ResetStatCharacter();
-        TeamManager.instance.TPTeamToShop();
-        CanvasManager.instance.ToggleCanvases();
-        CanvasManager.instance.ToggleCanvasInterStep(result);
+        if ((int)PlayerInfoUI.instance.getLifes() == _maxTrophy)
+            CanvasManager.instance.ShowCanvasWinOrLoose(result);
+        else if ((int)PlayerInfoUI.instance.getLifes() == _minLife)
+            CanvasManager.instance.ShowCanvasWinOrLoose(result);
+        else
+        {
+            //CameraMovement.instance.MoveCameraToShop();
+            TeamManager.instance.ResetStatCharacter();
+            TeamManager.instance.TPTeamToShop();
+            CanvasManager.instance.ToggleCanvasInterStep(result);
+        }
+
+
     }
 
     private void LaunchProjectile(Vector3 position, Transform target, GameObject projectilePrefab)
@@ -242,9 +184,16 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    private void PlayAttachUp(Vector3 position)
+    private void PlayAttackUp(Vector3 position)
     {
         var attackUp = Instantiate(attackUpPrefab, position, Quaternion.identity);
+        TimeScaleController.Instance.AddAnimator(attackUp.GetComponentInChildren<Animator>());
+
+    }
+
+    private void PlayHealthUp(Vector3 position)
+    {
+        var attackUp = Instantiate(healthUpPrefab, position, Quaternion.identity);
         TimeScaleController.Instance.AddAnimator(attackUp.GetComponentInChildren<Animator>());
 
     }
@@ -272,7 +221,10 @@ public class BattleManager : MonoBehaviour
                 PlayPowerUp(position);
                 break;
             case Role.Torchoblin:
-                PlayAttachUp(position);
+                PlayAttackUp(position);
+                break;
+            case Role.Bomboblin:
+                PlayHealthUp(position);
                 break;
         }
     }

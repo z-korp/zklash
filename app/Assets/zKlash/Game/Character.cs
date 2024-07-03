@@ -227,6 +227,8 @@ namespace zKlash.Game
 
         public void Unequip()
         {
+            Talent(Phase.OnUnequip);
+
             // [Effect] Update the item's effect
             Buff buff = new Buff
             {

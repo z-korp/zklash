@@ -8,9 +8,8 @@ public class CanvasManager : MonoBehaviour
     public GameObject canvasInfo;
     public GameObject canvasShopInfo;
     public GameObject canvasInterStep;
-    public GameObject canvasWaitForTransaction;
 
-    public bool debugOn = true;
+    public GameObject canvasWinLoose;
 
     void Awake()
     {
@@ -27,9 +26,14 @@ public class CanvasManager : MonoBehaviour
         canvasInfo.SetActive(!canvasInfo.activeSelf);
     }
 
-    public void HideOrShowUserStatsInfo(bool show)
+    public void HideUserStatsInfo()
     {
-        canvasInfo.transform.Find("PanelRibbon").gameObject.SetActive(show);
+        canvasInfo.transform.Find("PanelRibbon").gameObject.SetActive(false);
+    }
+
+    public void ShowUserStatsInfo()
+    {
+        canvasInfo.transform.Find("PanelRibbon").gameObject.SetActive(true);
     }
 
     public void ToggleCanvasShopInfo()
@@ -65,16 +69,11 @@ public class CanvasManager : MonoBehaviour
             btnSell.gameObject.SetActive(!btnSell.gameObject.activeSelf);
     }
 
-    public void ToggleCanvasForDuration(float duration)
+    public void ShowCanvasWinOrLoose(bool victory = true)
     {
-        if (!debugOn)
-            StartCoroutine(ToggleCanvasCoroutine(duration));
-    }
-
-    private IEnumerator ToggleCanvasCoroutine(float duration)
-    {
-        canvasWaitForTransaction.SetActive(true);
-        yield return new WaitForSeconds(duration);
-        canvasWaitForTransaction.SetActive(false);
+        if (victory)
+            canvasWinLoose.GetComponent<CanvasWinLoose>().ToggleWinPanel();
+        else
+            canvasWinLoose.GetComponent<CanvasWinLoose>().ToggleLoosePanel();
     }
 }

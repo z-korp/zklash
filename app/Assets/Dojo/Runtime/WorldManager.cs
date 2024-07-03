@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Dojo
 {
     public class WorldManager : MonoBehaviour
-    {   
+    {
         public SynchronizationMaster synchronizationMaster;
         public ToriiClient toriiClient;
         public ToriiWasmClient wasmClient;
@@ -17,6 +17,7 @@ namespace Dojo
 
         async void Awake()
         {
+
 #if UNITY_WEBGL && !UNITY_EDITOR
             wasmClient = new ToriiWasmClient(dojoConfig.toriiUrl, dojoConfig.rpcUrl,
                                                 dojoConfig.relayWebrtcUrl, dojoConfig.worldAddress);
@@ -25,7 +26,7 @@ namespace Dojo
             toriiClient = new ToriiClient(dojoConfig.toriiUrl, dojoConfig.rpcUrl,
                                             dojoConfig.relayUrl, dojoConfig.worldAddress);
 #endif
-            
+
             /*  fetch entities from the world
                 TODO: maybe do in the start function of the SynchronizationMaster?
                 problem is when to start the subscription service

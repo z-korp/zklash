@@ -10,25 +10,14 @@ import {
   DrawerTrigger,
 } from "@/ui/elements/drawer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faGear } from "@fortawesome/free-solid-svg-icons";
-import Connect from "../components/Connect";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuItem,
-} from "@/ui/elements/dropdown-menu";
-import { KATANA_ETH_CONTRACT_ADDRESS } from "@dojoengine/core";
-import Balance from "../components/Balance";
-import { useAccount } from "@starknet-react/core";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "../elements/button";
 import { ModeToggle } from "../components/Theme";
+import { Mobs } from "../modules/Mobs";
+import { Items } from "../modules/Items";
 
 export const Header = () => {
   const navigate = useNavigate();
-  const account = useAccount();
 
   const isMdOrLarger = useMediaQuery({ query: "(min-width: 768px)" });
 
@@ -43,6 +32,8 @@ export const Header = () => {
             zKlash
           </p>
           <Button onClick={() => navigate("/rules")}>How to play?</Button>
+          <Mobs />
+          <Items />
         </div>
 
         <div className="flex flex-col gap-4 items-center md:flex-row">

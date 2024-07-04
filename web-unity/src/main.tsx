@@ -9,9 +9,9 @@ import {
   voyager,
 } from "@starknet-react/core";
 import { mainnet } from "@starknet-react/chains";
+import { ThemeProvider } from "./ui/elements/theme-provider.tsx";
 
 import "./index.css";
-import { ThemeProvider } from "./ui/elements/theme-provider.tsx";
 
 function rpc() {
   return {

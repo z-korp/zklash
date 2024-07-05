@@ -89,7 +89,6 @@ public class ItemDraggable : MonoBehaviour
                     mob.GetComponent<MobController>().Character.Equip(item.type);
 
                     Destroy(gameObject);
-                    DialogueManager.Instance.ShowDialogueForDuration("Nice looking", 2f);
                 },
                 (error) =>
                 {

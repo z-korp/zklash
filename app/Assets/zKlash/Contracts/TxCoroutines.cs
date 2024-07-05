@@ -119,6 +119,7 @@ public class TxCoroutines : MonoBehaviour
         }
 #else
         yield return new WaitForSeconds(1.0f);
+        onSuccess?.Invoke();
 #endif
         CanvasWaitForTransaction.Instance.setTxHash("");
         CanvasWaitForTransaction.Instance.ToggleCanvas(false);
@@ -161,7 +162,7 @@ public class TxCoroutines : MonoBehaviour
     }
 
     // Market System
-    public IEnumerator ExecuteEquip(uint team_id, byte character_id, uint index)
+    public IEnumerator ExecuteEquip(uint team_id, byte character_id, uint index, Action onSuccess = null, Action<string> onError = null)
     {
         Debug.Log("[[[[[[[[[[[  ExecuteEquip  ]]]]]]]]]]] team_id:" + team_id + " character_id:" + character_id + " index:" + index);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
@@ -169,14 +170,14 @@ public class TxCoroutines : MonoBehaviour
 
         yield return StartCoroutine(ExecuteTransaction(
             () => marketSystem.Equip(account, world, team_id, character_id, index),
-            onSuccess: () => Debug.Log("Equip transaction was successful."),
-            onError: (error) => Debug.LogError("Equip transaction failed: " + error)
+            onSuccess: () => onSuccess?.Invoke(),
+            onError: (error) => onError?.Invoke(error)
         ));
 
         Debug.Log("[[[[[[[[[[[ END ExecuteEquip ]]]]]]]]]]]");
     }
 
-    public IEnumerator ExecuteHire(uint team_id, uint index)
+    public IEnumerator ExecuteHire(uint team_id, uint index, Action onSuccess = null, Action<string> onError = null)
     {
         Debug.Log("[[[[[[[[[[[  ExecuteHire  ]]]]]]]]]]] team_id:" + team_id + " index:" + index);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
@@ -184,8 +185,8 @@ public class TxCoroutines : MonoBehaviour
 
         yield return StartCoroutine(ExecuteTransaction(
             () => marketSystem.Hire(account, world, team_id, index),
-            onSuccess: () => Debug.Log("Hire transaction was successful."),
-            onError: (error) => Debug.LogError("Hire transaction failed: " + error)
+            onSuccess: () => onSuccess?.Invoke(),
+            onError: (error) => onError?.Invoke(error)
         ));
 
         Debug.Log("[[[[[[[[[[[ END ExecuteHire ]]]]]]]]]]]");
@@ -210,7 +211,7 @@ public class TxCoroutines : MonoBehaviour
         Debug.Log("[[[[[[[[[[[ END ExecuteReroll ]]]]]]]]]]]");
     }
 
-    public IEnumerator ExecuteMerge(uint team_id, uint from_id, uint to_id)
+    public IEnumerator ExecuteMerge(uint team_id, uint from_id, uint to_id, Action onSuccess = null, Action<string> onError = null)
     {
         Debug.Log("[[[[[[[[[[[  ExecuteMerge  ]]]]]]]]]]] team_id:" + team_id + " from_id:" + from_id + " to_id:" + to_id);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
@@ -218,14 +219,14 @@ public class TxCoroutines : MonoBehaviour
 
         yield return StartCoroutine(ExecuteTransaction(
             () => marketSystem.Merge(account, world, team_id, from_id, to_id),
-            onSuccess: () => Debug.Log("Merge transaction was successful."),
-            onError: (error) => Debug.LogError("Merge transaction failed: " + error)
+            onSuccess: () => onSuccess?.Invoke(),
+            onError: (error) => onError?.Invoke(error)
         ));
 
         Debug.Log("[[[[[[[[[[[ END ExecuteMerge ]]]]]]]]]]]");
     }
 
-    public IEnumerator ExecuteMergeFromShop(uint team_id, uint character_id, uint index)
+    public IEnumerator ExecuteMergeFromShop(uint team_id, uint character_id, uint index, Action onSuccess = null, Action<string> onError = null)
     {
         Debug.Log("[[[[[[[[[[[  ExecuteMergeFromShop  ]]]]]]]]]]] team_id:" + team_id + " character_id:" + character_id + " index:" + index);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
@@ -233,8 +234,8 @@ public class TxCoroutines : MonoBehaviour
 
         yield return StartCoroutine(ExecuteTransaction(
             () => marketSystem.MergeFromShop(account, world, team_id, character_id, index),
-            onSuccess: () => Debug.Log("Merge from shop transaction was successful."),
-            onError: (error) => Debug.LogError("Merge from shop transaction failed: " + error)
+            onSuccess: () => onSuccess?.Invoke(),
+            onError: (error) => onError?.Invoke(error)
         ));
 
         Debug.Log("[[[[[[[[[[[ END ExecuteMergeFromShop ]]]]]]]]]]]");

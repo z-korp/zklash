@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
                 PlayerData.Instance.characterEntities.Add(entity.name);
                 var character = worldManager.Entity(entity.name).GetComponent<Character>();
                 Debug.Log($"Character entity spawned with id: {entity.name}");
-                TeamManager.instance.UpdateMissingEntity(entity.name);
+                TeamManager.instance.PendingEntity = entity.name;
             }
         }
 

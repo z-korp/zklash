@@ -93,19 +93,12 @@ img {
   user-drag: none;
   -webkit-user-drag: none;
   pointer-events: none;
+
+  image-rendering: pixelated;
 }
 
 html,
 body {
   touch-action: none; /* Prevents touch-based panning */
   height: 100vh;
-}
-
-img {
-  image-rendering: auto;
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
-
-  /* Safari seems to support, but seems deprecated and does the same thing as the others. */
-  image-rendering: -webkit-optimize-contrast;
 }

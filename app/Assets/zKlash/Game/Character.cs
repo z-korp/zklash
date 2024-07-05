@@ -17,7 +17,7 @@ namespace zKlash.Game
         private int _lvl;
 
         private Role _role;
-        private Item _item;
+        private ItemEnum _item;
 
         private const int MaxLevel = 3;  // Max level limit
 
@@ -38,7 +38,7 @@ namespace zKlash.Game
             private set => _role = value;
         }
 
-        public Item ItemInterface
+        public ItemEnum ItemInterface
         {
             get => _item;
             private set => _item = value;
@@ -162,16 +162,18 @@ namespace zKlash.Game
         {
             if (damage > 0)
             {
+                Debug.Log(">>>>>>>>>>>>>>>>>> TakeDamage: " + damage + " " + Absorb + " Math.Min:" + Math.Min(damage, Absorb));
                 damage -= Math.Min(damage, Absorb);
+                Debug.Log(">>>>>>>>>>>>>>>>>> TakeDamage: " + damage);
                 Absorb = 0;
             }
-            damage = Math.Min(damage, Health);
-            Health -= damage;
+            Health -= Math.Min(damage, Health);
             return damage;
         }
 
         public void ApplyBuff(Buff buff)
         {
+            Debug.Log(">>>>>>>>>>>>>>>>>> ApplyBuff: " + buff.Health + " " + buff.Attack + " " + buff.Absorb);
             Health += buff.Health;
             Attack += buff.Attack;
             Absorb += buff.Absorb;
@@ -193,6 +195,7 @@ namespace zKlash.Game
                 Attack = Role.Attack(phase, Level),
                 Absorb = Role.Absorb(phase, Level),
             };
+            Debug.Log(">>>>>>>>>>>>>>>>>> buff: " + buff.Health + " " + buff.Attack + " " + buff.Absorb);
             ApplyBuff(buff);
 
             int damage = Role.Damage(phase, Level);
@@ -203,6 +206,7 @@ namespace zKlash.Game
                 Attack = Role.NextAttack(phase, Level),
                 Absorb = Role.NextAbsorb(phase, Level),
             };
+            Debug.Log(">>>>>>>>>>>>>>>>>> nextBuff: " + nextBuff.Health + " " + nextBuff.Attack + " " + nextBuff.Absorb);
             return (damage, stun, nextBuff);
         }
 
@@ -244,7 +248,8 @@ namespace zKlash.Game
         public void Equip(ItemEnum item)
         {
             // [Effect] Remove the previous item's effect
-            Unequip();
+            if (_item != ItemEnum.None)
+                Unequip();
 
             Item = ItemFactory.GetItem(item);
             _item = item;

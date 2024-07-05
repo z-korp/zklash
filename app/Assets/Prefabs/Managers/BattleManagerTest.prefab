@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8481764898386681991}
-  - component: {fileID: 9217120453313012864}
+  - component: {fileID: 7782349404850231999}
   m_Layer: 0
   m_Name: BattleManagerTest
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9217120453313012864
+--- !u!114 &7782349404850231999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,45 +44,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eae254fc0cc548b99b39656e2398055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alliesSetup:
-  - role: 1
-    level: 1
-    item: 4
-  - role: 2
-    level: 1
-    item: 2
-  - role: 3
-    level: 1
-    item: 0
-  enemiesSetup:
-  - role: 5
-    level: 1
-    item: 5
-  - role: 5
-    level: 1
-    item: 0
-  - role: 4
-    level: 1
-    item: 11
   unitPrefabs:
   - {fileID: 7526038476407582817, guid: 0b81a6e0437dcd64691d23038e74a9ab, type: 3}
   - {fileID: 4565273498285202334, guid: 3577e56c68a25403d95bb4963bb3ca0f, type: 3}
   - {fileID: 3616953106443787091, guid: d79223f014b164f339571e527ed8ffc2, type: 3}
+  - {fileID: 7526038476407582817, guid: 0806b0faa990d45e3a41792a8a217bf4, type: 3}
   - {fileID: 7526038476407582817, guid: c458dcd96d5401c46bdd545d3aff79e9, type: 3}
   - {fileID: 4971632552838307129, guid: 516308181385c43ac9481bff3bd24d44, type: 3}
   - {fileID: 7526038476407582817, guid: 537639cb2c98840569a9ddf41ace634d, type: 3}
-  itemData:
-  - {fileID: 11400000, guid: 0cc7f62b8401e460ead0dd2ecb5f86ea, type: 2}
-  - {fileID: 11400000, guid: 7cc435beaf5d34c4e897caab24263325, type: 2}
+  dynamitePrefab: {fileID: 4487817848020293432, guid: c48b17cf2243d400a932df37f6b921cd, type: 3}
+  arrowPrefab: {fileID: 3057966421338909317, guid: 3aff38cf0a5344c9496ce017e6d1eed1, type: 3}
+  powerUpPrefab: {fileID: 7664621273551576041, guid: d6fb2dbf69d6c4c8b911dc5d2a21dfe8, type: 3}
+  attackUpPrefab: {fileID: 7664621273551576041, guid: 72ac80e6cddd24d1f900738eaa50cf24, type: 3}
+  healthUpPrefab: {fileID: 7664621273551576041, guid: 91071487b907248f8bdde28721cdf831, type: 3}
+  itemDataArray:
   - {fileID: 11400000, guid: 3d434f2c3761742c8ba5bed005f65e6a, type: 2}
-  - {fileID: 11400000, guid: 2ed3eae5b7da44a32afee65cc85ba259, type: 2}
-  - {fileID: 11400000, guid: 7573566f514854b59a55e113c679e23e, type: 2}
-  - {fileID: 11400000, guid: f71464fe3e13048939312a947b2f0d1f, type: 2}
-  - {fileID: 11400000, guid: 834909c78e08c4952a7ef09d5eeca074, type: 2}
+  - {fileID: 11400000, guid: 7cc435beaf5d34c4e897caab24263325, type: 2}
+  - {fileID: 11400000, guid: 0cc7f62b8401e460ead0dd2ecb5f86ea, type: 2}
   - {fileID: 11400000, guid: 7e8ddb42f03e64879b4b3dca74a963f0, type: 2}
-  - {fileID: 11400000, guid: 8ca5124c63a3141be8484d88514a0d05, type: 2}
-  - {fileID: 11400000, guid: ae4dc7894d4b84607b50c51f1368984e, type: 2}
+  - {fileID: 11400000, guid: 834909c78e08c4952a7ef09d5eeca074, type: 2}
+  - {fileID: 11400000, guid: f71464fe3e13048939312a947b2f0d1f, type: 2}
+  - {fileID: 11400000, guid: 7573566f514854b59a55e113c679e23e, type: 2}
+  - {fileID: 11400000, guid: 2ed3eae5b7da44a32afee65cc85ba259, type: 2}
   - {fileID: 11400000, guid: 197e012bf8a364ccbb5d86d61b4e5937, type: 2}
+  - {fileID: 11400000, guid: ae4dc7894d4b84607b50c51f1368984e, type: 2}
+  - {fileID: 11400000, guid: 8ca5124c63a3141be8484d88514a0d05, type: 2}
   allySpots:
   - {fileID: 0}
   - {fileID: 0}
@@ -93,3 +79,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  alliesSetup: []
+  enemiesSetup: []
+  allies: []
+  enemies: []

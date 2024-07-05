@@ -33,6 +33,14 @@ public class TeamManager : MonoBehaviour
 
     private Vector3 offset = new(0, 0.5f, 0);
 
+    private string pendingEntity = "";
+
+    public string PendingEntity
+    {
+        get { return pendingEntity; }
+        set { pendingEntity = value; }
+    }
+
     void Awake()
     {
         if (instance != null)
@@ -174,22 +182,24 @@ public class TeamManager : MonoBehaviour
 
     public string GetEntityFromTeam(GameObject mob)
     {
+        Debug.Log(">>>>>>>>>>> GetEntityFromTeam");
         foreach (var spot in TeamSpots)
         {
+            Debug.Log("Spot " + spot.Role);
             if (spot.Mob == mob)
             {
                 return spot.Entity;
             }
         }
+        Debug.Log("<<<<<<<<<<<<<<");
         return "";
     }
 
     // Call this method to fill a spot with an entity
-    public bool FillSpot(int spotIndex, Role _role, GameObject mob, string entity = "")
+    public bool FillSpot(int spotIndex, Role _role, GameObject mob, string entity)
     {
         if (spotIndex < 0 || spotIndex >= TeamSpots.Length || !TeamSpots[spotIndex].IsAvailable)
         {
-            Debug.Log("Coco nope");
             return false; // Spot index is out of range or spot is not available
         }
 
@@ -198,6 +208,18 @@ public class TeamManager : MonoBehaviour
         TeamSpots[spotIndex].Entity = entity;
         Debug.Log($"Spot {spotIndex} filled with entity: {_role}");
         return true;
+    }
+
+    // This function is called when we hire a new mob, it will use the pendingEntity that
+    // was set by torii when it fetched the entity that has been hired
+    public bool FillNewSpot(int spotIndex, Role _role, GameObject mob, string entity = "")
+    {
+        bool ret = FillSpot(spotIndex, _role, mob, pendingEntity);
+        if (ret)
+        {
+            pendingEntity = ""; // reset pending entity
+        }
+        return ret;
     }
 
     public bool UpdateSpot(int spotIndex, Role _role, GameObject mob, string entity = "")

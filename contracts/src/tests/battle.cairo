@@ -39,13 +39,13 @@ fn test_battle_start_lose() {
     systems.battle.hydrate(world);
 
     // [Start]
-    let intiial_team = store.team(context.player_id, player.team_id());
+    let initial_team = store.team(context.player_id, player.team_id());
     systems.battle.start(world, player.team_id(), 0x01);
 
     // [Assert] Team
     let team = store.team(context.player_id, player.team_id());
-    assert(intiial_team.gold < team.gold, 'Hire: wrong team gold');
-    assert(intiial_team.health > team.health, 'Hire: wrong team health');
+    assert(initial_team.gold < team.gold, 'Hire: wrong team gold');
+    assert(initial_team.health > team.health, 'Hire: wrong team health');
 }
 
 #[test]
@@ -68,13 +68,13 @@ fn test_battle_start_win() {
     systems.battle.hydrate(world);
 
     // [Start]
-    let intiial_team = store.team(context.player_id, player.team_id());
+    let initial_team = store.team(context.player_id, player.team_id());
     systems.battle.start(world, player.team_id(), 0x030201);
 
     // [Assert] Team
     let team = store.team(context.player_id, player.team_id());
-    assert(intiial_team.gold < team.gold, 'Hire: wrong team gold');
-    assert(intiial_team.health == team.health, 'Hire: wrong team health');
+    assert(initial_team.gold < team.gold, 'Hire: wrong team gold');
+    assert(initial_team.health == team.health, 'Hire: wrong team health');
 }
 
 #[test]
@@ -97,11 +97,11 @@ fn test_battle_start_with_item() {
     systems.battle.hydrate(world);
 
     // [Start]
-    let intiial_team = store.team(context.player_id, player.team_id());
+    let initial_team = store.team(context.player_id, player.team_id());
     systems.battle.start(world, player.team_id(), 0x0102);
 
     // [Assert] Team
     let team = store.team(context.player_id, player.team_id());
-    assert(intiial_team.gold < team.gold, 'Item: wrong team gold');
-    assert(intiial_team.health > team.health, 'Item: wrong team health');
+    assert(initial_team.gold < team.gold, 'Item: wrong team gold');
+    assert(initial_team.health > team.health, 'Item: wrong team health');
 }

@@ -12,14 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9bb301c2336430592323a918e1e00d, type: 3}
   m_Name: PawnData
   m_EditorClassIdentifier: 
-  id: 2
   title: Pawn
   powerLV1: At death, add (+1/+1) to the next friend.
-  powerLV2: At death, add (+2/+2) health to the next friend.
-  powerLV3: At death, add (+3/+3) health to the next friend.
-  element: 
-  health: 2
-  damage: 1
-  xp: 1
+  powerLV2: At death, add (+2/+2) to the next friend.
+  powerLV3: At death, add (+3/+3) to the next friend.
   image: {fileID: -507430714, guid: e8459362d7f43eb4dbe83cce595b4326, type: 3}
   role: 3

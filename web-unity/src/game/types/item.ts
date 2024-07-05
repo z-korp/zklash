@@ -64,17 +64,18 @@ export class Item {
         else if (size === Size.Medium) return "Absorb 2 damage.";
         else return "Absorb 3 damage.";
       case ItemType.Mushroom:
-        if (size === Size.Small) return "Heal 1 health.";
-        else if (size === Size.Medium) return "Heal 2 health.";
-        else return "Heal 3 health.";
+        if (size === Size.Small) return "Give +1 health.";
+        else if (size === Size.Medium) return "Give +2 health.";
+        else return "Give +3 health.";
       case ItemType.Pumpkin:
         if (size === Size.Small) return "Save you once.";
         else if (size === Size.Medium) return "Save you twice.";
         else return "";
       case ItemType.Rock:
-        if (size === Size.Small) return "Deal 1 damage.";
-        else if (size === Size.Medium) return "Deal 2 damage.";
-        else return "Deal 3 damage.";
+        if (size === Size.Small) return "Deals 1 damage to the enemy once";
+        else if (size === Size.Medium)
+          return "Deals 2 damages to the enemy once";
+        else return "Deals 3 damages to the enemy once";
       default:
         return "";
     }

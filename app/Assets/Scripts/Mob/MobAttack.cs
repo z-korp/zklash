@@ -95,17 +95,6 @@ public class MobAttack : MonoBehaviour
         //target.TakeDamage(damage);
     }
 
-    /*public void IncreaseDamage(int amount)
-    {
-        bonusDamage += amount;
-
-        SetTextAttack(damage);
-
-        isBlinking = true;
-        StartCoroutine(BlinkPowerUpFlash());
-        StartCoroutine(HandleBlinkDelay());
-    }*/
-
     public void SetTextAttack(int amount)
     {
         txtAttack.text = amount.ToString();

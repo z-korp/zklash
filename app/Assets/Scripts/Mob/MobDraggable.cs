@@ -55,20 +55,9 @@ public class MobDraggable : MonoBehaviour
 
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             _rb.MovePosition(mousePos);
-
-            if (!isFromShop && !togglingButton)
-            {
-                togglingButton = true;
-                CanvasManager.instance.ToggleSellRerollButton();
-            }
         }
         else
         {
-            if (togglingButton)
-            {
-                togglingButton = false;
-                CanvasManager.instance.ToggleSellRerollButton();
-            }
             SetMobOrderVisual(_maxOrderValue - 1);
         }
     }
@@ -78,6 +67,13 @@ public class MobDraggable : MonoBehaviour
         if (CanvasWaitForTransaction.Instance.IsCanvasActive()) return;
 
         _drag = true;
+
+        if (!isFromShop)
+        {
+            togglingButton = true;
+            CanvasManager.instance.ShowSellButton();
+        }
+
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
         if (mouseHoverDetector != null)
@@ -88,9 +84,16 @@ public class MobDraggable : MonoBehaviour
 
     private void OnMouseUp()
     {
+        _drag = false;
+
         if (CanvasWaitForTransaction.Instance.IsCanvasActive()) return;
 
-        _drag = false;
+        if (togglingButton)
+        {
+            togglingButton = false;
+            CanvasManager.instance.ShowRerollButton();
+        }
+
         animator.SetBool("IsWalking", false);
         DestroyAllIndicators();
 
@@ -116,7 +119,6 @@ public class MobDraggable : MonoBehaviour
 
         // Manage the merge or swap case
         MergeOrSwapMob(zoneIndex, teamId);
-
     }
 
     private void SetMobOrderVisual(int spOrder)
@@ -153,7 +155,6 @@ public class MobDraggable : MonoBehaviour
         return false;
     }
 
-
     private void MergeOrSwapMob(int zoneIndex, uint teamId)
     {
         if (TeamManager.instance.RoleAtIndex(zoneIndex) == gameObject.GetComponent<MobController>().Character.Role.GetRole)
@@ -167,18 +168,73 @@ public class MobDraggable : MonoBehaviour
 
             if (MobIsMaxLevel(zoneIndex, mobToUpdate, mobToRemove)) return;
 
-            // Merge the mob
-            MergeMobThatCanLevelUpUI(mobToUpdate, mobToRemove, oldLevel);
+            mobToRemove.GetComponent<Rigidbody2D>().MovePosition(currentDroppableZone.transform.position + offset);
 
             if (isFromShop)
             {
-                if (!MergeMobFromShopContract(mobToUpdate, teamId)) return;
-
+                // Merge mob from shop
+                string entity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+                if (entity == "")
+                    return;
+                Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
+                StartCoroutine(TxCoroutines.Instance.ExecuteMergeFromShop(
+                    teamId,
+                    character.id,
+                    (uint)index,
+                    onSuccess: () =>
+                    {
+                        Debug.Log("MergeFromShop transaction was successful.");
+                        MergeMobThatCanLevelUpUI(mobToUpdate, mobToRemove, oldLevel);
+                    },
+                    onError: (error) =>
+                    {
+                        Debug.LogError("MergeFromShop transaction failed: " + error);
+                        ResetPosition();
+                    }
+                ));
             }
             else
             {
-                if (!MergeMobNotFromShopContract(mobToUpdate, teamId)) return;
+                string fromEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+                if (fromEntity == "")
+                    return;
+                Character from = GameManager.Instance.worldManager.Entity(fromEntity).GetComponent<Character>();
 
+                string toEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+                if (toEntity == "")
+                    return;
+                Character to = GameManager.Instance.worldManager.Entity(toEntity).GetComponent<Character>();
+
+                StartCoroutine(TxCoroutines.Instance.ExecuteMerge(
+                    teamId,
+                    from.id,
+                    to.id,
+                    onSuccess: () =>
+                    {
+                        Debug.Log("Merge transaction was successful.");
+                        MergeMobThatCanLevelUpUI(mobToUpdate, mobToRemove, oldLevel);
+
+                        var itemFrom = gameObject.GetComponent<MobItem>().item;
+                        var mobItemTo = mobToUpdate.GetComponent<MobItem>();
+                        var itemTo = mobItemTo.item;
+                        if (itemFrom != null && itemTo == null)
+                        {
+                            mobItemTo.item = itemFrom;
+                            mobToUpdate.GetComponent<MobController>().Character.Equip(itemFrom.type);
+                        }
+
+                        // Reset Team spot after merge
+                        TeamManager.instance.FreeSpot(index);
+
+                        // Reset sell btn to reroll
+                        CanvasManager.instance.ShowRerollButton();
+                    },
+                    onError: (error) =>
+                    {
+                        Debug.LogError("Merge transaction failed: " + error);
+                        ResetPosition();
+                    }
+                ));
             }
         }
         else
@@ -186,7 +242,6 @@ public class MobDraggable : MonoBehaviour
             // Cancel the drag if the mob is dropped in a zone that is not available
             if (zoneIndex > TeamManager.instance.TeamSpots.Length || !TeamManager.instance.TeamSpots[zoneIndex].IsAvailable)
             {
-
                 // Spot is already taken in teamManager but don't come from shop that's mean
                 // we want to invert both pos when we drag mob on top of another mob
                 if (!isFromShop)
@@ -202,9 +257,10 @@ public class MobDraggable : MonoBehaviour
                     ResetPosition();
                     return;
                 }
-
             }
 
+            // Position the mob in the center of the zone
+            _rb.MovePosition(currentDroppableZone.transform.position + offset);
 
             // Manage the case where the mob is dropped in a valid zone and come from the shop
             if (isFromShop)
@@ -216,17 +272,31 @@ public class MobDraggable : MonoBehaviour
                 }
 
                 isFromShop = false;
-                StartCoroutine(TxCoroutines.Instance.ExecuteHire(teamId, (uint)index));
-                CreateMobForTeam(zoneIndex);
+
+                StartCoroutine(TxCoroutines.Instance.ExecuteHire(
+                    teamId,
+                    (uint)index,
+                    onSuccess: () =>
+                    {
+                        Debug.Log("Hire transaction was successful.");
+                        CreateMobForTeam(zoneIndex);
+                        index = zoneIndex;
+                    },
+                    onError: (error) =>
+                    {
+                        Debug.LogError("Hire transaction failed: " + error);
+                        ResetPosition();
+                        isFromShop = true;
+                    }
+                ));
             }
             else
             {
                 SwapMobPositionInFreeSpotTeam(zoneIndex);
+                index = zoneIndex;
             }
 
-            index = zoneIndex;
         }
-
     }
 
     private void NoMoneyMessageResetPosition()
@@ -304,54 +374,10 @@ public class MobDraggable : MonoBehaviour
             LevelUpAnimation(mobToUpdate);
     }
 
-    private bool MergeMobFromShopContract(GameObject mobToUpdate, uint teamId)
-    {
-        string entity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
-        if (entity == "")
-            return false;
-        Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
-        StartCoroutine(TxCoroutines.Instance.ExecuteMergeFromShop(teamId, character.id, (uint)index));
-        return true;
-    }
-
-    private bool MergeMobNotFromShopContract(GameObject mobToUpdate, uint teamId)
-    {
-        string fromEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
-        if (fromEntity == "")
-            return false;
-
-        Character from = GameManager.Instance.worldManager.Entity(fromEntity).GetComponent<Character>();
-        var itemFrom = gameObject.GetComponent<MobItem>().item;
-
-        string toEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
-        if (toEntity == "")
-            return false;
-        Character to = GameManager.Instance.worldManager.Entity(toEntity).GetComponent<Character>();
-        var mobItemTo = mobToUpdate.GetComponent<MobItem>();
-        var itemTo = mobItemTo.item;
-
-        if (itemFrom != null && itemTo == null)
-        {
-            mobItemTo.item = itemFrom;
-            mobToUpdate.GetComponent<MobController>().Character.Equip(itemFrom.type);
-        }
-
-        StartCoroutine(TxCoroutines.Instance.ExecuteMerge(teamId, from.id, to.id));
-
-        // Reset Team spot after merge
-        TeamManager.instance.FreeSpot(index);
-
-        // Reset sell btn to reroll
-        CanvasManager.instance.ToggleSellRerollButton();
-
-        return true;
-    }
-
     private void CreateMobForTeam(int zoneIndex)
     {
         Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
-        TeamManager.instance.FillSpot(zoneIndex, role, gameObject);
-        _rb.MovePosition(currentDroppableZone.transform.position + offset);
+        TeamManager.instance.FillNewSpot(zoneIndex, role, gameObject);
     }
 
     private void SwapMobPositionInFreeSpotTeam(int zoneIndex)
@@ -359,7 +385,6 @@ public class MobDraggable : MonoBehaviour
         string entity = TeamManager.instance.TeamSpots[index].Entity;
         Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
         TeamManager.instance.FillSpot(zoneIndex, role, gameObject, entity);
-        _rb.MovePosition(currentDroppableZone.transform.position + offset);
         TeamManager.instance.FreeSpot(index);
     }
 

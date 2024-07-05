@@ -1,13 +1,14 @@
+using UnityEngine;
+
 namespace zKlash.Game.Roles
 {
     public class Knight : IRole
     {
-
         public Role GetRole => Role.Knight;
-        private bool _firstTimeInOnUnequip = true;
 
         public int Health(Phase phase, int level)
         {
+            Debug.Log("Knight Health: " + phase + " " + level);
             switch (phase)
             {
                 case Phase.OnHire:
@@ -15,15 +16,7 @@ namespace zKlash.Game.Roles
                 case Phase.OnEquip:
                     return level;
                 case Phase.OnUnequip:
-                    if (_firstTimeInOnUnequip)
-                    {
-                        _firstTimeInOnUnequip = false;
-                        return 0;
-                    }
-                    else
-                    {
-                        return -level;
-                    }
+                    return -level;
                 default:
                     return 0;
             }

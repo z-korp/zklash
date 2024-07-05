@@ -81,22 +81,23 @@ public class MobHealth : MonoBehaviour
 
         MobDamageText damageTextComponent = GetComponent<MobDamageText>();
 
-        if (damageTextComponent == null)
-        {
-            Debug.LogWarning("DamageTextComponent not found on the mob.");
-        }
-        else
-        {
-            Debug.Log($"Taking {real_dmg} damage");
-            damageTextComponent.ShowDamage(amount);
-        }
 
-        SetTextHealth(Math.Max(0, Health));
+        Debug.Log($"Taking {real_dmg} damage");
+        if (real_dmg > 0)
+        {
+            if (damageTextComponent == null)
+                Debug.LogWarning("DamageTextComponent not found on the mob.");
+            else
+                damageTextComponent.ShowDamage(real_dmg);
 
-        // Animation
-        isBlinking = true;
-        StartCoroutine(BlinkDamageFlash());
-        yield return StartCoroutine(HandleBlinkDelay());
+            // update health text
+            SetTextHealth(Math.Max(0, Health));
+
+            // Animation
+            isBlinking = true;
+            StartCoroutine(BlinkDamageFlash());
+            yield return StartCoroutine(HandleBlinkDelay());
+        }
     }
 
     public IEnumerator TriggerDie()

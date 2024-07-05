@@ -58,7 +58,7 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
         int index = draggedObject.GetComponent<MobDraggable>().index;
         Destroy(draggedObject);
         TeamManager.instance.FreeSpot(index);
-        CanvasManager.instance.ToggleSellRerollButton();
+        CanvasManager.instance.ShowRerollButton();
         isDraggingSellMob = false;
         imageCoin.SetActive(true);
         imageCoin.GetComponent<Animator>().SetTrigger("makeCoinPop");

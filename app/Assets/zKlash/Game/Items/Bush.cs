@@ -61,13 +61,7 @@ namespace zKlash.Game.Items
 
         public Item Usage(Phase phase)
         {
-            return _size switch
-            {
-                Size.Small => Item.BushSmall,
-                Size.Medium => Item.BushMedium,
-                Size.Large => Item.BushLarge,
-                _ => Item.None
-            };
+            return Item.None; // only one-time use
         }
     }
 }

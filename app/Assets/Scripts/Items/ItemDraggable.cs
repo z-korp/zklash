@@ -48,7 +48,6 @@ public class ItemDraggable : MonoBehaviour
     {
         drag = true;
         initPos = transform.position;
-
     }
 
     private void OnMouseUp()
@@ -65,14 +64,6 @@ public class ItemDraggable : MonoBehaviour
                 return;
             }
 
-            isFromShop = false;
-            //GameObject itemOrbiterGO = Instantiate(orbitObjectPrefab, mob.transform.position, Quaternion.identity);
-            //OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
-            //itemOrbiter.target = mob.transform;
-            //itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
-            mob.GetComponent<MobItem>().item = item;
-            mob.GetComponent<MobController>().Character.Equip(item.type);
-
             // Smart contract call
             string entity = TeamManager.instance.GetEntityFromTeam(mob);
             if (entity == "")
@@ -82,11 +73,32 @@ public class ItemDraggable : MonoBehaviour
                 return;
             }
             Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
-            //ContractActions.instance.TriggerEquip(character.id, (uint)index);
             uint teamId = PlayerData.Instance.GetTeamId();
-            StartCoroutine(TxCoroutines.Instance.ExecuteEquip(teamId, character.id, (uint)index));
+            StartCoroutine(TxCoroutines.Instance.ExecuteEquip(
+                teamId,
+                character.id,
+                (uint)index,
+                () =>
+                {
+                    Debug.Log("=> Item equipped on mob: " + mob.name + " with item: " + item.name);
 
-            Destroy(gameObject);
+                    // On success equip item
+                    isFromShop = false;
+                    mob.GetComponent<MobItem>().item = item;
+                    Debug.Log("Item dropped on mob: " + mob.name + " with item: " + item.name);
+                    mob.GetComponent<MobController>().Character.Equip(item.type);
+
+                    Destroy(gameObject);
+                    DialogueManager.Instance.ShowDialogueForDuration("Nice looking", 2f);
+                },
+                (error) =>
+                {
+                    // On error move item back to initial position
+                    Debug.LogError("=> Error in ExecuteEquip: " + error);
+                    DialogueManager.Instance.ShowDialogueForDuration("Error during equip", 2f);
+                    rb.MovePosition(initPos);
+                }
+            ));
         }
         else
         {

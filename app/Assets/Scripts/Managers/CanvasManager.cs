@@ -11,6 +11,9 @@ public class CanvasManager : MonoBehaviour
 
     public GameObject canvasWinLoose;
 
+    private Transform btnReroll;
+    private Transform btnSell;
+
     void Awake()
     {
         if (instance != null)
@@ -19,6 +22,17 @@ public class CanvasManager : MonoBehaviour
             return;
         }
         instance = this;
+
+        btnReroll = canvasInfo.transform.Find("BtnReroll");
+        if (btnReroll == null)
+        {
+            Debug.LogError("BtnReroll not found in CanvasManager");
+        }
+        btnSell = canvasInfo.transform.Find("BtnSell");
+        if (btnSell == null)
+        {
+            Debug.LogError("BtnSell not found in CanvasManager");
+        }
     }
 
     public void ToggleCanvasInfo()
@@ -59,14 +73,16 @@ public class CanvasManager : MonoBehaviour
         ToggleCanvasShopInfo();
     }
 
-    public void ToggleSellRerollButton()
+    public void ShowSellButton()
     {
-        Transform btnReroll = canvasInfo.transform.Find("BtnReroll");
-        Transform btnSell = canvasInfo.transform.Find("BtnSell");
-        if (btnReroll != null)
-            btnReroll.gameObject.SetActive(!btnReroll.gameObject.activeSelf);
-        if (btnSell != null)
-            btnSell.gameObject.SetActive(!btnSell.gameObject.activeSelf);
+        btnReroll.gameObject.SetActive(false);
+        btnSell.gameObject.SetActive(true);
+    }
+
+    public void ShowRerollButton()
+    {
+        btnReroll.gameObject.SetActive(true);
+        btnSell.gameObject.SetActive(false);
     }
 
     public void ShowCanvasWinOrLoose(bool victory = true)

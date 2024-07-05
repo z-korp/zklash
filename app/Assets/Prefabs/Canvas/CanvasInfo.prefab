@@ -998,10 +998,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BtnSell
       objectReference: {fileID: 0}
-    - target: {fileID: 834543797220072754, guid: 0dcee148484064ee3b6fe2a8b5e0eab4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4575866744188458587, guid: 0dcee148484064ee3b6fe2a8b5e0eab4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1028,19 +1024,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4575866744188458587, guid: 0dcee148484064ee3b6fe2a8b5e0eab4, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 139
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 4575866744188458587, guid: 0dcee148484064ee3b6fe2a8b5e0eab4, type: 3}
       propertyPath: m_SizeDelta.y
       value: 112
-      objectReference: {fileID: 0}
-    - target: {fileID: 4575866744188458587, guid: 0dcee148484064ee3b6fe2a8b5e0eab4, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4575866744188458587, guid: 0dcee148484064ee3b6fe2a8b5e0eab4, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4575866744188458587, guid: 0dcee148484064ee3b6fe2a8b5e0eab4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1072,7 +1060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4575866744188458587, guid: 0dcee148484064ee3b6fe2a8b5e0eab4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 43
+      value: 51
       objectReference: {fileID: 0}
     - target: {fileID: 4575866744188458587, guid: 0dcee148484064ee3b6fe2a8b5e0eab4, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1094,14 +1082,6 @@ PrefabInstance:
       propertyPath: imageCoin
       value: 
       objectReference: {fileID: 5393166933742157712}
-    - target: {fileID: 9006641209498609203, guid: 0dcee148484064ee3b6fe2a8b5e0eab4, type: 3}
-      propertyPath: m_fontSize
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 9006641209498609203, guid: 0dcee148484064ee3b6fe2a8b5e0eab4, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 35
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

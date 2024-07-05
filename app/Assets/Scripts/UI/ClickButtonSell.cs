@@ -9,6 +9,8 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public GameObject imageCoin;
 
+    public AudioClip sellSound;
+
 
     public void Awake()
     {
@@ -52,16 +54,27 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
             return;
         }
         Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
-        StartCoroutine(TxCoroutines.Instance.ExecuteSell(teamId, character.id));
+        StartCoroutine(TxCoroutines.Instance.ExecuteSell(
+            teamId,
+            character.id,
+            onSuccess: () =>
+            {
+                AudioManager.instance.PlayClipAt(sellSound, ClickButtonSell.instance.transform.position);
 
-        // Get index to free spot in team and destroy gameObject
-        int index = draggedObject.GetComponent<MobDraggable>().index;
-        Destroy(draggedObject);
-        TeamManager.instance.FreeSpot(index);
-        CanvasManager.instance.ShowRerollButton();
-        isDraggingSellMob = false;
-        imageCoin.SetActive(true);
-        imageCoin.GetComponent<Animator>().SetTrigger("makeCoinPop");
-
+                // Get index to free spot in team and destroy gameObject
+                int index = draggedObject.GetComponent<MobDraggable>().index;
+                Destroy(draggedObject);
+                TeamManager.instance.FreeSpot(index);
+                CanvasManager.instance.ShowRerollButton();
+                isDraggingSellMob = false;
+                imageCoin.SetActive(true);
+                imageCoin.GetComponent<Animator>().SetTrigger("makeCoinPop");
+            },
+            onError: (error) =>
+            {
+                Debug.LogError("=> Error in ExecuteSell: " + error);
+                DialogueManager.Instance.ShowDialogueForDuration("Error during sell", 2f);
+            }
+        ));
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI; // Utilisé pour accéder aux composants UI
+using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class PlayerInfoUI : MonoBehaviour
 {
@@ -8,9 +9,16 @@ public class PlayerInfoUI : MonoBehaviour
     public TextMeshProUGUI txtGold;
     public TextMeshProUGUI txtTrophy;
 
-    private uint playerLives;
-    private uint playerGold;
-    private uint playerTrophies;
+    private float currentLife;
+    private float currentGold;
+    private float currentTrophy;
+
+    private uint targetLife;
+    private uint targetGold;
+    private uint targetTrophy;
+
+    private float lerpDuration = 0.2f; // Duration of the lerping effect in seconds
+    private Coroutine lerpCoroutine;
 
     public static PlayerInfoUI instance;
 
@@ -26,9 +34,9 @@ public class PlayerInfoUI : MonoBehaviour
 
     void Start()
     {
-        playerLives = 0;
-        playerGold = 0;
-        playerTrophies = 0;
+        currentLife = 0;
+        currentGold = 0;
+        currentTrophy = 0;
 
         EventManager.OnRefreshPlayerStats += RefreshPlayerStats;
     }
@@ -61,47 +69,88 @@ public class PlayerInfoUI : MonoBehaviour
 
     public void UpdatePlayerStats(uint lives, uint gold, uint trophies)
     {
-        playerLives = lives;
-        playerGold = gold;
-        playerTrophies = trophies - 1;
+        targetLife = lives;
+        targetGold = gold;
+        targetTrophy = trophies - 1;
 
-        UpdateUI();
+        if (lerpCoroutine != null)
+        {
+            StopCoroutine(lerpCoroutine);
+        }
+        lerpCoroutine = StartCoroutine(LerpPlayerStats());
     }
 
-    // Méthode pour mettre à jour l'interface utilisateur avec les valeurs actuelles
-    void UpdateUI()
+    private IEnumerator LerpPlayerStats()
     {
-        txtLife.text = playerLives.ToString();
-        txtGold.text = playerGold.ToString();
-        txtTrophy.text = playerTrophies.ToString();
+        float elapsedTime = 0f;
+
+        float startLife = currentLife;
+        float startGold = currentGold;
+        float startTrophy = currentTrophy;
+
+        while (elapsedTime < lerpDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / lerpDuration);
+
+            currentLife = Mathf.Lerp(startLife, targetLife, t);
+            currentGold = Mathf.Lerp(startGold, targetGold, t);
+            currentTrophy = Mathf.Lerp(startTrophy, targetTrophy, t);
+
+            UpdateUI();
+
+            yield return null;
+        }
+
+        // Ensure the final values are set accurately
+        currentLife = targetLife;
+        currentGold = targetGold;
+        currentTrophy = targetTrophy;
+
+        UpdateUI(true); // Force update to the exact target values
+        lerpCoroutine = null;
     }
 
-    // Exemples de méthodes pour modifier les valeurs, à appeler depuis d'autres scripts ou événements
+    // Method to update the UI with the current values
+    void UpdateUI(bool useTargetValues = false)
+    {
+        if (useTargetValues)
+        {
+            txtLife.text = targetLife.ToString();
+            txtGold.text = targetGold.ToString();
+            txtTrophy.text = targetTrophy.ToString();
+        }
+        else
+        {
+            txtLife.text = Mathf.RoundToInt(currentLife).ToString();
+            txtGold.text = Mathf.RoundToInt(currentGold).ToString();
+            txtTrophy.text = Mathf.RoundToInt(currentTrophy).ToString();
+        }
+    }
+
+    // Examples of methods to modify the values, to be called from other scripts or events
     public void AddLife(uint amount)
     {
-        playerLives += amount;
-        UpdateUI();
+        UpdatePlayerStats((uint)currentLife + amount, (uint)currentGold, (uint)currentTrophy);
     }
 
     public void AddGold(uint amount)
     {
-        playerGold += amount;
-        UpdateUI();
+        UpdatePlayerStats((uint)currentLife, (uint)currentGold + amount, (uint)currentTrophy);
     }
 
     public void AddTrophy(uint amount)
     {
-        playerTrophies += amount;
-        UpdateUI();
+        UpdatePlayerStats((uint)currentLife, (uint)currentGold, (uint)currentTrophy + amount);
     }
 
     public uint getLifes()
     {
-        return playerLives;
+        return (uint)currentLife;
     }
 
     public uint getTrophies()
     {
-        return playerTrophies;
+        return (uint)currentTrophy;
     }
 }

@@ -72,10 +72,9 @@ export class Item {
         else if (size === Size.Medium) return "Save you twice.";
         else return "";
       case ItemType.Rock:
-        if (size === Size.Small) return "Deals 1 damage to the enemy once";
-        else if (size === Size.Medium)
-          return "Deals 2 damages to the enemy once";
-        else return "Deals 3 damages to the enemy once";
+        if (size === Size.Small) return "Deals 1 damage once to the foe";
+        else if (size === Size.Medium) return "Deals 2 damages once to the foe";
+        else return "Deals 3 damages once to the foe";
       default:
         return "";
     }

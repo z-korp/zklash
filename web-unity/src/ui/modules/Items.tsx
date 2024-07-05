@@ -69,7 +69,7 @@ export const Canvas = ({ itemType }: { itemType: ItemType }) => {
   const item = useMemo(() => new Item(itemType), [itemType]);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-2 p-2 border rounded">
+    <div className="flex flex-col justify-center items-center gap-2 p-2 pb-4 border rounded-2xl">
       <div className="flex flex-col items-center justify-center mb-2 ">
         <div className="text-2xl">{item.value}</div>
         <img src={item.getImage(size)} className="w-32 h-32" />

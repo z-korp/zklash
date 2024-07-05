@@ -29,8 +29,6 @@ public class MobDraggable : MonoBehaviour
     private GameObject[] droppableZones;
     private Vector3 offset = new(0, 0.5f, 0);
 
-    private bool togglingButton = false;
-
     public MouseHoverDetector mouseHoverDetector;
 
     private const int maxLevel = 3;
@@ -68,11 +66,7 @@ public class MobDraggable : MonoBehaviour
 
         _drag = true;
 
-        if (!isFromShop)
-        {
-            togglingButton = true;
-            CanvasManager.instance.ShowSellButton();
-        }
+        if (!isFromShop) CanvasManager.instance.ShowSellButton();
 
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
@@ -88,12 +82,6 @@ public class MobDraggable : MonoBehaviour
 
         if (CanvasWaitForTransaction.Instance.IsCanvasActive()) return;
 
-        if (togglingButton)
-        {
-            togglingButton = false;
-            CanvasManager.instance.ShowRerollButton();
-        }
-
         animator.SetBool("IsWalking", false);
         DestroyAllIndicators();
 
@@ -107,18 +95,27 @@ public class MobDraggable : MonoBehaviour
                 ClickButtonSell.instance.SellMob(gameObject);
 
         // Cancel the drag if the mob is not dropped in a valid zone
-        if (InvalidDropZoneResetPosition()) return;
+        if (InvalidDropZoneResetPosition())
+        {
+            CanvasManager.instance.ShowRerollButton();
+            return;
+        }
 
         // Get the index of the zone where the mob is dropped
         int zoneIndex = currentDroppableZone.index;
 
         // Manage the case where the mob is dropped at the same place when it doesn't come from the shop
-        if (MobNotFromShopDropAtSamePlace(zoneIndex)) return;
+        if (MobNotFromShopDropAtSamePlace(zoneIndex))
+        {
+            CanvasManager.instance.ShowRerollButton();
+            return;
+        }
 
         uint teamId = PlayerData.Instance.GetTeamId();
 
         // Manage the merge or swap case
         MergeOrSwapMob(zoneIndex, teamId);
+        CanvasManager.instance.ShowRerollButton();
     }
 
     private void SetMobOrderVisual(int spOrder)
@@ -280,6 +277,7 @@ public class MobDraggable : MonoBehaviour
                     {
                         Debug.Log("Hire transaction was successful.");
                         CreateMobForTeam(zoneIndex);
+                        AudioManager.instance.PlaySoundEffect(SoundEffect.Hire, transform.position);
                         index = zoneIndex;
                     },
                     onError: (error) =>
@@ -361,6 +359,8 @@ public class MobDraggable : MonoBehaviour
 
         // Update index of the spot they are in battle deck
         mob2.GetComponent<MobDraggable>().index = index;
+
+        AudioManager.instance.PlaySoundEffect(SoundEffect.Swap, transform.position);
     }
 
     private void MergeMobThatCanLevelUpUI(GameObject mobToUpdate, GameObject mobToRemove, int oldLevel)

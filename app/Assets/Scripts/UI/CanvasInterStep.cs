@@ -63,6 +63,7 @@ public class CanvasInterStep : MonoBehaviour
 
     public void onClickNext()
     {
+        AudioManager.instance.SwitchTheme(AudioManager.Theme.Village);
         CameraMovement.instance.MoveCameraToShop();
         CanvasManager.instance.ToggleCanvases();
     }

@@ -136,6 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDraggingSellMob: 0
   imageCoin: {fileID: 0}
+  sellSound: {fileID: 8300000, guid: 3f63114c7879b440fb047cbfe07efc16, type: 3}
 --- !u!1 &5842045040947590279
 GameObject:
   m_ObjectHideFlags: 0

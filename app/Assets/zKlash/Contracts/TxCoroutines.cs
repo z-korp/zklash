@@ -241,14 +241,14 @@ public class TxCoroutines : MonoBehaviour
         Debug.Log("[[[[[[[[[[[ END ExecuteMergeFromShop ]]]]]]]]]]]");
     }
 
-    public IEnumerator ExecuteSell(uint team_id, uint character_id)
+    public IEnumerator ExecuteSell(uint team_id, uint character_id, Action onSuccess = null, Action<string> onError = null)
     {
         Debug.Log("[[[[[[[[[[[  ExecuteSell  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
         string world = GameManager.Instance.dojoConfig.worldAddress; yield return StartCoroutine(ExecuteTransaction(
         () => marketSystem.Sell(account, world, team_id, character_id),
-        onSuccess: () => Debug.Log("Sell transaction was successful."),
-        onError: (error) => Debug.LogError("Sell transaction failed: " + error)
+        onSuccess: () => onSuccess?.Invoke(),
+        onError: (error) => onError?.Invoke(error)
     ));
 
         Debug.Log("[[[[[[[[[[[ END ExecuteSell ]]]]]]]]]]]");

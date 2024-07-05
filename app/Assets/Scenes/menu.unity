@@ -538,13 +538,29 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: hireSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4ad491a70177c4f5b9a78a7ffdd14f09, type: 3}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 742273103}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: musicSource
+      value: 
+      objectReference: {fileID: 742273103}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: effectSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
       propertyPath: playlist.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
       propertyPath: playlist.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 9f8ed6b64feee44fbbf5a59971739554, type: 3}
+      objectReference: {fileID: 8300000, guid: a1a04da14f7a64389b442be63f056c5b, type: 3}
     - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
       propertyPath: playlist.Array.data[1]
       value: 
@@ -553,6 +569,38 @@ PrefabInstance:
       propertyPath: playlist.Array.data[2]
       value: 
       objectReference: {fileID: 8300000, guid: 9f8ed6b64feee44fbbf5a59971739554, type: 3}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: battlePlaylist.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: villagePlaylist.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: soundEffectClips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: battlePlaylist.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 801ab265a649a4589aa32cd809abc9dc, type: 3}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: villagePlaylist.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: a1a04da14f7a64389b442be63f056c5b, type: 3}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: soundEffectClips.Array.data[0].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 02208415f3d7645f2a48febe8af488a8, type: 3}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: soundEffectClips.Array.data[1].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4ad491a70177c4f5b9a78a7ffdd14f09, type: 3}
+    - target: {fileID: 799229146363391352, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+      propertyPath: soundEffectClips.Array.data[1].soundEffect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8973820553593091483, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5041106
@@ -599,7 +647,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9039436882994803598, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9039436882994803598, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
       propertyPath: OutputAudioMixerGroup
@@ -611,7 +659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9043475861483710627, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -679,6 +727,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - {fileID: 99651561}
+--- !u!82 &742273103 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 9039436882994803598, guid: 33347ba34058e447d8c434bab7c846fe, type: 3}
+  m_PrefabInstance: {fileID: 164977571}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1043726214
 PrefabInstance:
   m_ObjectHideFlags: 0

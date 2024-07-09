@@ -31,9 +31,6 @@ export const Header = () => {
           >
             zKlash
           </p>
-          <Button variant="outline" onClick={() => navigate("/rules")}>
-            How to play?
-          </Button>
           <Mobs />
           <Items />
         </div>

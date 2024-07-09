@@ -88,6 +88,7 @@ public class TxCoroutines : MonoBehaviour
 
             Task<StarknetJsInterop.TransactionResult> waitTask = StarknetJsInterop.Instance.WaitForTransactionWrapper(txHash, optionsJson);
             yield return new WaitUntil(() => waitTask.IsCompleted);
+            yield return new WaitForSeconds(0.5f); // let 0.5 sec for torii to indexed // TBfixed
 
             if (waitTask.IsCompletedSuccessfully)
             {

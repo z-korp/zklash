@@ -244,7 +244,6 @@ public class BattleManager : MonoBehaviour
             }
 
             // [Effect] Apply effects on dispatch
-            Debug.Log(">>>>>>>>>> DISPATCH ALLY <<<<<<<<<<<< ");
             applyEffect(team1[0], Phase.OnDispatch);
             // [Effect] Apply floating buff
             team1[0].GetComponent<MobController>().Character.ApplyBuff(next_buff1);
@@ -264,7 +263,6 @@ public class BattleManager : MonoBehaviour
             }
 
             // [Effect] Apply effects on dispatch
-            Debug.Log(">>>>>>>>>> DISPATCH ENEMY <<<<<<<<<<<<");
             applyEffect(team2[0], Phase.OnDispatch);
             // [Effect] Apply floating buff
             team2[0].GetComponent<MobController>().Character.ApplyBuff(next_buff2);

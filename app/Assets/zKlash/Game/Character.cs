@@ -162,9 +162,7 @@ namespace zKlash.Game
         {
             if (damage > 0)
             {
-                Debug.Log(">>>>>>>>>>>>>>>>>> TakeDamage: " + damage + " " + Absorb + " Math.Min:" + Math.Min(damage, Absorb));
                 damage -= Math.Min(damage, Absorb);
-                Debug.Log(">>>>>>>>>>>>>>>>>> TakeDamage: " + damage);
                 Absorb = 0;
             }
             Health -= Math.Min(damage, Health);
@@ -173,7 +171,6 @@ namespace zKlash.Game
 
         public void ApplyBuff(Buff buff)
         {
-            Debug.Log(">>>>>>>>>>>>>>>>>> ApplyBuff: " + buff.Health + " " + buff.Attack + " " + buff.Absorb);
             Health += buff.Health;
             Attack += buff.Attack;
             Absorb += buff.Absorb;
@@ -195,7 +192,6 @@ namespace zKlash.Game
                 Attack = Role.Attack(phase, Level),
                 Absorb = Role.Absorb(phase, Level),
             };
-            Debug.Log(">>>>>>>>>>>>>>>>>> buff: " + buff.Health + " " + buff.Attack + " " + buff.Absorb);
             ApplyBuff(buff);
 
             int damage = Role.Damage(phase, Level);
@@ -206,7 +202,6 @@ namespace zKlash.Game
                 Attack = Role.NextAttack(phase, Level),
                 Absorb = Role.NextAbsorb(phase, Level),
             };
-            Debug.Log(">>>>>>>>>>>>>>>>>> nextBuff: " + nextBuff.Health + " " + nextBuff.Attack + " " + nextBuff.Absorb);
             return (damage, stun, nextBuff);
         }
 

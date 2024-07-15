@@ -248,7 +248,6 @@ function App() {
         <div className="flex flex-col items-center gap-2 border rounded p-4">
           <h2>SHOP</h2>
           <Separator />
-          {shop && <p>{`Purchase Cost: ${shop.purchase_cost}`}</p>}
           {shop && <p>{`Reroll cost: ${shop.reroll_cost}`}</p>}
           {team && shop && (
             <Button onClick={() => reroll(account, team.id)}>Reroll</Button>

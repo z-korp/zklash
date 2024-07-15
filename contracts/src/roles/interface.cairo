@@ -11,4 +11,5 @@ trait RoleTrait {
     fn next_health(phase: Phase, level: u8) -> u8;
     fn next_attack(phase: Phase, level: u8) -> u8;
     fn next_absorb(phase: Phase, level: u8) -> u8;
+    fn cost(level: u8) -> u8;
 }

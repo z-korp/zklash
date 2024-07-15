@@ -54,4 +54,14 @@ impl ItemImpl of ItemTrait {
             },
         }
     }
+
+    #[inline(always)]
+    fn cost(size: Size) -> u8 {
+        match size {
+            Size::Small => 30,
+            Size::Medium => 60,
+            Size::Large => 90,
+            _ => 0,
+        }
+    }
 }

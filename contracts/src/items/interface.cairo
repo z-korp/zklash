@@ -10,4 +10,5 @@ trait ItemTrait {
     fn damage(phase: Phase, size: Size) -> u8;
     fn absorb(phase: Phase, size: Size) -> u8;
     fn usage(phase: Phase, size: Size) -> Item;
+    fn cost(size: Size) -> u8;
 }

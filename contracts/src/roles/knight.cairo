@@ -53,4 +53,15 @@ impl RoleImpl of RoleTrait {
     fn next_absorb(phase: Phase, level: u8) -> u8 {
         0
     }
+
+    #[inline(always)]
+    fn cost(level: u8) -> u8 {
+        match level {
+            0 => 0,
+            1 => 30,
+            2 => 90,
+            3 => 180,
+            _ => 0,
+        }
+    }
 }

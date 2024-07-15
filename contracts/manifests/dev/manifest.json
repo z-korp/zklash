@@ -677,8 +677,8 @@
     {
       "kind": "DojoContract",
       "address": "0x6b3db511167c6c2291697a02e7ed9a162f115ac6a6c114bf99afa6547b3f90c",
-      "class_hash": "0x471a6c61ad82a916976bae86c3a7ebdaf920845a5610224b2e36d846bbf09ac",
-      "original_class_hash": "0x471a6c61ad82a916976bae86c3a7ebdaf920845a5610224b2e36d846bbf09ac",
+      "class_hash": "0x10b78be9c123150662e56e3a0028c2d3da278fd312ef79a903356ec301ba041",
+      "original_class_hash": "0x10b78be9c123150662e56e3a0028c2d3da278fd312ef79a903356ec301ba041",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -789,8 +789,8 @@
     {
       "kind": "DojoContract",
       "address": "0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1",
-      "class_hash": "0x614c8389be72137e289a1e8415a4685326947bdb197b6a2d31d37569c4e4a71",
-      "original_class_hash": "0x614c8389be72137e289a1e8415a4685326947bdb197b6a2d31d37569c4e4a71",
+      "class_hash": "0x2253589756ab63357e1061ed988596516b5c641dfce79cc32a469430e4f187d",
+      "original_class_hash": "0x2253589756ab63357e1061ed988596516b5c641dfce79cc32a469430e4f187d",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -905,8 +905,8 @@
     {
       "kind": "DojoContract",
       "address": "0x53fb59cc9aab03983033de799d10c9a0d3e4475e19224a661cefeacb0577871",
-      "class_hash": "0x36670d26fdcd56a6f9d9385198a9f2cef98641af0ab26f14b95db6c1839bac0",
-      "original_class_hash": "0x36670d26fdcd56a6f9d9385198a9f2cef98641af0ab26f14b95db6c1839bac0",
+      "class_hash": "0xb89c4632f3da469393148301f7b4bb17f6fb9a7a5b93148fe0806f9424041c",
+      "original_class_hash": "0xb89c4632f3da469393148301f7b4bb17f6fb9a7a5b93148fe0806f9424041c",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -2483,11 +2483,6 @@
           "key": true
         },
         {
-          "name": "purchase_cost",
-          "type": "u8",
-          "key": false
-        },
-        {
           "name": "reroll_cost",
           "type": "u8",
           "key": false
@@ -2513,8 +2508,8 @@
           "key": false
         }
       ],
-      "class_hash": "0x16670cac95fa5c929e489fd538ba6e05baad53a27fac3a8dfe286e7a59ded55",
-      "original_class_hash": "0x16670cac95fa5c929e489fd538ba6e05baad53a27fac3a8dfe286e7a59ded55",
+      "class_hash": "0x46e0358d78b3bb81086ca94fcf7c10aae5a624a9d354b617a8444596d3d443c",
+      "original_class_hash": "0x46e0358d78b3bb81086ca94fcf7c10aae5a624a9d354b617a8444596d3d443c",
       "abi": [
         {
           "type": "impl",
@@ -2700,10 +2695,6 @@
             {
               "name": "team_id",
               "type": "core::integer::u32"
-            },
-            {
-              "name": "purchase_cost",
-              "type": "core::integer::u8"
             },
             {
               "name": "reroll_cost",

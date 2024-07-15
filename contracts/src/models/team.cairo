@@ -140,7 +140,7 @@ impl TeamImpl of TeamTrait {
         // [Effect] Update Gold
         let role: Role = character.role.into();
         let item: Item = character.item.into();
-        self.gold += 75 * item.cost().into() + role.cost(character.level).into() / 100;
+        self.gold += 3 * (item.cost().into() + role.cost(character.level).into()) / 4;
         // [Effect] Update Character
         character.nullify();
     }

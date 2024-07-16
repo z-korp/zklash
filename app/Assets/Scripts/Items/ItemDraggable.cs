@@ -18,13 +18,16 @@ public class ItemDraggable : MonoBehaviour
     public delegate void ItemHoveredHandler(bool isHovered);
     public event ItemHoveredHandler OnItemHovered;
 
+    private TeamManager _teamManager;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Start()
+    private void Start()
     {
+        _teamManager = TeamManager.Instance;
     }
 
     void Update()
@@ -65,7 +68,7 @@ public class ItemDraggable : MonoBehaviour
             }
 
             // Smart contract call
-            string entity = TeamManager.instance.GetEntityFromTeam(mob);
+            string entity = _teamManager.GetEntityFromTeam(mob);
             if (entity == "")
             {
                 Debug.Log("Entity not found.");

@@ -12,6 +12,7 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public AudioClip sellSound;
 
     private CanvasManager _canvasManager;
+    private TeamManager _teamManager;
 
 
     public void Awake()
@@ -27,6 +28,7 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private void Start()
     {
         _canvasManager = CanvasManager.Instance;
+        _teamManager = TeamManager.Instance;
     }
 
 
@@ -44,7 +46,7 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void SellMob(GameObject draggedObject)
     {
-        if (TeamManager.instance.CountMobInTeam() <= 1)
+        if (_teamManager.CountMobInTeam() <= 1)
         {
             isDraggingSellMob = false;
             DialogueManager.Instance.ShowDialogueForDuration("Even heroes need an army!", 2f);
@@ -54,7 +56,7 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
         Debug.Log("Selling mob: ------------------>");
         Debug.Log("Selling mob: " + draggedObject.name);
         uint teamId = PlayerData.Instance.GetTeamId();
-        string entity = TeamManager.instance.GetEntityFromTeam(draggedObject);
+        string entity = _teamManager.GetEntityFromTeam(draggedObject);
         if (entity == "")
         {
             Debug.Log("Entity not found.");
@@ -71,7 +73,7 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
                 // Get index to free spot in team and destroy gameObject
                 int index = draggedObject.GetComponent<MobDraggable>().index;
                 Destroy(draggedObject);
-                TeamManager.instance.FreeSpot(index);
+                _teamManager.FreeSpot(index);
                 _canvasManager.ShowRerollButton();
                 isDraggingSellMob = false;
                 imageCoin.SetActive(true);

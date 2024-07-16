@@ -41,7 +41,9 @@ public class BattleManager : MonoBehaviour
     private int _minLife = 0;
 
     private CanvasManager _canvasManager;
+    private TeamManager _teamManager;
     private TimeScaleController _timeScaleController;
+
 
     void Awake()
     {
@@ -66,6 +68,7 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         _canvasManager = CanvasManager.Instance;
+        _teamManager = TeamManager.Instance;
         _timeScaleController = TimeScaleController.Instance;
     }
 
@@ -166,8 +169,8 @@ public class BattleManager : MonoBehaviour
         else
         {
             //CameraMovement.instance.MoveCameraToShop();
-            TeamManager.instance.ResetStatCharacter();
-            TeamManager.instance.TPTeamToShop();
+            _teamManager.ResetStatCharacter();
+            _teamManager.TPTeamToShop();
             _canvasManager.ToggleCanvasInterStep(result);
         }
 

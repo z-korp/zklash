@@ -21,11 +21,9 @@ public class TeamSpot
     }
 }
 
-public class TeamManager : MonoBehaviour
+public class TeamManager : Singleton<TeamManager>
 {
     public TeamSpot[] TeamSpots = new TeamSpot[4]; // 4 spots for team members
-
-    public static TeamManager instance;
 
     public List<Transform> targetsTeam;
 
@@ -43,25 +41,17 @@ public class TeamManager : MonoBehaviour
 
     private TimeScaleController _timeScaleController;
 
-    void Awake()
+    private void Start()
     {
-        if (instance != null)
-        {
-            Debug.LogWarning("More than one instance of TeamManager found!");
-            return;
-        }
-        instance = this;
+        // Init singleton 
+        _timeScaleController = TimeScaleController.Instance;
 
         // Initialize the team spots
         for (int i = 0; i < TeamSpots.Length; i++)
         {
             TeamSpots[i] = new TeamSpot(true); // Make all spots available
         }
-    }
 
-    private void Start()
-    {
-        _timeScaleController = TimeScaleController.Instance;
     }
 
     public void MoveTeam()

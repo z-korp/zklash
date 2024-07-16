@@ -34,6 +34,7 @@ public class MobDraggable : MonoBehaviour
     private const int maxLevel = 3;
 
     private CanvasManager _canvasManager;
+    private TeamManager _teamManager;
 
 
     private void Awake()
@@ -49,6 +50,7 @@ public class MobDraggable : MonoBehaviour
     private void Start()
     {
         _canvasManager = CanvasManager.Instance;
+        _teamManager = TeamManager.Instance;
     }
 
     private void Update()
@@ -161,11 +163,11 @@ public class MobDraggable : MonoBehaviour
 
     private void MergeOrSwapMob(int zoneIndex, uint teamId)
     {
-        if (TeamManager.instance.RoleAtIndex(zoneIndex) == gameObject.GetComponent<MobController>().Character.Role.GetRole)
+        if (_teamManager.RoleAtIndex(zoneIndex) == gameObject.GetComponent<MobController>().Character.Role.GetRole)
         {
             if (NotEnoughMoney()) return;
 
-            GameObject mobToUpdate = TeamManager.instance.GetMemberFromTeam(zoneIndex);
+            GameObject mobToUpdate = _teamManager.GetMemberFromTeam(zoneIndex);
             GameObject mobToRemove = gameObject;
 
             int oldLevel = mobToUpdate.GetComponent<MobController>().Character.Level;
@@ -177,7 +179,7 @@ public class MobDraggable : MonoBehaviour
             if (isFromShop)
             {
                 // Merge mob from shop
-                string entity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+                string entity = _teamManager.GetEntityFromTeam(mobToUpdate);
                 if (entity == "")
                     return;
                 Character character = GameManager.Instance.worldManager.Entity(entity).GetComponent<Character>();
@@ -199,12 +201,12 @@ public class MobDraggable : MonoBehaviour
             }
             else
             {
-                string fromEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+                string fromEntity = _teamManager.GetEntityFromTeam(mobToUpdate);
                 if (fromEntity == "")
                     return;
                 Character from = GameManager.Instance.worldManager.Entity(fromEntity).GetComponent<Character>();
 
-                string toEntity = TeamManager.instance.GetEntityFromTeam(mobToUpdate);
+                string toEntity = _teamManager.GetEntityFromTeam(mobToUpdate);
                 if (toEntity == "")
                     return;
                 Character to = GameManager.Instance.worldManager.Entity(toEntity).GetComponent<Character>();
@@ -228,7 +230,7 @@ public class MobDraggable : MonoBehaviour
                         }
 
                         // Reset Team spot after merge
-                        TeamManager.instance.FreeSpot(index);
+                        _teamManager.FreeSpot(index);
 
                         // Reset sell btn to reroll
                         _canvasManager.ShowRerollButton();
@@ -244,7 +246,7 @@ public class MobDraggable : MonoBehaviour
         else
         {
             // Cancel the drag if the mob is dropped in a zone that is not available
-            if (zoneIndex > TeamManager.instance.TeamSpots.Length || !TeamManager.instance.TeamSpots[zoneIndex].IsAvailable)
+            if (zoneIndex > _teamManager.TeamSpots.Length || !_teamManager.TeamSpots[zoneIndex].IsAvailable)
             {
                 // Spot is already taken in teamManager but don't come from shop that's mean
                 // we want to invert both pos when we drag mob on top of another mob
@@ -344,21 +346,21 @@ public class MobDraggable : MonoBehaviour
     private void swapUnit(int index, int zoneIndex)
     {
         // Get data from drag mob to populate teamManager spot
-        string entity1 = TeamManager.instance.TeamSpots[index].Entity;
+        string entity1 = _teamManager.TeamSpots[index].Entity;
         Role role1 = gameObject.GetComponent<MobController>().Character.Role.GetRole;
 
         // Get data from standing mob to populate teamManager spot
-        GameObject mob2 = TeamManager.instance.GetMemberFromTeam(zoneIndex);
+        GameObject mob2 = _teamManager.GetMemberFromTeam(zoneIndex);
         Role role2 = mob2.GetComponent<MobController>().Character.Role.GetRole;
-        string entity2 = TeamManager.instance.TeamSpots[zoneIndex].Entity;
+        string entity2 = _teamManager.TeamSpots[zoneIndex].Entity;
 
         // Free spots so we can fill them with new data
-        TeamManager.instance.FreeSpot(index);
-        TeamManager.instance.FreeSpot(zoneIndex);
+        _teamManager.FreeSpot(index);
+        _teamManager.FreeSpot(zoneIndex);
 
         // Update spots in teamManager 
-        TeamManager.instance.FillSpot(zoneIndex, role1, gameObject, entity1);
-        TeamManager.instance.FillSpot(index, role2, mob2, entity2);
+        _teamManager.FillSpot(zoneIndex, role1, gameObject, entity1);
+        _teamManager.FillSpot(index, role2, mob2, entity2);
 
         // Update UI pos of entity
         _rb.MovePosition(currentDroppableZone.transform.position + offset);
@@ -384,15 +386,15 @@ public class MobDraggable : MonoBehaviour
     private void CreateMobForTeam(int zoneIndex)
     {
         Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
-        TeamManager.instance.FillNewSpot(zoneIndex, role, gameObject);
+        _teamManager.FillNewSpot(zoneIndex, role, gameObject);
     }
 
     private void SwapMobPositionInFreeSpotTeam(int zoneIndex)
     {
-        string entity = TeamManager.instance.TeamSpots[index].Entity;
+        string entity = _teamManager.TeamSpots[index].Entity;
         Role role = gameObject.GetComponent<MobController>().Character.Role.GetRole;
-        TeamManager.instance.FillSpot(zoneIndex, role, gameObject, entity);
-        TeamManager.instance.FreeSpot(index);
+        _teamManager.FillSpot(zoneIndex, role, gameObject, entity);
+        _teamManager.FreeSpot(index);
     }
 
     private void LevelUpAnimation(GameObject mob)
@@ -415,7 +417,7 @@ public class MobDraggable : MonoBehaviour
 
         foreach (DroppableZone zone in allDroppableZones)
         {
-            if (TeamManager.instance.TeamSpots[zone.index].IsAvailable)
+            if (_teamManager.TeamSpots[zone.index].IsAvailable)
             {
                 // Add transform of the zone if it is available
                 validDropTargets.Add(zone.transform);

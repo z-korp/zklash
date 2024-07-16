@@ -10,19 +10,22 @@ public class ClickButtonFight : MonoBehaviour
     private AudioManager _audioManager;
     private CameraMovement _cameraMovement;
     private CanvasManager _canvasManager;
+    private TeamManager _teamManager;
     private TimeScaleController _timeScaleController;
+
     private void Start()
     {
         _audioManager = AudioManager.Instance;
         _cameraMovement = CameraMovement.Instance;
         _canvasManager = CanvasManager.Instance;
+        _teamManager = TeamManager.Instance;
         _timeScaleController = TimeScaleController.Instance;
     }
 
     public void OnClickFight()
     {
         _audioManager.SwitchTheme(AudioManager.Theme.Battle);
-        if (TeamManager.instance.CountMobInTeam() < 1)
+        if (_teamManager.CountMobInTeam() < 1)
         {
             DialogueManager.Instance.ShowDialogueForDuration("Even heroes need an army!", 2f);
             return;
@@ -49,7 +52,7 @@ public class ClickButtonFight : MonoBehaviour
 
     private bool PrepareAllies(out uint order)
     {
-        var spots = TeamManager.instance.TeamSpots.Where(spot => !spot.IsAvailable).ToArray();
+        var spots = _teamManager.TeamSpots.Where(spot => !spot.IsAvailable).ToArray();
         if (spots.Length == 0)
         {
             Debug.Log("No allies found");
@@ -109,11 +112,11 @@ public class ClickButtonFight : MonoBehaviour
         // Allies
         //BattleManager.instance.DestroyGameObjectFromList(BattleManager.instance.allies);
         //var reversedTeamSpots = TeamManager.instance.TeamSpots.Reverse().ToArray();
-        TeamManager.instance.ReorganizeTeamSpots();
-        var teamSpots = TeamManager.instance.TeamSpots.ToArray();
+        _teamManager.ReorganizeTeamSpots();
+        var teamSpots = _teamManager.TeamSpots.ToArray();
         BattleManager.instance.allies = teamSpots.Where(spot => !spot.IsAvailable).Select(spot => spot.Mob).ToList();
         BattleManager.instance.InstanciateTeam(BattleManager.instance.allies, BattleManager.instance.alliesSetup, BattleManager.instance.allySpots, Orientation.Right);
-        TeamManager.instance.SaveInfoMobBeforeFight();
+        _teamManager.SaveInfoMobBeforeFight();
     }
 
     private void FinalizeSetup()
@@ -121,7 +124,7 @@ public class ClickButtonFight : MonoBehaviour
         _cameraMovement.MoveCameraToFight();
         _canvasManager.ShowUserStatsInfo();
         _canvasManager.ToggleCanvases();
-        TeamManager.instance.MoveTeam();
+        _teamManager.MoveTeam();
 
         // Refresh shop
         EventManager.RefreshShop();

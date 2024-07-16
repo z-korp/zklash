@@ -43,6 +43,7 @@ public class BattleManagerTest : MonoBehaviour
     private bool battleStarted = false;
 
     private CanvasManager _canvasManager;
+    private TeamManager _teamManager;
 
     void Awake()
     {
@@ -68,6 +69,7 @@ public class BattleManagerTest : MonoBehaviour
     {
         LoadBattleSetup(7);
         _canvasManager = CanvasManager.Instance;
+        _teamManager = TeamManager.Instance;
     }
 
     void Update()
@@ -201,8 +203,8 @@ public class BattleManagerTest : MonoBehaviour
         else
         {
             //CameraMovement.instance.MoveCameraToShop();
-            TeamManager.instance.ResetStatCharacter();
-            TeamManager.instance.TPTeamToShop();
+            _teamManager.ResetStatCharacter();
+            _teamManager.TPTeamToShop();
             _canvasManager.ToggleCanvasInterStep(result);
         }
     }

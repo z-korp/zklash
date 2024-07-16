@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { Separator } from "@/ui/elements/separator";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -11,10 +10,10 @@ import {
 } from "@/ui/elements/drawer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "../elements/button";
 import { ModeToggle } from "../components/Theme";
 import { Mobs } from "../modules/Mobs";
 import { Items } from "../modules/Items";
+import { Leaderboard } from "../modules/Leaderboard";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -33,6 +32,7 @@ export const Header = () => {
           </p>
           <Mobs />
           <Items />
+          <Leaderboard />
         </div>
 
         <div className="flex flex-col gap-4 items-center md:flex-row">

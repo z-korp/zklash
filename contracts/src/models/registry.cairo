@@ -46,14 +46,14 @@ impl RegistryImpl of RegistryTrait {
     }
 
     #[inline(always)]
-    fn create_squad(ref self: Registry, level: u8, size: u8) -> Squad {
+    fn create_squad(ref self: Registry, level: u8, size: u8, name: felt252) -> Squad {
         // [Effect] Create new squad
         self.squad_count += 1;
         // [Effect] Update seed
         let (new_seed, _, _) = hades_permutation(self.seed, self.leagues, self.squad_count.into());
         self.seed = new_seed;
         // [Return] Squad
-        SquadTrait::new(self.id, self.squad_count, level, size)
+        SquadTrait::new(self.id, self.squad_count, level, size, name)
     }
 
     #[inline(always)]

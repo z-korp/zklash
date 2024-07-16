@@ -10,6 +10,9 @@ import {
 } from "@starknet-react/core";
 import { mainnet } from "@starknet-react/chains";
 import { ThemeProvider } from "./ui/elements/theme-provider.tsx";
+import { setup } from "./dojo/setup.ts";
+import { DojoProvider } from "./dojo/DojoContext.tsx";
+import { dojoConfig } from "../dojoConfig.ts";
 
 import "./index.css";
 
@@ -27,6 +30,8 @@ async function init() {
   const connectors = [argent(), braavos()];
   const provider = jsonRpcProvider({ rpc });
 
+  const setupResult = await setup(dojoConfig);
+
   root.render(
     <React.StrictMode>
       <StarknetConfig
@@ -34,11 +39,15 @@ async function init() {
         provider={provider}
         connectors={connectors}
         explorer={voyager}
-        autoConnect
       >
-        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme-zklash">
-          <App />
-        </ThemeProvider>
+        <DojoProvider value={setupResult}>
+          <ThemeProvider
+            defaultTheme="system"
+            storageKey="vite-ui-theme-zklash"
+          >
+            <App />
+          </ThemeProvider>
+        </DojoProvider>
       </StarknetConfig>
     </React.StrictMode>,
   );

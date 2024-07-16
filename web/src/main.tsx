@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { Toaster } from "@/ui/elements/sonner.tsx";
-import "./index.css";
 import { setup } from "./dojo/setup.ts";
 import { DojoProvider } from "./dojo/DojoContext.tsx";
 import { dojoConfig } from "../dojoConfig.ts";
+
+import "./index.css";
 
 async function init() {
   const rootElement = document.getElementById("root");

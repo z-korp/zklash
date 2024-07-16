@@ -8,6 +8,7 @@ using zKlash.Game.Items;
 public class ClickButtonFight : MonoBehaviour
 {
     private AudioManager _audioManager;
+    private BattleManager _battleManager;
     private CameraMovement _cameraMovement;
     private CanvasManager _canvasManager;
     private TeamManager _teamManager;
@@ -16,6 +17,7 @@ public class ClickButtonFight : MonoBehaviour
     private void Start()
     {
         _audioManager = AudioManager.Instance;
+        _battleManager = BattleManager.Instance;
         _cameraMovement = CameraMovement.Instance;
         _canvasManager = CanvasManager.Instance;
         _teamManager = TeamManager.Instance;
@@ -106,16 +108,16 @@ public class ClickButtonFight : MonoBehaviour
     private void SetupBattlefield(List<CharacterSetup> foeSetups)
     {
         // Enemies
-        BattleManager.instance.DestroyGameObjectFromList(BattleManager.instance.enemies);
-        BattleManager.instance.InstanciateTeam(BattleManager.instance.enemies, foeSetups, BattleManager.instance.enemySpots, Orientation.Left);
+        _battleManager.DestroyGameObjectFromList(_battleManager.enemies);
+        _battleManager.InstanciateTeam(_battleManager.enemies, foeSetups, _battleManager.enemySpots, Orientation.Left);
 
         // Allies
         //BattleManager.instance.DestroyGameObjectFromList(BattleManager.instance.allies);
         //var reversedTeamSpots = TeamManager.instance.TeamSpots.Reverse().ToArray();
         _teamManager.ReorganizeTeamSpots();
         var teamSpots = _teamManager.TeamSpots.ToArray();
-        BattleManager.instance.allies = teamSpots.Where(spot => !spot.IsAvailable).Select(spot => spot.Mob).ToList();
-        BattleManager.instance.InstanciateTeam(BattleManager.instance.allies, BattleManager.instance.alliesSetup, BattleManager.instance.allySpots, Orientation.Right);
+        _battleManager.allies = teamSpots.Where(spot => !spot.IsAvailable).Select(spot => spot.Mob).ToList();
+        _battleManager.InstanciateTeam(_battleManager.allies, _battleManager.alliesSetup, _battleManager.allySpots, Orientation.Right);
         _teamManager.SaveInfoMobBeforeFight();
     }
 

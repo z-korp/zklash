@@ -14,10 +14,8 @@ public struct CharacterSetup
     public Item item;
 }
 
-public class BattleManager : MonoBehaviour
+public class BattleManager : Singleton<BattleManager>
 {
-    public static BattleManager instance;
-
     public GameObject[] unitPrefabs;
 
     public GameObject dynamitePrefab;
@@ -43,17 +41,6 @@ public class BattleManager : MonoBehaviour
     private CanvasManager _canvasManager;
     private TeamManager _teamManager;
     private TimeScaleController _timeScaleController;
-
-
-    void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.LogWarning("More than one instance of BattleManager found!");
-            return;
-        }
-        instance = this;
-    }
 
     private void OnEnable()
     {

@@ -14,9 +14,8 @@ public struct CharacterSetupTest
     public Item item;
 }
 
-public class BattleManagerTest : MonoBehaviour
+public class BattleManagerTest : Singleton<BattleManagerTest>
 {
-    public static BattleManagerTest instance;
 
     public GameObject[] unitPrefabs;
 
@@ -44,16 +43,6 @@ public class BattleManagerTest : MonoBehaviour
 
     private CanvasManager _canvasManager;
     private TeamManager _teamManager;
-
-    void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.LogWarning("More than one instance of BattleManager found!");
-            return;
-        }
-        instance = this;
-    }
 
     private void OnEnable()
     {

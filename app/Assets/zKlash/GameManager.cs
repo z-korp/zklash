@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
-    private TeamManager _teamManager;
 
     void Awake()
     {
@@ -123,7 +122,7 @@ public class GameManager : MonoBehaviour
                 PlayerData.Instance.characterEntities.Add(entity.name);
                 var character = worldManager.Entity(entity.name).GetComponent<Character>();
                 Debug.Log($"Character entity spawned with id: {entity.name}");
-                _teamManager.PendingEntity = entity.name;
+                TeamManager.Instance.PendingEntity = entity.name;
             }
         }
 

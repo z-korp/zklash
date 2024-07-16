@@ -40,12 +40,7 @@ public class MobDraggable : MonoBehaviour
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _sp = GetComponent<SpriteRenderer>();
-        UpdateDropTargets();
 
-        droppableZones = GameObject.FindGameObjectsWithTag("DroppableZone");
-        mouseHoverDetector = GetComponent<MouseHoverDetector>();
     }
 
     private void Start()
@@ -53,6 +48,13 @@ public class MobDraggable : MonoBehaviour
         _canvasManager = CanvasManager.Instance;
         _dialogueManager = DialogueManager.Instance;
         _teamManager = TeamManager.Instance;
+
+        _rb = GetComponent<Rigidbody2D>();
+        _sp = GetComponent<SpriteRenderer>();
+        UpdateDropTargets();
+
+        droppableZones = GameObject.FindGameObjectsWithTag("DroppableZone");
+        mouseHoverDetector = GetComponent<MouseHoverDetector>();
     }
 
     private void Update()

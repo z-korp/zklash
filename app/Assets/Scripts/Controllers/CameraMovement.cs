@@ -13,9 +13,14 @@ public class CameraMovement : Singleton<CameraMovement>
     private bool moveToFight = false;
     private bool moveToShop = false;
 
+    private TimeScaleController _timeScaleController;
+    private CanvasManager _canvasManager;
+
 
     private void Start()
     {
+        _timeScaleController = TimeScaleController.Instance;
+        _canvasManager = CanvasManager.Instance;
         initialPosition = transform.position;
     }
 
@@ -23,7 +28,7 @@ public class CameraMovement : Singleton<CameraMovement>
     {
         while (Vector3.Distance(transform.position, targetPosition.position) > 0.1f)
         {
-            float step = speedToBattleArea * Time.deltaTime * TimeScaleController.Instance.speedGame;
+            float step = speedToBattleArea * Time.deltaTime * _timeScaleController.speedGame;
             transform.position = Vector3.MoveTowards(transform.position, targetPosition.position, step);
             yield return null;
         }
@@ -40,7 +45,7 @@ public class CameraMovement : Singleton<CameraMovement>
             yield return null;
         }
         moveToShop = false;
-        CanvasManager.instance.ToggleCanvasInterStep();
+        _canvasManager.ToggleCanvasInterStep();
     }
 
     public void MoveCameraToFight()

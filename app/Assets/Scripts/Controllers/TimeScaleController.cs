@@ -1,16 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeScaleController : MonoBehaviour
+public class TimeScaleController : Singleton<TimeScaleController>
 {
-    public static TimeScaleController Instance;
     private List<Animator> animators;
     public float speedGame = 1f;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     void Start()
     {

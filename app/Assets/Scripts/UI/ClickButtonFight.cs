@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Linq;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using zKlash.Game.Roles;
@@ -11,11 +10,13 @@ public class ClickButtonFight : MonoBehaviour
     private AudioManager _audioManager;
     private CameraMovement _cameraMovement;
     private CanvasManager _canvasManager;
+    private TimeScaleController _timeScaleController;
     private void Start()
     {
         _audioManager = AudioManager.Instance;
         _cameraMovement = CameraMovement.Instance;
         _canvasManager = CanvasManager.Instance;
+        _timeScaleController = TimeScaleController.Instance;
     }
 
     public void OnClickFight()
@@ -28,8 +29,8 @@ public class ClickButtonFight : MonoBehaviour
         }
         _canvasManager.HideUserStatsInfo(); // otherwise the user see the new stats (health, gold) from contract
         StartCoroutine(FightSequence());
-        TimeScaleController.Instance.UpdateAnimatorList();
-        TimeScaleController.Instance.ApplySpeed();
+        _timeScaleController.UpdateAnimatorList();
+        _timeScaleController.ApplySpeed();
     }
 
     private IEnumerator FightSequence()

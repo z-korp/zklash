@@ -5,6 +5,13 @@ public class ButtonSpeed : MonoBehaviour
     public GameObject ImgSpeed1;
     public GameObject ImgSpeed2;
 
+    private TimeScaleController _timeScaleController;
+
+    private void Start()
+    {
+        _timeScaleController = TimeScaleController.Instance;
+    }
+
     public void OnClickToggleSpeed()
     {
         ImgSpeed1.SetActive(!ImgSpeed1.activeSelf);
@@ -22,15 +29,15 @@ public class ButtonSpeed : MonoBehaviour
 
     private void OnClickSpeed1()
     {
-        TimeScaleController.Instance.SetTimeScale(1.0f);
-        TimeScaleController.Instance.UpdateAnimatorList();
-        TimeScaleController.Instance.ApplySpeed();
+        _timeScaleController.SetTimeScale(1.0f);
+        _timeScaleController.UpdateAnimatorList();
+        _timeScaleController.ApplySpeed();
     }
 
     private void OnClickSpeed2()
     {
-        TimeScaleController.Instance.SetTimeScale(2.0f);
-        TimeScaleController.Instance.UpdateAnimatorList();
-        TimeScaleController.Instance.ApplySpeed();
+        _timeScaleController.SetTimeScale(2.0f);
+        _timeScaleController.UpdateAnimatorList();
+        _timeScaleController.ApplySpeed();
     }
 }

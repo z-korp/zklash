@@ -41,6 +41,7 @@ public class BattleManager : MonoBehaviour
     private int _minLife = 0;
 
     private CanvasManager _canvasManager;
+    private TimeScaleController _timeScaleController;
 
     void Awake()
     {
@@ -65,6 +66,7 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         _canvasManager = CanvasManager.Instance;
+        _timeScaleController = TimeScaleController.Instance;
     }
 
     void Update()
@@ -88,7 +90,7 @@ public class BattleManager : MonoBehaviour
 
         GameObject mobObject = Instantiate(prefab, spot.transform.position, Quaternion.identity);
         mobObject.GetComponent<MobOrientation>().SetOrientation(orientation);
-        TimeScaleController.Instance.AddAnimator(mobObject.GetComponent<Animator>());
+        _timeScaleController.AddAnimator(mobObject.GetComponent<Animator>());
 
         GameCharacter character = new GameCharacter(setup.role, setup.level, setup.item);
         mobObject.GetComponent<MobController>().ConfigureCharacter(character);
@@ -176,28 +178,28 @@ public class BattleManager : MonoBehaviour
     {
         var dynamite = Instantiate(projectilePrefab, position, Quaternion.identity);
         dynamite.GetComponent<ProjectileParabolic>().Initialize(target);
-        TimeScaleController.Instance.AddAnimator(dynamite.GetComponent<Animator>());
+        _timeScaleController.AddAnimator(dynamite.GetComponent<Animator>());
 
     }
 
     private void PlayPowerUp(Vector3 position)
     {
         var powerUp = Instantiate(powerUpPrefab, position, Quaternion.identity);
-        TimeScaleController.Instance.AddAnimator(powerUp.GetComponentInChildren<Animator>());
+        _timeScaleController.AddAnimator(powerUp.GetComponentInChildren<Animator>());
 
     }
 
     private void PlayAttackUp(Vector3 position)
     {
         var attackUp = Instantiate(attackUpPrefab, position, Quaternion.identity);
-        TimeScaleController.Instance.AddAnimator(attackUp.GetComponentInChildren<Animator>());
+        _timeScaleController.AddAnimator(attackUp.GetComponentInChildren<Animator>());
 
     }
 
     private void PlayHealthUp(Vector3 position)
     {
         var attackUp = Instantiate(healthUpPrefab, position, Quaternion.identity);
-        TimeScaleController.Instance.AddAnimator(attackUp.GetComponentInChildren<Animator>());
+        _timeScaleController.AddAnimator(attackUp.GetComponentInChildren<Animator>());
 
     }
 
@@ -278,7 +280,7 @@ public class BattleManager : MonoBehaviour
         GameObject char1 = team1[0];
         GameObject char2 = team2[0];
 
-        yield return new WaitForSeconds(2f / TimeScaleController.Instance.speedGame);
+        yield return new WaitForSeconds(2f / _timeScaleController.speedGame);
         yield return Duel(char1, char2, team1, team2);
 
         //yield return RepositionTeams();

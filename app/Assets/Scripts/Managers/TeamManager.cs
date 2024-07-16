@@ -41,6 +41,8 @@ public class TeamManager : MonoBehaviour
         set { pendingEntity = value; }
     }
 
+    private TimeScaleController _timeScaleController;
+
     void Awake()
     {
         if (instance != null)
@@ -57,6 +59,11 @@ public class TeamManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        _timeScaleController = TimeScaleController.Instance;
+    }
+
     public void MoveTeam()
     {
         for (int i = 0; i < TeamSpots.Length; i++)
@@ -64,7 +71,7 @@ public class TeamManager : MonoBehaviour
             if (TeamSpots[i].Mob != null)
             {
                 HideXpCanvas(TeamSpots[i].Mob);
-                TeamSpots[i].Mob.GetComponent<MobMovement>().speed = 6f * TimeScaleController.Instance.speedGame;
+                TeamSpots[i].Mob.GetComponent<MobMovement>().speed = 6f * _timeScaleController.speedGame;
                 TeamSpots[i].Mob.GetComponent<MobMovement>().Move(targetsTeam[i]);
             }
         }

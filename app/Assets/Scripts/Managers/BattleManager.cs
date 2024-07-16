@@ -40,6 +40,8 @@ public class BattleManager : MonoBehaviour
     private int _maxTrophy = 10;
     private int _minLife = 0;
 
+    private CanvasManager _canvasManager;
+
     void Awake()
     {
         if (instance != null)
@@ -62,6 +64,7 @@ public class BattleManager : MonoBehaviour
 
     void Start()
     {
+        _canvasManager = CanvasManager.Instance;
     }
 
     void Update()
@@ -155,15 +158,15 @@ public class BattleManager : MonoBehaviour
     private void ExecuteAfterBattle(bool result)
     {
         if ((int)PlayerInfoUI.instance.getLifes() == _maxTrophy)
-            CanvasManager.instance.ShowCanvasWinOrLoose(result);
+            _canvasManager.ShowCanvasWinOrLoose(result);
         else if ((int)PlayerInfoUI.instance.getLifes() == _minLife)
-            CanvasManager.instance.ShowCanvasWinOrLoose(result);
+            _canvasManager.ShowCanvasWinOrLoose(result);
         else
         {
             //CameraMovement.instance.MoveCameraToShop();
             TeamManager.instance.ResetStatCharacter();
             TeamManager.instance.TPTeamToShop();
-            CanvasManager.instance.ToggleCanvasInterStep(result);
+            _canvasManager.ToggleCanvasInterStep(result);
         }
 
 

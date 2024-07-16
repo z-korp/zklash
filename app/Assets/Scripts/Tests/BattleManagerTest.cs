@@ -42,6 +42,8 @@ public class BattleManagerTest : MonoBehaviour
 
     private bool battleStarted = false;
 
+    private CanvasManager _canvasManager;
+
     void Awake()
     {
         if (instance != null)
@@ -62,9 +64,10 @@ public class BattleManagerTest : MonoBehaviour
         EventManager.OnStartBattle -= StartBattle;
     }
 
-    void Start()
+    private void Start()
     {
         LoadBattleSetup(7);
+        _canvasManager = CanvasManager.Instance;
     }
 
     void Update()
@@ -192,15 +195,15 @@ public class BattleManagerTest : MonoBehaviour
     private void ExecuteAfterBattle(bool result)
     {
         if ((int)PlayerInfoUI.instance.getLifes() == _maxTrophy)
-            CanvasManager.instance.ShowCanvasWinOrLoose(result);
+            _canvasManager.ShowCanvasWinOrLoose(result);
         else if ((int)PlayerInfoUI.instance.getLifes() == _minLife)
-            CanvasManager.instance.ShowCanvasWinOrLoose(result);
+            _canvasManager.ShowCanvasWinOrLoose(result);
         else
         {
             //CameraMovement.instance.MoveCameraToShop();
             TeamManager.instance.ResetStatCharacter();
             TeamManager.instance.TPTeamToShop();
-            CanvasManager.instance.ToggleCanvasInterStep(result);
+            _canvasManager.ToggleCanvasInterStep(result);
         }
     }
 

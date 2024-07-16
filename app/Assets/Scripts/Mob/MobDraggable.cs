@@ -33,6 +33,8 @@ public class MobDraggable : MonoBehaviour
 
     private const int maxLevel = 3;
 
+    private CanvasManager _canvasManager;
+
 
     private void Awake()
     {
@@ -42,6 +44,11 @@ public class MobDraggable : MonoBehaviour
 
         droppableZones = GameObject.FindGameObjectsWithTag("DroppableZone");
         mouseHoverDetector = GetComponent<MouseHoverDetector>();
+    }
+
+    private void Start()
+    {
+        _canvasManager = CanvasManager.Instance;
     }
 
     private void Update()
@@ -66,7 +73,7 @@ public class MobDraggable : MonoBehaviour
 
         _drag = true;
 
-        if (!isFromShop) CanvasManager.instance.ShowSellButton();
+        if (!isFromShop) _canvasManager.ShowSellButton();
 
         animator.SetBool("IsWalking", true);
         initPos = transform.position;
@@ -97,7 +104,7 @@ public class MobDraggable : MonoBehaviour
         // Cancel the drag if the mob is not dropped in a valid zone
         if (InvalidDropZoneResetPosition())
         {
-            CanvasManager.instance.ShowRerollButton();
+            _canvasManager.ShowRerollButton();
             return;
         }
 
@@ -107,7 +114,7 @@ public class MobDraggable : MonoBehaviour
         // Manage the case where the mob is dropped at the same place when it doesn't come from the shop
         if (MobNotFromShopDropAtSamePlace(zoneIndex))
         {
-            CanvasManager.instance.ShowRerollButton();
+            _canvasManager.ShowRerollButton();
             return;
         }
 
@@ -115,7 +122,7 @@ public class MobDraggable : MonoBehaviour
 
         // Manage the merge or swap case
         MergeOrSwapMob(zoneIndex, teamId);
-        CanvasManager.instance.ShowRerollButton();
+        _canvasManager.ShowRerollButton();
     }
 
     private void SetMobOrderVisual(int spOrder)
@@ -224,7 +231,7 @@ public class MobDraggable : MonoBehaviour
                         TeamManager.instance.FreeSpot(index);
 
                         // Reset sell btn to reroll
-                        CanvasManager.instance.ShowRerollButton();
+                        _canvasManager.ShowRerollButton();
                     },
                     onError: (error) =>
                     {

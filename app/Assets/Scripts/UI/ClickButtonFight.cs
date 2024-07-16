@@ -8,15 +8,25 @@ using zKlash.Game.Items;
 
 public class ClickButtonFight : MonoBehaviour
 {
+    private AudioManager _audioManager;
+    private CameraMovement _cameraMovement;
+    private CanvasManager _canvasManager;
+    private void Start()
+    {
+        _audioManager = AudioManager.Instance;
+        _cameraMovement = CameraMovement.Instance;
+        _canvasManager = CanvasManager.Instance;
+    }
+
     public void OnClickFight()
     {
-        AudioManager.Instance.SwitchTheme(AudioManager.Theme.Battle);
+        _audioManager.SwitchTheme(AudioManager.Theme.Battle);
         if (TeamManager.instance.CountMobInTeam() < 1)
         {
             DialogueManager.Instance.ShowDialogueForDuration("Even heroes need an army!", 2f);
             return;
         }
-        CanvasManager.instance.HideUserStatsInfo(); // otherwise the user see the new stats (health, gold) from contract
+        _canvasManager.HideUserStatsInfo(); // otherwise the user see the new stats (health, gold) from contract
         StartCoroutine(FightSequence());
         TimeScaleController.Instance.UpdateAnimatorList();
         TimeScaleController.Instance.ApplySpeed();
@@ -107,9 +117,9 @@ public class ClickButtonFight : MonoBehaviour
 
     private void FinalizeSetup()
     {
-        CameraMovement.instance.MoveCameraToFight();
-        CanvasManager.instance.ShowUserStatsInfo();
-        CanvasManager.instance.ToggleCanvases();
+        _cameraMovement.MoveCameraToFight();
+        _canvasManager.ShowUserStatsInfo();
+        _canvasManager.ToggleCanvases();
         TeamManager.instance.MoveTeam();
 
         // Refresh shop

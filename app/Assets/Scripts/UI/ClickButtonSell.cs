@@ -11,6 +11,8 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public AudioClip sellSound;
 
+    private CanvasManager _canvasManager;
+
 
     public void Awake()
     {
@@ -20,6 +22,11 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
             return;
         }
         instance = this;
+    }
+
+    private void Start()
+    {
+        _canvasManager = CanvasManager.Instance;
     }
 
 
@@ -65,7 +72,7 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
                 int index = draggedObject.GetComponent<MobDraggable>().index;
                 Destroy(draggedObject);
                 TeamManager.instance.FreeSpot(index);
-                CanvasManager.instance.ShowRerollButton();
+                _canvasManager.ShowRerollButton();
                 isDraggingSellMob = false;
                 imageCoin.SetActive(true);
                 imageCoin.GetComponent<Animator>().SetTrigger("makeCoinPop");

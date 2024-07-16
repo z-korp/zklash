@@ -12,10 +12,21 @@ public class CanvasInterStep : MonoBehaviour
     public Image trophyPrefab;
     public Material grayscaleMaterial;
 
+    private AudioManager _audioManager;
+    private CameraMovement _cameraMovement;
+    private CanvasManager _canvasManager;
+
     private void Awake()
     {
         UpdateHeartsDisplay(5);
         UpdateTrophysDisplay(5);
+    }
+
+    private void Start()
+    {
+        _audioManager = AudioManager.Instance;
+        _cameraMovement = CameraMovement.Instance;
+        _canvasManager = CanvasManager.Instance;
     }
 
     public void ToggleRibbonVictoryDefeat(bool victory)
@@ -63,8 +74,8 @@ public class CanvasInterStep : MonoBehaviour
 
     public void onClickNext()
     {
-        AudioManager.Instance.SwitchTheme(AudioManager.Theme.Village);
-        CameraMovement.instance.MoveCameraToShop();
-        CanvasManager.instance.ToggleCanvases();
+        _audioManager.SwitchTheme(AudioManager.Theme.Village);
+        _cameraMovement.MoveCameraToShop();
+        _canvasManager.ToggleCanvases();
     }
 }

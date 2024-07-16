@@ -1,10 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class CanvasManager : MonoBehaviour
+public class CanvasManager : Singleton<CanvasManager>
 {
-    public static CanvasManager instance;
-
     public GameObject canvasInfo;
     public GameObject canvasShopInfo;
     public GameObject canvasInterStep;
@@ -14,14 +12,8 @@ public class CanvasManager : MonoBehaviour
     private Transform btnReroll;
     private Transform btnSell;
 
-    void Awake()
+    private void Start()
     {
-        if (instance != null)
-        {
-            Debug.LogWarning("More than one instance of CanvasManager found!");
-            return;
-        }
-        instance = this;
 
         btnReroll = canvasInfo.transform.Find("BtnReroll");
         if (btnReroll == null)

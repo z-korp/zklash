@@ -12,6 +12,7 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public AudioClip sellSound;
 
     private CanvasManager _canvasManager;
+    private DialogueManager _dialogueManager;
     private TeamManager _teamManager;
 
 
@@ -28,6 +29,7 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private void Start()
     {
         _canvasManager = CanvasManager.Instance;
+        _dialogueManager = DialogueManager.Instance;
         _teamManager = TeamManager.Instance;
     }
 
@@ -49,7 +51,7 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (_teamManager.CountMobInTeam() <= 1)
         {
             isDraggingSellMob = false;
-            DialogueManager.Instance.ShowDialogueForDuration("Even heroes need an army!", 2f);
+            _dialogueManager.ShowDialogueForDuration("Even heroes need an army!", 2f);
             return;
         }
 

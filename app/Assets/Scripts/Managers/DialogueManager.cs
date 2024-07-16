@@ -2,27 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : Singleton<DialogueManager>
 {
-    public static DialogueManager Instance { get; private set; }
     public GameObject dialogueBubble;
     public Text dialogueText;
     public Transform npc;
     public float displayDuration = 2f; // Time of display for message
-
-    private void Awake()
-    {
-        // Vérifiez s'il y a déjà une instance de DialogueManager
-        if (Instance != null && Instance != this)
-        {
-            Debug.LogError("ERROR: only one instance of DialogueManager should be there destroying previous one");
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
 
     void Update()
     {

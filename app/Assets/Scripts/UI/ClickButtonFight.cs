@@ -11,6 +11,7 @@ public class ClickButtonFight : MonoBehaviour
     private BattleManager _battleManager;
     private CameraMovement _cameraMovement;
     private CanvasManager _canvasManager;
+    private DialogueManager _dialogueManager;
     private TeamManager _teamManager;
     private TimeScaleController _timeScaleController;
 
@@ -20,6 +21,7 @@ public class ClickButtonFight : MonoBehaviour
         _battleManager = BattleManager.Instance;
         _cameraMovement = CameraMovement.Instance;
         _canvasManager = CanvasManager.Instance;
+        _dialogueManager = DialogueManager.Instance;
         _teamManager = TeamManager.Instance;
         _timeScaleController = TimeScaleController.Instance;
     }
@@ -29,7 +31,7 @@ public class ClickButtonFight : MonoBehaviour
         _audioManager.SwitchTheme(AudioManager.Theme.Battle);
         if (_teamManager.CountMobInTeam() < 1)
         {
-            DialogueManager.Instance.ShowDialogueForDuration("Even heroes need an army!", 2f);
+            _dialogueManager.ShowDialogueForDuration("Even heroes need an army!", 2f);
             return;
         }
         _canvasManager.HideUserStatsInfo(); // otherwise the user see the new stats (health, gold) from contract

@@ -13,6 +13,9 @@ public class ShopManager : MonoBehaviour
 
     public uint rolesUint;
     public uint itemUint;
+
+    private DialogueManager _dialogueManager;
+
     void Awake()
     {
         if (instance != null)
@@ -25,6 +28,7 @@ public class ShopManager : MonoBehaviour
 
     void Start()
     {
+        _dialogueManager = DialogueManager.Instance;
         rolesUint = 66051;
         itemUint = 1;
 
@@ -58,7 +62,7 @@ public class ShopManager : MonoBehaviour
     {
         if (PlayerData.Instance.Gold < PlayerData.Instance.rerollCost)
         {
-            DialogueManager.Instance.ShowDialogueForDuration("You're broke mate !", 2f);
+            _dialogueManager.ShowDialogueForDuration("You're broke mate !", 2f);
             Debug.LogWarning("Not enough gold to reroll.");
             return;
         }

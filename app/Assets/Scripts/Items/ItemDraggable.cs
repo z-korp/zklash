@@ -18,6 +18,7 @@ public class ItemDraggable : MonoBehaviour
     public delegate void ItemHoveredHandler(bool isHovered);
     public event ItemHoveredHandler OnItemHovered;
 
+    private DialogueManager _dialogueManager;
     private TeamManager _teamManager;
 
     void Awake()
@@ -27,6 +28,7 @@ public class ItemDraggable : MonoBehaviour
 
     private void Start()
     {
+        _dialogueManager = DialogueManager.Instance;
         _teamManager = TeamManager.Instance;
     }
 
@@ -61,7 +63,7 @@ public class ItemDraggable : MonoBehaviour
         {
             if (PlayerData.Instance.Gold < PlayerData.Instance.purchaseCost)
             {
-                DialogueManager.Instance.ShowDialogueForDuration("You're broke mate !", 2f);
+                _dialogueManager.ShowDialogueForDuration("You're broke mate !", 2f);
                 Debug.LogWarning("Not enough gold to purchase item.");
                 rb.MovePosition(initPos);
                 return;
@@ -97,7 +99,7 @@ public class ItemDraggable : MonoBehaviour
                 {
                     // On error move item back to initial position
                     Debug.LogError("=> Error in ExecuteEquip: " + error);
-                    DialogueManager.Instance.ShowDialogueForDuration("Error during equip", 2f);
+                    _dialogueManager.ShowDialogueForDuration("Error during equip", 2f);
                     rb.MovePosition(initPos);
                 }
             ));

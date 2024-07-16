@@ -34,6 +34,7 @@ public class MobDraggable : MonoBehaviour
     private const int maxLevel = 3;
 
     private CanvasManager _canvasManager;
+    private DialogueManager _dialogueManager;
     private TeamManager _teamManager;
 
 
@@ -50,6 +51,7 @@ public class MobDraggable : MonoBehaviour
     private void Start()
     {
         _canvasManager = CanvasManager.Instance;
+        _dialogueManager = DialogueManager.Instance;
         _teamManager = TeamManager.Instance;
     }
 
@@ -308,7 +310,7 @@ public class MobDraggable : MonoBehaviour
 
     private void NoMoneyMessageResetPosition()
     {
-        DialogueManager.Instance.ShowDialogueForDuration("You're broke mate !", 2f);
+        _dialogueManager.ShowDialogueForDuration("You're broke mate !", 2f);
         Debug.LogWarning("Not enough balance");
         ResetPosition();
     }

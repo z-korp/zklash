@@ -9,21 +9,8 @@ public enum SoundEffect
     Hire,
 }
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
-    public static AudioManager instance;
-
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.LogWarning("There is more than one AudioManager in the scene!");
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
-        DontDestroyOnLoad(this.gameObject);
-    }
 
     // Playlist for village and battle themes
     public AudioClip[] villagePlaylist;
@@ -55,6 +42,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         // Initialize the sound effects dictionary
         soundEffects = new Dictionary<SoundEffect, AudioClip>();
         foreach (var soundEffectClip in soundEffectClips)

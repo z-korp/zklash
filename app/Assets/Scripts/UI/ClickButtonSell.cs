@@ -59,7 +59,7 @@ public class ClickButtonSell : MonoBehaviour, IPointerEnterHandler, IPointerExit
             character.id,
             onSuccess: () =>
             {
-                AudioManager.instance.PlayClipAt(sellSound, ClickButtonSell.instance.transform.position);
+                AudioManager.Instance.PlayClipAt(sellSound, ClickButtonSell.instance.transform.position);
 
                 // Get index to free spot in team and destroy gameObject
                 int index = draggedObject.GetComponent<MobDraggable>().index;

@@ -8,12 +8,15 @@ public class MobAudio : MonoBehaviour
     public AudioClip attackSound;
     public AudioClip deathSound;
 
+    private AudioManager _audioManager;
+
     private void Awake()
     {
     }
 
     void Start()
     {
+        _audioManager = AudioManager.Instance;
     }
 
     void Update()
@@ -24,9 +27,9 @@ public class MobAudio : MonoBehaviour
     {
         if (attackSound != null)
         {
-            if (AudioManager.instance != null)
+            if (_audioManager != null)
             {
-                AudioManager.instance.PlayClipAt(attackSound, transform.position);
+                _audioManager.PlayClipAt(attackSound, transform.position);
             }
         }
 
@@ -36,9 +39,9 @@ public class MobAudio : MonoBehaviour
     {
         if (deathSound != null)
         {
-            if (AudioManager.instance != null)
+            if (_audioManager != null)
             {
-                AudioManager.instance.PlayClipAt(deathSound, transform.position);
+                _audioManager.PlayClipAt(deathSound, transform.position);
             }
         }
 

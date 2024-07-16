@@ -277,7 +277,7 @@ public class MobDraggable : MonoBehaviour
                     {
                         Debug.Log("Hire transaction was successful.");
                         CreateMobForTeam(zoneIndex);
-                        AudioManager.instance.PlaySoundEffect(SoundEffect.Hire, transform.position);
+                        AudioManager.Instance.PlaySoundEffect(SoundEffect.Hire, transform.position);
                         index = zoneIndex;
                     },
                     onError: (error) =>
@@ -360,7 +360,7 @@ public class MobDraggable : MonoBehaviour
         // Update index of the spot they are in battle deck
         mob2.GetComponent<MobDraggable>().index = index;
 
-        AudioManager.instance.PlaySoundEffect(SoundEffect.Swap, transform.position);
+        AudioManager.Instance.PlaySoundEffect(SoundEffect.Swap, transform.position);
     }
 
     private void MergeMobThatCanLevelUpUI(GameObject mobToUpdate, GameObject mobToRemove, int oldLevel)

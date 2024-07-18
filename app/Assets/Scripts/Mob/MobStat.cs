@@ -18,6 +18,7 @@ public class MobStat : MonoBehaviour
     public string powerLV3;
     public int health;
     public int attack;
+    public int price;
 
     public void Start()
     {
@@ -48,6 +49,7 @@ public class MobStat : MonoBehaviour
             attack = mobController.Character.Attack;
             imageLeftMob.sprite = mob.image;
             imageRightMob.sprite = mob.image;
+            price = mob.price;
         }
     }
 

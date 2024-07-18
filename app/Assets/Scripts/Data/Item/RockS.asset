@@ -18,4 +18,5 @@ MonoBehaviour:
   description: Deals +1 damage
   save: 0
   durability: 1
+  price: 10
   image: {fileID: 21300000, guid: 201887c338347413d866ba4880ec7190, type: 3}

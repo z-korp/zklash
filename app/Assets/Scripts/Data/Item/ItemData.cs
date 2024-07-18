@@ -10,6 +10,7 @@ public class ItemData : ScriptableObject
     public string description;
     public int save;
     public int durability;
+    public int price;
     public Sprite image;
 
 }

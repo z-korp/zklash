@@ -9,5 +9,6 @@ public class MobData : ScriptableObject
     public string powerLV2;
     public string powerLV3;
     public Sprite image;
+    public int price;
     public Role role;
 }

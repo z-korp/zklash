@@ -20,6 +20,9 @@ public class ItemDraggable : MonoBehaviour
 
     private DialogueManager _dialogueManager;
     private TeamManager _teamManager;
+    private ShopMessageManager _shopMessageManager;
+
+    private string _priceString = "It will cost you: \n\n";
 
     void Awake()
     {
@@ -30,6 +33,7 @@ public class ItemDraggable : MonoBehaviour
     {
         _dialogueManager = DialogueManager.Instance;
         _teamManager = TeamManager.Instance;
+        _shopMessageManager = ShopMessageManager.Instance;
     }
 
     void Update()
@@ -135,9 +139,12 @@ public class ItemDraggable : MonoBehaviour
     private void OnMouseEnter()
     {
         OnItemHovered?.Invoke(true);
+        _shopMessageManager.ShowShopMessage(_priceString + item.price.ToString());
+
     }
     private void OnMouseExit()
     {
         OnItemHovered?.Invoke(false);
+        _shopMessageManager.ResetShopMessage();
     }
 }

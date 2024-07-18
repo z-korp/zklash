@@ -511,8 +511,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 25.7, y: 225}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 46.622517, y: 78.88518}
+  m_SizeDelta: {x: 281.294, y: 228.1633}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &122090310
 PrefabInstance:
@@ -2102,6 +2102,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 493726060}
   m_CullTransparentMesh: 1
+--- !u!1 &496216785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 496216786}
+  - component: {fileID: 496216787}
+  m_Layer: 0
+  m_Name: ShopMessageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &496216786
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496216785}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1416638326}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &496216787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496216785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b5cde65609c44c1ac6b5f4b731b79e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shopText: {fileID: 2047837420}
 --- !u!1001 &500753628
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3940,7 +3985,7 @@ Tilemap:
       - {fileID: -935363233, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -403315721, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -1164164611, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: -8, z: 0}
@@ -4651,7 +4696,7 @@ Tilemap:
       - {fileID: -935363233, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -403315721, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -1164164611, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: 7, z: 0}
@@ -33249,10 +33294,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 104820548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 62.30013, y: -236.6545}
-  m_SizeDelta: {x: 283.0941, y: 223.7109}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1202944014
 MonoBehaviour:
@@ -35604,7 +35649,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: -5, z: 0}
@@ -36279,7 +36324,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -3, y: 3, z: 0}
@@ -37107,6 +37152,7 @@ Transform:
   - {fileID: 1777870522}
   - {fileID: 1406579292}
   - {fileID: 617068051}
+  - {fileID: 496216786}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1446427676 stripped
@@ -44564,7 +44610,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -8, y: -2, z: 0}
@@ -45149,7 +45195,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: 4, z: 0}
@@ -52540,7 +52586,7 @@ Tilemap:
       - {fileID: -935363233, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -403315721, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -1164164611, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: -1, z: 0}
@@ -53154,10 +53200,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 104820548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 74.59887, y: -234.2662}
-  m_SizeDelta: {x: 222.3511, y: 100.0524}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.11000061, y: 8.4961}
+  m_SizeDelta: {x: -118.357, y: -126.5579}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2047837420
 MonoBehaviour:
@@ -53217,7 +53263,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -53245,7 +53291,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 4.868021, z: 28.32269, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

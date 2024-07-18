@@ -6,8 +6,17 @@ public class MouseHoverDetector : MonoBehaviour
 
     private bool isDragging = false;
 
+    private ShopMessageManager _shopMessageManager;
+
+    private string _priceString = "It will cost you: \n\n";
+
+    private int _price;
+
+
     void Start()
     {
+        _shopMessageManager = ShopMessageManager.Instance;
+        _price = GetComponent<MobStat>().price;
         if (canvas != null)
         {
             canvas.SetActive(false);
@@ -17,17 +26,22 @@ public class MouseHoverDetector : MonoBehaviour
 
     void OnMouseEnter()
     {
-        if (canvas != null && !isDragging)
+        if (canvas != null)
         {
-            canvas.SetActive(true);
+            _shopMessageManager.ShowShopMessage(_priceString + _price.ToString());
+            if (!isDragging)
+                canvas.SetActive(true);
+
         }
     }
 
     void OnMouseExit()
     {
-        if (canvas != null && !isDragging)
+        if (canvas != null)
         {
-            canvas.SetActive(false);
+            ShopMessageManager.Instance.ResetShopMessage();
+            if (!isDragging)
+                canvas.SetActive(false);
         }
     }
 

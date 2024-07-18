@@ -1,6 +1,6 @@
 {
   "world": {
-    "kind": "Contract",
+    "kind": "WorldContract",
     "class_hash": "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd",
     "original_class_hash": "0x799bc4e9da10bfb3dd88e6f223c9cfbf7745435cd14f5d69675ea448e578cd",
     "abi": [
@@ -662,8 +662,12 @@
     ],
     "address": "0x11aa9b474f093e27b773aaec3c0bae571140e825d27ac433698d3584c8d4af9",
     "transaction_hash": "0x5be0af36841d33273a0466f5a92bf2f5ddaf15daf07cf0c12c419547b90f21",
-    "block_number": 3,
+    "block_number": 5,
     "seed": "zklash",
+    "metadata": {
+      "profile_name": "dev",
+      "rpc_url": "http://localhost:5050/"
+    },
     "name": "dojo::world::world"
   },
   "base": {
@@ -789,8 +793,8 @@
     {
       "kind": "DojoContract",
       "address": "0x4b438b06982e6d5c40267a2c65947d5fae877c3a7e5693245cf5459f09d5bd1",
-      "class_hash": "0x614c8389be72137e289a1e8415a4685326947bdb197b6a2d31d37569c4e4a71",
-      "original_class_hash": "0x614c8389be72137e289a1e8415a4685326947bdb197b6a2d31d37569c4e4a71",
+      "class_hash": "0x5b0be4de62b42812a7f78a3b01d4a11b23c568ab4e6f73ecc446be6d19da44c",
+      "original_class_hash": "0x5b0be4de62b42812a7f78a3b01d4a11b23c568ab4e6f73ecc446be6d19da44c",
       "base_class_hash": "0x679177a2cb757694ac4f326d01052ff0963eac0bc2a17116a2b87badcdf6f76",
       "abi": [
         {
@@ -3035,10 +3039,15 @@
           "name": "size",
           "type": "u8",
           "key": false
+        },
+        {
+          "name": "name",
+          "type": "felt252",
+          "key": false
         }
       ],
-      "class_hash": "0x5a508a5c5918e923e4b9279b9e1a0e06e37f9a6ed35135d16d607522498a0af",
-      "original_class_hash": "0x5a508a5c5918e923e4b9279b9e1a0e06e37f9a6ed35135d16d607522498a0af",
+      "class_hash": "0x53f1fe4c46d10bef3a148f16394d532de0984ae25ac72312686b4dc9867e6ad",
+      "original_class_hash": "0x53f1fe4c46d10bef3a148f16394d532de0984ae25ac72312686b4dc9867e6ad",
       "abi": [
         {
           "type": "impl",
@@ -3240,6 +3249,10 @@
             {
               "name": "size",
               "type": "core::integer::u8"
+            },
+            {
+              "name": "name",
+              "type": "core::felt252"
             }
           ]
         },

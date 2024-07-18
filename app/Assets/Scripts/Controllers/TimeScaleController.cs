@@ -10,11 +10,13 @@ public class TimeScaleController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        UpdateAnimatorList();
     }
 
     void Start()
     {
-        UpdateAnimatorList();
+
     }
 
     void Update()

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8481764898386681991}
-  - component: {fileID: 7782349404850231999}
+  - component: {fileID: 3307400599455081202}
   m_Layer: 0
-  m_Name: BattleManagerTest
+  m_Name: BattleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7782349404850231999
+--- !u!114 &3307400599455081202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,17 +58,16 @@ MonoBehaviour:
   attackUpPrefab: {fileID: 7664621273551576041, guid: 72ac80e6cddd24d1f900738eaa50cf24, type: 3}
   healthUpPrefab: {fileID: 7664621273551576041, guid: 91071487b907248f8bdde28721cdf831, type: 3}
   itemDataArray:
-  - {fileID: 11400000, guid: 3d434f2c3761742c8ba5bed005f65e6a, type: 2}
-  - {fileID: 11400000, guid: 7cc435beaf5d34c4e897caab24263325, type: 2}
   - {fileID: 11400000, guid: 0cc7f62b8401e460ead0dd2ecb5f86ea, type: 2}
-  - {fileID: 11400000, guid: 7e8ddb42f03e64879b4b3dca74a963f0, type: 2}
-  - {fileID: 11400000, guid: 834909c78e08c4952a7ef09d5eeca074, type: 2}
-  - {fileID: 11400000, guid: f71464fe3e13048939312a947b2f0d1f, type: 2}
-  - {fileID: 11400000, guid: 7573566f514854b59a55e113c679e23e, type: 2}
+  - {fileID: 11400000, guid: 7cc435beaf5d34c4e897caab24263325, type: 2}
+  - {fileID: 11400000, guid: 3d434f2c3761742c8ba5bed005f65e6a, type: 2}
   - {fileID: 11400000, guid: 2ed3eae5b7da44a32afee65cc85ba259, type: 2}
-  - {fileID: 11400000, guid: 197e012bf8a364ccbb5d86d61b4e5937, type: 2}
-  - {fileID: 11400000, guid: ae4dc7894d4b84607b50c51f1368984e, type: 2}
+  - {fileID: 11400000, guid: 7573566f514854b59a55e113c679e23e, type: 2}
+  - {fileID: 11400000, guid: f71464fe3e13048939312a947b2f0d1f, type: 2}
+  - {fileID: 11400000, guid: 7e8ddb42f03e64879b4b3dca74a963f0, type: 2}
   - {fileID: 11400000, guid: 8ca5124c63a3141be8484d88514a0d05, type: 2}
+  - {fileID: 11400000, guid: ae4dc7894d4b84607b50c51f1368984e, type: 2}
+  - {fileID: 11400000, guid: 197e012bf8a364ccbb5d86d61b4e5937, type: 2}
   allySpots:
   - {fileID: 0}
   - {fileID: 0}

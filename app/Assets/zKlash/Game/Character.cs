@@ -223,7 +223,6 @@ namespace zKlash.Game
             return dmg;
         }
 
-
         public void Unequip()
         {
             Talent(Phase.OnUnequip);

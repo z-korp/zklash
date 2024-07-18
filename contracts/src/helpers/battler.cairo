@@ -267,4 +267,33 @@ mod tests {
         );
         assert(win, 'Battler: invalid win status');
     }
+
+    #[test]
+    fn test_battle_bug_win_loose_1() {
+        let mut characters: Array<Character> = array![
+            CharacterTrait::from(1, Role::Pawn, 3, Item::MushroomLarge),
+            CharacterTrait::from(2, Role::Knight, 3, Item::PumpkinMedium),
+            CharacterTrait::from(3, Role::Pawn, 3, Item::MushroomLarge),
+            CharacterTrait::from(4, Role::Knight, 3, Item::PumpkinMedium),
+        ];
+
+        let mut foes: Array<Character> = array![
+            CharacterTrait::from(1, Role::Bomboblin, 3, Item::BushLarge),
+            CharacterTrait::from(2, Role::Torchoblin, 3, Item::MushroomMedium),
+            CharacterTrait::from(3, Role::Dynamoblin, 3, Item::RockMedium),
+            CharacterTrait::from(4, Role::Dynamoblin, 3, Item::PumpkinMedium),
+        ];
+
+        let mut tick: u32 = 0;
+        let win = Battler::battle(
+            ref characters,
+            ref foes,
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            ref tick,
+        );
+        assert(!win, 'Battler: invalid win status');
+    }
 }

@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using zKlash.Game;
+using System.Collections;
 
 public class MobItem : MonoBehaviour
 {
@@ -61,7 +62,10 @@ public class MobItem : MonoBehaviour
         if (item != _previousItem)
         {
             Debug.Log("Item changed");
-            Destroy(itemOrbiterGO);
+            if (itemOrbiterGO != null)
+            {
+                StartCoroutine(FadeOutAndDestroy(itemOrbiterGO, 0.3f));
+            }
             _previousItem = item;
             if (item != null)
             {
@@ -131,7 +135,24 @@ public class MobItem : MonoBehaviour
         itemOrbiterGO = Instantiate(orbitObjectPrefab, gameObject.transform.position, Quaternion.identity);
         OrbitObject itemOrbiter = itemOrbiterGO.GetComponent<OrbitObject>();
         itemOrbiter.target = gameObject.transform;
-        itemOrbiterGO.GetComponent<SpriteRenderer>().sprite = itemImage.sprite;
+        SpriteRenderer spriteRenderer = itemOrbiterGO.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = itemImage.sprite;
+
+        // Start with fully transparent and fade in
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0f);
+        StartCoroutine(FadeIn(spriteRenderer, 0.3f));
+    }
+
+    private IEnumerator FadeIn(SpriteRenderer spriteRenderer, float duration)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, elapsedTime / duration);
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, alpha);
+            yield return null;
+        }
     }
 
     public void SaveItemDataBeforeBattle(ItemData itemToSave)
@@ -150,5 +171,22 @@ public class MobItem : MonoBehaviour
     public void ResetItemDataAfterBattle()
     {
         _resetAfterBattle = true;
+    }
+
+    private IEnumerator FadeOutAndDestroy(GameObject objectToFade, float duration)
+    {
+        SpriteRenderer spriteRenderer = objectToFade.GetComponent<SpriteRenderer>();
+        float elapsedTime = 0f;
+        Color originalColor = spriteRenderer.color;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / duration);
+            spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+
+        Destroy(objectToFade);
     }
 }

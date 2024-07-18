@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using zKlash.Game.Roles;
 
 public class MobAttack : MonoBehaviour
 {
@@ -86,7 +87,15 @@ public class MobAttack : MonoBehaviour
 
     public IEnumerator TriggerPostMortemCoroutine(int dmg)
     {
-        Debug.Log($"PostMorteming {target.name} for {dmg} damage");
+        if (GetComponent<MobController>().Character.RoleInterface == Role.Bomboblin) // TBD standardize the PostMortem animation
+        {
+            animator.SetTrigger("PostMortem");
+
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("PostMortem"));
+            yield return new WaitWhile(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f);
+        }
+
+        Debug.Log($"PostMorteming {target.name} for {dmg} damage, target has {target.Health} health left.");
         yield return target.TakeDamage(dmg);
     }
 

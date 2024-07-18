@@ -14,9 +14,11 @@ public class ProjectileParabolic : MonoBehaviour
 
     private Animator _animator;
 
+    private SoundEffect _soundOnHit;
 
 
-    public void Initialize(Transform target, float speed = 3f, float arcHeight = 2f)
+
+    public void Initialize(Transform target, SoundEffect soundOnHit, float speed = 3f, float arcHeight = 2f)
     {
         this.target = target;
         this.startPosition = transform.position;
@@ -28,6 +30,7 @@ public class ProjectileParabolic : MonoBehaviour
         float distance = Vector3.Distance(startPosition, targetPosition);
         this.timeToTarget = distance / speed;
         this.elapsedTime = 0f;
+        _soundOnHit = soundOnHit;
     }
 
     private void Awake()
@@ -58,7 +61,7 @@ public class ProjectileParabolic : MonoBehaviour
         transform.position = currentPosition;
 
         // Check if the projectile has reached the target
-        if (t >= 1f)
+        if (t >= 0.95f) // I put 0.95f because the arrow was not hitting the target, dynamite was working, TBD more clean solution
         {
             OnProjectileHit();
         }
@@ -66,10 +69,12 @@ public class ProjectileParabolic : MonoBehaviour
 
     private void OnProjectileHit()
     {
+        Debug.Log("qqqqqqqqqqqqqqqqqqqqqqqqqqq OnProjectileHit");
         hitted = true;
-        // Here you can add logic for when the projectile hits the target, such as applying damage.
         _animator.SetTrigger("explode");
         //Destroy(gameObject);
+        Debug.Log("qqqqqqqqqqqqqqqqqqqqqqqqqqq OnProjectileHit");
+        AudioManager.instance.PlaySoundEffect(_soundOnHit, targetPosition);
     }
 
     private void DestroyProjectile()

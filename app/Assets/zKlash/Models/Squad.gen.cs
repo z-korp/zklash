@@ -6,7 +6,8 @@ using Dojo.Starknet;
 using Dojo.Torii;
 
 // Model definition for `zklash::models::squad::Squad` model
-public class Squad : ModelInstance {
+public class Squad : ModelInstance
+{
     [ModelField("registry_id")]
     public uint registry_id;
 
@@ -25,12 +26,17 @@ public class Squad : ModelInstance {
     [ModelField("size")]
     public byte size;
 
+    [ModelField("name")]
+    public FieldElement name;
+
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
     }
 
     public override void OnUpdate(Model model)
@@ -39,4 +45,3 @@ public class Squad : ModelInstance {
         base.OnUpdate(model);
     }
 }
-        

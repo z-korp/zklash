@@ -726,11 +726,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1958345953791812209, guid: 76f25ccb9ee3e42ef98fc4e359850fe3, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.611
       objectReference: {fileID: 0}
     - target: {fileID: 1958345953791812209, guid: 76f25ccb9ee3e42ef98fc4e359850fe3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4174653123879183155, guid: 76f25ccb9ee3e42ef98fc4e359850fe3, type: 3}
       propertyPath: m_Pivot.x

@@ -1326,35 +1326,35 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleManager
       objectReference: {fileID: 0}
-    - target: {fileID: 7782349404850231999, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
+    - target: {fileID: 3307400599455081202, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
       propertyPath: allySpots.Array.data[0]
       value: 
       objectReference: {fileID: 482579361}
-    - target: {fileID: 7782349404850231999, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
+    - target: {fileID: 3307400599455081202, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
       propertyPath: allySpots.Array.data[1]
       value: 
       objectReference: {fileID: 1882034723}
-    - target: {fileID: 7782349404850231999, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
+    - target: {fileID: 3307400599455081202, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
       propertyPath: allySpots.Array.data[2]
       value: 
       objectReference: {fileID: 1446427676}
-    - target: {fileID: 7782349404850231999, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
+    - target: {fileID: 3307400599455081202, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
       propertyPath: allySpots.Array.data[3]
       value: 
       objectReference: {fileID: 676795845}
-    - target: {fileID: 7782349404850231999, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
+    - target: {fileID: 3307400599455081202, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
       propertyPath: enemySpots.Array.data[0]
       value: 
       objectReference: {fileID: 443469210}
-    - target: {fileID: 7782349404850231999, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
+    - target: {fileID: 3307400599455081202, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
       propertyPath: enemySpots.Array.data[1]
       value: 
       objectReference: {fileID: 309762400}
-    - target: {fileID: 7782349404850231999, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
+    - target: {fileID: 3307400599455081202, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
       propertyPath: enemySpots.Array.data[2]
       value: 
       objectReference: {fileID: 2072028144}
-    - target: {fileID: 7782349404850231999, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
+    - target: {fileID: 3307400599455081202, guid: 086cb89f44d1849b5ab88749cf0aacf6, type: 3}
       propertyPath: enemySpots.Array.data[3]
       value: 
       objectReference: {fileID: 1485656274}
@@ -3940,7 +3940,7 @@ Tilemap:
       - {fileID: -935363233, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -403315721, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -1164164611, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: -8, z: 0}
@@ -4270,7 +4270,7 @@ Tilemap:
       - {fileID: 1301796949, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -1398993166, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: 30671161, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -1, y: -1, z: 0}
@@ -35604,7 +35604,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: -5, z: 0}
@@ -35919,7 +35919,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: -3, z: 0}
@@ -35994,7 +35994,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -4, y: 0, z: 0}
@@ -36279,7 +36279,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -3, y: 3, z: 0}
@@ -44594,7 +44594,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 3, y: -2, z: 0}
@@ -44984,7 +44984,7 @@ Tilemap:
       - {fileID: 578198522, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: 1511159342, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
       - {fileID: -198556892, guid: 6f78a97718c6446c993ce9fd0fa34179, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 6, y: 3, z: 0}
@@ -52540,7 +52540,7 @@ Tilemap:
       - {fileID: -935363233, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -403315721, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
       - {fileID: -1164164611, guid: 15ab5bcaf780b48b38711355992f240f, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: -1, z: 0}

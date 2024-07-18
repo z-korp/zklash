@@ -7,6 +7,8 @@ public enum SoundEffect
 {
     Swap,
     Hire,
+    Explosion,
+    Stun
 }
 
 public class AudioManager : Singleton<AudioManager>

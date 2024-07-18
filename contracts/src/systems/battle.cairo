@@ -107,7 +107,7 @@ mod battle {
                 match waves.pop_front() {
                     Option::Some(wave) => {
                         let (level, size) = WaveTrait::attributes(wave);
-                        let mut squad: Squad = registry.create_squad(level, size);
+                        let mut squad: Squad = registry.create_squad(level, size, 'zKorp');
                         let mut foes: Array<Foe> = WaveTrait::foes(wave, registry.id, squad.id);
                         let league_id: u8 = LeagueTrait::compute_id(squad.rating);
                         let mut league = store.league(registry.id, league_id);
@@ -160,7 +160,7 @@ mod battle {
             // [Effect] Create squad
             let mut registry = store.registry(team.registry_id);
             let team_size: u8 = characters.len().try_into().unwrap();
-            let mut team_squad = registry.create_squad(team.level, team_size);
+            let mut team_squad = registry.create_squad(team.level, team_size, player.name);
 
             // [Effect] Create foes
             store.set_character_foes(registry.id, team_squad.id, characters.span());

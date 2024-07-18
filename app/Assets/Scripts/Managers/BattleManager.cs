@@ -14,11 +14,28 @@ public struct CharacterSetup
     public Item item;
 }
 
+public struct EffectResult
+{
+    public int TalentDamage;
+    public int ItemDamage;
+    public int Stun;
+    public Buff NextBuff;
+}
+
+public enum BattleMode
+{
+    Normal,
+    Test
+}
+
 public class BattleManager : Singleton<BattleManager>
 {
+    public BattleMode battleMode;
+
     public GameObject[] unitPrefabs;
 
     public GameObject dynamitePrefab;
+    public GameObject stonePrefab;
     public GameObject arrowPrefab;
     public GameObject powerUpPrefab;
     public GameObject attackUpPrefab;
@@ -38,9 +55,13 @@ public class BattleManager : Singleton<BattleManager>
     private int _maxTrophy = 10;
     private int _minLife = 0;
 
+
     private CanvasManager _canvasManager;
     private TeamManager _teamManager;
     private TimeScaleController _timeScaleController;
+
+    private bool battleStarted = false;
+
 
     private void OnEnable()
     {
@@ -54,22 +75,62 @@ public class BattleManager : Singleton<BattleManager>
 
     void Start()
     {
-        _canvasManager = CanvasManager.Instance;
         _teamManager = TeamManager.Instance;
         _timeScaleController = TimeScaleController.Instance;
+
+        if (battleMode == BattleMode.Test)
+        {
+            LoadBattleSetup(14);
+        }
+        else
+        {
+            _canvasManager = CanvasManager.Instance;
+        }
     }
 
     void Update()
     {
+        if (battleMode == BattleMode.Test && !battleStarted && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartBattle();
+        }
+    }
+
+    public void LoadBattleSetup(int index)
+    {
+        Debug.Log("LoadBattleSetup: " + BattleSetups.setups.Count);
+        if (index >= 0 && index < BattleSetups.setups.Count)
+        {
+            var setup = BattleSetups.setups[index];
+            alliesSetup = setup.alliesSetup;
+            enemiesSetup = setup.enemiesSetup;
+
+            InstantiateTeams();
+        }
+        else
+        {
+            Debug.LogError("Invalid battle setup index: " + index);
+        }
+    }
+
+    private void InstantiateTeams()
+    {
+        DestroyGameObjectFromList(allies);
+        DestroyGameObjectFromList(enemies);
+
+        InstanciateTeam(allies, alliesSetup, allySpots, Orientation.Right);
+        InstanciateTeam(enemies, enemiesSetup, enemySpots, Orientation.Left);
     }
 
     private void StartBattle()
     {
+        battleStarted = true;
         StartCoroutine(Battle(allies, enemies));
     }
 
     private GameObject CreateMob(CharacterSetup setup, GameObject spot, Orientation orientation)
     {
+        Debug.Log("CreateMob: " + setup.role + " --- " + setup.level + " --- " + setup.item);
         if (setup.role == Role.None || setup.role.ToString() == "None")
             return null;
 
@@ -78,7 +139,10 @@ public class BattleManager : Singleton<BattleManager>
         if (prefab == null || spot == null)
             return null;
 
+        Debug.Log("CreateMob: " + setup.role + " " + setup.level + " " + setup.item + " " + spot.name + " " + orientation.ToString() + " " + prefab.name);
+
         GameObject mobObject = Instantiate(prefab, spot.transform.position, Quaternion.identity);
+        Debug.Log("MobObject: " + mobObject.name);
         mobObject.GetComponent<MobOrientation>().SetOrientation(orientation);
         _timeScaleController.AddAnimator(mobObject.GetComponent<Animator>());
 
@@ -86,6 +150,7 @@ public class BattleManager : Singleton<BattleManager>
         mobObject.GetComponent<MobController>().ConfigureCharacter(character);
 
         string itemName = PrefabMappings.NameToItemDataMap[setup.item];
+        Debug.Log("ItemName: " + itemName);
         if (itemName != "None")
         {
             ItemData item = PrefabUtils.FindScriptableByName(itemDataArray, itemName);
@@ -100,6 +165,7 @@ public class BattleManager : Singleton<BattleManager>
 
     public void InstanciateTeam(List<GameObject> mobs, List<CharacterSetup> mobSetups, List<GameObject> spots, Orientation orientation)
     {
+        Debug.Log("-----------> mobs: " + mobs.Count + " --- mobSetups: " + mobSetups.Count + " --- spots: " + spots.Count + " --- orientation: " + orientation);
         if (mobs.Count > 0)
             return;
 
@@ -144,9 +210,6 @@ public class BattleManager : Singleton<BattleManager>
         }
     }
 
-    private Buff next_buff1 = new Buff();
-    private Buff next_buff2 = new Buff();
-
     private void ExecuteAfterBattle(bool result)
     {
         if ((int)PlayerInfoUI.instance.getLifes() == _maxTrophy)
@@ -160,49 +223,48 @@ public class BattleManager : Singleton<BattleManager>
             _teamManager.TPTeamToShop();
             _canvasManager.ToggleCanvasInterStep(result);
         }
-
-
     }
 
-    private void LaunchProjectile(Vector3 position, Transform target, GameObject projectilePrefab)
+    private void LaunchProjectile(Vector3 position, Transform target, GameObject projectilePrefab, SoundEffect soundOnHit, char size = '0')
     {
-        var dynamite = Instantiate(projectilePrefab, position, Quaternion.identity);
-        dynamite.GetComponent<ProjectileParabolic>().Initialize(target);
-        _timeScaleController.AddAnimator(dynamite.GetComponent<Animator>());
-
+        var projectile = Instantiate(projectilePrefab, position, Quaternion.identity);
+        // TBD dirty hack to set if stone or not, if set to 0, it will not be a stone
+        if (size != '0')
+        {
+            projectile.GetComponent<StoneSizeController>().SetStoneSize(size);
+        }
+        projectile.GetComponent<ProjectileParabolic>().Initialize(target, soundOnHit);
+        _timeScaleController.AddAnimator(projectile.GetComponent<Animator>());
     }
 
     private void PlayPowerUp(Vector3 position)
     {
         var powerUp = Instantiate(powerUpPrefab, position, Quaternion.identity);
         _timeScaleController.AddAnimator(powerUp.GetComponentInChildren<Animator>());
-
     }
 
     private void PlayAttackUp(Vector3 position)
     {
         var attackUp = Instantiate(attackUpPrefab, position, Quaternion.identity);
         _timeScaleController.AddAnimator(attackUp.GetComponentInChildren<Animator>());
-
     }
 
     private void PlayHealthUp(Vector3 position)
     {
         var attackUp = Instantiate(healthUpPrefab, position, Quaternion.identity);
         _timeScaleController.AddAnimator(attackUp.GetComponentInChildren<Animator>());
-
     }
 
-    private void PlayDeathRattleEffects(Role role, Vector3 position, Transform target)
+    private void PlayDamageEffects(Role role, Vector3 position, Transform target)
     {
         switch (role)
         {
             case Role.Dynamoblin:
-                LaunchProjectile(position, target, dynamitePrefab);
+                LaunchProjectile(position, target, dynamitePrefab, SoundEffect.Explosion);
                 // TBD : add good death rattle
                 break;
             case Role.Bowman:
-                LaunchProjectile(position, target, arrowPrefab);
+                LaunchProjectile(position, target, arrowPrefab, SoundEffect.Stun);
                 // TBD : add good death rattle
                 break;
         }
@@ -239,12 +301,7 @@ public class BattleManager : Singleton<BattleManager>
             }
 
             // [Effect] Apply effects on dispatch
-            Debug.Log(">>>>>>>>>> DISPATCH ALLY <<<<<<<<<<<< ");
-            applyEffect(team1[0], Phase.OnDispatch);
-            // [Effect] Apply floating buff
-            team1[0].GetComponent<MobController>().Character.ApplyBuff(next_buff1);
-            next_buff1 = new Buff(); // reinit buff for next character
-
+            ApplyEffect(team1[0], Phase.OnDispatch);
         }
 
         if (team2[0].GetComponent<MobHealth>().Health <= 0)
@@ -259,12 +316,7 @@ public class BattleManager : Singleton<BattleManager>
             }
 
             // [Effect] Apply effects on dispatch
-            Debug.Log(">>>>>>>>>> DISPATCH ENEMY <<<<<<<<<<<<");
-            applyEffect(team2[0], Phase.OnDispatch);
-            // [Effect] Apply floating buff
-            team2[0].GetComponent<MobController>().Character.ApplyBuff(next_buff2);
-            next_buff2 = new Buff(); // reinit buff for next character
-
+            ApplyEffect(team2[0], Phase.OnDispatch);
         }
 
         GameObject char1 = team1[0];
@@ -281,109 +333,148 @@ public class BattleManager : Singleton<BattleManager>
 
     IEnumerator Duel(GameObject char1, GameObject char2, List<GameObject> team1, List<GameObject> team2)
     {
-        GameCharacter c1 = char1.GetComponent<MobController>().Character;
-        GameCharacter c2 = char2.GetComponent<MobController>().Character;
-
         Debug.Log("[START DUEL]============================================================");
         Debug.Log("Dueling");
 
-        // [Effect] Apply talent and item buff for char1 and char2
-        var item = c1.Item;
-        var (talent_dmg1, item_dmg1, stun1, _) = applyEffect(char1, Phase.OnFight);
-        int damage1 = talent_dmg1 + item_dmg1;
-        /*if (item_dmg1 != 0)
-        {
-            yield return StartCoroutine(ItemEffect(char1));
-        }*/
+        // Apply effects and calculate damage
+        EffectResult char1Effect = ApplyEffect(char1, Phase.OnFight);
+        EffectResult char2Effect = ApplyEffect(char2, Phase.OnFight);
 
-        var (talent_dmg2, item_dmg2, stun2, _) = applyEffect(char2, Phase.OnFight);
-        /*if (item_dmg2 != 0)
-        {
-            yield return StartCoroutine(ItemEffect(char2));
-        }*/
-        int damage2 = talent_dmg2 + item_dmg2;
+        // Apply stun effects
+        char1.GetComponent<MobController>().Character.Stun = char1Effect.Stun;
+        char2.GetComponent<MobController>().Character.Stun = char2Effect.Stun;
 
-        // [Effect] Apply stun effects
-        c1.Stun = stun2;
-        c2.Stun = stun1;
-
-        Coroutine attack1 = StartCoroutine(Attack(char1, char2, damage1));
-        Coroutine attack2 = StartCoroutine(Attack(char2, char1, damage2));
-        yield return attack1;
-        yield return attack2;
+        // Perform attacks
+        yield return PerformItemAttacks(char1, char2, char1Effect, char2Effect);
+        if (!IsCharacterDead(char1) && !IsCharacterDead(char2))
+            yield return PerformAttacks(char1, char2, char1Effect, char2Effect);
 
         yield return new WaitForSeconds(0.1f);
 
-        bool isChar1Dead = char1.GetComponent<MobHealth>().Health <= 0;
-        bool isChar2Dead = char2.GetComponent<MobHealth>().Health <= 0;
+        // Check deaths and apply post-mortem effects
+        bool char1WasAlive = !IsCharacterDead(char1);
+        bool char2WasAlive = !IsCharacterDead(char2);
 
-        if (isChar1Dead)
-        {
-            PlayDeathRattleEffects(char1.GetComponent<MobController>().Character.RoleInterface, char1.transform.position, char2.transform);
-            if (team1.Count > 1)
-                PlayBuffEffects(char1.GetComponent<MobController>().Character.RoleInterface, team1[1].transform.position);
+        yield return CheckDeathAndApplyEffects(char1, char2, team1, team2);
+        yield return CheckDeathAndApplyEffects(char2, char1, team2, team1);
 
-            var (dmg1, buff1) = postMortem(char1, char2);
-            if (dmg1 > 0)
-                yield return StartCoroutine(PostMortem(char1, char2, dmg1));
+        // If char1 was alive before but is now dead, and char2 is dead, apply char1's post-mortem effect
+        if (char1WasAlive && IsCharacterDead(char1) && IsCharacterDead(char2))
+            yield return CheckDeathAndApplyEffects(char1, char2, team1, team2);
 
-            var (dmg2, buff2) = postMortem(char2, char1);
-            if (dmg2 > 0)
-                yield return StartCoroutine(PostMortem(char2, char1, dmg2));
+        // Trigger death animations
+        yield return TriggerDeathAnimations(char1, char2);
 
-            next_buff1 = buff1;
-            next_buff2 = buff2;
-        }
-        if (isChar2Dead)
-        {
-
-
-            PlayDeathRattleEffects(char2.GetComponent<MobController>().Character.RoleInterface, char2.transform.position, char1.transform);
-            if (team2.Count > 1)
-                PlayBuffEffects(char2.GetComponent<MobController>().Character.RoleInterface, team2[1].transform.position);
-
-            var (dmg2, buff2) = postMortem(char2, char1);
-            if (dmg2 > 0)
-                yield return StartCoroutine(PostMortem(char2, char1, dmg2));
-
-            var (dmg1, buff1) = postMortem(char1, char2);
-            if (dmg1 > 0)
-                yield return StartCoroutine(PostMortem(char1, char2, dmg1));
-
-            next_buff1 = buff1;
-            next_buff2 = buff2;
-        }
-
-
-        Coroutine dead1 = null;
-        Coroutine dead2 = null;
-
-        isChar1Dead = char1.GetComponent<MobHealth>().Health <= 0;
-        if (isChar1Dead)
-        {
-            dead1 = StartCoroutine(char1.GetComponent<MobHealth>().TriggerDie());
-        }
-
-        isChar2Dead = char2.GetComponent<MobHealth>().Health <= 0;
-        if (isChar2Dead)
-        {
-            dead2 = StartCoroutine(char2.GetComponent<MobHealth>().TriggerDie());
-        }
-
-        yield return dead1;
-        yield return dead2;
+        bool isChar1Dead = IsCharacterDead(char1);
+        bool isChar2Dead = IsCharacterDead(char2);
 
         if (isChar1Dead || isChar2Dead)
         {
-            //yield return WaitForKey();
+            if (battleMode == BattleMode.Test)
+                yield return WaitForKey();
             Debug.Log("[END DUEL]============================================================");
             yield break;
         }
 
-        //yield return WaitForKey();
+        if (battleMode == BattleMode.Test)
+            yield return WaitForKey();
         Debug.Log("[END CONTINUE DUEL]============================================================");
 
         yield return Duel(char1, char2, team1, team2);
+    }
+
+    private IEnumerator PerformItemAttacks(GameObject char1, GameObject char2, EffectResult effectChar1, EffectResult effectChar2)
+    {
+        int damage1 = effectChar1.ItemDamage;
+        int damage2 = effectChar2.ItemDamage;
+        var item1 = char1.GetComponent<MobItem>().previousItem;
+        var item2 = char2.GetComponent<MobItem>().previousItem;
+
+        bool projectile1Launched = LaunchProjectileIfNeeded(char1, char2, damage1, item1);
+        bool projectile2Launched = LaunchProjectileIfNeeded(char2, char1, damage2, item2);
+
+        bool anyProjectileLaunched = projectile1Launched || projectile2Launched;
+
+        if (anyProjectileLaunched)
+            yield return new WaitForSeconds(0.8f);
+
+        yield return StartCoroutine(ApplyDamageSimultaneously(char1, char2, damage1, damage2));
+
+        if (anyProjectileLaunched)
+            yield return new WaitForSeconds(0.8f);
+    }
+
+    private bool LaunchProjectileIfNeeded(GameObject attacker, GameObject target, int damage, ItemData item)
+    {
+        if (damage > 0)
+        {
+            LaunchProjectile(attacker.transform.position, target.transform, stonePrefab, SoundEffect.Swap, item.size);
+            return true;
+        }
+        return false;
+    }
+
+    private IEnumerator ApplyDamageSimultaneously(GameObject char1, GameObject char2, int damage1, int damage2)
+    {
+        Coroutine dmg1 = damage1 > 0 ? StartCoroutine(char2.GetComponent<MobHealth>().TakeDamage(damage1)) : null;
+        Coroutine dmg2 = damage2 > 0 ? StartCoroutine(char1.GetComponent<MobHealth>().TakeDamage(damage2)) : null;
+
+        if (dmg1 != null) yield return dmg1;
+        if (dmg2 != null) yield return dmg2;
+    }
+
+    private IEnumerator PerformAttacks(GameObject char1, GameObject char2, EffectResult effectChar1, EffectResult effectChar2)
+    {
+        Coroutine attack1 = StartCoroutine(Attack(char1, char2, effectChar1.TalentDamage));
+        Coroutine attack2 = StartCoroutine(Attack(char2, char1, effectChar2.TalentDamage));
+        yield return attack1;
+        yield return attack2;
+    }
+
+    private IEnumerator CheckDeathAndApplyEffects(GameObject attacker, GameObject defender, List<GameObject> attackerTeam, List<GameObject> defenderTeam)
+    {
+        if (IsCharacterDead(attacker))
+        {
+            EffectResult effects = ApplyEffect(attacker, Phase.OnDeath);
+            // The pumpkin save the character, so let's check if it is really dead after the item effect
+            if (IsCharacterDead(attacker))
+            {
+                yield return ApplyPostMortemEffects(attacker, defender, attackerTeam, effects);
+
+                if (attackerTeam.Count > 1)
+                    attackerTeam[1].GetComponent<MobController>().Character.ApplyBuff(effects.NextBuff);
+            }
+        }
+    }
+
+    private IEnumerator ApplyPostMortemEffects(GameObject attacker, GameObject defender, List<GameObject> attackerTeam, EffectResult effects)
+    {
+        PlayDamageEffects(attacker.GetComponent<MobController>().Character.RoleInterface, attacker.transform.position, defender.transform);
+        if (attackerTeam.Count > 1)
+            PlayBuffEffects(attacker.GetComponent<MobController>().Character.RoleInterface, attackerTeam[1].transform.position);
+
+        yield return new WaitForSeconds(0.8f);
+
+        int dmg = effects.ItemDamage + effects.TalentDamage;
+        if (dmg > 0)
+            yield return StartCoroutine(PostMortem(attacker, defender, dmg));
+
+        if (effects.Stun > 0)
+            defender.GetComponent<MobController>().Character.Stun = effects.Stun;
+    }
+
+    private IEnumerator TriggerDeathAnimations(GameObject char1, GameObject char2)
+    {
+        Coroutine dead1 = IsCharacterDead(char1) ? StartCoroutine(char1.GetComponent<MobHealth>().TriggerDie()) : null;
+        Coroutine dead2 = IsCharacterDead(char2) ? StartCoroutine(char2.GetComponent<MobHealth>().TriggerDie()) : null;
+
+        yield return dead1;
+        yield return dead2;
+    }
+
+    private bool IsCharacterDead(GameObject character)
+    {
+        return character.GetComponent<MobHealth>().Health <= 0;
     }
 
     IEnumerator WaitForKey()
@@ -405,11 +496,8 @@ public class BattleManager : Singleton<BattleManager>
         int stun = attacker.GetComponent<MobController>().Character.Stun;
 
         if (totalDamage <= 0 || stun > 0)
-        {
             yield break;
-        }
 
-        //yield return new WaitForSeconds(5f);
         MobAttack attackerAttack = attacker.GetComponent<MobAttack>();
         MobHealth defenderHealth = defender.GetComponent<MobHealth>();
 
@@ -427,32 +515,48 @@ public class BattleManager : Singleton<BattleManager>
         }
     }
 
-    IEnumerator ApplyEffect(GameObject character, Phase phase)
-    {
-        yield return null;
-    }
-
     IEnumerator ItemEffect(GameObject character)
     {
         Debug.Log("wwwwwwwwwwwwwwwwwwwwwww Item effect");
         yield return character.GetComponent<MobAttack>().BlinkPowerUp();
     }
 
-    (int, int, int, Buff) applyEffect(GameObject character, Phase phase)
+    // Main ApplyEffect function
+    EffectResult ApplyEffect(GameObject character, Phase phase)
+    {
+        var talentEffect = ApplyTalentEffect(character, phase);
+        int itemDamage = ApplyItemEffect(character, phase);
+
+        return new EffectResult
+        {
+            TalentDamage = talentEffect.TalentDamage,
+            ItemDamage = itemDamage,
+            Stun = talentEffect.Stun,
+            NextBuff = talentEffect.NextBuff
+        };
+    }
+
+    // Function to apply talent effects
+    (int TalentDamage, int Stun, Buff NextBuff) ApplyTalentEffect(GameObject character, Phase phase)
     {
         GameCharacter c = character.GetComponent<MobController>().Character;
-        // Talent buff
-        var (talent_damage, stun, next_buff) = c.Talent(phase);
-        Debug.Log("----> " + "Next buff: " + next_buff.Health + " " + next_buff.Attack + " " + next_buff.Absorb);
+        var (talentDamage, stun, nextBuff) = c.Talent(phase);
 
-        // Item buff
-        var item_dmg = c.Usage(phase);
+        Debug.Log($"----> Next buff: Health={nextBuff.Health}, Attack={nextBuff.Attack}, Absorb={nextBuff.Absorb}");
+
+        return (talentDamage, stun, nextBuff);
+    }
+
+    // Function to apply item effects
+    int ApplyItemEffect(GameObject character, Phase phase)
+    {
+        GameCharacter c = character.GetComponent<MobController>().Character;
+        int itemDamage = c.Usage(phase);
 
         string itemName = PrefabMappings.NameToItemDataMap[c.Item.GetItemType()];
         if (itemName != "None")
         {
             ItemData item = PrefabUtils.FindScriptableByName(itemDataArray, itemName);
-            //c.Equip(item.type);
             character.GetComponent<MobItem>().item = item;
         }
         else
@@ -460,8 +564,8 @@ public class BattleManager : Singleton<BattleManager>
             character.GetComponent<MobItem>().item = null;
         }
 
-        Debug.Log("----> " + "item_dmg: " + item_dmg);
-        return (talent_damage, item_dmg, stun, next_buff);
+        Debug.Log($"----> item_dmg: {itemDamage}");
+        return itemDamage;
     }
 
     private void EquipItem(GameObject character, Item itemEnum)
@@ -494,24 +598,6 @@ public class BattleManager : Singleton<BattleManager>
         else
         {
             Debug.Log("MobAttack component not found on attacker or MobHealth component not found on defender.");
-        }
-    }
-
-    (int, Buff) postMortem(GameObject character, GameObject foe)
-    {
-        GameCharacter c = character.GetComponent<MobController>().Character;
-        GameCharacter f = foe.GetComponent<MobController>().Character;
-        if (c.IsDead())
-        {
-            var (talent_dmg, item_dmg, stun, next_buff) = applyEffect(character, Phase.OnDeath);
-            int damage = talent_dmg + item_dmg;
-            f.Stun = stun;
-            f.TakeDamage(damage);
-            return (damage, next_buff);
-        }
-        else
-        {
-            return (0, new Buff());
         }
     }
 

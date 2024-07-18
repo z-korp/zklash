@@ -6,7 +6,7 @@ public class TimeScaleController : Singleton<TimeScaleController>
     private List<Animator> animators;
     public float speedGame = 1f;
 
-    void Start()
+    protected override void Init()
     {
         UpdateAnimatorList();
     }

@@ -81,7 +81,6 @@ public class MobHealth : MonoBehaviour
 
         MobDamageText damageTextComponent = GetComponent<MobDamageText>();
 
-
         Debug.Log($"Taking {real_dmg} damage");
         if (real_dmg > 0)
         {
@@ -117,7 +116,6 @@ public class MobHealth : MonoBehaviour
     {
         yield return null;
     }
-
 
     private void TriggerDeathRattleEffects()
     {

@@ -72,7 +72,13 @@ export const Canvas = ({ role }: { role: RoleType }) => {
     <div className="flex flex-col justify-center items-center gap-2 p-2 pb-4 border rounded-2xl">
       <div className="flex flex-col items-center justify-center mb-2 ">
         <div className="text-2xl">{mob.value}</div>
-        <img src={mob.getImage()} className="w-32 h-32 pixelated" />
+        <div className="flex items-center">
+          <div className="text-center">{`Health ${mob.getHealth()}`}</div>
+          <img src={mob.getImage()} className="w-32 h-32 pixelated" />
+
+          <div className="text-center">{`Attack ${mob.getDamage()}`}</div>
+        </div>
+
         <div className="h-[48px]">{mob.getTalent(level)}</div>
       </div>
       <div className="flex justify-center items-center gap-2">

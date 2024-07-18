@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1ca82b12fd749c3bc5774449a26bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSound: {fileID: 8300000, guid: 4b85fcf7cda9b4354a8f3213d630e79a, type: 3}
+  attackSound: {fileID: 8300000, guid: 92ea16f9312294445bb59aa0085f9fa5, type: 3}
   deathSound: {fileID: 8300000, guid: 56f93b54da0e144a7b2a3e6d94570f6e, type: 3}
 --- !u!114 &2416784710284706374
 MonoBehaviour:
@@ -319,6 +319,7 @@ MonoBehaviour:
   titleItem: {fileID: 9047692928555577194}
   sizeItem: {fileID: 201236159419140595}
   descriptionItem: {fileID: 3880543356644482929}
+  previousItem: {fileID: 0}
   itemImage: {fileID: 8193143247752982697}
   orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
   itemOrbiterGO: {fileID: 0}

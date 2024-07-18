@@ -42,10 +42,10 @@ AudioSource:
   m_GameObject: {fileID: 9043475861483710627}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5329283937604560961, guid: 8c55303e44f4740688f95e476a34851c, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -141,7 +141,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c50991d8a1464d1c881111f71125d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playlist:
-  - {fileID: 8300000, guid: bed30b05f8959434d9b5294c8c299ea3, type: 3}
-  source: {fileID: 9039436882994803598}
+  villagePlaylist:
+  - {fileID: 8300000, guid: a1a04da14f7a64389b442be63f056c5b, type: 3}
+  battlePlaylist:
+  - {fileID: 8300000, guid: 801ab265a649a4589aa32cd809abc9dc, type: 3}
+  musicSource: {fileID: 9039436882994803598}
+  effectSource: {fileID: 0}
   audioMixerGroup: {fileID: -6250989057744867328, guid: 8c55303e44f4740688f95e476a34851c, type: 2}
+  currentTheme: 0
+  soundEffectClips:
+  - soundEffect: 0
+    audioClip: {fileID: 8300000, guid: 02208415f3d7645f2a48febe8af488a8, type: 3}
+  - soundEffect: 1
+    audioClip: {fileID: 8300000, guid: 4ad491a70177c4f5b9a78a7ffdd14f09, type: 3}

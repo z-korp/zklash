@@ -207,14 +207,14 @@ public class TeamManager : Singleton<TeamManager>
         return true;
     }
 
-    // This function is called when we hire a new mob, it will use the pendingEntity that
+    // This function is called when we hire a new mob, it will use the PendingEntity that
     // was set by torii when it fetched the entity that has been hired
     public bool FillNewSpot(int spotIndex, Role _role, GameObject mob, string entity = "")
     {
-        bool ret = FillSpot(spotIndex, _role, mob, pendingEntity);
+        bool ret = FillSpot(spotIndex, _role, mob, PendingEntity);
         if (ret)
         {
-            pendingEntity = ""; // reset pending entity
+            PendingEntity = ""; // reset pending entity
         }
         return ret;
     }

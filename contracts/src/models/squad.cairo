@@ -36,14 +36,15 @@ struct Squad {
     index: u32,
     rating: u32,
     size: u8,
+    name: felt252,
 }
 
 #[generate_trait]
 impl SquadImpl of SquadTrait {
     #[inline(always)]
-    fn new(registry_id: u32, id: u32, level: u8, size: u8) -> Squad {
+    fn new(registry_id: u32, id: u32, level: u8, size: u8, name: felt252) -> Squad {
         let rating: u32 = level.into() * LEAGUE_SIZE.into() + LEAGUE_MIN_THRESHOLD;
-        Squad { registry_id, id, league_id: 0, index: 0, rating, size }
+        Squad { registry_id, id, league_id: 0, index: 0, rating, size, name }
     }
 
     #[inline(always)]
@@ -99,7 +100,7 @@ impl SquadAssert of AssertTrait {
 impl SquadZeroable of Zeroable<Squad> {
     #[inline(always)]
     fn zero() -> Squad {
-        Squad { registry_id: 0, id: 0, league_id: 0, index: 0, rating: 0, size: 0 }
+        Squad { registry_id: 0, id: 0, league_id: 0, index: 0, rating: 0, size: 0, name: 0 }
     }
 
     #[inline(always)]

@@ -199,6 +199,10 @@
       {
         "name": "size",
         "type": "core::integer::u8"
+      },
+      {
+        "name": "name",
+        "type": "core::felt252"
       }
     ]
   },

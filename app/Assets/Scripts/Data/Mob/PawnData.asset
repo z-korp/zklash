@@ -17,4 +17,5 @@ MonoBehaviour:
   powerLV2: At death, add (+2/+2) to the next friend.
   powerLV3: At death, add (+3/+3) to the next friend.
   image: {fileID: -507430714, guid: e8459362d7f43eb4dbe83cce595b4326, type: 3}
+  price: 30
   role: 3

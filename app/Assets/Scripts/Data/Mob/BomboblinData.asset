@@ -17,4 +17,5 @@ MonoBehaviour:
   powerLV2: At death, kill opponent and add +2 health to next friend.
   powerLV3: At death, kill opponent and add +3 health to next friend.
   image: {fileID: -1583091982, guid: 73beb986810a8476eaee4ffcc1037e3a, type: 3}
+  price: 30
   role: 6

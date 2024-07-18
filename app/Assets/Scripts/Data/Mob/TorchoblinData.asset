@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9bb301c2336430592323a918e1e00d, type: 3}
   m_Name: TorchoblinData
   m_EditorClassIdentifier: 
-  id: 5
   title: Torchoblin
   powerLV1: At death, add +1 attack to the next friend.
   powerLV2: At death, add +2 attack to the next friend.
   powerLV3: At death, add +3 attack to the next friend.
-  element: 
-  health: 4
-  damage: 1
-  xp: 1
   image: {fileID: 1343856753, guid: 3725583d287c04219b4e8be418adbe39, type: 3}
+  price: 30
   role: 4

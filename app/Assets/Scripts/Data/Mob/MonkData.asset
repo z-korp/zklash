@@ -17,4 +17,5 @@ MonoBehaviour:
   powerLV2: At death, heal +2.
   powerLV3: At death, heal +3.
   image: {fileID: 1444620675, guid: b81a1f348576e42da958991ec67ec009, type: 3}
+  price: 30
   role: 0

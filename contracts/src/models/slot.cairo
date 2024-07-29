@@ -4,18 +4,8 @@ use starknet::ContractAddress;
 
 // Internal imports
 
-use zklash::models::squad::{Squad, SquadTrait};
-
-#[derive(Model, Copy, Drop, Serde)]
-struct Slot {
-    #[key]
-    registry_id: u32,
-    #[key]
-    league_id: u8,
-    #[key]
-    index: u32,
-    squad_id: u32,
-}
+use zklash::models::index::{Slot, Squad};
+use zklash::models::squad::{SquadTrait};
 
 #[generate_trait]
 impl SlotImpl of SlotTrait {
@@ -56,7 +46,7 @@ mod tests {
 
     #[test]
     fn test_new() {
-        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         squad.league_id = LEAGUE_ID;
         squad.index = INDEX;
         let slot = SlotTrait::new(squad);

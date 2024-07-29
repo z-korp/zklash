@@ -6,7 +6,7 @@ use core::array::ArrayTrait;
 
 // Internal imports
 
-use zklash::models::character::{Character, CharacterTrait, Buff};
+use zklash::models::character::{Character, CharacterTrait, Buff, ZeroableCharacter};
 use zklash::types::phase::Phase;
 
 #[generate_trait]
@@ -14,7 +14,7 @@ impl Battler of BattlerTrait {
     fn start(ref team1: Array<Character>, ref team2: Array<Character>) -> bool {
         // [Compute] Start the battle
         let mut tick: u32 = 0;
-        Battler::battle(
+        Self::battle(
             ref team1,
             ref team2,
             Zeroable::zero(),
@@ -41,7 +41,7 @@ impl Battler of BattlerTrait {
                 Option::None => { return false; },
             };
             // [Effect] Apply effects on dispatch
-            Battler::apply_effects(ref char1, Phase::OnDispatch, tick);
+            Self::apply_effects(ref char1, Phase::OnDispatch, tick);
             // [Effect] Apply floating buff
             char1.buff(next_buff1);
         };
@@ -53,23 +53,23 @@ impl Battler of BattlerTrait {
                 Option::None => { return true; },
             };
             // [Effect] Apply effects on dispatch
-            Battler::apply_effects(ref char2, Phase::OnDispatch, tick);
+            Self::apply_effects(ref char2, Phase::OnDispatch, tick);
             // [Effect] Apply floating buff
             char2.buff(next_buff2);
         };
 
         // [Compute] Fight until one of the fighter is dead
         tick += 1;
-        let (buff1, buff2) = Battler::duel(ref char1, ref char2, ref tick,);
+        let (buff1, buff2) = Self::duel(ref char1, ref char2, ref tick,);
 
         // [Compute] Continue the battle
-        Battler::battle(ref team1, ref team2, char1, char2, buff1, buff2, ref tick,)
+        Self::battle(ref team1, ref team2, char1, char2, buff1, buff2, ref tick,)
     }
 
     fn duel(ref char1: Character, ref char2: Character, ref tick: u32,) -> (Buff, Buff) {
         // [Effect] Apply talent and item buff for char1
-        let (damage1, stun1, _) = Battler::apply_effects(ref char1, Phase::OnFight, tick);
-        let (damage2, stun2, _) = Battler::apply_effects(ref char2, Phase::OnFight, tick);
+        let (damage1, stun1, _) = Self::apply_effects(ref char1, Phase::OnFight, tick);
+        let (damage2, stun2, _) = Self::apply_effects(ref char2, Phase::OnFight, tick);
 
         // [Effect] Apply stun effects
         char1.stun(stun2);
@@ -84,13 +84,13 @@ impl Battler of BattlerTrait {
         // [Compute] Post mortem effects
         let (next_buff1, next_buff2) = if char1.is_dead() {
             tick += 1;
-            let next_buff1: Buff = Battler::post_mortem(ref char1, ref char2, tick);
-            let next_buff2: Buff = Battler::post_mortem(ref char2, ref char1, tick);
+            let next_buff1: Buff = Self::post_mortem(ref char1, ref char2, tick);
+            let next_buff2: Buff = Self::post_mortem(ref char2, ref char1, tick);
             (next_buff1, next_buff2)
         } else if char2.is_dead() {
             tick += 1;
-            let next_buff2: Buff = Battler::post_mortem(ref char2, ref char1, tick);
-            let next_buff1: Buff = Battler::post_mortem(ref char1, ref char2, tick);
+            let next_buff2: Buff = Self::post_mortem(ref char2, ref char1, tick);
+            let next_buff1: Buff = Self::post_mortem(ref char1, ref char2, tick);
             (next_buff1, next_buff2)
         } else {
             (Zeroable::zero(), Zeroable::zero())
@@ -101,7 +101,7 @@ impl Battler of BattlerTrait {
             return (next_buff1, next_buff2);
         }
         tick += 1;
-        Battler::duel(ref char1, ref char2, ref tick,)
+        Self::duel(ref char1, ref char2, ref tick,)
     }
 
     #[inline(always)]
@@ -109,7 +109,7 @@ impl Battler of BattlerTrait {
         // [Compute] On Death effects for char
         if char.is_dead() {
             // [Effect] Apply talent and item buff on death
-            let (damage, stun, next_buff) = Battler::apply_effects(ref char, Phase::OnDeath, tick);
+            let (damage, stun, next_buff) = Self::apply_effects(ref char, Phase::OnDeath, tick);
             foe.stun(stun);
             foe.take_damage(damage);
             next_buff
@@ -142,7 +142,7 @@ mod tests {
 
     // Local imports
 
-    use super::{Battler, Character, CharacterTrait, Phase};
+    use super::{Battler, Character, CharacterTrait, ZeroableCharacter, Phase};
 
     // Constants
 

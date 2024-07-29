@@ -8,77 +8,88 @@ use dojo::world::IWorldDispatcher;
 
 #[starknet::interface]
 trait IAccount<TContractState> {
-    fn create(self: @TContractState, world: IWorldDispatcher, name: felt252,);
-    fn spawn(self: @TContractState, world: IWorldDispatcher,);
+    fn create(self: @TContractState, world: IWorldDispatcher, name: felt252);
+    fn rename(self: @TContractState, world: IWorldDispatcher, name: felt252);
+    fn spawn(self: @TContractState, world: IWorldDispatcher);
 }
 
 #[starknet::contract]
 mod account {
-    // Core imports
-
-    use core::debug::PrintTrait;
-
-    // Starknet imports
-
-    use starknet::ContractAddress;
-    use starknet::info::{get_caller_address, get_block_timestamp, get_block_number};
-
     // Dojo imports
 
     use dojo::world;
     use dojo::world::IWorldDispatcher;
     use dojo::world::IWorldDispatcherTrait;
-    use dojo::world::IWorldProvider;
     use dojo::world::IDojoResourceProvider;
 
-    // Internal imports
+    // Starknet imports
 
-    use zklash::constants::WORLD;
-    use zklash::store::{Store, StoreTrait};
-    use zklash::models::registry::{Registry, RegistryTrait};
-    use zklash::models::player::{Player, PlayerTrait, PlayerAssert};
-    use zklash::models::team::{Team, TeamTrait, TeamAssert};
-    use zklash::models::shop::{Shop, ShopTrait, ShopAssert};
+    use starknet::ContractAddress;
+    use starknet::info::{
+        get_block_timestamp, get_block_number, get_caller_address, get_contract_address
+    };
+
+    // Component imports
+
+    use zklash::components::emitter::EmitterComponent;
+    use zklash::components::ownable::OwnableComponent;
+    use zklash::components::manageable::ManageableComponent;
 
     // Local imports
 
     use super::IAccount;
+    use zklash::store::{Store, StoreImpl, StoreTrait};
+    use zklash::models::player::{AssertTrait, PlayerTrait};
+    use zklash::models::team::{TeamTrait};
+    use zklash::models::registry::{RegistryTrait};
+
+    // Components
+
+    component!(path: EmitterComponent, storage: emitter, event: EmitterEvent);
+    impl EmitterImpl = EmitterComponent::EmitterImpl<ContractState>;
+    component!(path: OwnableComponent, storage: ownable, event: OwnableEvent);
+    #[abi(embed_v0)]
+    impl OwnableImpl = OwnableComponent::OwnableImpl<ContractState>;
+    impl OwnableInternalImpl = OwnableComponent::InternalImpl<ContractState>;
+    component!(path: ManageableComponent, storage: manageable, event: ManageableEvent);
+    impl ManageableInternalImpl = ManageableComponent::InternalImpl<ContractState>;
 
     // Storage
 
     #[storage]
-    struct Storage {}
+    struct Storage {
+        #[substorage(v0)]
+        emitter: EmitterComponent::Storage,
+        #[substorage(v0)]
+        ownable: OwnableComponent::Storage,
+        #[substorage(v0)]
+        manageable: ManageableComponent::Storage,
+    }
+
+    // Events
+
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event {
+        #[flat]
+        EmitterEvent: EmitterComponent::Event,
+        #[flat]
+        OwnableEvent: OwnableComponent::Event,
+        #[flat]
+        ManageableEvent: ManageableComponent::Event,
+    }
 
     // Implementations
 
     #[abi(embed_v0)]
-    impl DojoResourceProviderImpl of IDojoResourceProvider<ContractState> {
-        fn dojo_resource(self: @ContractState) -> felt252 {
-            'account'
-        }
-    }
-
-    #[abi(embed_v0)]
-    impl WorldProviderImpl of IWorldProvider<ContractState> {
-        fn world(self: @ContractState) -> IWorldDispatcher {
-            IWorldDispatcher { contract_address: WORLD() }
-        }
-    }
-
-    #[abi(embed_v0)]
     impl AccountImpl of IAccount<ContractState> {
-        fn create(self: @ContractState, world: IWorldDispatcher, name: felt252,) {
-            // [Setup] Datastore
-            let store: Store = StoreTrait::new(world);
+        fn create(self: @ContractState, world: IWorldDispatcher, name: felt252) {
+            // [Effect] Create a player
+            self.manageable._create(world, name);
+        }
 
-            // [Check] Player not already exists
-            let caller = get_caller_address();
-            let player = store.player(caller.into());
-            player.assert_not_exists();
-
-            // [Effect] Create a new player
-            let player = PlayerTrait::new(caller, name);
-            store.set_player(player);
+        fn rename(self: @ContractState, world: IWorldDispatcher, name: felt252) {
+            self.manageable._rename(world, name);
         }
 
         fn spawn(self: @ContractState, world: IWorldDispatcher) {

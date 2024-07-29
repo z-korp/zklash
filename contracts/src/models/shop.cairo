@@ -2,13 +2,10 @@
 
 use core::debug::PrintTrait;
 
-// Starknet imports
-
-use starknet::ContractAddress;
-
 // Internal imports
 
 use zklash::constants;
+use zklash::models::index::Shop;
 use zklash::helpers::packer::Packer;
 use zklash::types::dice::{Dice, DiceTrait};
 use zklash::types::item::{Item, ITEM_COUNT};
@@ -18,20 +15,6 @@ use zklash::types::role::{Role, ROLE_COUNT, RoleAssert};
 
 const TWO_POW_8: u32 = 256;
 
-#[derive(Model, Copy, Drop, Serde)]
-struct Shop {
-    #[key]
-    player_id: ContractAddress,
-    #[key]
-    team_id: u32,
-    purchase_cost: u8,
-    reroll_cost: u8,
-    item_count: u8,
-    items: u32,
-    role_count: u8,
-    roles: u32,
-}
-
 mod errors {
     const SHOP_NOT_EXIST: felt252 = 'Shop: does not exist';
     const SHOP_ALREADY_EXIST: felt252 = 'Shop: already exist';
@@ -40,7 +23,7 @@ mod errors {
 #[generate_trait]
 impl ShopImpl of ShopTrait {
     #[inline(always)]
-    fn new(player_id: ContractAddress, team_id: u32, seed: felt252) -> Shop {
+    fn new(player_id: felt252, team_id: u32, seed: felt252) -> Shop {
         // [Effect] Create the Shop and shuffle
         let mut shop = Shop {
             player_id,
@@ -68,7 +51,9 @@ impl ShopImpl of ShopTrait {
     #[inline(always)]
     fn purchase_item(ref self: Shop, index: u8) -> Item {
         // [Effect] Remove the item at index from the shop
-        let (items, item) = Packer::remove(self.items, index);
+        let (items, item) = Packer::<
+            u32, u8, u16
+        >::remove(self.items, index, constants::ITEMS_SIZE);
         self.items = items;
         // [Return] The purchased item
         item.into()
@@ -77,7 +62,9 @@ impl ShopImpl of ShopTrait {
     #[inline(always)]
     fn purchase_role(ref self: Shop, index: u8) -> Role {
         // [Effect] Remove the role at index from the shop
-        let (roles, role) = Packer::remove(self.roles, index);
+        let (roles, role) = Packer::<
+            u32, u8, u16
+        >::remove(self.roles, index, constants::ROLES_SIZE);
         self.roles = roles;
         role.into()
     }
@@ -85,7 +72,7 @@ impl ShopImpl of ShopTrait {
     fn items(self: Shop) -> Array<Item> {
         // [View] Get the items in the shop
         let mut items: Array<Item> = array![];
-        let mut unpacked: Array<u8> = Packer::unpack(self.items);
+        let mut unpacked: Array<u8> = Packer::unpack(self.items, constants::ITEMS_SIZE);
         loop {
             match unpacked.pop_front() {
                 Option::Some(index) => {
@@ -101,7 +88,7 @@ impl ShopImpl of ShopTrait {
     fn roles(self: Shop) -> Array<Role> {
         // [View] Get the items in the shop
         let mut roles: Array<Role> = array![];
-        let mut unpacked: Array<u8> = Packer::unpack(self.roles);
+        let mut unpacked: Array<u8> = Packer::unpack(self.roles, constants::ROLES_SIZE);
         loop {
             match unpacked.pop_front() {
                 Option::Some(index) => {
@@ -147,7 +134,7 @@ impl ZeroableShopImpl of core::Zeroable<Shop> {
     #[inline(always)]
     fn zero() -> Shop {
         Shop {
-            player_id: Zeroable::zero(),
+            player_id: core::Zeroable::zero(),
             team_id: 0,
             purchase_cost: 0,
             reroll_cost: 0,

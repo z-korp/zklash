@@ -9,22 +9,14 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::constants::{LEAGUE_SIZE, LEAGUE_COUNT, LEAGUE_MIN_THRESHOLD};
-use zklash::models::squad::{Squad, SquadTrait, SquadAssert};
-use zklash::models::slot::{Slot, SlotTrait};
+use zklash::models::index::{Squad, Slot, League};
+use zklash::models::squad::{SquadTrait, SquadAssert};
+use zklash::models::slot::{SlotTrait};
 
 // Errors
 
 mod errors {
     const LEAGUE_NOT_SUBSCRIBED: felt252 = 'League: squad not subscribed';
-}
-
-#[derive(Model, Copy, Drop, Serde)]
-struct League {
-    #[key]
-    registry_id: u32,
-    #[key]
-    id: u8,
-    size: u32,
 }
 
 #[generate_trait]
@@ -144,7 +136,7 @@ mod tests {
 
     #[test]
     fn test_subscribe_once() {
-        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         let mut league = LeagueTrait::new(REGISTRY_ID, LEAGUE_ID);
         let slot = LeagueTrait::subscribe(ref league, ref squad);
         // [Assert] League
@@ -159,7 +151,7 @@ mod tests {
     #[test]
     #[should_panic(expected: ('Squad: not subscribable',))]
     fn test_subscribe_twice() {
-        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         let mut league = LeagueTrait::new(REGISTRY_ID, LEAGUE_ID);
         LeagueTrait::subscribe(ref league, ref squad);
         LeagueTrait::subscribe(ref league, ref squad);
@@ -167,7 +159,7 @@ mod tests {
 
     #[test]
     fn test_unsubscribe_once() {
-        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         let mut league = LeagueTrait::new(REGISTRY_ID, LEAGUE_ID);
         LeagueTrait::subscribe(ref league, ref squad);
         LeagueTrait::unsubscribe(ref league, ref squad);
@@ -181,7 +173,7 @@ mod tests {
     #[test]
     #[should_panic(expected: ('League: squad not subscribed',))]
     fn test_unsubscribe_twice() {
-        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         let mut league = LeagueTrait::new(REGISTRY_ID, LEAGUE_ID);
         LeagueTrait::subscribe(ref league, ref squad);
         LeagueTrait::unsubscribe(ref league, ref squad);

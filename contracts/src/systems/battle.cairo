@@ -36,18 +36,19 @@ mod battle {
 
     // Internal imports
 
-    use zklash::constants::{WORLD, DEFAULT_REGISTRY_ID};
+    use zklash::constants::{WORLD, DEFAULT_REGISTRY_ID, IDS_SIZE};
+    use zklash::models::index::{League, Player, Team, Shop, Foe, Slot, Squad, Character};
     use zklash::store::{Store, StoreImpl};
     use zklash::helpers::packer::Packer;
     use zklash::helpers::array::ArrayTraitExt;
     use zklash::models::registry::{Registry, RegistryImpl, RegistryAssert};
-    use zklash::models::league::{League, LeagueTrait, LeagueAssert};
-    use zklash::models::squad::{Squad, SquadImpl, SquadAssert};
-    use zklash::models::foe::{Foe, FoeImpl};
-    use zklash::models::player::{Player, PlayerImpl, PlayerAssert};
-    use zklash::models::team::{Team, TeamImpl, TeamAssert};
-    use zklash::models::shop::{Shop, ShopImpl, ShopAssert};
-    use zklash::models::character::{Character, CharacterImpl, CharacterAssert};
+    use zklash::models::league::{LeagueTrait, LeagueAssert};
+    use zklash::models::squad::{SquadImpl, SquadAssert};
+    use zklash::models::foe::FoeImpl;
+    use zklash::models::player::{PlayerImpl, PlayerAssert};
+    use zklash::models::team::{TeamImpl, TeamAssert};
+    use zklash::models::shop::{ShopImpl, ShopAssert};
+    use zklash::models::character::{CharacterImpl, CharacterAssert, PartialEqCharacter};
     use zklash::types::wave::{Wave, WaveTrait};
 
     // Local imports
@@ -144,7 +145,7 @@ mod battle {
 
             // [Check] Characters exist
             let mut characters: Array<Character> = array![];
-            let mut character_ids = Packer::unpack(order);
+            let mut character_ids = Packer::unpack(order, IDS_SIZE);
             loop {
                 match character_ids.pop_front() {
                     Option::Some(character_id) => {

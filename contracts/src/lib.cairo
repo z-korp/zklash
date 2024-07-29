@@ -1,6 +1,14 @@
 mod constants;
 mod store;
 
+mod components {
+    mod emitter;
+    mod ownable;
+    mod initializable;
+    mod manageable;
+    mod playable;
+}
+
 mod types {
     mod dice;
     mod item;
@@ -51,6 +59,7 @@ mod waves {
 }
 
 mod models {
+    mod index;
     mod character;
     mod player;
     mod shop;

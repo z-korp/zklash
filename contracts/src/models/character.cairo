@@ -8,29 +8,12 @@ use starknet::ContractAddress;
 
 // Internal imports
 
+use zklash::models::index::Character;
 use zklash::constants;
 use zklash::helpers::math::Math;
 use zklash::types::item::{Item, ItemTrait};
 use zklash::types::role::{Role, RoleTrait};
 use zklash::types::phase::Phase;
-
-#[derive(Model, Copy, Drop, Serde)]
-struct Character {
-    #[key]
-    player_id: ContractAddress,
-    #[key]
-    team_id: u32,
-    #[key]
-    id: u8,
-    role: u8,
-    item: u8,
-    xp: u8,
-    level: u8,
-    health: u8,
-    attack: u8,
-    absorb: u8,
-    stun: u8,
-}
 
 #[derive(Copy, Drop)]
 struct Buff {
@@ -55,7 +38,7 @@ mod errors {
 #[generate_trait]
 impl CharacterImpl of CharacterTrait {
     #[inline(always)]
-    fn new(player_id: ContractAddress, team_id: u32, id: u8, role: Role) -> Character {
+    fn new(player_id: felt252, team_id: u32, id: u8, role: Role) -> Character {
         let level: u8 = 1;
         Character {
             player_id,
@@ -75,7 +58,7 @@ impl CharacterImpl of CharacterTrait {
     #[inline(always)]
     fn from(id: u8, role: Role, level: u8, item: Item) -> Character {
         Character {
-            player_id: Zeroable::zero(),
+            player_id: core::Zeroable::zero(),
             team_id: 0,
             id,
             role: role.into(),
@@ -237,7 +220,7 @@ impl ZeroableCharacter of core::Zeroable<Character> {
     #[inline(always)]
     fn zero() -> Character {
         Character {
-            player_id: Zeroable::zero(),
+            player_id: core::Zeroable::zero(),
             team_id: 0,
             id: 0,
             role: 0,

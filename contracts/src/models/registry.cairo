@@ -9,10 +9,10 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::store::{Store, StoreTrait};
-use zklash::models::team::Team;
-use zklash::models::league::{League, LeagueTrait};
-use zklash::models::squad::{Squad, SquadTrait, SquadAssert};
-use zklash::models::slot::{Slot, SlotTrait};
+use zklash::models::index::{Registry, Team, League, Squad, Slot};
+use zklash::models::league::{LeagueTrait};
+use zklash::models::squad::{SquadTrait, SquadAssert};
+use zklash::models::slot::{SlotTrait};
 use zklash::helpers::bitmap::Bitmap;
 
 // Errors
@@ -21,15 +21,6 @@ mod errors {
     const REGISTRY_INVALID_INDEX: felt252 = 'Registry: invalid bitmap index';
     const REGISTRY_IS_EMPTY: felt252 = 'Registry: is empty';
     const REGISTRY_LEAGUE_NOT_FOUND: felt252 = 'Registry: league not found';
-}
-
-#[derive(Model, Copy, Drop, Serde)]
-struct Registry {
-    #[key]
-    id: u32,
-    squad_count: u32,
-    leagues: felt252,
-    seed: felt252,
 }
 
 #[generate_trait]
@@ -153,7 +144,7 @@ mod tests {
     fn test_subscribe() {
         let mut registry = RegistryTrait::new(REGISTRY_ID);
         let mut league = LeagueTrait::new(REGISTRY_ID, LEAGUE_ID);
-        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         registry.subscribe(ref league, ref squad);
         // [Assert] Registry
         assert(registry.leagues.into() > 0_u256, 'Registry: wrong leagues value');
@@ -163,7 +154,7 @@ mod tests {
     fn test_unsubscribe() {
         let mut registry = RegistryTrait::new(REGISTRY_ID);
         let mut league = LeagueTrait::new(REGISTRY_ID, LEAGUE_ID);
-        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         registry.subscribe(ref league, ref squad);
         registry.unsubscribe(ref league, ref squad);
         // [Assert] Registry
@@ -174,7 +165,9 @@ mod tests {
     fn test_search_league_same() {
         let mut registry = RegistryTrait::new(REGISTRY_ID);
         let mut league = LeagueTrait::new(REGISTRY_ID, LEAGUE_ID);
-        let mut foe_squad = SquadTrait::new(REGISTRY_ID, FOE_SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut foe_squad = SquadTrait::new(
+            REGISTRY_ID, FOE_SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test'
+        );
         registry.subscribe(ref league, ref foe_squad);
         let league_id = registry.search_league(league);
         // [Assert] Registry
@@ -186,7 +179,9 @@ mod tests {
         let mut registry = RegistryTrait::new(REGISTRY_ID);
         let mut league = LeagueTrait::new(REGISTRY_ID, LEAGUE_ID);
         let mut foe_league = LeagueTrait::new(REGISTRY_ID, CLOSEST_LEAGUE_ID);
-        let mut foe_squad = SquadTrait::new(REGISTRY_ID, FOE_SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut foe_squad = SquadTrait::new(
+            REGISTRY_ID, FOE_SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test'
+        );
         registry.subscribe(ref foe_league, ref foe_squad);
         let league_id = registry.search_league(league);
         // [Assert] Registry
@@ -198,7 +193,9 @@ mod tests {
         let mut registry = RegistryTrait::new(REGISTRY_ID);
         let mut league = LeagueTrait::new(REGISTRY_ID, LEAGUE_ID);
         let mut foe_league = LeagueTrait::new(REGISTRY_ID, TARGET_LEAGUE_ID);
-        let mut foe_squad = SquadTrait::new(REGISTRY_ID, FOE_SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut foe_squad = SquadTrait::new(
+            REGISTRY_ID, FOE_SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test'
+        );
         registry.subscribe(ref foe_league, ref foe_squad);
         let league_id = registry.search_league(league);
         // [Assert] Registry
@@ -210,7 +207,9 @@ mod tests {
         let mut registry = RegistryTrait::new(REGISTRY_ID);
         let mut league = LeagueTrait::new(REGISTRY_ID, LEAGUE_ID);
         let mut foe_league = LeagueTrait::new(REGISTRY_ID, FAREST_LEAGUE_ID);
-        let mut foe_squad = SquadTrait::new(REGISTRY_ID, FOE_SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut foe_squad = SquadTrait::new(
+            REGISTRY_ID, FOE_SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test'
+        );
         registry.subscribe(ref foe_league, ref foe_squad);
         let league_id = registry.search_league(league);
         // [Assert] Registry
@@ -222,7 +221,9 @@ mod tests {
         let mut registry = RegistryTrait::new(REGISTRY_ID);
         let mut league = LeagueTrait::new(REGISTRY_ID, FAREST_LEAGUE_ID);
         let mut foe_league = LeagueTrait::new(REGISTRY_ID, LEAGUE_ID);
-        let mut foe_squad = SquadTrait::new(REGISTRY_ID, FOE_SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut foe_squad = SquadTrait::new(
+            REGISTRY_ID, FOE_SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test'
+        );
         registry.subscribe(ref foe_league, ref foe_squad);
         let league_id = registry.search_league(league);
         // [Assert] Registry

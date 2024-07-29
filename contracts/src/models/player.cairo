@@ -4,7 +4,8 @@ use starknet::ContractAddress;
 
 // Internal imports
 
-use zklash::models::team::{Team, TeamTrait};
+use zklash::models::index::{Team, Player};
+use zklash::models::team::TeamTrait;
 
 mod errors {
     const PLAYER_NOT_EXIST: felt252 = 'Player: does not exist';
@@ -12,24 +13,23 @@ mod errors {
     const PLAYER_INVALID_NAME: felt252 = 'Player: invalid name';
 }
 
-#[derive(Model, Copy, Drop, Serde)]
-struct Player {
-    #[key]
-    id: ContractAddress,
-    name: felt252,
-    team_count: u32,
-    win_count: u32,
-}
-
 #[generate_trait]
 impl PlayerImpl of PlayerTrait {
     #[inline(always)]
-    fn new(id: ContractAddress, name: felt252) -> Player {
+    fn new(id: felt252, name: felt252) -> Player {
         // [Check] Name is valid
         assert(name != 0, errors::PLAYER_INVALID_NAME);
 
         // [Return] Player
         Player { id, name, team_count: 0, win_count: 0 }
+    }
+
+    #[inline(always)]
+    fn rename(ref self: Player, name: felt252) {
+        // [Check] Name is valid
+        assert(name != 0, errors::PLAYER_INVALID_NAME);
+        // [Effect] Change the name
+        self.name = name;
     }
 
     #[inline(always)]
@@ -63,7 +63,7 @@ impl PlayerAssert of AssertTrait {
 impl ZeroablePlayerImpl of core::Zeroable<Player> {
     #[inline(always)]
     fn zero() -> Player {
-        Player { id: Zeroable::zero(), name: 0, team_count: 0, win_count: 0 }
+        Player { id: core::Zeroable::zero(), name: 0, team_count: 0, win_count: 0 }
     }
 
     #[inline(always)]

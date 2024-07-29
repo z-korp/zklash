@@ -1,12 +1,12 @@
 kind = "DojoModel"
-class_hash = "0x16670cac95fa5c929e489fd538ba6e05baad53a27fac3a8dfe286e7a59ded55"
-original_class_hash = "0x16670cac95fa5c929e489fd538ba6e05baad53a27fac3a8dfe286e7a59ded55"
-abi = "manifests/dev/abis/base/models/zklash_models_shop_shop.json"
-name = "zklash::models::shop::shop"
+class_hash = "0x37c35d440d3fdb1389684a2ac05ba9ff13879521b515836194d5558ffc9e8c3"
+original_class_hash = "0x37c35d440d3fdb1389684a2ac05ba9ff13879521b515836194d5558ffc9e8c3"
+abi = "manifests/dev/abis/base/models/zklash_models_index_shop.json"
+name = "zklash::models::index::shop"
 
 [[members]]
 name = "player_id"
-type = "ContractAddress"
+type = "felt252"
 key = true
 
 [[members]]

@@ -4,10 +4,6 @@ fn WORLD() -> starknet::ContractAddress {
     starknet::contract_address_const::<0x1>()
 }
 
-fn ZERO() -> starknet::ContractAddress {
-    starknet::contract_address_const::<0>()
-}
-
 // ELO
 
 const DEFAULT_K_FACTOR: u8 = 20;
@@ -31,6 +27,12 @@ const DEFAULT_SHOP_REROLL_COST: u8 = 1;
 const DEFAULT_ITEM_COUNT: u8 = 1;
 const DEFAULT_ROLE_COUNT: u8 = 3;
 const TEAM_MAX_LEVEL: u8 = 11;
+
+// Packing
+
+const IDS_SIZE: u16 = 256;
+const ROLES_SIZE: u16 = 256;
+const ITEMS_SIZE: u16 = 256;
 
 // Bitmap
 

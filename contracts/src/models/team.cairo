@@ -9,6 +9,7 @@ use starknet::ContractAddress;
 // Internal imports
 
 use zklash::constants;
+use zklash::models::index::Team;
 use zklash::store::{Store, StoreImpl};
 use zklash::helpers::packer::Packer;
 use zklash::helpers::battler::Battler;
@@ -18,22 +19,6 @@ use zklash::models::character::{Character, CharacterTrait};
 use zklash::types::item::Item;
 use zklash::types::role::Role;
 use zklash::types::wave::{Wave, WaveTrait};
-
-
-#[derive(Model, Copy, Drop, Serde)]
-struct Team {
-    #[key]
-    player_id: ContractAddress,
-    #[key]
-    id: u32,
-    registry_id: u32,
-    gold: u32,
-    health: u32,
-    level: u8,
-    character_uuid: u8,
-    battle_id: u8,
-    foe_squad_id: u32,
-}
 
 mod errors {
     const TEAM_NOT_EXIST: felt252 = 'Team: does not exist';
@@ -51,7 +36,7 @@ mod errors {
 #[generate_trait]
 impl TeamImpl of TeamTrait {
     #[inline(always)]
-    fn new(player_id: ContractAddress, id: u32) -> Team {
+    fn new(player_id: felt252, id: u32) -> Team {
         // [Return] Team
         Team {
             player_id,
@@ -220,7 +205,7 @@ impl ZeroableTeam of core::Zeroable<Team> {
     #[inline(always)]
     fn zero() -> Team {
         Team {
-            player_id: Zeroable::zero(),
+            player_id: core::Zeroable::zero(),
             id: 0,
             registry_id: 0,
             gold: 0,

@@ -1,7 +1,7 @@
 [package]
-cairo-version = "2.5.4"
 name = "zklash"
-version = "0.6.0"
+version = "0.0.1"
+edition = "2023_10"
 
 [cairo]
 sierra-replace-ids = true
@@ -11,8 +11,8 @@ dev = "sozo --profile dev build && sozo --profile dev migrate plan && sozo --pro
 slot = "sozo --profile slot build && sozo --profile slot migrate plan --name v0 && sozo --profile slot migrate apply --name v0 && ./scripts/authorize.sh slot"
 
 [dependencies]
-origami = { git = "https://github.com/dojoengine/origami", rev = "84f9b24" }
-dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.6.0" }
+origami = { git = "https://github.com/dojoengine/origami", tag = "v0.7.2" }
+dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.7.2" }
 
 [[target.dojo]]
 

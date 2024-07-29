@@ -1,33 +1,16 @@
 // Internal imports
 
-use zklash::constants::ZERO;
-use zklash::models::character::Character;
+use zklash::models::index::Foe;
+use zklash::models::index::Character;
 use zklash::types::item::Item;
 use zklash::types::role::{Role, RoleTrait};
 use zklash::types::phase::Phase;
-
-#[derive(Model, Copy, Drop, Serde)]
-struct Foe {
-    #[key]
-    registry_id: u32,
-    #[key]
-    squad_id: u32,
-    #[key]
-    id: u8,
-    role: u8,
-    item: u8,
-    level: u8,
-    health: u8,
-    attack: u8,
-    absorb: u8,
-    stun: u8,
-}
 
 impl FoeIntoCharacter of Into<Foe, Character> {
     #[inline(always)]
     fn into(self: Foe) -> Character {
         Character {
-            player_id: ZERO(),
+            player_id: core::Zeroable::zero(),
             team_id: self.squad_id,
             id: self.id,
             role: self.role,

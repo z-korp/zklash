@@ -14,15 +14,12 @@ use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 
 // Models imports
 
-use zklash::models::character::Character;
-use zklash::models::player::Player;
-use zklash::models::shop::Shop;
-use zklash::models::team::Team;
-use zklash::models::slot::{Slot, SlotTrait};
-use zklash::models::squad::Squad;
-use zklash::models::league::{League, LeagueTrait};
-use zklash::models::foe::{Foe, FoeTrait};
-use zklash::models::registry::Registry;
+use zklash::models::index::{Character, Player, Shop, Team, Slot, Squad, League, Foe, Registry};
+use zklash::models::slot::SlotTrait;
+use zklash::models::league::LeagueTrait;
+use zklash::models::foe::FoeTrait;
+use zklash::models::character::CharacterTrait;
+use zklash::models::foe::FoeIntoCharacter;
 
 
 /// Store struct.
@@ -42,24 +39,22 @@ impl StoreImpl of StoreTrait {
     }
 
     #[inline(always)]
-    fn player(self: Store, player_id: ContractAddress) -> Player {
+    fn player(self: Store, player_id: felt252) -> Player {
         get!(self.world, player_id, (Player))
     }
 
     #[inline(always)]
-    fn shop(self: Store, player_id: ContractAddress, team_id: u32) -> Shop {
+    fn shop(self: Store, player_id: felt252, team_id: u32) -> Shop {
         get!(self.world, (player_id, team_id), (Shop))
     }
 
     #[inline(always)]
-    fn team(self: Store, player_id: ContractAddress, team_id: u32) -> Team {
+    fn team(self: Store, player_id: felt252, team_id: u32) -> Team {
         get!(self.world, (player_id, team_id), (Team))
     }
 
     #[inline(always)]
-    fn character(
-        self: Store, player_id: ContractAddress, team_id: u32, character_id: u8
-    ) -> Character {
+    fn character(self: Store, player_id: felt252, team_id: u32, character_id: u8) -> Character {
         get!(self.world, (player_id, team_id, character_id), (Character))
     }
 

@@ -12,7 +12,8 @@ use origami::rating::elo::EloTrait;
 
 // Internal imports
 
-use zklash::constants::{ZERO, DEFAULT_K_FACTOR, LEAGUE_MIN_THRESHOLD, LEAGUE_SIZE};
+use zklash::models::index::Squad;
+use zklash::constants::{DEFAULT_K_FACTOR, LEAGUE_MIN_THRESHOLD, LEAGUE_SIZE};
 use zklash::helpers::battler::Battler;
 use zklash::models::league::LeagueTrait;
 use zklash::models::character::Character;
@@ -24,19 +25,6 @@ mod errors {
     const SQUAD_ALREADY_EXIST: felt252 = 'Squad: already exist';
     const SQUAD_NOT_SUBSCRIBABLE: felt252 = 'Squad: not subscribable';
     const SQUAD_NOT_SUBSCRIBED: felt252 = 'Squad: not subscribed';
-}
-
-#[derive(Model, Copy, Drop, Serde)]
-struct Squad {
-    #[key]
-    registry_id: u32,
-    #[key]
-    id: u32,
-    league_id: u8,
-    index: u32,
-    rating: u32,
-    size: u8,
-    name: felt252,
 }
 
 #[generate_trait]
@@ -133,7 +121,7 @@ mod tests {
 
     #[test]
     fn test_new() {
-        let squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         let expected_rating: u32 = (DEFAULT_LEVEL * LEAGUE_SIZE).into() + LEAGUE_MIN_THRESHOLD;
         assert_eq!(squad.registry_id, REGISTRY_ID);
         assert_eq!(squad.id, SQUAD_ID);
@@ -144,21 +132,21 @@ mod tests {
 
     #[test]
     fn test_subscribable() {
-        let squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         AssertTrait::assert_subscribable(squad);
     }
 
     #[test]
     #[should_panic(expected: ('Squad: not subscribable',))]
     fn test_subscribable_revert_not_subscribable() {
-        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         squad.league_id = 1;
         AssertTrait::assert_subscribable(squad);
     }
 
     #[test]
     fn test_subscribed() {
-        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         squad.league_id = 1;
         AssertTrait::assert_subscribed(squad);
     }
@@ -166,7 +154,7 @@ mod tests {
     #[test]
     #[should_panic(expected: ('Squad: not subscribed',))]
     fn test_subscribed_revert_not_subscribed() {
-        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE);
+        let mut squad = SquadTrait::new(REGISTRY_ID, SQUAD_ID, DEFAULT_LEVEL, DEFAULT_SIZE, 'test');
         AssertTrait::assert_subscribed(squad);
     }
 }

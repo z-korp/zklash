@@ -45,7 +45,7 @@ mod setup {
 
     #[derive(Drop)]
     struct Context {
-        player_id: ContractAddress,
+        player_id: felt252,
         player_name: felt252,
     }
 
@@ -53,15 +53,15 @@ mod setup {
     fn spawn_game() -> (IWorldDispatcher, Systems, Context) {
         // [Setup] World
         let mut models = core::array::ArrayTrait::new();
-        models.append(zklash::models::player::player::TEST_CLASS_HASH);
-        models.append(zklash::models::team::team::TEST_CLASS_HASH);
-        models.append(zklash::models::shop::shop::TEST_CLASS_HASH);
-        models.append(zklash::models::character::character::TEST_CLASS_HASH);
-        models.append(zklash::models::registry::registry::TEST_CLASS_HASH);
-        models.append(zklash::models::league::league::TEST_CLASS_HASH);
-        models.append(zklash::models::slot::slot::TEST_CLASS_HASH);
-        models.append(zklash::models::squad::squad::TEST_CLASS_HASH);
-        models.append(zklash::models::foe::foe::TEST_CLASS_HASH);
+        models.append(zklash::models::index::player::TEST_CLASS_HASH);
+        models.append(zklash::models::index::team::TEST_CLASS_HASH);
+        models.append(zklash::models::index::shop::TEST_CLASS_HASH);
+        models.append(zklash::models::index::character::TEST_CLASS_HASH);
+        models.append(zklash::models::index::registry::TEST_CLASS_HASH);
+        models.append(zklash::models::index::league::TEST_CLASS_HASH);
+        models.append(zklash::models::index::slot::TEST_CLASS_HASH);
+        models.append(zklash::models::index::squad::TEST_CLASS_HASH);
+        models.append(zklash::models::index::foe::TEST_CLASS_HASH);
         let world = spawn_test_world(models);
 
         // [Setup] Systems

@@ -1,0 +1,25 @@
+kind = "DojoModel"
+class_hash = "0x5ad097398b9af16b1457ee4613f0517ced2fc39e0cb76221fd445536bb1b28e"
+original_class_hash = "0x5ad097398b9af16b1457ee4613f0517ced2fc39e0cb76221fd445536bb1b28e"
+abi = "manifests/dev/abis/base/models/zklash_models_index_registry.json"
+name = "zklash::models::index::registry"
+
+[[members]]
+name = "id"
+type = "u32"
+key = true
+
+[[members]]
+name = "squad_count"
+type = "u32"
+key = false
+
+[[members]]
+name = "leagues"
+type = "felt252"
+key = false
+
+[[members]]
+name = "seed"
+type = "felt252"
+key = false

@@ -1,11 +1,13 @@
 import { ComponentValue } from "@dojoengine/recs";
+import { Role } from "../types/role";
+import { Item } from "../types/item";
 
 export class Character {
   public player_id: string;
   public team_id: number;
   public id: number;
-  public role: number;
-  public item: number;
+  public role: Role;
+  public item: Item;
   public xp: number;
   public level: number;
   public health: number;
@@ -17,8 +19,8 @@ export class Character {
     this.player_id = character.player_id.toString(16);
     this.team_id = character.team_id;
     this.id = character.id;
-    this.role = character.role;
-    this.item = character.item;
+    this.role = Role.from(character.role);
+    this.item = Item.from(character.item);
     this.xp = character.xp;
     this.level = character.level;
     this.health = character.health;

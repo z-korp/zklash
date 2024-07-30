@@ -32,7 +32,7 @@ function Home() {
           Character: CharacterModel,
           Registry: RegistryModel,
         },
-        classes: { Player, Team, Shop },
+        classes: { Player, Team, Shop, Character },
       },
     },
     account: { account },
@@ -41,7 +41,7 @@ function Home() {
   const dragItem = useRef<typeof CharacterModel | null>(null);
   const dragOverItem = useRef<typeof CharacterModel | null>(null);
   const [name, setName] = useState("");
-  const [characters, setCharacters] = useState<any[]>([]);
+  const [characters, setCharacters] = useState<(typeof Character)[]>([]);
 
   // Player
   const playerKey = useMemo(() => {
@@ -88,9 +88,9 @@ function Home() {
     if (!characterKeys) return;
     const newCharacters: any[] = [];
     characterKeys.forEach((key) => {
-      const character = getComponentValue(CharacterModel, key);
-      if (!character || !character.role) return;
-      newCharacters.push(character);
+      const characterComponent = getComponentValue(CharacterModel, key);
+      if (!characterComponent || !characterComponent.role) return;
+      newCharacters.push(new Character(characterComponent));
     });
     setCharacters(newCharacters);
   }, [characterKeys]);
@@ -207,7 +207,7 @@ function Home() {
   );
 
   return (
-    <div className="flex flex-col gap-4 w-full items-center mt-20">
+    <div className="flex flex-col gap-4 w-full items-center">
       <h1>zKlash</h1>
       <div className="flex gap-4 justify-center items-stretch">
         <div className="flex flex-col items-center gap-2 border rounded p-4">

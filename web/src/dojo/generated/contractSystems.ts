@@ -82,7 +82,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "create",
-            calldata: [provider.getWorldAddress(), encoded_name],
+            calldata: [encoded_name],
           },
           details,
         );
@@ -99,7 +99,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "spawn",
-            calldata: [provider.getWorldAddress()],
+            calldata: [],
           },
           details,
         );
@@ -126,7 +126,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
         return await provider.execute(account, {
           contractName: contract_name,
           entrypoint: "equip",
-          calldata: [provider.getWorldAddress(), team_id, character_id, index],
+          calldata: [team_id, character_id, index],
         });
       } catch (error) {
         console.error("Error executing equip:", error);
@@ -139,7 +139,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
         return await provider.execute(account, {
           contractName: contract_name,
           entrypoint: "hire",
-          calldata: [provider.getWorldAddress(), team_id, index],
+          calldata: [team_id, index],
         });
       } catch (error) {
         console.error("Error executing hire:", error);
@@ -152,7 +152,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
         return await provider.execute(account, {
           contractName: contract_name,
           entrypoint: "xp",
-          calldata: [provider.getWorldAddress(), team_id, character_id, index],
+          calldata: [team_id, character_id, index],
         });
       } catch (error) {
         console.error("Error executing xp:", error);
@@ -165,7 +165,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
         return await provider.execute(account, {
           contractName: contract_name,
           entrypoint: "merge",
-          calldata: [provider.getWorldAddress(), team_id, from_id, to_id],
+          calldata: [team_id, from_id, to_id],
         });
       } catch (error) {
         console.error("Error executing merge:", error);
@@ -178,7 +178,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
         return await provider.execute(account, {
           contractName: contract_name,
           entrypoint: "sell",
-          calldata: [provider.getWorldAddress(), team_id, character_id],
+          calldata: [team_id, character_id],
         });
       } catch (error) {
         console.error("Error executing sell:", error);
@@ -191,7 +191,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
         return await provider.execute(account, {
           contractName: contract_name,
           entrypoint: "reroll",
-          calldata: [provider.getWorldAddress(), team_id],
+          calldata: [team_id],
         });
       } catch (error) {
         console.error("Error executing reroll:", error);
@@ -210,7 +210,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
         return await provider.execute(account, {
           contractName: contract_name,
           entrypoint: "hydrate",
-          calldata: [provider.getWorldAddress()],
+          calldata: [],
         });
       } catch (error) {
         console.error("Error executing create:", error);
@@ -223,7 +223,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
         return await provider.execute(account, {
           contractName: contract_name,
           entrypoint: "start",
-          calldata: [provider.getWorldAddress(), team_id, order],
+          calldata: [team_id, order],
         });
       } catch (error) {
         console.error("Error executing create:", error);

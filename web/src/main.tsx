@@ -1,28 +1,52 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import { Toaster } from "@/ui/elements/sonner.tsx";
-import { setup } from "./dojo/setup.ts";
-import { DojoProvider } from "./dojo/DojoContext.tsx";
-import { dojoConfig } from "../dojoConfig.ts";
+import { setup, SetupResult } from "./dojo/setup.ts";
+import { DojoProvider } from "./dojo/context.tsx";
+import { dojoConfig } from "../dojo.config.ts";
+import { Loading } from "./ui/screens/Loading.tsx";
 
 import "./index.css";
 
-async function init() {
-  const rootElement = document.getElementById("root");
-  if (!rootElement) throw new Error("React root not found");
-  const root = ReactDOM.createRoot(rootElement as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement,
+);
 
-  const setupResult = await setup(dojoConfig);
+function Main() {
+  const [setupResult, setSetupResult] = useState<SetupResult | null>(null);
+  const [ready, setReady] = useState(false);
+  const [enter, setEnter] = useState(false);
 
-  root.render(
+  const loading = useMemo(
+    () => !enter || !setupResult || !ready,
+    [enter, setupResult, ready],
+  );
+
+  useEffect(() => {
+    async function initialize() {
+      const result = await setup(dojoConfig());
+      setSetupResult(result);
+    }
+
+    initialize();
+  }, [enter]);
+
+  useEffect(() => {
+    if (!enter) return;
+    setTimeout(() => setReady(true), 2000);
+  }, [enter]);
+
+  return (
     <React.StrictMode>
-      <DojoProvider value={setupResult}>
-        <App />
-        <Toaster position="top-center" />
-      </DojoProvider>
-    </React.StrictMode>,
+      {!loading && setupResult ? (
+        <DojoProvider value={setupResult}>
+          <App />
+        </DojoProvider>
+      ) : (
+        <Loading enter={enter} setEnter={setEnter} />
+      )}
+    </React.StrictMode>
   );
 }
 
-init();
+root.render(<Main />);

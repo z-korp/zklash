@@ -58,11 +58,8 @@ fn test_market_hire_all_from_first_to_last() {
     // [Hire]
     let player: Player = store.player(context.player_id);
     systems.market.hire(world, player.team_id(), 0);
-    println!("Hired 0");
     systems.market.hire(world, player.team_id(), 1);
-    println!("Hired 1");
     systems.market.hire(world, player.team_id(), 2);
-    println!("Hired 2");
 
     // [Assert] Shop
     let shop = store.shop(context.player_id, player.team_id());

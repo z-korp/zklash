@@ -1,14 +1,7 @@
 import * as React from "react";
 import { useMemo } from "react";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/ui/elements/card";
+import { Card, CardContent, CardFooter, CardHeader } from "@/ui/elements/card";
 import Slot from "./Slot";
 import { getEntityIdFromKeys } from "@dojoengine/utils";
 import { Entity, Has, HasValue } from "@dojoengine/recs";
@@ -26,14 +19,21 @@ const League = React.memo((props: LeagueProps) => {
   const { registry, index, title, image } = props;
   const {
     setup: {
-      clientComponents: { League: LeagueModel, Slot: SlotModel },
+      clientModels: {
+        models: { League: LeagueModel, Slot: SlotModel },
+        classes: { League: LeagueClass },
+      },
     },
   } = useDojo();
 
   const leagueKey = useMemo(() => {
     return getEntityIdFromKeys([BigInt(registry), BigInt(index + 1)]) as Entity;
   }, [registry, index]);
-  const league = useComponentValue(LeagueModel, leagueKey);
+  const leagueComponent = useComponentValue(LeagueModel, leagueKey);
+
+  const league = useMemo(() => {
+    return leagueComponent ? new LeagueClass(leagueComponent) : null;
+  }, [leagueComponent]);
 
   const slotKeys = useEntityQuery([
     Has(SlotModel),

@@ -4,9 +4,7 @@ mod store;
 mod components {
     mod emitter;
     mod ownable;
-    mod initializable;
     mod manageable;
-    mod playable;
 }
 
 mod types {

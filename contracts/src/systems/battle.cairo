@@ -6,13 +6,13 @@ use starknet::ContractAddress;
 
 use dojo::world::IWorldDispatcher;
 
-#[starknet::interface]
+#[dojo::interface]
 trait IBattle<TContractState> {
-    fn hydrate(self: @TContractState, world: IWorldDispatcher);
-    fn start(self: @TContractState, world: IWorldDispatcher, team_id: u32, order: u32,);
+    fn hydrate(ref world: IWorldDispatcher);
+    fn start(ref world: IWorldDispatcher, team_id: u32, order: u32,);
 }
 
-#[starknet::contract]
+#[dojo::contract]
 mod battle {
     // Core imports
 
@@ -26,17 +26,9 @@ mod battle {
     use starknet::ContractAddress;
     use starknet::info::{get_caller_address, get_block_timestamp};
 
-    // Dojo imports
-
-    use dojo::world;
-    use dojo::world::IWorldDispatcher;
-    use dojo::world::IWorldDispatcherTrait;
-    use dojo::world::IWorldProvider;
-    use dojo::world::IDojoResourceProvider;
-
     // Internal imports
 
-    use zklash::constants::{WORLD, DEFAULT_REGISTRY_ID, IDS_SIZE};
+    use zklash::constants::{DEFAULT_REGISTRY_ID, IDS_SIZE};
     use zklash::models::index::{League, Player, Team, Shop, Foe, Slot, Squad, Character};
     use zklash::store::{Store, StoreImpl};
     use zklash::helpers::packer::Packer;
@@ -51,6 +43,10 @@ mod battle {
     use zklash::models::character::{CharacterImpl, CharacterAssert, PartialEqCharacter};
     use zklash::types::wave::{Wave, WaveTrait};
 
+    // Component imports
+
+    use zklash::components::initializable::InitializableComponent;
+
     // Local imports
 
     use super::IBattle;
@@ -61,30 +57,10 @@ mod battle {
         const CHARACTER_DUPLICATE: felt252 = 'Battle: character duplicate';
     }
 
-    // Storage
-
-    #[storage]
-    struct Storage {}
-
     // Implementations
-
-    #[abi(embed_v0)]
-    impl DojoResourceProviderImpl of IDojoResourceProvider<ContractState> {
-        fn dojo_resource(self: @ContractState) -> felt252 {
-            'battle'
-        }
-    }
-
-    #[abi(embed_v0)]
-    impl WorldProviderImpl of IWorldProvider<ContractState> {
-        fn world(self: @ContractState) -> IWorldDispatcher {
-            IWorldDispatcher { contract_address: WORLD() }
-        }
-    }
-
     #[abi(embed_v0)]
     impl BattleImpl of IBattle<ContractState> {
-        fn hydrate(self: @ContractState, world: IWorldDispatcher) {
+        fn hydrate(ref world: IWorldDispatcher) {
             // [Setup] Datastore
             let store: Store = StoreImpl::new(world);
 
@@ -126,7 +102,7 @@ mod battle {
             store.set_registry(registry);
         }
 
-        fn start(self: @ContractState, world: IWorldDispatcher, team_id: u32, order: u32,) {
+        fn start(ref world: IWorldDispatcher, team_id: u32, order: u32,) {
             // [Setup] Datastore
             let store: Store = StoreImpl::new(world);
 

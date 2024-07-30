@@ -1,8 +1,30 @@
 [
   {
     "type": "impl",
-    "name": "AccountImpl",
-    "interface_name": "zklash::systems::account::IAccount"
+    "name": "DojoResourceProviderImpl",
+    "interface_name": "dojo::world::IDojoResourceProvider"
+  },
+  {
+    "type": "interface",
+    "name": "dojo::world::IDojoResourceProvider",
+    "items": [
+      {
+        "type": "function",
+        "name": "dojo_resource",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::felt252"
+          }
+        ],
+        "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "WorldProviderImpl",
+    "interface_name": "dojo::world::IWorldProvider"
   },
   {
     "type": "struct",
@@ -16,6 +38,46 @@
   },
   {
     "type": "interface",
+    "name": "dojo::world::IWorldProvider",
+    "items": [
+      {
+        "type": "function",
+        "name": "world",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "dojo::world::IWorldDispatcher"
+          }
+        ],
+        "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "IDojoInitImpl",
+    "interface_name": "zklash::systems::account::account::IDojoInit"
+  },
+  {
+    "type": "interface",
+    "name": "zklash::systems::account::account::IDojoInit",
+    "items": [
+      {
+        "type": "function",
+        "name": "dojo_init",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "external"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "AccountImpl",
+    "interface_name": "zklash::systems::account::IAccount"
+  },
+  {
+    "type": "interface",
     "name": "zklash::systems::account::IAccount",
     "items": [
       {
@@ -23,85 +85,78 @@
         "name": "create",
         "inputs": [
           {
-            "name": "world",
-            "type": "dojo::world::IWorldDispatcher"
-          },
-          {
             "name": "name",
             "type": "core::felt252"
           }
         ],
         "outputs": [],
-        "state_mutability": "view"
+        "state_mutability": "external"
       },
       {
         "type": "function",
         "name": "rename",
         "inputs": [
           {
-            "name": "world",
-            "type": "dojo::world::IWorldDispatcher"
-          },
-          {
             "name": "name",
             "type": "core::felt252"
           }
         ],
         "outputs": [],
-        "state_mutability": "view"
+        "state_mutability": "external"
       },
       {
         "type": "function",
         "name": "spawn",
-        "inputs": [
-          {
-            "name": "world",
-            "type": "dojo::world::IWorldDispatcher"
-          }
-        ],
+        "inputs": [],
         "outputs": [],
-        "state_mutability": "view"
+        "state_mutability": "external"
       }
     ]
   },
   {
     "type": "impl",
-    "name": "OwnableImpl",
-    "interface_name": "zklash::components::ownable::IOwnable"
+    "name": "UpgradableImpl",
+    "interface_name": "dojo::components::upgradeable::IUpgradeable"
   },
   {
     "type": "interface",
-    "name": "zklash::components::ownable::IOwnable",
+    "name": "dojo::components::upgradeable::IUpgradeable",
     "items": [
       {
         "type": "function",
-        "name": "owner",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "type": "function",
-        "name": "transfer_ownership",
+        "name": "upgrade",
         "inputs": [
           {
-            "name": "new_owner",
-            "type": "core::starknet::contract_address::ContractAddress"
+            "name": "new_class_hash",
+            "type": "core::starknet::class_hash::ClassHash"
           }
         ],
         "outputs": [],
         "state_mutability": "external"
-      },
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "dojo::components::upgradeable::upgradeable::Upgraded",
+    "kind": "struct",
+    "members": [
       {
-        "type": "function",
-        "name": "renounce_ownership",
-        "inputs": [],
-        "outputs": [],
-        "state_mutability": "external"
+        "name": "class_hash",
+        "type": "core::starknet::class_hash::ClassHash",
+        "kind": "data"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "dojo::components::upgradeable::upgradeable::Event",
+    "kind": "enum",
+    "variants": [
+      {
+        "name": "Upgraded",
+        "type": "dojo::components::upgradeable::upgradeable::Upgraded",
+        "kind": "nested"
       }
     ]
   },
@@ -110,57 +165,6 @@
     "name": "zklash::components::emitter::EmitterComponent::Event",
     "kind": "enum",
     "variants": []
-  },
-  {
-    "type": "event",
-    "name": "zklash::components::ownable::OwnableComponent::OwnershipTransferred",
-    "kind": "struct",
-    "members": [
-      {
-        "name": "previous_owner",
-        "type": "core::starknet::contract_address::ContractAddress",
-        "kind": "key"
-      },
-      {
-        "name": "new_owner",
-        "type": "core::starknet::contract_address::ContractAddress",
-        "kind": "key"
-      }
-    ]
-  },
-  {
-    "type": "event",
-    "name": "zklash::components::ownable::OwnableComponent::OwnershipTransferStarted",
-    "kind": "struct",
-    "members": [
-      {
-        "name": "previous_owner",
-        "type": "core::starknet::contract_address::ContractAddress",
-        "kind": "key"
-      },
-      {
-        "name": "new_owner",
-        "type": "core::starknet::contract_address::ContractAddress",
-        "kind": "key"
-      }
-    ]
-  },
-  {
-    "type": "event",
-    "name": "zklash::components::ownable::OwnableComponent::Event",
-    "kind": "enum",
-    "variants": [
-      {
-        "name": "OwnershipTransferred",
-        "type": "zklash::components::ownable::OwnableComponent::OwnershipTransferred",
-        "kind": "nested"
-      },
-      {
-        "name": "OwnershipTransferStarted",
-        "type": "zklash::components::ownable::OwnableComponent::OwnershipTransferStarted",
-        "kind": "nested"
-      }
-    ]
   },
   {
     "type": "event",
@@ -174,13 +178,13 @@
     "kind": "enum",
     "variants": [
       {
-        "name": "EmitterEvent",
-        "type": "zklash::components::emitter::EmitterComponent::Event",
-        "kind": "flat"
+        "name": "UpgradeableEvent",
+        "type": "dojo::components::upgradeable::upgradeable::Event",
+        "kind": "nested"
       },
       {
-        "name": "OwnableEvent",
-        "type": "zklash::components::ownable::OwnableComponent::Event",
+        "name": "EmitterEvent",
+        "type": "zklash::components::emitter::EmitterComponent::Event",
         "kind": "flat"
       },
       {

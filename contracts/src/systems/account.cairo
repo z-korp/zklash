@@ -6,22 +6,15 @@ use starknet::ContractAddress;
 
 use dojo::world::IWorldDispatcher;
 
-#[starknet::interface]
+#[dojo::interface]
 trait IAccount<TContractState> {
-    fn create(self: @TContractState, world: IWorldDispatcher, name: felt252);
-    fn rename(self: @TContractState, world: IWorldDispatcher, name: felt252);
-    fn spawn(self: @TContractState, world: IWorldDispatcher);
+    fn create(ref world: IWorldDispatcher, name: felt252);
+    fn rename(ref world: IWorldDispatcher, name: felt252);
+    fn spawn(ref world: IWorldDispatcher);
 }
 
-#[starknet::contract]
+#[dojo::contract]
 mod account {
-    // Dojo imports
-
-    use dojo::world;
-    use dojo::world::IWorldDispatcher;
-    use dojo::world::IWorldDispatcherTrait;
-    use dojo::world::IDojoResourceProvider;
-
     // Starknet imports
 
     use starknet::ContractAddress;
@@ -31,8 +24,8 @@ mod account {
 
     // Component imports
 
+    use zklash::components::initializable::InitializableComponent;
     use zklash::components::emitter::EmitterComponent;
-    use zklash::components::ownable::OwnableComponent;
     use zklash::components::manageable::ManageableComponent;
 
     // Local imports
@@ -47,10 +40,6 @@ mod account {
 
     component!(path: EmitterComponent, storage: emitter, event: EmitterEvent);
     impl EmitterImpl = EmitterComponent::EmitterImpl<ContractState>;
-    component!(path: OwnableComponent, storage: ownable, event: OwnableEvent);
-    #[abi(embed_v0)]
-    impl OwnableImpl = OwnableComponent::OwnableImpl<ContractState>;
-    impl OwnableInternalImpl = OwnableComponent::InternalImpl<ContractState>;
     component!(path: ManageableComponent, storage: manageable, event: ManageableEvent);
     impl ManageableInternalImpl = ManageableComponent::InternalImpl<ContractState>;
 
@@ -60,8 +49,6 @@ mod account {
     struct Storage {
         #[substorage(v0)]
         emitter: EmitterComponent::Storage,
-        #[substorage(v0)]
-        ownable: OwnableComponent::Storage,
         #[substorage(v0)]
         manageable: ManageableComponent::Storage,
     }
@@ -74,26 +61,28 @@ mod account {
         #[flat]
         EmitterEvent: EmitterComponent::Event,
         #[flat]
-        OwnableEvent: OwnableComponent::Event,
-        #[flat]
         ManageableEvent: ManageableComponent::Event,
     }
+
+    // Constructor
+
+    fn dojo_init(ref world: IWorldDispatcher) {}
 
     // Implementations
 
     #[abi(embed_v0)]
     impl AccountImpl of IAccount<ContractState> {
-        fn create(self: @ContractState, world: IWorldDispatcher, name: felt252) {
+        fn create(ref world: IWorldDispatcher, name: felt252) {
             // [Effect] Create a player
             self.manageable._create(world, name);
         }
 
-        fn rename(self: @ContractState, world: IWorldDispatcher, name: felt252) {
+        fn rename(ref world: IWorldDispatcher, name: felt252) {
             self.manageable._rename(world, name);
         }
 
         // [Spawn] Spawn a new team for the player
-        fn spawn(self: @ContractState, world: IWorldDispatcher) {
+        fn spawn(ref world: IWorldDispatcher) {
             // [Setup] Datastore
             let store: Store = StoreTrait::new(world);
 

@@ -8,16 +8,13 @@ import { getEntityIdFromKeys } from "@dojoengine/utils";
 import { Button } from "@/ui/elements/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/ui/elements/dialog";
 import { Badge } from "../elements/badge";
-import { getItemName, getRoleName } from "@/dojo/game";
 
 interface SlotProps {
   registry: number;
@@ -31,7 +28,10 @@ const Slot = React.memo((props: SlotProps) => {
   const { registry, entity, title, rating, size } = props;
   const {
     setup: {
-      clientComponents: { Squad: SquadModel, Slot: SlotModel, Foe: FoeModel },
+      clientModels: {
+        models: { Squad: SquadModel, Slot: SlotModel, Foe: FoeModel },
+        classes: { Squad: SquadClass, Foe: FoeClass },
+      },
     },
   } = useDojo();
 
@@ -44,7 +44,10 @@ const Slot = React.memo((props: SlotProps) => {
     ]) as Entity;
   }, [registry, slot]);
 
-  const squad = useComponentValue(SquadModel, squadKey);
+  const squadComponent = useComponentValue(SquadModel, squadKey);
+  const squad = useMemo(() => {
+    return squadComponent ? new SquadClass(squadComponent) : null;
+  }, [squadComponent]);
 
   const foeKeys = useEntityQuery([
     Has(FoeModel),
@@ -52,7 +55,8 @@ const Slot = React.memo((props: SlotProps) => {
   ]);
   const foes = useMemo(() => {
     return foeKeys.map((key) => {
-      return getComponentValue(FoeModel, key);
+      const component = getComponentValue(FoeModel, key);
+      return component ? new FoeClass(component) : null;
     });
   }, [foeKeys]);
 
@@ -79,9 +83,9 @@ const Slot = React.memo((props: SlotProps) => {
               {(foe && (
                 <Badge className="grow">
                   <div className="flex flex-col">
-                    <p>{`[${foe.id}] ${getRoleName(foe.role)} Lv${foe.level}`}</p>
+                    <p>{`[${foe.id}] ${foe.role.getName()} Lv${foe.level}`}</p>
                     {(foe.item && (
-                      <p className="text-xs">{`- ${getItemName(foe.item)}`}</p>
+                      <p className="text-xs">{`- ${foe.item.getName()}`}</p>
                     )) ||
                       null}
                   </div>

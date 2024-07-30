@@ -1,13 +1,13 @@
 import { getSyncEntities } from "@dojoengine/state";
 import { DojoConfig, DojoProvider } from "@dojoengine/core";
 import * as torii from "@dojoengine/torii-client";
-import { createClientComponents } from "./createClientComponents";
-import { createSystemCalls } from "./createSystemCalls";
 import { defineContractComponents } from "./generated/contractModels";
 import { world } from "./world";
 import { setupWorld } from "./generated/contractSystems";
-import { Account } from "starknet";
+import { Account, RpcProvider } from "starknet";
 import { BurnerManager } from "@dojoengine/create-burner";
+import { models } from "./models";
+import { systems } from "./systems";
 
 export type SetupResult = Awaited<ReturnType<typeof setup>>;
 
@@ -21,32 +21,39 @@ export async function setup({ ...config }: DojoConfig) {
   });
 
   // create contract components
-  const contractComponents = defineContractComponents(world);
+  const contractModels = defineContractComponents(world);
 
   // create client components
-  const clientComponents = createClientComponents({ contractComponents });
+  const clientModels = models({ contractModels });
 
   // fetch all existing entities from torii
-  await getSyncEntities(toriiClient, contractComponents as any);
+  // await getSyncEntities(toriiClient, contractModels as any, []);
+  const sync = await getSyncEntities(
+    toriiClient,
+    contractModels as any,
+    [],
+    1000,
+  );
 
-  // create dojo provider
-  const dojoProvider = new DojoProvider(config.manifest, config.rpcUrl);
+  const client = await setupWorld(
+    new DojoProvider(config.manifest, config.rpcUrl),
+    config,
+  );
 
-  // setup world
-  const client = await setupWorld(dojoProvider);
+  const rpcProvider = new RpcProvider({
+    nodeUrl: config.rpcUrl,
+  });
 
-  // create burner manager
   const burnerManager = new BurnerManager({
     masterAccount: new Account(
-      {
-        nodeUrl: config.rpcUrl,
-      },
+      rpcProvider,
       config.masterAddress,
       config.masterPrivateKey,
     ),
-    accountClassHash: config.accountClassHash,
-    rpcProvider: dojoProvider.provider,
     feeTokenAddress: config.feeTokenAddress,
+    accountClassHash: config.accountClassHash,
+
+    rpcProvider,
   });
 
   try {
@@ -60,15 +67,13 @@ export async function setup({ ...config }: DojoConfig) {
 
   return {
     client,
-    clientComponents,
-    contractComponents,
-    systemCalls: createSystemCalls(
-      { client },
-      contractComponents,
-      clientComponents,
-    ),
+    clientModels,
+    contractComponents: clientModels,
+    systemCalls: systems({ client, clientModels }),
     config,
-    dojoProvider,
+    world,
     burnerManager,
+    rpcProvider,
+    sync,
   };
 }

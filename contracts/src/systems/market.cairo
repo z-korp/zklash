@@ -6,21 +6,17 @@ use starknet::ContractAddress;
 
 use dojo::world::IWorldDispatcher;
 
-#[starknet::interface]
+#[dojo::interface]
 trait IMarket<TContractState> {
-    fn equip(
-        self: @TContractState, world: IWorldDispatcher, team_id: u32, character_id: u8, index: u8,
-    );
-    fn hire(self: @TContractState, world: IWorldDispatcher, team_id: u32, index: u8,);
-    fn xp(
-        self: @TContractState, world: IWorldDispatcher, team_id: u32, character_id: u8, index: u8,
-    );
-    fn merge(self: @TContractState, world: IWorldDispatcher, team_id: u32, from_id: u8, to_id: u8,);
-    fn sell(self: @TContractState, world: IWorldDispatcher, team_id: u32, character_id: u8);
-    fn reroll(self: @TContractState, world: IWorldDispatcher, team_id: u32,);
+    fn equip(ref world: IWorldDispatcher, team_id: u32, character_id: u8, index: u8,);
+    fn hire(ref world: IWorldDispatcher, team_id: u32, index: u8,);
+    fn xp(ref world: IWorldDispatcher, team_id: u32, character_id: u8, index: u8,);
+    fn merge(ref world: IWorldDispatcher, team_id: u32, from_id: u8, to_id: u8,);
+    fn sell(ref world: IWorldDispatcher, team_id: u32, character_id: u8);
+    fn reroll(ref world: IWorldDispatcher, team_id: u32,);
 }
 
-#[starknet::contract]
+#[dojo::contract]
 mod market {
     // Core imports
 
@@ -30,14 +26,6 @@ mod market {
 
     use starknet::ContractAddress;
     use starknet::info::{get_caller_address, get_block_timestamp};
-
-    // Dojo imports
-
-    use dojo::world;
-    use dojo::world::IWorldDispatcher;
-    use dojo::world::IWorldDispatcherTrait;
-    use dojo::world::IWorldProvider;
-    use dojo::world::IDojoResourceProvider;
 
     // Internal imports
 
@@ -61,28 +49,8 @@ mod market {
     // Implementations
 
     #[abi(embed_v0)]
-    impl DojoResourceProviderImpl of IDojoResourceProvider<ContractState> {
-        fn dojo_resource(self: @ContractState) -> felt252 {
-            'market'
-        }
-    }
-
-    #[abi(embed_v0)]
-    impl WorldProviderImpl of IWorldProvider<ContractState> {
-        fn world(self: @ContractState) -> IWorldDispatcher {
-            IWorldDispatcher { contract_address: WORLD() }
-        }
-    }
-
-    #[abi(embed_v0)]
     impl MarketImpl of IMarket<ContractState> {
-        fn equip(
-            self: @ContractState,
-            world: IWorldDispatcher,
-            team_id: u32,
-            character_id: u8,
-            index: u8,
-        ) {
+        fn equip(ref world: IWorldDispatcher, team_id: u32, character_id: u8, index: u8,) {
             // [Setup] Datastore
             let store: Store = StoreTrait::new(world);
 
@@ -116,7 +84,7 @@ mod market {
             store.set_team(team);
         }
 
-        fn hire(self: @ContractState, world: IWorldDispatcher, team_id: u32, index: u8,) {
+        fn hire(ref world: IWorldDispatcher, team_id: u32, index: u8,) {
             // [Setup] Datastore
             let store: Store = StoreTrait::new(world);
 
@@ -146,13 +114,7 @@ mod market {
             store.set_team(team);
         }
 
-        fn xp(
-            self: @ContractState,
-            world: IWorldDispatcher,
-            team_id: u32,
-            character_id: u8,
-            index: u8,
-        ) {
+        fn xp(ref world: IWorldDispatcher, team_id: u32, character_id: u8, index: u8,) {
             // [Setup] Datastore
             let store: Store = StoreTrait::new(world);
 
@@ -186,9 +148,7 @@ mod market {
             store.set_team(team);
         }
 
-        fn merge(
-            self: @ContractState, world: IWorldDispatcher, team_id: u32, from_id: u8, to_id: u8,
-        ) {
+        fn merge(ref world: IWorldDispatcher, team_id: u32, from_id: u8, to_id: u8,) {
             // [Setup] Datastore
             let store: Store = StoreTrait::new(world);
 
@@ -220,7 +180,7 @@ mod market {
             store.set_team(team);
         }
 
-        fn sell(self: @ContractState, world: IWorldDispatcher, team_id: u32, character_id: u8,) {
+        fn sell(ref world: IWorldDispatcher, team_id: u32, character_id: u8,) {
             // [Setup] Datastore
             let store: Store = StoreTrait::new(world);
 
@@ -247,7 +207,7 @@ mod market {
             store.set_team(team);
         }
 
-        fn reroll(self: @ContractState, world: IWorldDispatcher, team_id: u32,) {
+        fn reroll(ref world: IWorldDispatcher, team_id: u32,) {
             // [Setup] Datastore
             let store: Store = StoreTrait::new(world);
 

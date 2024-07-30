@@ -92,6 +92,7 @@ mod account {
             self.manageable._rename(world, name);
         }
 
+        // [Spawn] Spawn a new team for the player
         fn spawn(self: @ContractState, world: IWorldDispatcher) {
             // [Setup] Datastore
             let store: Store = StoreTrait::new(world);

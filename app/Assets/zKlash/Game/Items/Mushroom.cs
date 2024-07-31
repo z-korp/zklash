@@ -69,5 +69,16 @@ namespace zKlash.Game.Items
                 default: return Item.None;
             }
         }
+
+        public int Cost()
+        {
+            return _size switch
+            {
+                Size.Small => 30,
+                Size.Medium => 60,
+                Size.Large => 90,
+                _ => 0
+            };
+        }
     }
 }

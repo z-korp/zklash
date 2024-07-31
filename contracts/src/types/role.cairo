@@ -144,6 +144,19 @@ impl RoleImpl of RoleTrait {
             Role::Bomboblin => BomboblinImpl::next_absorb(phase, level),
         }
     }
+
+    #[inline(always)]
+    fn cost(self: Role, level: u8) -> u8 {
+        match self {
+            Role::None => 0,
+            Role::Knight => KnightImpl::cost(level),
+            Role::Bowman => BowmanImpl::cost(level),
+            Role::Pawn => PawnImpl::cost(level),
+            Role::Torchoblin => TorchoblinImpl::cost(level),
+            Role::Dynamoblin => DynamoblinImpl::cost(level),
+            Role::Bomboblin => BomboblinImpl::cost(level),
+        }
+    }
 }
 
 #[generate_trait]

@@ -73,7 +73,6 @@ struct Shop {
     player_id: felt252,
     #[key]
     team_id: u32,
-    purchase_cost: u8,
     reroll_cost: u8,
     item_count: u8,
     items: u32,

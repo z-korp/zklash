@@ -16,9 +16,6 @@ public class Shop : ModelInstance
     [ModelField("team_id")]
     public uint team_id;
 
-    [ModelField("purchase_cost")]
-    public uint purchase_cost;
-
     [ModelField("reroll_cost")]
     public uint reroll_cost;
 

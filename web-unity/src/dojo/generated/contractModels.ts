@@ -134,7 +134,6 @@ export function defineContractComponents(world: World) {
         {
           player_id: RecsType.String,
           team_id: RecsType.Number,
-          purchase_cost: RecsType.Number,
           reroll_cost: RecsType.Number,
           item_count: RecsType.Number,
           items: RecsType.Number,
@@ -144,16 +143,7 @@ export function defineContractComponents(world: World) {
         {
           metadata: {
             name: "Shop",
-            types: [
-              "ContractAddress",
-              "u32",
-              "u8",
-              "u8",
-              "u8",
-              "u32",
-              "u8",
-              "u32",
-            ],
+            types: ["ContractAddress", "u32", "u8", "u8", "u32", "u8", "u32"],
           },
         },
       );

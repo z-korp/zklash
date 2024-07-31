@@ -46,4 +46,47 @@ export class Role {
         return "None";
     }
   }
+
+  public getCost(lvl: number): number {
+    switch (this.value) {
+      case RoleType.Bomboblin:
+        if (lvl === 0) return 0;
+        if (lvl === 1) return 30;
+        if (lvl === 2) return 90;
+        if (lvl === 3) return 180;
+        return 0;
+      case RoleType.Bowman:
+        if (lvl === 0) return 0;
+        if (lvl === 1) return 30;
+        if (lvl === 2) return 90;
+        if (lvl === 3) return 180;
+        return 0;
+      case RoleType.Dynamoblin:
+        if (lvl === 0) return 0;
+        if (lvl === 1) return 30;
+        if (lvl === 2) return 90;
+        if (lvl === 3) return 180;
+        return 0;
+      case RoleType.Knight:
+        if (lvl === 0) return 0;
+        if (lvl === 1) return 30;
+        if (lvl === 2) return 90;
+        if (lvl === 3) return 180;
+        return 0;
+      case RoleType.Pawn:
+        if (lvl === 0) return 0;
+        if (lvl === 1) return 30;
+        if (lvl === 2) return 90;
+        if (lvl === 3) return 180;
+        return 0;
+      case RoleType.Torchoblin:
+        if (lvl === 0) return 0;
+        if (lvl === 1) return 30;
+        if (lvl === 2) return 90;
+        if (lvl === 3) return 180;
+        return 0;
+      default:
+        return 0;
+    }
+  }
 }

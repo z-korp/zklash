@@ -16,8 +16,8 @@ use zklash::helpers::battler::Battler;
 use zklash::models::squad::{Squad, SquadTrait};
 use zklash::models::shop::{Shop, ShopTrait};
 use zklash::models::character::{Character, CharacterTrait};
-use zklash::types::item::Item;
-use zklash::types::role::Role;
+use zklash::types::item::{Item, ItemTrait};
+use zklash::types::role::{Role, RoleTrait};
 use zklash::types::wave::{Wave, WaveTrait};
 
 mod errors {
@@ -63,11 +63,11 @@ impl TeamImpl of TeamTrait {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Affordable
-        self.assert_is_affordable(shop.purchase_cost);
-        // [Effect] Update Gold
-        self.gold -= shop.purchase_cost.into();
-        // [Effect] Purchase item from the shop
         let item: Item = shop.purchase_item(index);
+        let cost: u8 = item.cost();
+        self.assert_is_affordable(cost);
+        // [Effect] Update Gold
+        self.gold -= cost.into();
         // [Effect] Update Characters
         character.equip(item);
     }
@@ -77,9 +77,11 @@ impl TeamImpl of TeamTrait {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Affordable
-        self.assert_is_affordable(shop.purchase_cost);
+        let role: Role = shop.purchase_role(index);
+        let cost = role.cost(1);
+        self.assert_is_affordable(cost);
         // [Effect] Update Gold
-        self.gold -= shop.purchase_cost.into();
+        self.gold -= cost.into();
         // [Effect] Hire Character
         let role: Role = shop.purchase_role(index);
         self.character_uuid += 1;
@@ -93,9 +95,11 @@ impl TeamImpl of TeamTrait {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Affordable
-        self.assert_is_affordable(shop.purchase_cost);
+        let role: Role = character.role.into();
+        let cost: u8 = role.cost(1);
+        self.assert_is_affordable(cost);
         // [Effect] Update Gold
-        self.gold -= shop.purchase_cost.into();
+        self.gold -= cost.into();
         // [Check] Roles match
         let role: Role = character.role.into();
         let purchased_role: Role = shop.purchase_role(index);
@@ -121,7 +125,9 @@ impl TeamImpl of TeamTrait {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Effect] Update Gold
-        self.gold += character.level.into();
+        let role: Role = character.role.into();
+        let item: Item = character.item.into();
+        self.gold += 3 * (item.cost().into() + role.cost(character.level).into()) / 4;
         // [Effect] Update Character
         character.nullify();
     }

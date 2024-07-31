@@ -145,6 +145,25 @@ impl ItemImpl of ItemTrait {
             Item::PumpkinLarge => PumpkinImpl::usage(phase, Size::Large),
         }
     }
+
+    #[inline(always)]
+    fn cost(self: Item) -> u8 {
+        match self {
+            Item::None => 0,
+            Item::MushroomSmall => MushroomImpl::cost(Size::Small),
+            Item::MushroomMedium => MushroomImpl::cost(Size::Medium),
+            Item::MushroomLarge => MushroomImpl::cost(Size::Large),
+            Item::RockSmall => RockImpl::cost(Size::Small),
+            Item::RockMedium => RockImpl::cost(Size::Medium),
+            Item::RockLarge => RockImpl::cost(Size::Large),
+            Item::BushSmall => BushImpl::cost(Size::Small),
+            Item::BushMedium => BushImpl::cost(Size::Medium),
+            Item::BushLarge => BushImpl::cost(Size::Large),
+            Item::PumpkinSmall => PumpkinImpl::cost(Size::Small),
+            Item::PumpkinMedium => PumpkinImpl::cost(Size::Medium),
+            Item::PumpkinLarge => PumpkinImpl::cost(Size::Large),
+        }
+    }
 }
 
 #[generate_trait]

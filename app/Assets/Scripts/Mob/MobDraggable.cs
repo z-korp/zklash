@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using zKlash.Game.Roles;
+using GameCharacter = zKlash.Game.Character;
 
 public class MobDraggable : MonoBehaviour
 {
@@ -274,7 +275,9 @@ public class MobDraggable : MonoBehaviour
             // Manage the case where the mob is dropped in a valid zone and come from the shop
             if (isFromShop)
             {
-                if (PlayerData.Instance.purchaseCost > PlayerData.Instance.Gold)
+                GameCharacter character = GetComponent<MobController>().Character;
+                int cost = character.Role.Cost(character.Level);
+                if (PlayerData.Instance.Gold < cost)
                 {
                     NoMoneyMessageResetPosition();
                     return;
@@ -318,7 +321,9 @@ public class MobDraggable : MonoBehaviour
 
     private bool NotEnoughMoney()
     {
-        if (isFromShop && PlayerData.Instance.purchaseCost > PlayerData.Instance.Gold)
+        GameCharacter character = GetComponent<MobController>().Character;
+        int cost = character.Role.Cost(character.Level);
+        if (isFromShop && PlayerData.Instance.Gold < cost)
         {
             NoMoneyMessageResetPosition();
             return true;

@@ -1,6 +1,6 @@
 kind = "DojoModel"
-class_hash = "0x37c35d440d3fdb1389684a2ac05ba9ff13879521b515836194d5558ffc9e8c3"
-original_class_hash = "0x37c35d440d3fdb1389684a2ac05ba9ff13879521b515836194d5558ffc9e8c3"
+class_hash = "0xf814988ad08adabe563a801f4d127cc9f426d64ec3181b42fe3e965a17055e"
+original_class_hash = "0xf814988ad08adabe563a801f4d127cc9f426d64ec3181b42fe3e965a17055e"
 abi = "manifests/dev/abis/base/models/zklash_models_index_shop.json"
 name = "zklash::models::index::shop"
 
@@ -13,11 +13,6 @@ key = true
 name = "team_id"
 type = "u32"
 key = true
-
-[[members]]
-name = "purchase_cost"
-type = "u8"
-key = false
 
 [[members]]
 name = "reroll_cost"

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using zKlash.Game.Items;
 
 public class ItemDraggable : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class ItemDraggable : MonoBehaviour
     public bool isFromShop = true;
     public int index;
     public ItemData item;
+    public IItem Item;
     private Rigidbody2D rb;
     public bool canDropItem;
 
@@ -34,6 +36,8 @@ public class ItemDraggable : MonoBehaviour
         _dialogueManager = DialogueManager.Instance;
         _teamManager = TeamManager.Instance;
         _shopMessageManager = ShopMessageManager.Instance;
+
+        Item = ItemFactory.GetItem(item.type);
     }
 
     void Update()
@@ -65,7 +69,7 @@ public class ItemDraggable : MonoBehaviour
 
         if (canDropItem)
         {
-            if (PlayerData.Instance.Gold < PlayerData.Instance.purchaseCost)
+            if (PlayerData.Instance.Gold < Item.Cost())
             {
                 _dialogueManager.ShowDialogueForDuration("You're broke mate !", 2f);
                 Debug.LogWarning("Not enough gold to purchase item.");
@@ -139,7 +143,7 @@ public class ItemDraggable : MonoBehaviour
     private void OnMouseEnter()
     {
         OnItemHovered?.Invoke(true);
-        _shopMessageManager.ShowShopMessage(_priceString + item.price.ToString());
+        _shopMessageManager.ShowShopMessage(_priceString + Item.Cost().ToString());
 
     }
     private void OnMouseExit()

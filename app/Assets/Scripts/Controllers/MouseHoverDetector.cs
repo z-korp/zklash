@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using GameCharacter = zKlash.Game.Character;
 
 public class MouseHoverDetector : MonoBehaviour
 {
@@ -16,7 +18,8 @@ public class MouseHoverDetector : MonoBehaviour
     void Start()
     {
         _shopMessageManager = ShopMessageManager.Instance;
-        _price = GetComponent<MobStat>().price;
+        GameCharacter character = GetComponent<MobController>().Character;
+        _price = character.Role.Cost(character.Level);
         if (canvas != null)
         {
             canvas.SetActive(false);

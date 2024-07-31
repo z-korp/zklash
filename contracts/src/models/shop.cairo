@@ -28,7 +28,6 @@ impl ShopImpl of ShopTrait {
         let mut shop = Shop {
             player_id,
             team_id,
-            purchase_cost: constants::DEFAULT_SHOP_PURCHASE_COST,
             reroll_cost: constants::DEFAULT_SHOP_REROLL_COST,
             item_count: constants::DEFAULT_ITEM_COUNT,
             items: 0,
@@ -136,7 +135,6 @@ impl ZeroableShopImpl of core::Zeroable<Shop> {
         Shop {
             player_id: core::Zeroable::zero(),
             team_id: 0,
-            purchase_cost: 0,
             reroll_cost: 0,
             item_count: 0,
             items: 0,
@@ -147,7 +145,7 @@ impl ZeroableShopImpl of core::Zeroable<Shop> {
 
     #[inline(always)]
     fn is_zero(self: Shop) -> bool {
-        0 == self.purchase_cost
+        0 == self.reroll_cost
     }
 
     #[inline(always)]

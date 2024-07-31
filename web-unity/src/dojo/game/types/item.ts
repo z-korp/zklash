@@ -168,4 +168,31 @@ export class Item {
         return "";
     }
   }
+
+  public getCost(size: ItemSize): number {
+    switch (this.category) {
+      case ItemCategory.Bush:
+        if (size === ItemSize.Small) return 30;
+        if (size === ItemSize.Medium) return 60;
+        if (size === ItemSize.Large) return 90;
+        return 0;
+      case ItemCategory.Mushroom:
+        if (size === ItemSize.Small) return 30;
+        if (size === ItemSize.Medium) return 60;
+        if (size === ItemSize.Large) return 90;
+        return 0;
+      case ItemCategory.Pumpkin:
+        if (size === ItemSize.Small) return 30;
+        if (size === ItemSize.Medium) return 60;
+        if (size === ItemSize.Large) return 90;
+        return 0;
+      case ItemCategory.Rock:
+        if (size === ItemSize.Small) return 30;
+        if (size === ItemSize.Medium) return 60;
+        if (size === ItemSize.Large) return 90;
+        return 0;
+      default:
+        return 0;
+    }
+  }
 }

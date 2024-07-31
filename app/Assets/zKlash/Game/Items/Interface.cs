@@ -35,6 +35,7 @@ namespace zKlash.Game.Items
         int Damage(Phase phase);
         int Absorb(Phase phase);
         Item Usage(Phase phase);
+        int Cost();
     }
 
     public class NoneItem : IItem
@@ -46,6 +47,7 @@ namespace zKlash.Game.Items
         public int Damage(Phase phase) => 0;
         public int Absorb(Phase phase) => 0;
         public Item Usage(Phase phase) => Item.None;
+        public int Cost() => 0;
     }
 
     public static class ItemFactory

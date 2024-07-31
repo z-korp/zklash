@@ -19,6 +19,7 @@ namespace zKlash.Game.Roles
         int NextHealth(Phase phase, int level);
         int NextAttack(Phase phase, int level);
         int NextAbsorb(Phase phase, int level);
+        int Cost(int level);
     }
 
     public class NoneRole : IRole
@@ -32,6 +33,7 @@ namespace zKlash.Game.Roles
         public int NextHealth(Phase phase, int level) => 0;
         public int NextAttack(Phase phase, int level) => 0;
         public int NextAbsorb(Phase phase, int level) => 0;
+        public int Cost(int level) => 0;
     }
 
     public static class RoleFactory

@@ -73,7 +73,8 @@ export const Canvas = ({ itemType }: { itemType: ItemType }) => {
       <div className="flex flex-col items-center justify-center mb-2 ">
         <div className="text-2xl">{item.value}</div>
         <img src={item.getImage(size)} className="w-32 h-32" />
-        <div className="h-[48px]">{item.getTalent(size)}</div>
+        <div className="h-[48px] text-center">{item.getTalent(size)}</div>
+        <div className="mt-1">{`Cost: ${item.getCost(size)} golds`}</div>
       </div>
       <div className="flex justify-center items-center gap-2">
         Size

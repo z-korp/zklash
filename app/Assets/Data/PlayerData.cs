@@ -41,7 +41,6 @@ public class PlayerData : MonoBehaviour
     public Role[] shopRoles = new Role[3];
 
     public uint rerollCost;
-    public uint purchaseCost;
 
     public Item shopItem = Item.None;
 
@@ -109,7 +108,6 @@ public class PlayerData : MonoBehaviour
         shopItem = (Item)shop.items;
 
         rerollCost = shop.reroll_cost;
-        purchaseCost = shop.purchase_cost;
 
         EventManager.ShopUpdated();
     }

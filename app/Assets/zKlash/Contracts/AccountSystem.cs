@@ -17,7 +17,7 @@ public class AccountSystem : MonoBehaviour
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.accountContractAddress,
+                to = new FieldElement(data.accountContractAddress).Inner,
                 selector = "dojo_resource",
                 calldata = new dojo.FieldElement[] {
 
@@ -30,14 +30,13 @@ public class AccountSystem : MonoBehaviour
 
     // Call the `create` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> Create(Account account, string world, string name)
+    public async Task<FieldElement> Create(Account account, string name)
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.accountContractAddress,
+                to = new FieldElement(data.accountContractAddress).Inner,
                 selector = "create",
                 calldata = new dojo.FieldElement[] {
-                    new FieldElement(world).Inner,
                     new FieldElement(name).Inner
                 }
             }
@@ -46,15 +45,13 @@ public class AccountSystem : MonoBehaviour
 
     // Call the `spawn` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> Spawn(Account account, string world)
+    public async Task<FieldElement> Spawn(Account account)
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.accountContractAddress,
+                to = new FieldElement(data.accountContractAddress).Inner,
                 selector = "spawn",
-                calldata = new dojo.FieldElement[] {
-                    new FieldElement(world).Inner
-                }
+                calldata = new dojo.FieldElement[] {}
             }
         });
     }

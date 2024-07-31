@@ -56,7 +56,7 @@ public class ContractActions : MonoBehaviour
         var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
         Debug.Log($"Player team_id: {player.team_count}");
 
-        var txHash = await marketSystem.Equip(currentBurner, dojoConfig.worldAddress, player.team_count, character_id, index);
+        var txHash = await marketSystem.Equip(currentBurner, player.team_count, character_id, index);
         Debug.Log($"[Equip] Transaction Hash: {txHash.Hex()}");
 
         transactionHashes.Add(txHash);
@@ -71,7 +71,7 @@ public class ContractActions : MonoBehaviour
         var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
         Debug.Log($"Player team_id: {player.team_count}");
 
-        var txHash = await marketSystem.Hire(currentBurner, dojoConfig.worldAddress, player.team_count, index);
+        var txHash = await marketSystem.Hire(currentBurner, player.team_count, index);
         Debug.Log($"[Hire] Transaction Hash: {txHash.Hex()}");
 
         transactionHashes.Add(txHash);
@@ -86,7 +86,7 @@ public class ContractActions : MonoBehaviour
         var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
         Debug.Log($"Player team_id: {player.team_count}");
 
-        var txHash = await marketSystem.Reroll(currentBurner, dojoConfig.worldAddress, player.team_count);
+        var txHash = await marketSystem.Reroll(currentBurner, player.team_count);
         Debug.Log($"[Reroll] Transaction Hash: {txHash.Hex()}");
 
         transactionHashes.Add(txHash);
@@ -101,7 +101,7 @@ public class ContractActions : MonoBehaviour
         var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
         Debug.Log($"Player team_id: {player.team_count}");
 
-        var txHash = await marketSystem.Merge(currentBurner, dojoConfig.worldAddress, player.team_count, from_id, to_id);
+        var txHash = await marketSystem.Merge(currentBurner, player.team_count, from_id, to_id);
         Debug.Log($"[Merge] Transaction Hash: {txHash.Hex()}");
 
         transactionHashes.Add(txHash);
@@ -116,7 +116,7 @@ public class ContractActions : MonoBehaviour
         var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
         Debug.Log($"Player team_id: {player.team_count}");
 
-        var txHash = await marketSystem.MergeFromShop(currentBurner, dojoConfig.worldAddress, player.team_count, character_id, index);
+        var txHash = await marketSystem.MergeFromShop(currentBurner, player.team_count, character_id, index);
         Debug.Log($"[MergeFromShop] Transaction Hash: {txHash.Hex()}");
 
         transactionHashes.Add(txHash);
@@ -131,7 +131,7 @@ public class ContractActions : MonoBehaviour
         var player = gameManager.worldManager.Entity(playerEntity).GetComponent<Player>();
         Debug.Log($"Player team_id: {player.team_count}");
 
-        var txHash = await marketSystem.Sell(currentBurner, dojoConfig.worldAddress, player.team_count, character_id);
+        var txHash = await marketSystem.Sell(currentBurner, player.team_count, character_id);
         Debug.Log($"[Sell] Transaction Hash: {txHash.Hex()}");
 
         transactionHashes.Add(txHash);
@@ -238,7 +238,7 @@ public class ContractActions : MonoBehaviour
         uint hexNumber = Convert.ToUInt32(hexString, 16);
         Debug.Log($"Concatenated Hex String: {hexString}");
 
-        var txHash = await battleSystem.StartBattle(currentBurner, dojoConfig.worldAddress, player.team_count, hexNumber);
+        var txHash = await battleSystem.StartBattle(currentBurner, player.team_count, hexNumber);
         Debug.Log($"[Hire] Transaction Hash: {txHash.Hex()}");
 
         await gameManager.provider.WaitForTransaction(txHash);

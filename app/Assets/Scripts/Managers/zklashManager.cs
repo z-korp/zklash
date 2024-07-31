@@ -23,14 +23,7 @@ public class zklashManager : MonoBehaviour
             return;
         }
 
-        if (_worldManagerPrefab != null)
-        {
-            Instantiate(_worldManagerPrefab, Vector3.zero, Quaternion.identity);
-        }
-        else
-        {
-            Debug.LogError("worldManagerPrefab is not assigned in PrefabManager.");
-        }
+
         if (_unityMainThreadDispatcherPrefab != null)
         {
             Instantiate(_unityMainThreadDispatcherPrefab, Vector3.zero, Quaternion.identity);
@@ -56,6 +49,15 @@ public class zklashManager : MonoBehaviour
         else
         {
             Debug.LogError("canvasWaitForTransactionPrefab is not assigned in PrefabManager.");
+        }
+
+        if (_worldManagerPrefab != null)
+        {
+            Instantiate(_worldManagerPrefab, Vector3.zero, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogError("worldManagerPrefab is not assigned in PrefabManager.");
         }
     }
 }

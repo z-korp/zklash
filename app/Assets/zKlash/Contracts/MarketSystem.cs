@@ -11,14 +11,13 @@ public class MarketSystem : MonoBehaviour
 {
     public GameManagerData data;
 
-    public async Task<FieldElement> Equip(Account account, string world, uint team_id, byte character_id, uint index)
+    public async Task<FieldElement> Equip(Account account, uint team_id, byte character_id, uint index)
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.marketContractAddress,
+                to = new FieldElement(data.marketContractAddress).Inner,
                 selector = "equip",
                 calldata = new dojo.FieldElement[] {
-                    new FieldElement(world).Inner,
                     new FieldElement(team_id).Inner,
                     new FieldElement(character_id).Inner,
                     new FieldElement(index).Inner
@@ -27,14 +26,13 @@ public class MarketSystem : MonoBehaviour
         });
     }
 
-    public async Task<FieldElement> Hire(Account account, string world, uint team_id, uint index)
+    public async Task<FieldElement> Hire(Account account, uint team_id, uint index)
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.marketContractAddress,
+                to = new FieldElement(data.marketContractAddress).Inner,
                 selector = "hire",
                 calldata = new dojo.FieldElement[] {
-                    new FieldElement(world).Inner,
                     new FieldElement(team_id).Inner,
                     new FieldElement(index).Inner
                 }
@@ -42,28 +40,26 @@ public class MarketSystem : MonoBehaviour
         });
     }
 
-    public async Task<FieldElement> Reroll(Account account, string world, uint team_id)
+    public async Task<FieldElement> Reroll(Account account, uint team_id)
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.marketContractAddress,
+                to = new FieldElement(data.marketContractAddress).Inner,
                 selector = "reroll",
                 calldata = new dojo.FieldElement[] {
-                    new FieldElement(world).Inner,
                     new FieldElement(team_id).Inner
                 }
             }
         });
     }
 
-    public async Task<FieldElement> Merge(Account account, string world, uint team_id, uint from_id, uint to_id)
+    public async Task<FieldElement> Merge(Account account, uint team_id, uint from_id, uint to_id)
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.marketContractAddress,
+                to = new FieldElement(data.marketContractAddress).Inner,
                 selector = "merge",
                 calldata = new dojo.FieldElement[] {
-                    new FieldElement(world).Inner,
                     new FieldElement(team_id).Inner,
                     new FieldElement(from_id).Inner,
                     new FieldElement(to_id).Inner
@@ -72,14 +68,13 @@ public class MarketSystem : MonoBehaviour
         });
     }
 
-    public async Task<FieldElement> MergeFromShop(Account account, string world, uint team_id, uint character_id, uint index)
+    public async Task<FieldElement> MergeFromShop(Account account, uint team_id, uint character_id, uint index)
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.marketContractAddress,
+                to = new FieldElement(data.marketContractAddress).Inner,
                 selector = "xp",
                 calldata = new dojo.FieldElement[] {
-                    new FieldElement(world).Inner,
                     new FieldElement(team_id).Inner,
                     new FieldElement(character_id).Inner,
                     new FieldElement(index).Inner
@@ -88,14 +83,13 @@ public class MarketSystem : MonoBehaviour
         });
     }
 
-    public async Task<FieldElement> Sell(Account account, string world, uint team_id, uint character_id)
+    public async Task<FieldElement> Sell(Account account, uint team_id, uint character_id)
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.marketContractAddress,
+                to = new FieldElement(data.marketContractAddress).Inner,
                 selector = "sell",
                 calldata = new dojo.FieldElement[] {
-                    new FieldElement(world).Inner,
                     new FieldElement(team_id).Inner,
                     new FieldElement(character_id).Inner
                 }
@@ -109,10 +103,9 @@ public class MarketSystem : MonoBehaviour
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.marketContractAddress,
+                to = new FieldElement(data.marketContractAddress).Inner,
                 selector = "dojo_resource",
-                calldata = new dojo.FieldElement[] {
-                }
+                calldata = new dojo.FieldElement[] {}
             }
         });
     }

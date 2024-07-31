@@ -25,6 +25,7 @@ namespace Dojo
 
         public UnityEvent<List<GameObject>> OnSynchronized;
         public UnityEvent<GameObject> OnEntitySpawned;
+        public UnityEvent<ModelInstance> OnEventMessage;
 
         // Awake is called when the script instance is being loaded.
         void Awake()
@@ -40,19 +41,10 @@ namespace Dojo
         // Fetch all entities from the dojo world and spawn them.
         public async Task<int> SynchronizeEntities()
         {
-            var query = new dojo.Query
-            {
-                clause = new dojo.COptionClause
-                {
-                    tag = dojo.COptionClause_Tag.NoneClause,
-                },
-                limit = limit,
-            };
-
 #if UNITY_WEBGL && !UNITY_EDITOR
-            var entities = await worldManager.wasmClient.Entities(query);
+            var entities = await worldManager.wasmClient.Entities(worldManager.dojoConfig.query);
 #else
-            var entities = await Task.Run(() => worldManager.toriiClient.Entities(query));
+            var entities = await Task.Run(() => worldManager.toriiClient.Entities(worldManager.dojoConfig.query));
 #endif
 
             var entityGameObjects = new List<GameObject>();
@@ -77,7 +69,7 @@ namespace Dojo
                 var model = models.FirstOrDefault(m => m.GetType().Name == entityModel.Name);
                 if (model == null)
                 {
-                    Debug.LogError($"Model {entityModel.Name} not found");
+                    Debug.LogWarning($"Model {entityModel.Name} not found");
                     continue;
                 }
 
@@ -111,7 +103,7 @@ namespace Dojo
                     var model = models.FirstOrDefault(m => m.GetType().Name == entityModel.Name);
                     if (model == null)
                     {
-                        Debug.LogError($"Model {entityModel.Name} not found");
+                        Debug.LogWarning($"Model {entityModel.Name} not found");
                         continue;
                     }
 
@@ -125,10 +117,32 @@ namespace Dojo
             }
         }
 
+        private void HandleEventMessage(FieldElement hashedKeys, Model[] entityModels)
+        {
+            foreach (var entityModel in entityModels)
+            {
+                var model = models.FirstOrDefault(m => m.GetType().Name == entityModel.Name);
+                if (model == null)
+                {
+                    Debug.LogWarning($"Model {entityModel.Name} not found");
+                    continue;
+                }
+
+                model.OnUpdate(entityModel);
+                OnEventMessage?.Invoke(model);
+            }
+        }
+
         // Register our entity callbacks
         public void RegisterEntityCallbacks()
         {
             ToriiEvents.Instance.OnEntityUpdated += HandleEntityUpdate;
+        }
+
+        // Register event message callbacks
+        public void RegisterEventMessageCallbacks()
+        {
+            ToriiEvents.Instance.OnEventMessageUpdated += HandleEventMessage;
         }
 
         private ModelInstance[] LoadModels()

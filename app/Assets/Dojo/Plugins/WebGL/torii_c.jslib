@@ -9,7 +9,7 @@ mergeInto(LibraryManager.library, {
     // callbackMethodName
     cb
   ) {
-    var client = await wasm_bindgen.createClient([], {
+    let client = await wasm_bindgen.createClient({
       rpcUrl: UTF8ToString(rpcUrl),
       toriiUrl: UTF8ToString(toriiUrl),
       relayUrl: UTF8ToString(relayUrl),
@@ -22,14 +22,29 @@ mergeInto(LibraryManager.library, {
   GetEntities: async function (clientPtr, queryString, cb) {
     const client = wasm_bindgen.Client.__wrap(clientPtr);
     const query = JSON.parse(UTF8ToString(queryString));
-    var entities = await client.getEntities(query);
-    console.log(entities);
+    let entities = await client.getEntities(query);
 
     // stringify the entities
-    var entitiesString = JSON.stringify(entities);
+    let entitiesString = JSON.stringify(entities);
     // return buffer
-    var bufferSize = lengthBytesUTF8(entitiesString) + 1;
-    var buffer = _malloc(bufferSize);
+    let bufferSize = lengthBytesUTF8(entitiesString) + 1;
+    let buffer = _malloc(bufferSize);
+    stringToUTF8(entitiesString, buffer, bufferSize);
+
+    client.__destroy_into_raw();
+    dynCall_vi(cb, buffer);
+  },
+  // Returns a dictionary of all of the eventmessages
+  GetEventMessages: async function (clientPtr, queryString, cb) {
+    const client = wasm_bindgen.Client.__wrap(clientPtr);
+    const query = JSON.parse(UTF8ToString(queryString));
+    let entities = await client.getEventMessages(query);
+
+    // stringify the entities
+    let entitiesString = JSON.stringify(entities);
+    // return buffer
+    let bufferSize = lengthBytesUTF8(entitiesString) + 1;
+    let buffer = _malloc(bufferSize);
     stringToUTF8(entitiesString, buffer, bufferSize);
 
     client.__destroy_into_raw();
@@ -37,86 +52,109 @@ mergeInto(LibraryManager.library, {
   },
   // Get the value of a model for a specific set of keys
   GetModelValue: async function (clientPtr, model, keys, cb) {
-    var client = wasm_bindgen.Client.__wrap(clientPtr);
-    var modelValue = await client.getModelValue(
+    let client = wasm_bindgen.Client.__wrap(clientPtr);
+    let modelValue = await client.getModelValue(
       UTF8ToString(model),
       JSON.parse(UTF8ToString(keys))
     );
 
     // stringify the model value
-    var modelValueString = JSON.stringify(modelValue);
+    let modelValueString = JSON.stringify(modelValue);
     // return buffer
-    var bufferSize = lengthBytesUTF8(modelValueString) + 1;
-    var buffer = _malloc(bufferSize);
+    let bufferSize = lengthBytesUTF8(modelValueString) + 1;
+    let buffer = _malloc(bufferSize);
     stringToUTF8(modelValueString, buffer, bufferSize);
 
     client.__destroy_into_raw();
     dynCall_vi(cb, buffer);
   },
-  OnEntityUpdated: function (clientPtr, ids, cb) {
-    var client = wasm_bindgen.Client.__wrap(clientPtr);
-    var idsString = UTF8ToString(ids);
-    var idsArray = JSON.parse(idsString);
+  OnEntityUpdated: async function (clientPtr, clauseStr, cb) {
+    let client = wasm_bindgen.Client.__wrap(clientPtr);
+    let clause = clauseStr ? JSON.parse(UTF8ToString(clauseStr)) : undefined;
 
-    client.onEntityUpdated(idsArray, (entities) => {
+    const subscription = await client.onEntityUpdated(clause, (entities) => {
       // stringify the entities
-      var entitiesString = JSON.stringify(entities);
+      let entitiesString = JSON.stringify(entities);
       // return buffer
-      var bufferSize = lengthBytesUTF8(entitiesString) + 1;
-      var buffer = _malloc(bufferSize);
+      let bufferSize = lengthBytesUTF8(entitiesString) + 1;
+      let buffer = _malloc(bufferSize);
       stringToUTF8(entitiesString, buffer, bufferSize);
 
       dynCall_vi(cb, buffer);
     });
+    subscription.__destroy_into_raw();
+
+    client.__destroy_into_raw();
+  },
+  OnEventMessageUpdated: async function (clientPtr, clauseStr, cb) {
+    let client = wasm_bindgen.Client.__wrap(clientPtr);
+    let clause = clauseStr ? JSON.parse(UTF8ToString(clauseStr)) : undefined;
+
+    const subscription = await client.onEventMessageUpdated(
+      clause,
+      (entities) => {
+        // stringify the entities
+        let entitiesString = JSON.stringify(entities);
+        // return buffer
+        let bufferSize = lengthBytesUTF8(entitiesString) + 1;
+        let buffer = _malloc(bufferSize);
+        stringToUTF8(entitiesString, buffer, bufferSize);
+
+        dynCall_vi(cb, buffer);
+      }
+    );
+    subscription.__destroy_into_raw();
 
     client.__destroy_into_raw();
   },
   AddModelsToSync: function (clientPtr, models) {
-    var client = wasm_bindgen.Client.__wrap(clientPtr);
-    var modelsString = UTF8ToString(models);
-    var modelsArray = JSON.parse(modelsString);
+    let client = wasm_bindgen.Client.__wrap(clientPtr);
+    let modelsString = UTF8ToString(models);
+    let modelsArray = JSON.parse(modelsString);
 
     client.__destroy_into_raw();
     client.addModelsToSync(modelsArray);
   },
   RemoveModelsToSync: function (clientPtr, models) {
-    var client = wasm_bindgen.Client.__wrap(clientPtr);
-    var modelsString = UTF8ToString(models);
-    var modelsArray = JSON.parse(modelsString);
+    let client = wasm_bindgen.Client.__wrap(clientPtr);
+    let modelsString = UTF8ToString(models);
+    let modelsArray = JSON.parse(modelsString);
 
     client.__destroy_into_raw();
     client.removeModelsToSync(modelsArray);
   },
-  OnSyncModelChange: function (
+  OnSyncModelChange: async function (
     clientPtr,
     models,
     callbackObjectName,
     callbackMethodName
   ) {
-    var client = wasm_bindgen.Client.__wrap(clientPtr);
-    var modelsString = UTF8ToString(models);
-    var modelsArray = JSON.parse(modelsString);
+    let client = wasm_bindgen.Client.__wrap(clientPtr);
+    let modelsString = UTF8ToString(models);
+    let modelsArray = JSON.parse(modelsString);
 
-    client.onSyncModelChange(modelsArray, () => {
+    const subscription = await client.onSyncModelChange(modelsArray, () => {
       gameInstance.SendMessage(
         UTF8ToString(callbackObjectName),
         UTF8ToString(callbackMethodName)
       );
     });
+    subscription.__destroy_into_raw();
+
     client.__destroy_into_raw();
   },
   // Encode typed data with the corresponding address and return the message hash
   // typedData: JSON string
   // address: string
   EncodeTypedData: function (typedData, address) {
-    var encodedTypedData = wasm_bindgen.typedDataEncode(
+    let encodedTypedData = wasm_bindgen.typedDataEncode(
       UTF8ToString(typedData),
       UTF8ToString(address)
     );
 
     // return buffer
-    var bufferSize = lengthBytesUTF8(encodedTypedData) + 1;
-    var buffer = _malloc(bufferSize);
+    let bufferSize = lengthBytesUTF8(encodedTypedData) + 1;
+    let buffer = _malloc(bufferSize);
     stringToUTF8(encodedTypedData, buffer, bufferSize);
 
     return buffer;
@@ -125,9 +163,11 @@ mergeInto(LibraryManager.library, {
   // message: typed data JSON string
   // signature: JSON string { r: string, s: string }
   PublishMessage: async function (clientPtr, message, signature, cb) {
-    var client = wasm_bindgen.Client.__wrap(clientPtr);
-    const published = await client.publishMessage(UTF8ToString(message), JSON.parse(UTF8ToString(signature)));
-    console.log(published);
+    let client = wasm_bindgen.Client.__wrap(clientPtr);
+    const published = await client.publishMessage(
+      UTF8ToString(message),
+      JSON.parse(UTF8ToString(signature))
+    );
     const publishedString = JSON.stringify(Array.from(published));
     const bufferSize = lengthBytesUTF8(publishedString) + 1;
     const buffer = _malloc(bufferSize);

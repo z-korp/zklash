@@ -11,6 +11,7 @@ mergeInto(LibraryManager.library, {
       UTF8ToString(address)
     );
 
+    provider.__destroy_into_raw();
     dynCall_vi(cb, account.__destroy_into_raw());
   },
   AccountAddress: function (accountPtr) {
@@ -40,55 +41,17 @@ mergeInto(LibraryManager.library, {
     account.setBlockId(UTF8ToString(blockId));
   },
   AccountExecuteRaw: async function (accountPtr, callsStr, cb) {
-    let account;
-    let buffer;
+    const account = wasm_bindgen.Account.__wrap(accountPtr);
+    const calls = JSON.parse(UTF8ToString(callsStr));
+    const txHash = await account.executeRaw(calls);
+    const bufferSize = lengthBytesUTF8(txHash) + 1;
+    const buffer = _malloc(bufferSize);
+    stringToUTF8(txHash, buffer, bufferSize);
 
-    try {
-      account = wasm_bindgen.Account.__wrap(accountPtr);
-      const calls = JSON.parse(UTF8ToString(callsStr));
-
-      // Execute the raw calls and get the transaction hash
-      const txHash = await account.executeRaw(calls);
-
-      // Create a success message
-      const message = JSON.stringify({ success: true, result: txHash });
-
-      // Allocate buffer for the message
-      const bufferSize = lengthBytesUTF8(message) + 1;
-      buffer = _malloc(bufferSize);
-      stringToUTF8(message, buffer, bufferSize);
-
-      // Call the callback function with the success message
-      dynCall_vi(cb, buffer);
-    } catch (error) {
-      // Log the error
-      console.error("Starknet call error:", error);
-
-      // Create an error message
-      const message = JSON.stringify({
-        success: false,
-        error: error.toString(),
-      });
-
-      // Allocate buffer for the error message
-      const bufferSize = lengthBytesUTF8(message) + 1;
-      buffer = _malloc(bufferSize);
-      stringToUTF8(message, buffer, bufferSize);
-
-      // Call the callback function with the error message
-      dynCall_vi(cb, buffer);
-    } finally {
-      // Clean up the account object
-      if (account) {
-        account.__destroy_into_raw();
-      }
-      if (buffer) {
-        _free(buffer);
-      }
-    }
+    account.__destroy_into_raw();
+    dynCall_vi(cb, buffer);
   },
   AccountDeployBurner: async function (accountPtr, privateKey, cb) {
-    console.log(UTF8ToString(privateKey));
     const account = wasm_bindgen.Account.__wrap(accountPtr);
     const burner = await account.deployBurner(UTF8ToString(privateKey));
 
@@ -115,31 +78,29 @@ mergeInto(LibraryManager.library, {
     dynCall_vi(cb, confirmed);
   },
   NewSigningKey: function () {
-    var pk = wasm_bindgen.signingKeyNew();
-    var bufferSize = lengthBytesUTF8(pk) + 1;
-    var buffer = _malloc(bufferSize);
+    let pk = wasm_bindgen.signingKeyNew();
+    let bufferSize = lengthBytesUTF8(pk) + 1;
+    let buffer = _malloc(bufferSize);
     stringToUTF8(pk, buffer, bufferSize);
     return buffer;
   },
   Sign: function (pk, hash) {
-    var signature = wasm_bindgen.signingKeySign(
+    let signature = wasm_bindgen.signingKeySign(
       UTF8ToString(pk),
       UTF8ToString(hash)
     );
-    var compactSig =
+    let compactSig =
       signature.r.replace("0x", "").padStart(64, "0") +
       signature.s.replace("0x", "").padStart(64, "0");
-    console.log(signature);
-    console.log(compactSig);
-    var bufferSize = lengthBytesUTF8(compactSig) + 1;
-    var buffer = _malloc(bufferSize);
+    let bufferSize = lengthBytesUTF8(compactSig) + 1;
+    let buffer = _malloc(bufferSize);
     stringToUTF8(compactSig, buffer, bufferSize);
     return buffer;
   },
   NewVerifyingKey: function (pk) {
-    var verifyingKey = wasm_bindgen.verifyingKeyNew(UTF8ToString(pk));
-    var bufferSize = lengthBytesUTF8(verifyingKey) + 1;
-    var buffer = _malloc(bufferSize);
+    let verifyingKey = wasm_bindgen.verifyingKeyNew(UTF8ToString(pk));
+    let bufferSize = lengthBytesUTF8(verifyingKey) + 1;
+    let buffer = _malloc(bufferSize);
     stringToUTF8(verifyingKey, buffer, bufferSize);
     return buffer;
   },
@@ -152,5 +113,22 @@ mergeInto(LibraryManager.library, {
         s: UTF8ToString(s),
       }
     );
+  },
+  SerializeByteArray: function (byteArrayStr) {
+    const felts = wasm_bindgen.byteArraySerialize(UTF8ToString(byteArrayStr));
+    
+    const feltsString = JSON.stringify(felts);
+    const bufferSize = lengthBytesUTF8(feltsString) + 1;
+    const buffer = _malloc(bufferSize);
+    stringToUTF8(feltsString, buffer, bufferSize);
+    return buffer;
+  },
+  DeserializeByteArray: function (feltsStr) {
+    const felts = JSON.parse(UTF8ToString(feltsStr));
+    const byteArray = wasm_bindgen.byteArrayDeserialize(felts);
+    const bufferSize = lengthBytesUTF8(byteArray) + 1;
+    const buffer = _malloc(bufferSize);
+    stringToUTF8(byteArray, buffer, bufferSize);
+    return buffer;
   },
 });

@@ -18,9 +18,9 @@ public class BattleSystem : MonoBehaviour
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.battleContractAddress,
-                selector = "dojo_resource",
-                calldata = new dojo.FieldElement[] {
+                    to = new FieldElement(data.battleContractAddress).Inner,
+                    selector = "dojo_resource",
+                    calldata = new dojo.FieldElement[] {
                 }
             }
         });
@@ -28,14 +28,13 @@ public class BattleSystem : MonoBehaviour
 
     // Call the `start` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> StartBattle(Account account, string world, uint team_id, uint order)
+    public async Task<FieldElement> StartBattle(Account account, uint team_id, uint order)
     {
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
-                to = data.battleContractAddress,
+                to = new FieldElement(data.battleContractAddress).Inner,
                 selector = "start",
                 calldata = new dojo.FieldElement[] {
-                    new FieldElement(world).Inner,
                     new FieldElement(team_id).Inner,
                     new FieldElement(order).Inner
                 }

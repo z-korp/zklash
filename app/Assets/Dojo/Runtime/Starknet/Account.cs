@@ -94,13 +94,9 @@ namespace Dojo.Starknet
         // webgl js interop starknet bindings
         public async Task<FieldElement> ExecuteRaw(dojo.Call[] calls)
         {
-            try {
-                var res = await StarknetInterop.AccountExecuteRawAsync(await account.Task, calls);
-                return res;
-            } catch (Exception e) {
-                Debug.LogError($"Error in ExecuteRaw: {e.Message}");
-                throw;
-            }
+            var res = await StarknetInterop.AccountExecuteRawAsync(await account.Task, calls);
+
+            return res;
         }
 #else
         private unsafe FieldElement ExecuteRawSync(dojo.Call[] calls)

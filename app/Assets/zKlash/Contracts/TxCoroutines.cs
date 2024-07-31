@@ -71,7 +71,7 @@ public class TxCoroutines : MonoBehaviour
         {
             hexOutput += String.Format("{0:X2}", (int)c);
         }
-        return hexOutput;
+        return "0x" + hexOutput;
     }
 
     private IEnumerator ExecuteTransaction(Func<Task<FieldElement>> transactionFunc, Action onSuccess = null, Action<string> onError = null)
@@ -140,11 +140,10 @@ public class TxCoroutines : MonoBehaviour
     public IEnumerator ExecuteCreate(string name)
     {
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
-        string world = GameManager.Instance.dojoConfig.worldAddress;
         var nameHex = StringToHexString(name);
 
         yield return StartCoroutine(ExecuteTransaction(
-            () => accountSystem.Create(account, world, nameHex),
+            () => accountSystem.Create(account, nameHex),
             onSuccess: () => Debug.Log("Create transaction was successful."),
             onError: (error) => Debug.LogError("Create transaction failed: " + error)
         ));
@@ -153,10 +152,9 @@ public class TxCoroutines : MonoBehaviour
     public IEnumerator ExecuteSpawn()
     {
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
-        string world = GameManager.Instance.dojoConfig.worldAddress;
 
         yield return StartCoroutine(ExecuteTransaction(
-            () => accountSystem.Spawn(account, world),
+            () => accountSystem.Spawn(account),
             onSuccess: () => Debug.Log("Spawn transaction was successful."),
             onError: (error) => Debug.LogError("Spawn transaction failed: " + error)
         ));
@@ -167,10 +165,9 @@ public class TxCoroutines : MonoBehaviour
     {
         Debug.Log("[[[[[[[[[[[  ExecuteEquip  ]]]]]]]]]]] team_id:" + team_id + " character_id:" + character_id + " index:" + index);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
-        string world = GameManager.Instance.dojoConfig.worldAddress;
 
         yield return StartCoroutine(ExecuteTransaction(
-            () => marketSystem.Equip(account, world, team_id, character_id, index),
+            () => marketSystem.Equip(account, team_id, character_id, index),
             onSuccess: () => onSuccess?.Invoke(),
             onError: (error) => onError?.Invoke(error)
         ));
@@ -182,10 +179,9 @@ public class TxCoroutines : MonoBehaviour
     {
         Debug.Log("[[[[[[[[[[[  ExecuteHire  ]]]]]]]]]]] team_id:" + team_id + " index:" + index);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
-        string world = GameManager.Instance.dojoConfig.worldAddress;
 
         yield return StartCoroutine(ExecuteTransaction(
-            () => marketSystem.Hire(account, world, team_id, index),
+            () => marketSystem.Hire(account, team_id, index),
             onSuccess: () => onSuccess?.Invoke(),
             onError: (error) => onError?.Invoke(error)
         ));
@@ -197,10 +193,9 @@ public class TxCoroutines : MonoBehaviour
     {
         Debug.Log("[[[[[[[[[[[  ExecuteReroll  ]]]]]]]]]]] team_id:" + team_id);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
-        string world = GameManager.Instance.dojoConfig.worldAddress;
 
         yield return StartCoroutine(ExecuteTransaction(
-            () => marketSystem.Reroll(account, world, team_id),
+            () => marketSystem.Reroll(account, team_id),
             onSuccess: () => Debug.Log("Reroll transaction was successful."),
             onError: (error) => Debug.LogError("Reroll transaction failed: " + error)
         ));
@@ -216,10 +211,9 @@ public class TxCoroutines : MonoBehaviour
     {
         Debug.Log("[[[[[[[[[[[  ExecuteMerge  ]]]]]]]]]]] team_id:" + team_id + " from_id:" + from_id + " to_id:" + to_id);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
-        string world = GameManager.Instance.dojoConfig.worldAddress;
 
         yield return StartCoroutine(ExecuteTransaction(
-            () => marketSystem.Merge(account, world, team_id, from_id, to_id),
+            () => marketSystem.Merge(account, team_id, from_id, to_id),
             onSuccess: () => onSuccess?.Invoke(),
             onError: (error) => onError?.Invoke(error)
         ));
@@ -231,10 +225,9 @@ public class TxCoroutines : MonoBehaviour
     {
         Debug.Log("[[[[[[[[[[[  ExecuteMergeFromShop  ]]]]]]]]]]] team_id:" + team_id + " character_id:" + character_id + " index:" + index);
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
-        string world = GameManager.Instance.dojoConfig.worldAddress;
 
         yield return StartCoroutine(ExecuteTransaction(
-            () => marketSystem.MergeFromShop(account, world, team_id, character_id, index),
+            () => marketSystem.MergeFromShop(account, team_id, character_id, index),
             onSuccess: () => onSuccess?.Invoke(),
             onError: (error) => onError?.Invoke(error)
         ));
@@ -246,11 +239,12 @@ public class TxCoroutines : MonoBehaviour
     {
         Debug.Log("[[[[[[[[[[[  ExecuteSell  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
-        string world = GameManager.Instance.dojoConfig.worldAddress; yield return StartCoroutine(ExecuteTransaction(
-        () => marketSystem.Sell(account, world, team_id, character_id),
-        onSuccess: () => onSuccess?.Invoke(),
-        onError: (error) => onError?.Invoke(error)
-    ));
+
+        yield return StartCoroutine(ExecuteTransaction(
+            () => marketSystem.Sell(account, team_id, character_id),
+            onSuccess: () => onSuccess?.Invoke(),
+            onError: (error) => onError?.Invoke(error)
+        ));
 
         Debug.Log("[[[[[[[[[[[ END ExecuteSell ]]]]]]]]]]]");
     }
@@ -260,10 +254,9 @@ public class TxCoroutines : MonoBehaviour
     {
         Debug.Log("[[[[[[[[[[[  ExecuteStartBattle  ]]]]]]]]]]]");
         Account account = GameManager.Instance.burnerManager.CurrentBurner;
-        string world = GameManager.Instance.dojoConfig.worldAddress;
 
         yield return StartCoroutine(ExecuteTransaction(
-            () => battleSystem.StartBattle(account, world, team_id, order),
+            () => battleSystem.StartBattle(account, team_id, order),
             onSuccess: () => Debug.Log("Start battle transaction was successful."),
             onError: (error) => Debug.LogError("Start battle transaction failed: " + error)
         ));

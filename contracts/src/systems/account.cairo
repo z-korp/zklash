@@ -24,7 +24,6 @@ mod account {
 
     // Component imports
 
-    use zklash::components::initializable::InitializableComponent;
     use zklash::components::emitter::EmitterComponent;
     use zklash::components::manageable::ManageableComponent;
 

@@ -16,5 +16,8 @@ MonoBehaviour:
   rpcUrl: http://localhost:5050
   relayUrl: /ip4/127.0.0.1/tcp/9090
   relayWebrtcUrl: /ip4/127.0.0.1/udp/9091/webrtc-direct/certhash/uEiDD8KQcRhXJcyHxQ9MaxEFxVQY-0bsdTqJMCa4t7px4iA
-  limit: 100
-  worldAddress: 0x11aa9b474f093e27b773aaec3c0bae571140e825d27ac433698d3584c8d4af9
+  worldAddress:
+    hex: 0x11aa9b474f093e27b773aaec3c0bae571140e825d27ac433698d3584c8d4af9
+  query:
+    limit: 100
+    offset: 0

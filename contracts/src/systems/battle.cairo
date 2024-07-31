@@ -43,10 +43,6 @@ mod battle {
     use zklash::models::character::{CharacterImpl, CharacterAssert, PartialEqCharacter};
     use zklash::types::wave::{Wave, WaveTrait};
 
-    // Component imports
-
-    use zklash::components::initializable::InitializableComponent;
-
     // Local imports
 
     use super::IBattle;

@@ -19,7 +19,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from "../elements/pagination";
-import { ItemType, Item, Size } from "@/game/types/item";
+import { Item, ItemSize, ItemType } from "@/dojo/game/types/item";
 
 export const Items = () => {
   const isMdOrLarger = useMediaQuery({ query: "(min-width: 768px)" });
@@ -64,7 +64,7 @@ export const Items = () => {
 };
 
 export const Canvas = ({ itemType }: { itemType: ItemType }) => {
-  const [size, setSize] = useState<Size>(Size.Small);
+  const [size, setSize] = useState<ItemSize>(ItemSize.Small);
 
   const item = useMemo(() => new Item(itemType), [itemType]);
 
@@ -79,19 +79,21 @@ export const Canvas = ({ itemType }: { itemType: ItemType }) => {
         Size
         <Pagination>
           <PaginationContent>
-            {[Size.Small, Size.Medium, Size.Large].map((s, index) => (
-              <PaginationItem key={index}>
-                {item.getTalent(s) !== "" && (
-                  <PaginationLink
-                    className={`${size === s && "opacity-80"} px-1`}
-                    isActive={size === s}
-                    onClick={() => setSize(s)}
-                  >
-                    {s}
-                  </PaginationLink>
-                )}
-              </PaginationItem>
-            ))}
+            {[ItemSize.Small, ItemSize.Medium, ItemSize.Large].map(
+              (s, index) => (
+                <PaginationItem key={index}>
+                  {item.getTalent(s) !== "" && (
+                    <PaginationLink
+                      className={`${size === s && "opacity-80"} px-1`}
+                      isActive={size === s}
+                      onClick={() => setSize(s)}
+                    >
+                      {s}
+                    </PaginationLink>
+                  )}
+                </PaginationItem>
+              ),
+            )}
           </PaginationContent>
         </Pagination>
       </div>

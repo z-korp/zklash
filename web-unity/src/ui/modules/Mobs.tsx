@@ -8,7 +8,6 @@ import {
 import { Button } from "@/ui/elements/button";
 import { useMemo, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Mob, RoleType } from "@/game/types/mob";
 import {
   Carousel,
   CarouselContent,
@@ -20,6 +19,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from "../elements/pagination";
+import { Role, RoleType } from "@/dojo/game/types/role";
 
 export const Mobs = () => {
   const isMdOrLarger = useMediaQuery({ query: "(min-width: 768px)" });
@@ -66,7 +66,7 @@ export const Mobs = () => {
 export const Canvas = ({ role }: { role: RoleType }) => {
   const [level, setLevel] = useState<number>(1);
 
-  const mob = useMemo(() => new Mob(role), [role]);
+  const mob = useMemo(() => new Role(role), [role]);
 
   return (
     <div className="flex flex-col justify-center items-center gap-2 p-2 pb-4 border rounded-2xl">

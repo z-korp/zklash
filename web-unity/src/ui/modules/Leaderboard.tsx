@@ -12,6 +12,7 @@ import {
 } from "@/ui/elements/dialog";
 import { Button } from "@/ui/elements/button";
 import { shortString } from "starknet";
+import { Squad } from "@/dojo/game/models/squad";
 
 function getTop20UniqueNames(dataArray: any[]) {
   const sortedArray = dataArray.sort((a, b) => b.rating - a.rating);
@@ -34,20 +35,23 @@ function getTop20UniqueNames(dataArray: any[]) {
 export const Leaderboard = () => {
   const {
     setup: {
-      clientComponents: { Squad: SquadModel },
+      clientModels: {
+        models: { Squad: SquadModel },
+        classes: { Squad: SquadClass },
+      },
     },
   } = useDojo();
 
-  const [squads, setSquads] = useState<any[]>([]);
+  const [squads, setSquads] = useState<Squad[]>([]);
 
   const squadKeys = useEntityQuery([Has(SquadModel)]);
   useEffect(() => {
     if (!squadKeys) return;
-    const newSquads: any[] = [];
+    const newSquads: Squad[] = [];
     squadKeys.forEach((key) => {
-      const squad = getComponentValue(SquadModel, key);
-      if (!squad) return;
-      newSquads.push(squad);
+      const squadComponent = getComponentValue(SquadModel, key);
+      if (!squadComponent) return;
+      newSquads.push(new SquadClass(squadComponent));
     });
     setSquads(newSquads);
   }, [SquadModel, squadKeys]);

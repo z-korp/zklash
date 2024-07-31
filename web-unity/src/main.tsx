@@ -1,56 +1,52 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import {
-  StarknetConfig,
-  argent,
-  braavos,
-  jsonRpcProvider,
-  voyager,
-} from "@starknet-react/core";
-import { mainnet } from "@starknet-react/chains";
-import { ThemeProvider } from "./ui/elements/theme-provider.tsx";
-import { setup } from "./dojo/setup.ts";
-import { DojoProvider } from "./dojo/DojoContext.tsx";
-import { dojoConfig } from "../dojoConfig.ts";
+import { setup, SetupResult } from "./dojo/setup.ts";
+import { DojoProvider } from "./dojo/context.tsx";
+import { dojoConfig } from "../dojo.config.ts";
+import { Loading } from "./ui/screens/Loading.tsx";
 
 import "./index.css";
 
-function rpc() {
-  return {
-    nodeUrl: import.meta.env.VITE_PUBLIC_NODE_URL,
-  };
-}
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement,
+);
 
-async function init() {
-  const rootElement = document.getElementById("root");
-  if (!rootElement) throw new Error("React root not found");
-  const root = ReactDOM.createRoot(rootElement as HTMLElement);
-  const chains = [mainnet];
-  const connectors = [argent(), braavos()];
-  const provider = jsonRpcProvider({ rpc });
+function Main() {
+  const [setupResult, setSetupResult] = useState<SetupResult | null>(null);
+  const [ready, setReady] = useState(false);
+  const [enter, setEnter] = useState(false);
 
-  const setupResult = await setup(dojoConfig);
+  const loading = useMemo(
+    () => !enter || !setupResult || !ready,
+    [enter, setupResult, ready],
+  );
 
-  root.render(
+  useEffect(() => {
+    async function initialize() {
+      const result = await setup(dojoConfig());
+      setSetupResult(result);
+    }
+
+    initialize();
+  }, [enter]);
+
+  useEffect(() => {
+    if (!enter) return;
+    setTimeout(() => setReady(true), 2000);
+  }, [enter]);
+
+  return (
     <React.StrictMode>
-      <StarknetConfig
-        chains={chains}
-        provider={provider}
-        connectors={connectors}
-        explorer={voyager}
-      >
+      {!loading && setupResult ? (
         <DojoProvider value={setupResult}>
-          <ThemeProvider
-            defaultTheme="system"
-            storageKey="vite-ui-theme-zklash"
-          >
-            <App />
-          </ThemeProvider>
+          <App />
         </DojoProvider>
-      </StarknetConfig>
-    </React.StrictMode>,
+      ) : (
+        <Loading enter={enter} setEnter={setEnter} />
+      )}
+    </React.StrictMode>
   );
 }
 
-init();
+root.render(<Main />);

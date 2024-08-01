@@ -28,6 +28,7 @@ public class MarketSystem : MonoBehaviour
 
     public async Task<FieldElement> Hire(Account account, uint team_id, uint index)
     {
+        Debug.Log("Hiring character with index: " + index + " to team: " + team_id);
         return await account.ExecuteRaw(new dojo.Call[] {
             new dojo.Call{
                 to = new FieldElement(data.marketContractAddress).Inner,

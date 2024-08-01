@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -136, y: 12.778}
+  m_AnchoredPosition: {x: -300, y: 12.778}
   m_SizeDelta: {x: 86.6665, y: 86.6654}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2344221122870471554
@@ -109,8 +109,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -334, y: 7.7}
-  m_SizeDelta: {x: -1013.2826, y: 50}
+  m_AnchoredPosition: {x: -19, y: 12.778}
+  m_SizeDelta: {x: -1000.6413, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8788602716669489410
 CanvasRenderer:
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b482d73b15c2ce0418d62854e2456d39, type: 2}
   m_sharedMaterial: {fileID: -6685921502683196048, guid: b482d73b15c2ce0418d62854e2456d39, type: 2}
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 30.801094, y: 0, z: 109.61557, w: 0}
+  m_margin: {x: 30.801094, y: 0, z: 73.26132, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -410,8 +410,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -28, y: 7.7}
-  m_SizeDelta: {x: -1013.2826, y: 50}
+  m_AnchoredPosition: {x: -202.66034, y: 12.778}
+  m_SizeDelta: {x: -1045.3207, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1406300625637142823
 CanvasRenderer:
@@ -504,7 +504,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 30.801094, y: 0, z: 109.61557, w: 0}
+  m_margin: {x: 30.801094, y: 0, z: 75.53343, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -544,7 +544,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -294, y: 12.778}
+  m_AnchoredPosition: {x: -460, y: 12.778}
   m_SizeDelta: {x: 58.4445, y: 58.4437}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5243139911098952393
@@ -619,7 +619,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -456, y: 32}
+  m_AnchoredPosition: {x: -143, y: 33}
   m_SizeDelta: {x: 195.4904, y: 195.4904}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6536438700367102965
@@ -694,8 +694,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -183, y: 7.7}
-  m_SizeDelta: {x: -1013.2826, y: 50}
+  m_AnchoredPosition: {x: -354.66034, y: 12.778}
+  m_SizeDelta: {x: -1029.3207, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7420555406641499520
 CanvasRenderer:
@@ -725,7 +725,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b482d73b15c2ce0418d62854e2456d39, type: 2}
   m_sharedMaterial: {fileID: -6685921502683196048, guid: b482d73b15c2ce0418d62854e2456d39, type: 2}
@@ -788,7 +788,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 30.801094, y: 0, z: 109.61557, w: 0}
+  m_margin: {x: 30.801094, y: 0, z: 74.397484, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -945,7 +945,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 270, y: 75}
+  m_AnchoredPosition: {x: 260, y: 75}
   m_SizeDelta: {x: 1212.46, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &906523635275821987

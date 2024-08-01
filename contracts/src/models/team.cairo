@@ -83,7 +83,6 @@ impl TeamImpl of TeamTrait {
         // [Effect] Update Gold
         self.gold -= cost.into();
         // [Effect] Hire Character
-        let role: Role = shop.purchase_role(index);
         self.character_uuid += 1;
         let character_id = self.character_uuid;
         let character: Character = CharacterTrait::new(self.player_id, self.id, character_id, role);
@@ -101,7 +100,6 @@ impl TeamImpl of TeamTrait {
         // [Effect] Update Gold
         self.gold -= cost.into();
         // [Check] Roles match
-        let role: Role = character.role.into();
         let purchased_role: Role = shop.purchase_role(index);
         assert(role == purchased_role, errors::TEAM_XP_INVALID_ROLE);
         // [Effect] Update Character
@@ -127,7 +125,9 @@ impl TeamImpl of TeamTrait {
         // [Effect] Update Gold
         let role: Role = character.role.into();
         let item: Item = character.item.into();
-        self.gold += 3 * (item.cost().into() + role.cost(character.level).into()) / 4;
+        self.gold += 3
+            * (item.cost().into() + role.cost(character.level).into())
+            / 4; // 75% of the cost
         // [Effect] Update Character
         character.nullify();
     }

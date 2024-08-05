@@ -1,4 +1,14 @@
 import { Button } from "@/ui/elements/button";
+import background from "/assets/bg-desert.png";
+import logo from "/assets/enter_logo.png";
+import warriorBlue from "/assets/Warrior_Blue.png";
+import archerBlue from "/assets/Archer_Blue.png";
+import pawnBlue from "/assets/Pawn_Blue.png";
+import barrelRed from "/assets/Barrel_Red.png";
+import tntRed from "/assets/TNT_Red.png";
+import torchRed from "/assets/Torch_Red.png";
+import castleTitle from "/assets/Castle_Title.png";
+import { SpriteAnimator } from "react-sprite-animator";
 
 export const Loading = ({
   enter,
@@ -7,30 +17,80 @@ export const Loading = ({
   enter: boolean;
   setEnter: (state: boolean) => void;
 }) => {
-  const customBackground = {
-    "--s": "16px" /* control the size */,
-    "--c1": "#e4844a",
-    "--c2": "#0d6759",
-
-    "--g":
-      "radial-gradient(30% 50% at 30% 100%, #0000 66%, var(--c1) 67% 98%, #0000)",
-    backgroundImage: `
-          var(--g), 
-          var(--g) calc(5 * var(--s)) calc(3 * var(--s)), 
-          repeating-linear-gradient(90deg, var(--c1) 0 10%, var(--c2) 0 50%)`,
-    backgroundSize: "calc(10 * var(--s)) calc(6 * var(--s))",
-  };
-
   return (
     <div className="w-full h-screen flex justify-center items-center">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center opacity-50 animate-zoom-in-out" />
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-50 animate-zoom-in-out"
+          style={{ backgroundImage: `url('${background}')` }}
+        />
+      </div>
+
+      <div className="absolute md:top-1/4 top-1/6 left-1/2 -translate-x-1/2 -translate-y-1/2 text-9xl p-4 rounded-lg">
+        <div
+          className="w-96 h-96 bg-contain bg-no-repeat bg-center"
+          style={{ backgroundImage: `url('${castleTitle}')` }}
+        ></div>
+      </div>
+      {/* Logo */}
+      <div className="absolute md:top-1/2 top-1:3 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center w-full h-20">
+        <SpriteAnimator
+          sprite={warriorBlue}
+          width={192}
+          height={192}
+          fps={10}
+          className={` ${enter && "animate-bounce "}`}
+        />
+        <SpriteAnimator
+          sprite={archerBlue}
+          width={192}
+          height={192}
+          fps={10}
+          frameCount={6}
+          className={` ${enter && "animate-bounce "}`}
+        />
+        <SpriteAnimator
+          sprite={pawnBlue}
+          width={192}
+          height={192}
+          fps={10}
+          className={` ${enter && "animate-bounce "}`}
+        />
+        <div className="scale-x-[-1]">
+          <SpriteAnimator
+            sprite={tntRed}
+            width={192}
+            height={192}
+            fps={10}
+            frameCount={6}
+            className={`${enter && " animate-bounce "}`}
+          />
+        </div>
+        <div className="scale-x-[-1]">
+          <SpriteAnimator
+            sprite={torchRed}
+            width={192}
+            height={192}
+            fps={10}
+            className={`${enter && " animate-bounce "}`}
+          />
+        </div>
+        <div className="scale-x-[-1] w-[192px] h-[192px] flex justify-center items-center">
+          <SpriteAnimator
+            sprite={barrelRed}
+            width={128}
+            height={128}
+            fps={10}
+            wrapAfter={1}
+            className={`${enter && " animate-bounce "}`}
+          />
+        </div>
       </div>
 
       {/* Enter Button */}
       <div
-        className={`absolute bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-[2000] ${enter && "hidden"}`}
+        className={`absolute bottom-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-[2000] ${enter && "hidden"}`}
       >
         <Button
           onClick={() => setEnter(true)}
@@ -40,20 +100,6 @@ export const Loading = ({
           Enter
         </Button>
       </div>
-      <div className="mt-8 border-2 border-black p-[2px] rounded-md bg-white drop-shadow-[0_4px_0px_rgba(255,0,0,0.4)]">
-        <div
-          className="border-2 border-black rounded-md px-2 py-1 bg-slate-800 text-white"
-          style={{
-            backgroundImage: `url("https://www.transparenttextures.com/patterns/natural-paper.png")`,
-          }}
-        >
-          <p>Play</p>
-        </div>
-      </div>
-      <Button variant="blue"> Hello </Button>
-      <Button variant="green"> Hello </Button>
-      <Button variant="red"> Hello </Button>
-      <Button variant="yellow"> Hello </Button>
     </div>
   );
 };

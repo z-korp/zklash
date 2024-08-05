@@ -55,22 +55,26 @@ const UnityLoader: React.FC = () => {
 
   return (
     <div
-      style={{
-        width: "960px",
-        height: "600px",
-        overflow: "hidden",
-        background: "black",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-      className="border rounded-lg"
+      className="border-4 border-black p-2 rounded-lg bg-white"
+      style={{ boxShadow: `0 4px 0px black, 0 8px 0px black` }}
     >
-      <Unity
-        unityProvider={unityProvider}
-        style={{ width: "100%", height: "100%" }}
-        devicePixelRatio={window.devicePixelRatio}
-      />
+      <div
+        style={{
+          width: "960px",
+          height: "600px",
+          overflow: "hidden",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        className="border-4 border-black rounded-lg"
+      >
+        <Unity
+          unityProvider={unityProvider}
+          style={{ width: "100%", height: "100%" }}
+          devicePixelRatio={window.devicePixelRatio}
+        />
+      </div>
     </div>
   );
 };

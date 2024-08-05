@@ -31,7 +31,7 @@ export const Items = () => {
   return (
     <Drawer handleOnly={true}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Items</Button>
+        <Button variant="white">Items</Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="w-full max-w-sm md:max-w-full m-auto pb-4">

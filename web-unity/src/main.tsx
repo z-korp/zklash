@@ -40,7 +40,9 @@ function Main() {
     <React.StrictMode>
       {!loading && setupResult ? (
         <DojoProvider value={setupResult}>
-          <App />
+          <div className="relative flex flex-col h-screen w-screen">
+            <App />
+          </div>
         </DojoProvider>
       ) : (
         <Loading enter={enter} setEnter={setEnter} />

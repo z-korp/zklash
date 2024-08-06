@@ -18,7 +18,7 @@ export const Loading = ({
   setEnter: (state: boolean) => void;
 }) => {
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="w-full h-dvh flex justify-center items-center">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div

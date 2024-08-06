@@ -6,6 +6,8 @@ import Home from "./ui/screens/Home";
 import { Header } from "./ui/containers/Header"; // Adjust the import path if needed
 import background from "/assets/bg-desert.png";
 import banners from "/assets/banners.png";
+import { SpriteAnimator } from "react-sprite-animator";
+import archerBlue from "/assets/Archer_Blue.png";
 
 const App = () => {
   return (
@@ -17,7 +19,7 @@ const App = () => {
             style={{ backgroundImage: `url('${background}')` }}
           />
         </div>
-        <div className="relative flex flex-col w-screen">
+        <div className="relative flex flex-col w-screen h-screen">
           <div className="bg-tinyblue">
             <Header />
           </div>

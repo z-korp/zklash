@@ -18,6 +18,7 @@ export function dojoConfig() {
   return {
     rpcUrl: VITE_PUBLIC_NODE_URL || "http://localhost:5050",
     toriiUrl: VITE_PUBLIC_TORII || "http://0.0.0.0:8080",
+    relayUrl: "",
     masterAddress:
       VITE_PUBLIC_MASTER_ADDRESS ||
       "0x6162896d1d7ab204c7ccac6dd5f8e9e7c25ecd5ae4fcb4ad32e57786bb46e03",

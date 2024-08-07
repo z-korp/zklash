@@ -34,9 +34,9 @@ export const Items = () => {
         <Button variant="white">Items</Button>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="w-full max-w-sm md:max-w-full m-auto pb-4">
+        <div className="w-full max-w-sm md:max-w-full m-auto pb-4 cursor-grab">
           <DrawerHeader>
-            <DrawerTitle className="text-center text-2xl">
+            <DrawerTitle className="text-center text-4xl font-vinque">
               Item collection
             </DrawerTitle>
           </DrawerHeader>
@@ -69,14 +69,17 @@ export const Canvas = ({ itemType }: { itemType: ItemType }) => {
   const item = useMemo(() => new Item(itemType), [itemType]);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-2 p-2 pb-4 border rounded-2xl">
-      <div className="flex flex-col items-center justify-center mb-2 ">
-        <div className="text-2xl">{item.value}</div>
+    <div
+      className="flex flex-col justify-center items-center p-2 pb-4 border border-black rounded-2xl m-4 bg-secondary"
+      style={{ boxShadow: `0 4px 0px black, 0 6px 0px black` }}
+    >
+      <div className="flex flex-col items-center justify-center border border-black p-2 rounded-lg bg-primary w-11/12">
+        <div className="text-2xl font-vinque">{item.value}</div>
         <img src={item.getImage(size)} className="w-32 h-32" />
         <div className="h-[48px] text-center">{item.getTalent(size)}</div>
         <div className="mt-1">{`Cost: ${item.getCost(size)} golds`}</div>
       </div>
-      <div className="flex justify-center items-center gap-2">
+      <div className="flex justify-center items-center gap-2 mt-4">
         Size
         <Pagination>
           <PaginationContent>
@@ -85,7 +88,7 @@ export const Canvas = ({ itemType }: { itemType: ItemType }) => {
                 <PaginationItem key={index}>
                   {item.getTalent(s) !== "" && (
                     <PaginationLink
-                      className={`${size === s && "opacity-80"} px-1`}
+                      className={`${size === s && "opacity-80"} px-1 cursor-pointer`}
                       isActive={size === s}
                       onClick={() => setSize(s)}
                     >

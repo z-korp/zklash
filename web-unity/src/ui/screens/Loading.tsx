@@ -90,12 +90,13 @@ export const Loading = ({
 
       {/* Enter Button */}
       <div
-        className={`absolute bottom-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-[2000] ${enter && "hidden"}`}
+        className={`absolute bottom-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-[2000] ${enter && "hidden"}`}
       >
         <Button
           onClick={() => setEnter(true)}
-          className="text-2xl"
+          className="text-4xl"
           variant="default"
+          size={"xl"}
         >
           Enter
         </Button>

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
+import mapGrass from "/assets/map_grass.png";
 
 const UnityLoader: React.FC = () => {
   const { unityProvider } = useUnityContext({
@@ -55,8 +56,13 @@ const UnityLoader: React.FC = () => {
 
   return (
     <div
-      className="border-4 border-black p-2 rounded-lg bg-white"
-      style={{ boxShadow: `0 4px 0px black, 0 8px 0px black` }}
+      className="flex p-8 rounded-lg"
+      style={{
+        backgroundImage: `url('${mapGrass}')`,
+        backgroundSize: "100% 100%",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
     >
       <div
         style={{

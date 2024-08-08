@@ -24,7 +24,7 @@ function Main() {
 
   useEffect(() => {
     async function initialize() {
-      const result = await setup(dojoConfig());
+      const result = await setup(dojoConfig() as any);
       setSetupResult(result);
     }
 

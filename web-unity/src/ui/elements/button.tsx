@@ -48,21 +48,30 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
 
-    // Définir la couleur de l'ombre en fonction de la variante
-    const shadowColor =
-      {
-        white: "rgba(255, 255, 255, 0.6)",
-        blue: "rgba(0, 0, 255, 0.6)",
-        green: "rgba(0, 255, 0, 0.6)",
-        yellow: "rgba(255, 255, 0, 0.6)",
-        red: "rgba(255, 0, 0, 0.6)",
-      }[variant as keyof typeof buttonVariants.variants.variant] ||
-      ("rgba(0, 0, 0, 0.1)" as string);
+    type ShadowColors = {
+      white: string;
+      blue: string;
+      green: string;
+      yellow: string;
+      red: string;
+    };
+
+    const shadowColors: ShadowColors = {
+      white: "rgba(255, 255, 255, 0.6)",
+      blue: "rgba(0, 0, 255, 0.6)",
+      green: "rgba(0, 255, 0, 0.6)",
+      yellow: "rgba(255, 255, 0, 0.6)",
+      red: "rgba(255, 0, 0, 0.6)",
+    };
+
+    const variantColor: keyof ShadowColors = "white";
+
+    const shadowColorValue = shadowColors[variantColor] || "rgba(0, 0, 0, 0.1)";
 
     return (
       <div
         className={`border-2 border-black p-[2px] rounded-md bg-white hover:translate-y-0.5 transition-transform`}
-        style={{ boxShadow: `0 2px 0px ${shadowColor}, 0 4px 0px black` }}
+        style={{ boxShadow: `0 2px 0px ${shadowColorValue}, 0 4px 0px black` }}
       >
         <Comp
           className={cn(

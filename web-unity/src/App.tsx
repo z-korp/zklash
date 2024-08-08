@@ -4,14 +4,27 @@ import { ThemeProvider } from "./ui/elements/theme-provider";
 import Rules from "./ui/screens/Rules";
 import Home from "./ui/screens/Home";
 import { Header } from "./ui/containers/Header"; // Adjust the import path if needed
+import background from "/assets/bg-desert.png";
+import banners from "/assets/banners.png";
+import { SpriteAnimator } from "react-sprite-animator";
+import archerBlue from "/assets/Archer_Blue.png";
 
 const App = () => {
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <Router>
-        <div className="relative flex flex-col w-screen">
-          <Header />
-          <div className="relative flex flex-col gap-8 grow items-center justify-start">
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url('${background}')` }}
+          />
+        </div>
+        <div className="relative flex flex-col w-screen h-screen">
+          <div className="bg-tinyblue">
+            <Header />
+          </div>
+          <img src={banners} alt="banners" className="w-full h-20" />
+          <div className="relative flex flex-col grow items-center justify-start">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/rules" element={<Rules />} />

@@ -24,7 +24,7 @@ function Main() {
 
   useEffect(() => {
     async function initialize() {
-      const result = await setup(dojoConfig());
+      const result = await setup(dojoConfig() as any);
       setSetupResult(result);
     }
 
@@ -40,7 +40,9 @@ function Main() {
     <React.StrictMode>
       {!loading && setupResult ? (
         <DojoProvider value={setupResult}>
-          <App />
+          <div className="relative flex flex-col h-screen w-screen">
+            <App />
+          </div>
         </DojoProvider>
       ) : (
         <Loading enter={enter} setEnter={setEnter} />

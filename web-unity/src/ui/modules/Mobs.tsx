@@ -31,12 +31,12 @@ export const Mobs = () => {
   return (
     <Drawer handleOnly={true}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Mobs</Button>
+        <Button variant="blue">Mobs</Button>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="w-full max-w-sm md:max-w-full m-auto pb-4">
+        <div className="w-full max-w-sm md:max-w-full m-auto pb-4 cursor-grab">
           <DrawerHeader>
-            <DrawerTitle className="text-center text-2xl">
+            <DrawerTitle className="text-center text-4xl font-vinque">
               Mob collection
             </DrawerTitle>
           </DrawerHeader>
@@ -69,9 +69,12 @@ export const Canvas = ({ role }: { role: RoleType }) => {
   const mob = useMemo(() => new Role(role), [role]);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-2 p-2 pb-4 border rounded-2xl">
-      <div className="flex flex-col items-center justify-center ">
-        <div className="text-2xl">{mob.value}</div>
+    <div
+      className="flex flex-col justify-center items-center p-2 pb-4 border border-black rounded-2xl m-4 bg-secondary"
+      style={{ boxShadow: `0 4px 0px black, 0 6px 0px black` }}
+    >
+      <div className="flex flex-col items-center justify-center border border-black p-2 rounded-lg bg-primary w-11/12">
+        <div className="text-2xl font-vinque">{mob.value}</div>
         <div className="flex items-center">
           <div className="text-center">{`Health ${mob.getHealth()}`}</div>
           <img src={mob.getImage()} className="w-32 h-32 pixelated" />
@@ -80,16 +83,16 @@ export const Canvas = ({ role }: { role: RoleType }) => {
         </div>
 
         <div className="h-[48px] text-center">{mob.getTalent(level)}</div>
-        <div className="mt-1">{`Cost: ${mob.getCost(level)} golds`}</div>
+        <div className="mt-2">{`Cost: ${mob.getCost(level)} golds`}</div>
       </div>
-      <div className="flex justify-center items-center gap-2">
+      <div className="mt-4 flex justify-center items-center gap-2">
         Lvl
         <Pagination>
           <PaginationContent>
             {[1, 2, 3].map((lvl, index) => (
               <PaginationItem key={index}>
                 <PaginationLink
-                  className={`${level === lvl && "opacity-80"}`}
+                  className={`${level === lvl && "opacity-80"} cursor-pointer`}
                   isActive={level === lvl}
                   onClick={() => setLevel(lvl)}
                 >

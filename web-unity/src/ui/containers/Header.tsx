@@ -21,12 +21,12 @@ export const Header = () => {
   const isMdOrLarger = useMediaQuery({ query: "(min-width: 768px)" });
 
   return isMdOrLarger ? (
-    <div>
+    <div className="relative">
       <div className="flex justify-center items-center p-4 flex-wrap md:justify-between">
         <div className="flex gap-8 items-center">
           <p
             onClick={() => navigate("/")}
-            className="cursor-pointer text-4xl font-bold"
+            className="cursor-pointer text-4xl font-bold font-vinque"
           >
             zKlash
           </p>
@@ -53,7 +53,7 @@ export const Header = () => {
           <ModeToggle />
         </div>
       </div>
-      <Separator />
+      <Separator className="bg-black" />
     </div>
   ) : (
     <div>

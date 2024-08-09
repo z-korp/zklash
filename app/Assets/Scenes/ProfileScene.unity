@@ -950,27 +950,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3999765053651979157, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3999765053651979157, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3999765053651979157, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3999765053651979157, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3999765053651979157, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 3840
       objectReference: {fileID: 0}
     - target: {fileID: 3999765053651979157, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 2160
       objectReference: {fileID: 0}
     - target: {fileID: 3999765053651979157, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1020,6 +1020,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7465428134078520274, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
+      propertyPath: m_Color.b
+      value: 0.49056602
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465428134078520274, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
+      propertyPath: m_Color.g
+      value: 0.49056602
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465428134078520274, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
+      propertyPath: m_Color.r
+      value: 0.49056602
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465428134078520274, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: c01bc9c18f4c948bcb58f7ce55befa1e, type: 3}
     - target: {fileID: 8985542912928805601, guid: 28eb7417c9d9a4b2c97984d6b4744885, type: 3}
       propertyPath: m_Name
       value: ScrollingImage

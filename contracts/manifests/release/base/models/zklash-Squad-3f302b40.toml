@@ -1,0 +1,41 @@
+kind = "DojoModel"
+class_hash = "0x25d412935644c73745cc93aba6a17722748132d517e6ba82c7f654056e54675"
+original_class_hash = "0x25d412935644c73745cc93aba6a17722748132d517e6ba82c7f654056e54675"
+abi = "manifests/release/base/abis/models/zklash-Squad-3f302b40.json"
+tag = "zklash-Squad"
+manifest_name = "zklash-Squad-3f302b40"
+
+[[members]]
+name = "registry_id"
+type = "u32"
+key = true
+
+[[members]]
+name = "id"
+type = "u32"
+key = true
+
+[[members]]
+name = "league_id"
+type = "u8"
+key = false
+
+[[members]]
+name = "index"
+type = "u32"
+key = false
+
+[[members]]
+name = "rating"
+type = "u32"
+key = false
+
+[[members]]
+name = "size"
+type = "u8"
+key = false
+
+[[members]]
+name = "name"
+type = "felt252"
+key = false

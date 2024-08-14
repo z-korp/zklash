@@ -1,0 +1,428 @@
+[world]
+kind = "WorldContract"
+class_hash = "0x76ced5a15cb43c7be7176cff4779cd57c56638a46ddf2c9da709d22298c5e5a"
+original_class_hash = "0x76ced5a15cb43c7be7176cff4779cd57c56638a46ddf2c9da709d22298c5e5a"
+abi = "manifests/slotdev/deployment/abis/dojo-world.json"
+address = "0x7790a7b756ce5d0ac304132c81d55fa621e77f61e630b34694291aae68e387a"
+transaction_hash = "0x5a0c15aadbcce693dd9155158c86c17bcb5b09d3453a8802893b21f21e3b99c"
+block_number = 3
+seed = "zklash"
+manifest_name = "dojo-world"
+
+[world.metadata]
+profile_name = "slotdev"
+rpc_url = "https://api.cartridge.gg/x/zklash-slotdev/katana"
+
+[base]
+kind = "Class"
+class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
+original_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
+abi = "manifests/slotdev/deployment/abis/dojo-base.json"
+tag = "dojo-base"
+manifest_name = "dojo-base"
+
+[[contracts]]
+kind = "DojoContract"
+address = "0x3ef697cfac7ef96f391e7d8ab23f09cb083694d8b62551ed5865db2b59465bb"
+class_hash = "0x51c5bf2831e596a8e45dfd7727dc7b833877dd42179175c7b5ff4e2d04273d3"
+original_class_hash = "0x51c5bf2831e596a8e45dfd7727dc7b833877dd42179175c7b5ff4e2d04273d3"
+base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
+abi = "manifests/slotdev/deployment/abis/contracts/zklash-account-56d04506.json"
+reads = []
+writes = []
+init_calldata = []
+tag = "zklash-account"
+manifest_name = "zklash-account-56d04506"
+
+[[contracts]]
+kind = "DojoContract"
+address = "0x470766cdf6f5f095dc54c20b51cfa507817ef112a6a723385145a45adcbe952"
+class_hash = "0x2ccddf4d68f2738d0759279d70ab9379de01f589cadb6f89af4027b6c72d6d8"
+original_class_hash = "0x2ccddf4d68f2738d0759279d70ab9379de01f589cadb6f89af4027b6c72d6d8"
+base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
+abi = "manifests/slotdev/deployment/abis/contracts/zklash-battle-19c01f18.json"
+reads = []
+writes = []
+init_calldata = []
+tag = "zklash-battle"
+manifest_name = "zklash-battle-19c01f18"
+
+[[contracts]]
+kind = "DojoContract"
+address = "0xbb6858ef2f534853ed4b5c81ab1258149da4bba4802fb8387130813a85a5d8"
+class_hash = "0x2cc2fa1f31018a0eee44c55b117ee936e23839853df80aa95b20d17e4c4476a"
+original_class_hash = "0x2cc2fa1f31018a0eee44c55b117ee936e23839853df80aa95b20d17e4c4476a"
+base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
+abi = "manifests/slotdev/deployment/abis/contracts/zklash-market-aadec017.json"
+reads = []
+writes = []
+init_calldata = []
+tag = "zklash-market"
+manifest_name = "zklash-market-aadec017"
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x6c5d82322d3d773ab1f94ea14d76f80131570be0896c7b15c8fb7aee26535a8"
+original_class_hash = "0x6c5d82322d3d773ab1f94ea14d76f80131570be0896c7b15c8fb7aee26535a8"
+abi = "manifests/slotdev/deployment/abis/models/zklash-Character-3ed1781c.json"
+tag = "zklash-Character"
+manifest_name = "zklash-Character-3ed1781c"
+
+[[models.members]]
+name = "player_id"
+type = "felt252"
+key = true
+
+[[models.members]]
+name = "team_id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "id"
+type = "u8"
+key = true
+
+[[models.members]]
+name = "role"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "item"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "xp"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "level"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "health"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "attack"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "absorb"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "stun"
+type = "u8"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x10ae7a5fb37eb2baeca4c16d79bbd67b97bf23295edc95c0efe1aeff57ef9ba"
+original_class_hash = "0x10ae7a5fb37eb2baeca4c16d79bbd67b97bf23295edc95c0efe1aeff57ef9ba"
+abi = "manifests/slotdev/deployment/abis/models/zklash-Foe-8b001399.json"
+tag = "zklash-Foe"
+manifest_name = "zklash-Foe-8b001399"
+
+[[models.members]]
+name = "registry_id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "squad_id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "id"
+type = "u8"
+key = true
+
+[[models.members]]
+name = "role"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "item"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "level"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "health"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "attack"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "absorb"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "stun"
+type = "u8"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x75da053f384cb05bab438e1b712465fc277b59b1d6d9233b5792e5fec4e7f84"
+original_class_hash = "0x75da053f384cb05bab438e1b712465fc277b59b1d6d9233b5792e5fec4e7f84"
+abi = "manifests/slotdev/deployment/abis/models/zklash-League-6517c3b1.json"
+tag = "zklash-League"
+manifest_name = "zklash-League-6517c3b1"
+
+[[models.members]]
+name = "registry_id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "id"
+type = "u8"
+key = true
+
+[[models.members]]
+name = "size"
+type = "u32"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x60b0b130546885b3a6bec629858eb2a1abada653985ce39ceb85434bd5b45"
+original_class_hash = "0x60b0b130546885b3a6bec629858eb2a1abada653985ce39ceb85434bd5b45"
+abi = "manifests/slotdev/deployment/abis/models/zklash-Player-453a6b3b.json"
+tag = "zklash-Player"
+manifest_name = "zklash-Player-453a6b3b"
+
+[[models.members]]
+name = "id"
+type = "felt252"
+key = true
+
+[[models.members]]
+name = "name"
+type = "felt252"
+key = false
+
+[[models.members]]
+name = "team_count"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "win_count"
+type = "u32"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x13f30a9a849263fde1b579c7df37ffa54fa1969df6b25ad3e784da8920e22c2"
+original_class_hash = "0x13f30a9a849263fde1b579c7df37ffa54fa1969df6b25ad3e784da8920e22c2"
+abi = "manifests/slotdev/deployment/abis/models/zklash-Registry-343822e5.json"
+tag = "zklash-Registry"
+manifest_name = "zklash-Registry-343822e5"
+
+[[models.members]]
+name = "id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "squad_count"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "leagues"
+type = "felt252"
+key = false
+
+[[models.members]]
+name = "seed"
+type = "felt252"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x7749825cf4da560ecf2423ba0272fd9db2f5cf5147531b011bbe6b5b69daecd"
+original_class_hash = "0x7749825cf4da560ecf2423ba0272fd9db2f5cf5147531b011bbe6b5b69daecd"
+abi = "manifests/slotdev/deployment/abis/models/zklash-Shop-2d342c58.json"
+tag = "zklash-Shop"
+manifest_name = "zklash-Shop-2d342c58"
+
+[[models.members]]
+name = "player_id"
+type = "felt252"
+key = true
+
+[[models.members]]
+name = "team_id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "reroll_cost"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "item_count"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "items"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "role_count"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "roles"
+type = "u32"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x659cdb8c0d725a5e0355642213c699d58ba979e173669ff64c1be04ebfca6a2"
+original_class_hash = "0x659cdb8c0d725a5e0355642213c699d58ba979e173669ff64c1be04ebfca6a2"
+abi = "manifests/slotdev/deployment/abis/models/zklash-Slot-28d68947.json"
+tag = "zklash-Slot"
+manifest_name = "zklash-Slot-28d68947"
+
+[[models.members]]
+name = "registry_id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "league_id"
+type = "u8"
+key = true
+
+[[models.members]]
+name = "index"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "squad_id"
+type = "u32"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x25d412935644c73745cc93aba6a17722748132d517e6ba82c7f654056e54675"
+original_class_hash = "0x25d412935644c73745cc93aba6a17722748132d517e6ba82c7f654056e54675"
+abi = "manifests/slotdev/deployment/abis/models/zklash-Squad-3f302b40.json"
+tag = "zklash-Squad"
+manifest_name = "zklash-Squad-3f302b40"
+
+[[models.members]]
+name = "registry_id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "league_id"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "index"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "rating"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "size"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "name"
+type = "felt252"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x3ef50e51ca1b6c5d4373e56cd5e45fbe18067a55222d16e9148c153f67d86e6"
+original_class_hash = "0x3ef50e51ca1b6c5d4373e56cd5e45fbe18067a55222d16e9148c153f67d86e6"
+abi = "manifests/slotdev/deployment/abis/models/zklash-Team-73d002dc.json"
+tag = "zklash-Team"
+manifest_name = "zklash-Team-73d002dc"
+
+[[models.members]]
+name = "player_id"
+type = "felt252"
+key = true
+
+[[models.members]]
+name = "id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "registry_id"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "gold"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "health"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "level"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "character_uuid"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "battle_id"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "foe_squad_id"
+type = "u32"
+key = false

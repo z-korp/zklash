@@ -1,0 +1,10 @@
+kind = "DojoContract"
+class_hash = "0x281546fd7e0169b97de5bb55f480805cf771593bf09ba051e8486a9a77e4966"
+original_class_hash = "0x281546fd7e0169b97de5bb55f480805cf771593bf09ba051e8486a9a77e4966"
+base_class_hash = "0x0"
+abi = "manifests/slotdev/abis/base/contracts/zklash_systems_battle_battle.json"
+reads = []
+writes = []
+computed = []
+init_calldata = []
+name = "zklash::systems::battle::battle"

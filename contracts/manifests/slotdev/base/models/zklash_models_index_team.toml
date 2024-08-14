@@ -1,0 +1,50 @@
+kind = "DojoModel"
+class_hash = "0x3285d4302537f88bf1b31660abf6de7282d3ab82baa4075a1a75522d784d72d"
+original_class_hash = "0x3285d4302537f88bf1b31660abf6de7282d3ab82baa4075a1a75522d784d72d"
+abi = "manifests/slotdev/abis/base/models/zklash_models_index_team.json"
+name = "zklash::models::index::team"
+
+[[members]]
+name = "player_id"
+type = "felt252"
+key = true
+
+[[members]]
+name = "id"
+type = "u32"
+key = true
+
+[[members]]
+name = "registry_id"
+type = "u32"
+key = false
+
+[[members]]
+name = "gold"
+type = "u32"
+key = false
+
+[[members]]
+name = "health"
+type = "u32"
+key = false
+
+[[members]]
+name = "level"
+type = "u8"
+key = false
+
+[[members]]
+name = "character_uuid"
+type = "u8"
+key = false
+
+[[members]]
+name = "battle_id"
+type = "u8"
+key = false
+
+[[members]]
+name = "foe_squad_id"
+type = "u32"
+key = false

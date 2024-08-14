@@ -41,22 +41,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("---------------------------------");
         Debug.Log("GameManager Start");
         provider = new JsonRpcClient(dojoConfig.rpcUrl);
-        var signer = new SigningKey(gameManagerData.masterPrivateKey);
-        masterAccount = new Account(provider, signer, new FieldElement(gameManagerData.masterAddress));
-
+        masterAccount = new Account(provider, new SigningKey(gameManagerData.masterPrivateKey), new FieldElement(gameManagerData.masterAddress));
         burnerManager = new BurnerManager(provider, masterAccount);
-
-        var burner = await burnerManager.DeployBurner(new SigningKey());
 
         worldManager.synchronizationMaster.OnEntitySpawned.AddListener(InitEntity);
         foreach (var entity in worldManager.Entities())
         {
             InitEntity(entity);
         }
-
-
-
-        //worldManager.synchronizationMaster.OnSynchronized.AddListener(InitEntity2);
     }
 
     void Update()
@@ -64,20 +56,10 @@ public class GameManager : MonoBehaviour
 
     }
 
-    /*private void InitEntity2(List<GameObject> entities)
-    {
-        Debug.Log($"---------------------------------");
-        foreach (var entity in entities)
-        {
-            Debug.Log($"Entity spawned with id: {entity.name}");
-            //InitEntity(entity);
-        }
-        Debug.Log($"---------------------------------");
-    }*/
-
     private void InitEntity(GameObject entity)
     {
         Account currentBurner = burnerManager.CurrentBurner;
+        Debug.Log($"-----debub currentBurner: {currentBurner.Address.Hex()}");
         if (currentBurner == null)
         {
             Debug.Log("No current burner");

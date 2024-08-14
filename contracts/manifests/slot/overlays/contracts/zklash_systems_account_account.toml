@@ -1,0 +1,4 @@
+name = "zklash::systems::account::account"
+reads = []
+writes = ["Character", "Foe", "League", "Player", "Registry", "Shop", "Slot", "Squad", "Team"]
+init_calldata = []

@@ -28,7 +28,7 @@ mod errors {
     const ROLE_NOT_VALID: felt252 = 'Role: not valid';
 }
 
-#[derive(Copy, Drop, Serde, PartialEq, Introspection)]
+#[derive(Copy, Drop, Serde, PartialEq, Introspect)]
 enum Role {
     None,
     Knight,

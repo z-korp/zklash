@@ -1,0 +1,22 @@
+[world]
+name = "zKlash"
+description = "Autobattler where you hire creatures and improve them to defeat waves of enemies."
+# cover_uri = "file://assets/cover.png"
+# icon_uri = "file://assets/icon.png"
+website = "https://github.com/dojoengine/dojo-starter"
+seed = "zklash"
+
+[world.socials]
+x = "https://x.com/ohayo_dojo"
+discord = "https://discord.gg/FB2wR6uF"
+github = "https://github.com/dojoengine/dojo-starter"
+telegram = "https://t.me/dojoengine"
+
+[namespace]
+default = "zklash"
+
+[env]
+rpc_url = "https://api.cartridge.gg/x/zklash-matthias-3/katana" 
+#"https://api.cartridge.gg/x/zklash/katana/"
+account_address = "0x7fb5fb8033b9f199ba9347c2f8c1bdbbd47d8a22c09d25b5a29c183ddb47252"
+private_key = "0x76165bfb2708ab726999aa73d95d9a0bbaa94f9ced060dc5393ecdd020f9079"

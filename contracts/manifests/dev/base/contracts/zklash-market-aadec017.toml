@@ -1,0 +1,10 @@
+kind = "DojoContract"
+class_hash = "0x2cc2fa1f31018a0eee44c55b117ee936e23839853df80aa95b20d17e4c4476a"
+original_class_hash = "0x2cc2fa1f31018a0eee44c55b117ee936e23839853df80aa95b20d17e4c4476a"
+base_class_hash = "0x0"
+abi = "manifests/dev/base/abis/contracts/zklash-market-aadec017.json"
+reads = []
+writes = []
+init_calldata = []
+tag = "zklash-market"
+manifest_name = "zklash-market-aadec017"

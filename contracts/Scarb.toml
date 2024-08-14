@@ -1,6 +1,7 @@
 [package]
 name = "zklash"
-version = "0.0.1"
+cairo-version = "=2.7.0"
+version = "0.1.0"
 edition = "2023_10"
 
 [cairo]
@@ -12,44 +13,7 @@ slot = "NAME=v0 && sozo --profile slot clean && sozo --profile slot build && soz
 slotdev = "NAME=v0 && sozo --profile slotdev clean && sozo --profile slotdev build && sozo --profile slotdev migrate plan --name $NAME && sozo --profile slotdev migrate apply --name $NAME"
 
 [dependencies]
-origami = { git = "https://github.com/dojoengine/origami", tag = "v0.7.2" }
-dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.7.2" }
+origami_rating = { git = "https://github.com/dojoengine/origami", tag = "v1.0.0-alpha.5" }
+dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.0-alpha.5" }
 
 [[target.dojo]]
-
-[tool.dojo]
-initializer_class_hash = "0xbeef"
-
-[profile.dev.tool.dojo.env]
-rpc_url = "http://localhost:5050"
-account_address = "0x6b86e40118f29ebe393a75469b4d926c7a44c2e2681b6d319520b7c1156d114"
-private_key = "0x1c9053c053edf324aec366a34c6901b1095b07af69495bffec7d7fe21effb1b"
-
-[profile.slot.tool.dojo.env]
-rpc_url = "https://api.cartridge.gg/x/zklash-matthias-3/katana" 
-#"https://api.cartridge.gg/x/zklash/katana/"
-account_address = "0x7fb5fb8033b9f199ba9347c2f8c1bdbbd47d8a22c09d25b5a29c183ddb47252"
-private_key = "0x76165bfb2708ab726999aa73d95d9a0bbaa94f9ced060dc5393ecdd020f9079"
-
-[profile.slotdev.tool.dojo.env]
-rpc_url = "https://api.cartridge.gg/x/zklash-slot-dev/katana"
-account_address = "0x7b2ad9c0a331a84015dc07f71dd3d54545bac6f09b5385aa171db29fc32fbb6"
-private_key = "0x562b095dfdef600413f27b79a3fd908957b9449bd0c9e0fbdfb68594d6fa1f6"
-
-[profile.sepolia.tool.dojo.env]
-rpc_url = "https://starknet-sepolia.public.blastapi.io/rpc/v0_6"
-account_address = "0x063fd4be5b4df3068e3c4ae4062e999609b96a569e69628d6ba3331bf56e826c"
-private_key = "0x05c38e8a5fe551d71755d7c4c77ea8aa7083479b222b413fef3772205fefec00"
-
-[tool.dojo.world]
-name = "zKlash"
-description = "Autobattler where you hire creatures and improve them to defeat waves of enemies."
-# cover_uri = "file://assets/cover.png"
-# icon_uri = "file://assets/icon.png"
-website = "https://github.com/dojoengine/dojo-starter"
-
-[tool.dojo.world.socials]
-x = "https://x.com/ohayo_dojo"
-discord = "https://discord.gg/FB2wR6uF"
-github = "https://github.com/dojoengine/dojo-starter"
-telegram = "https://t.me/dojoengine"

@@ -2,7 +2,14 @@ using System.Collections.Generic;
 using Dojo;
 using Dojo.Starknet;
 using UnityEngine;
+using System.ComponentModel;
+using zklash;
 
+namespace System.Runtime.CompilerServices
+{
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal class IsExternalInit { }
+}
 
 public class GameManager : MonoBehaviour
 {

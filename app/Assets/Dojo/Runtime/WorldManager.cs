@@ -18,6 +18,7 @@ namespace Dojo
         async void Awake()
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
+
             wasmClient = new ToriiWasmClient(dojoConfig.toriiUrl, dojoConfig.rpcUrl,
                                                 dojoConfig.relayWebrtcUrl, dojoConfig.worldAddress);
             await wasmClient.CreateClient();

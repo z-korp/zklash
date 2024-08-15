@@ -16,7 +16,6 @@ telegram = "https://t.me/dojoengine"
 default = "zklash"
 
 [env]
-rpc_url = "https://api.cartridge.gg/x/zklash-matthias-3/katana" 
-#"https://api.cartridge.gg/x/zklash/katana/"
-account_address = "0x7fb5fb8033b9f199ba9347c2f8c1bdbbd47d8a22c09d25b5a29c183ddb47252"
-private_key = "0x76165bfb2708ab726999aa73d95d9a0bbaa94f9ced060dc5393ecdd020f9079"
+rpc_url = "http://localhost:5050"
+account_address = "0x6b86e40118f29ebe393a75469b4d926c7a44c2e2681b6d319520b7c1156d114"
+private_key = "0x1c9053c053edf324aec366a34c6901b1095b07af69495bffec7d7fe21effb1b"

@@ -69,22 +69,26 @@ mergeInto(LibraryManager.library, {
     dynCall_vi(cb, buffer);
   },
   OnEntityUpdated: async function (clientPtr, clausesStr, cb, subCb) {
+    console.log("aaaaa", clausesStr);
     let client = wasm_bindgen.ToriiClient.__wrap(clientPtr);
     let clauses = JSON.parse(UTF8ToString(clausesStr));
 
-    const subscription = await client.onEntityUpdated(clauses, (hashed_keys, models) => {
-      // stringify the models
-      let modelsString = JSON.stringify(models);
-      // return buffer
-      let hashedKeysBufferSize = lengthBytesUTF8(hashed_keys) + 1;
-      let hashedKeysBuffer = _malloc(hashedKeysBufferSize);
-      let modelsBufferSize = lengthBytesUTF8(modelsString) + 1;
-      let modelsBuffer = _malloc(modelsBufferSize);
-      stringToUTF8(hashed_keys, hashedKeysBuffer, hashedKeysBufferSize);
-      stringToUTF8(modelsString, modelsBuffer, modelsBufferSize);
+    const subscription = await client.onEntityUpdated(
+      clauses,
+      (hashed_keys, models) => {
+        // stringify the models
+        let modelsString = JSON.stringify(models);
+        // return buffer
+        let hashedKeysBufferSize = lengthBytesUTF8(hashed_keys) + 1;
+        let hashedKeysBuffer = _malloc(hashedKeysBufferSize);
+        let modelsBufferSize = lengthBytesUTF8(modelsString) + 1;
+        let modelsBuffer = _malloc(modelsBufferSize);
+        stringToUTF8(hashed_keys, hashedKeysBuffer, hashedKeysBufferSize);
+        stringToUTF8(modelsString, modelsBuffer, modelsBufferSize);
 
-      dynCall_vii(cb, hashedKeysBuffer, modelsBuffer);
-    });
+        dynCall_vii(cb, hashedKeysBuffer, modelsBuffer);
+      }
+    );
 
     client.__destroy_into_raw();
     dynCall_vi(subCb, subscription.__destroy_into_raw());
@@ -120,7 +124,11 @@ mergeInto(LibraryManager.library, {
     client.__destroy_into_raw();
     dynCall_vi(subCb, subscription.__destroy_into_raw());
   },
-  UpdateEventMessageSubscription: async function (clientPtr, subPtr, clausesStr) {
+  UpdateEventMessageSubscription: async function (
+    clientPtr,
+    subPtr,
+    clausesStr
+  ) {
     let client = wasm_bindgen.ToriiClient.__wrap(clientPtr);
     let subscription = wasm_bindgen.Subscription.__wrap(subPtr);
     let clauses = JSON.parse(UTF8ToString(clausesStr));

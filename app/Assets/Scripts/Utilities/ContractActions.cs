@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using zklash;
 
 public class ContractActions : MonoBehaviour
 {

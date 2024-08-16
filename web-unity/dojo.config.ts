@@ -1,7 +1,7 @@
-import local from "../contracts/manifests/dev/manifest.json";
-import slot from "../contracts/manifests/slot/manifest.json";
-import slotdev from "../contracts/manifests/slotdev/manifest.json";
-import sepolia from "../contracts/manifests/dev/manifest.json";
+import local from "../contracts/manifests/dev/deployment/manifest.json";
+import slot from "../contracts/manifests/slot/deployment/manifest.json";
+import slotdev from "../contracts/manifests/slotdev/deployment/manifest.json";
+import sepolia from "../contracts/manifests/dev/deployment/manifest.json";
 
 const {
   VITE_PUBLIC_NODE_URL,
@@ -10,7 +10,6 @@ const {
   VITE_PUBLIC_MASTER_PRIVATE_KEY,
   VITE_PUBLIC_ACCOUNT_CLASS_HASH,
   VITE_PUBLIC_FEE_TOKEN_ADDRESS,
-  VITE_PUBLIC_SEPOLIA,
   VITE_PUBLIC_DEPLOY_TYPE,
 } = import.meta.env;
 

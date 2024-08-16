@@ -1,4 +1,8 @@
-import { useComponentValue, useEntityQuery } from "@dojoengine/react";
+import {
+  useComponentValue,
+  useEntityQuery,
+  useQuerySync,
+} from "@dojoengine/react";
 import { Entity, Has, HasValue, getComponentValue } from "@dojoengine/recs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getEntityIdFromKeys } from "@dojoengine/utils";
@@ -34,9 +38,13 @@ function Home() {
         },
         classes: { Player, Team, Shop, Character },
       },
+      toriiClient,
+      contractComponents,
     },
     account: { account },
   } = useDojo();
+
+  useQuerySync(toriiClient, contractComponents as any, []);
 
   const dragItem = useRef<typeof CharacterModel | null>(null);
   const dragOverItem = useRef<typeof CharacterModel | null>(null);

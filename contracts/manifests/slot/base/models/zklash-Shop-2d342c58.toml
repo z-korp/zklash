@@ -1,0 +1,41 @@
+kind = "DojoModel"
+class_hash = "0x7749825cf4da560ecf2423ba0272fd9db2f5cf5147531b011bbe6b5b69daecd"
+original_class_hash = "0x7749825cf4da560ecf2423ba0272fd9db2f5cf5147531b011bbe6b5b69daecd"
+abi = "manifests/slot/base/abis/models/zklash-Shop-2d342c58.json"
+tag = "zklash-Shop"
+manifest_name = "zklash-Shop-2d342c58"
+
+[[members]]
+name = "player_id"
+type = "felt252"
+key = true
+
+[[members]]
+name = "team_id"
+type = "u32"
+key = true
+
+[[members]]
+name = "reroll_cost"
+type = "u8"
+key = false
+
+[[members]]
+name = "item_count"
+type = "u8"
+key = false
+
+[[members]]
+name = "items"
+type = "u32"
+key = false
+
+[[members]]
+name = "role_count"
+type = "u8"
+key = false
+
+[[members]]
+name = "roles"
+type = "u32"
+key = false

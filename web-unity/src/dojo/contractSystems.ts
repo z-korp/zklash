@@ -1,0 +1,283 @@
+import { Account, shortString, UniversalDetails } from "starknet";
+import { Config } from "../../dojo.config";
+import { DojoProvider } from "@dojoengine/core";
+
+const NAMESPACE = "zklash";
+
+export interface Signer {
+  account: Account;
+}
+
+export interface Create extends Signer {
+  name: string;
+}
+
+export interface Equip extends Signer {
+  team_id: number;
+  character_id: number;
+  index: number;
+}
+
+export interface Hire extends Signer {
+  team_id: number;
+  index: number;
+}
+
+export interface XP extends Signer {
+  team_id: number;
+  character_id: number;
+  index: number;
+}
+
+export interface Merge extends Signer {
+  team_id: number;
+  from_id: number;
+  to_id: number;
+}
+
+export interface Sell extends Signer {
+  team_id: number;
+  character_id: number;
+}
+
+export interface Reroll extends Signer {
+  team_id: number;
+}
+
+export interface Start extends Signer {
+  team_id: number;
+  order: number;
+}
+
+export type IWorld = Awaited<ReturnType<typeof setupWorld>>;
+
+export const getContractByName = (manifest: any, name: string) => {
+  const contract = manifest.contracts.find((contract: any) =>
+    contract.name.includes("::" + name),
+  );
+  if (contract) {
+    return contract.address;
+  } else {
+    return "";
+  }
+};
+
+export async function setupWorld(provider: DojoProvider, config: Config) {
+  const details: UniversalDetails | undefined = undefined; // { maxFee: 1e15 };
+
+  function account() {
+    const contract_name = "account";
+    const contract = config.manifest.contracts.find((c: any) =>
+      c.tag.includes(contract_name),
+    );
+    if (!contract) {
+      throw new Error(`Contract ${contract_name} not found in manifest`);
+    }
+
+    const create = async ({ account, name }: Create) => {
+      try {
+        const encoded_name = shortString.encodeShortString(name);
+        return await provider.execute(
+          account,
+          {
+            contractName: contract_name,
+            entrypoint: "create",
+            calldata: [encoded_name],
+          },
+          NAMESPACE,
+          details,
+        );
+      } catch (error) {
+        console.error("Error executing create:", error);
+        throw error;
+      }
+    };
+
+    const spawn = async ({ account }: Signer) => {
+      try {
+        return await provider.execute(
+          account,
+          {
+            contractName: contract_name,
+            entrypoint: "spawn",
+            calldata: [],
+          },
+          NAMESPACE,
+          details,
+        );
+      } catch (error) {
+        console.error("Error executing create:", error);
+        throw error;
+      }
+    };
+
+    return { create, spawn };
+  }
+
+  function market() {
+    const contract_name = "market";
+    const contract = config.manifest.contracts.find((c: any) =>
+      c.tag.includes(contract_name),
+    );
+    if (!contract) {
+      throw new Error(`Contract ${contract_name} not found in manifest`);
+    }
+
+    const equip = async ({ account, team_id, character_id, index }: Equip) => {
+      try {
+        return await provider.execute(
+          account,
+          {
+            contractName: contract_name,
+            entrypoint: "equip",
+            calldata: [team_id, character_id, index],
+          },
+          NAMESPACE,
+        );
+      } catch (error) {
+        console.error("Error executing equip:", error);
+        throw error;
+      }
+    };
+
+    const hire = async ({ account, team_id, index }: Hire) => {
+      try {
+        return await provider.execute(
+          account,
+          {
+            contractName: contract_name,
+            entrypoint: "hire",
+            calldata: [team_id, index],
+          },
+          NAMESPACE,
+        );
+      } catch (error) {
+        console.error("Error executing hire:", error);
+        throw error;
+      }
+    };
+
+    const xp = async ({ account, team_id, character_id, index }: XP) => {
+      try {
+        return await provider.execute(
+          account,
+          {
+            contractName: contract_name,
+            entrypoint: "xp",
+            calldata: [team_id, character_id, index],
+          },
+          NAMESPACE,
+        );
+      } catch (error) {
+        console.error("Error executing xp:", error);
+        throw error;
+      }
+    };
+
+    const merge = async ({ account, team_id, from_id, to_id }: Merge) => {
+      try {
+        return await provider.execute(
+          account,
+          {
+            contractName: contract_name,
+            entrypoint: "merge",
+            calldata: [team_id, from_id, to_id],
+          },
+          NAMESPACE,
+        );
+      } catch (error) {
+        console.error("Error executing merge:", error);
+        throw error;
+      }
+    };
+
+    const sell = async ({ account, team_id, character_id }: Sell) => {
+      try {
+        return await provider.execute(
+          account,
+          {
+            contractName: contract_name,
+            entrypoint: "sell",
+            calldata: [team_id, character_id],
+          },
+          NAMESPACE,
+        );
+      } catch (error) {
+        console.error("Error executing sell:", error);
+        throw error;
+      }
+    };
+
+    const reroll = async ({ account, team_id }: Reroll) => {
+      try {
+        return await provider.execute(
+          account,
+          {
+            contractName: contract_name,
+            entrypoint: "reroll",
+            calldata: [team_id],
+          },
+          NAMESPACE,
+        );
+      } catch (error) {
+        console.error("Error executing reroll:", error);
+        throw error;
+      }
+    };
+
+    return { equip, hire, xp, merge, sell, reroll };
+  }
+
+  function battle() {
+    const contract_name = "battle";
+
+    const contract = config.manifest.contracts.find((c: any) =>
+      c.tag.includes(contract_name),
+    );
+    if (!contract) {
+      throw new Error(`Contract ${contract_name} not found in manifest`);
+    }
+
+    const hydrate = async ({ account }: Signer) => {
+      try {
+        return await provider.execute(
+          account,
+          {
+            contractName: contract_name,
+            entrypoint: "hydrate",
+            calldata: [],
+          },
+          NAMESPACE,
+        );
+      } catch (error) {
+        console.error("Error executing create:", error);
+        throw error;
+      }
+    };
+
+    const start = async ({ account, team_id, order }: Start) => {
+      try {
+        return await provider.execute(
+          account,
+          {
+            contractName: contract_name,
+            entrypoint: "start",
+            calldata: [team_id, order],
+          },
+          NAMESPACE,
+        );
+      } catch (error) {
+        console.error("Error executing create:", error);
+        throw error;
+      }
+    };
+
+    return { hydrate, start };
+  }
+
+  return {
+    account: account(),
+    market: market(),
+    battle: battle(),
+  };
+}

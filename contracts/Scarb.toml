@@ -8,9 +8,9 @@ edition = "2023_10"
 sierra-replace-ids = true
 
 [scripts]
-dev = "sozo --profile dev clean && sozo --profile dev build && sozo --profile dev migrate plan && sozo --profile dev migrate apply"
-slot = "sozo --profile slot clean && sozo --profile slot build && sozo --profile slot migrate plan && sozo --profile slot migrate apply"
-slotdev = "sozo --profile slotdev clean && sozo --profile slotdev build && sozo --profile slotdev migrate plan && sozo --profile slotdev migrate apply -vvv"
+dev = "sozo --profile dev clean && sozo --profile dev build && sozo --profile dev migrate apply"
+slot = "sozo --profile slot clean && sozo --profile slot build && sozo --profile slot migrate apply"
+slotdev = "sozo --profile slotdev clean && sozo --profile slotdev build && sozo --profile slotdev migrate apply -vvv"
 
 [dependencies]
 origami_rating = { git = "https://github.com/dojoengine/origami", tag = "v1.0.0-alpha.5" }

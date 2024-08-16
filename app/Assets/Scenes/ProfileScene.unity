@@ -183,8 +183,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Player Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6db23ddf2887141ad9867a9dfc57e8c5, type: 2}
+  m_sharedMaterial: {fileID: 1477791107022902426, guid: 6db23ddf2887141ad9867a9dfc57e8c5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -370,7 +370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3041338915545561300, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -22.504
+      value: -36.882
       objectReference: {fileID: 0}
     - target: {fileID: 3041338915545561300, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -378,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3041338915545561300, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 11.251801
+      value: 18.441
       objectReference: {fileID: 0}
     - target: {fileID: 4384160491177792166, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
       propertyPath: m_Pivot.x
@@ -495,6 +495,26 @@ PrefabInstance:
     - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
       propertyPath: m_text
       value: Arena Ranked
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_fontSize
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 98403aaf24be144dba617a823ad2abb1, type: 2}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7393064115312720283, guid: 98403aaf24be144dba617a823ad2abb1, type: 2}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1225,6 +1245,26 @@ PrefabInstance:
       propertyPath: m_text
       value: Arena
       objectReference: {fileID: 0}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_fontSize
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 98403aaf24be144dba617a823ad2abb1, type: 2}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7393064115312720283, guid: 98403aaf24be144dba617a823ad2abb1, type: 2}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1431,6 +1471,38 @@ PrefabInstance:
     - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
       propertyPath: m_text
       value: Dungeon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_fontSize
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 98403aaf24be144dba617a823ad2abb1, type: 2}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7393064115312720283, guid: 98403aaf24be144dba617a823ad2abb1, type: 2}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906416165261975673, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8064449991782701576, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -49.8153
+      objectReference: {fileID: 0}
+    - target: {fileID: 8064449991782701576, guid: 593ba2fb8990343a1b60b57fb8418b4b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 11.9748
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

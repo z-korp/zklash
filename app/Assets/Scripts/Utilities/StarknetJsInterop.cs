@@ -66,4 +66,5 @@ public class StarknetJsInterop : MonoBehaviour
         public string finalityStatus;
         public string receipt;
     }
+
 }

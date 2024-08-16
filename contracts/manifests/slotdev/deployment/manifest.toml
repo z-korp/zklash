@@ -29,7 +29,17 @@ original_class_hash = "0x51c5bf2831e596a8e45dfd7727dc7b833877dd42179175c7b5ff4e2
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/slotdev/deployment/abis/contracts/zklash-account-56d04506.json"
 reads = []
-writes = []
+writes = [
+    "zklash-Character",
+    "zklash-Foe",
+    "zklash-League",
+    "zklash-Player",
+    "zklash-Registry",
+    "zklash-Shop",
+    "zklash-Slot",
+    "zklash-Squad",
+    "zklash-Team",
+]
 init_calldata = []
 tag = "zklash-account"
 manifest_name = "zklash-account-56d04506"
@@ -42,7 +52,17 @@ original_class_hash = "0x2ccddf4d68f2738d0759279d70ab9379de01f589cadb6f89af4027b
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/slotdev/deployment/abis/contracts/zklash-battle-19c01f18.json"
 reads = []
-writes = []
+writes = [
+    "zklash-Character",
+    "zklash-Foe",
+    "zklash-League",
+    "zklash-Player",
+    "zklash-Registry",
+    "zklash-Shop",
+    "zklash-Slot",
+    "zklash-Squad",
+    "zklash-Team",
+]
 init_calldata = []
 tag = "zklash-battle"
 manifest_name = "zklash-battle-19c01f18"
@@ -55,7 +75,17 @@ original_class_hash = "0x2cc2fa1f31018a0eee44c55b117ee936e23839853df80aa95b20d17
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/slotdev/deployment/abis/contracts/zklash-market-aadec017.json"
 reads = []
-writes = []
+writes = [
+    "zklash-Character",
+    "zklash-Foe",
+    "zklash-League",
+    "zklash-Player",
+    "zklash-Registry",
+    "zklash-Shop",
+    "zklash-Slot",
+    "zklash-Squad",
+    "zklash-Team",
+]
 init_calldata = []
 tag = "zklash-market"
 manifest_name = "zklash-market-aadec017"

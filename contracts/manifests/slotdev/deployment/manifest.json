@@ -1525,7 +1525,17 @@
         }
       ],
       "reads": [],
-      "writes": [],
+      "writes": [
+        "zklash-Character",
+        "zklash-Foe",
+        "zklash-League",
+        "zklash-Player",
+        "zklash-Registry",
+        "zklash-Shop",
+        "zklash-Slot",
+        "zklash-Squad",
+        "zklash-Team"
+      ],
       "init_calldata": [],
       "tag": "zklash-account",
       "manifest_name": "zklash-account-56d04506"
@@ -1777,7 +1787,17 @@
         }
       ],
       "reads": [],
-      "writes": [],
+      "writes": [
+        "zklash-Character",
+        "zklash-Foe",
+        "zklash-League",
+        "zklash-Player",
+        "zklash-Registry",
+        "zklash-Shop",
+        "zklash-Slot",
+        "zklash-Squad",
+        "zklash-Team"
+      ],
       "init_calldata": [],
       "tag": "zklash-battle",
       "manifest_name": "zklash-battle-19c01f18"
@@ -2110,7 +2130,17 @@
         }
       ],
       "reads": [],
-      "writes": [],
+      "writes": [
+        "zklash-Character",
+        "zklash-Foe",
+        "zklash-League",
+        "zklash-Player",
+        "zklash-Registry",
+        "zklash-Shop",
+        "zklash-Slot",
+        "zklash-Squad",
+        "zklash-Team"
+      ],
       "init_calldata": [],
       "tag": "zklash-market",
       "manifest_name": "zklash-market-aadec017"

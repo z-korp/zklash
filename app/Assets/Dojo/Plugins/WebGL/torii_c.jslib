@@ -76,6 +76,8 @@ mergeInto(LibraryManager.library, {
     const subscription = await client.onEntityUpdated(
       clauses,
       (hashed_keys, models) => {
+        console.log(hashed_keys, models);
+
         // stringify the models
         let modelsString = JSON.stringify(models);
         // return buffer

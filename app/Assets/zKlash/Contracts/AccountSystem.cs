@@ -11,22 +11,6 @@ public class AccountSystem : MonoBehaviour
 {
     public GameManagerData data;
 
-    // Call the `dojo_resource` system with the specified Account and calldata
-    // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.
-    public async Task<FieldElement> DojoResource(Account account)
-    {
-        return await account.ExecuteRaw(new dojo.Call[] {
-            new dojo.Call{
-                to = new FieldElement(data.accountContractAddress).Inner,
-                selector = "dojo_resource",
-                calldata = new dojo.FieldElement[] {
-
-                }
-            }
-        });
-    }
-
-
 
     // Call the `create` system with the specified Account and calldata
     // Returns the transaction hash. Use `WaitForTransaction` to wait for the transaction to be confirmed.

@@ -261,8 +261,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: dazddazda dazd dazd dadaz dazda
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b482d73b15c2ce0418d62854e2456d39, type: 2}
-  m_sharedMaterial: {fileID: -6685921502683196048, guid: b482d73b15c2ce0418d62854e2456d39, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6db23ddf2887141ad9867a9dfc57e8c5, type: 2}
+  m_sharedMaterial: {fileID: 1477791107022902426, guid: 6db23ddf2887141ad9867a9dfc57e8c5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

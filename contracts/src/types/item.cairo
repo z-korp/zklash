@@ -32,7 +32,7 @@ mod errors {
     const ITEM_NOT_VALID: felt252 = 'Item: not valid';
 }
 
-#[derive(Copy, Drop, Serde, PartialEq, Introspection)]
+#[derive(Copy, Drop, Serde, PartialEq, Introspect)]
 enum Item {
     None,
     MushroomSmall,

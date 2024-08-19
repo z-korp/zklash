@@ -1,0 +1,26 @@
+kind = "DojoModel"
+class_hash = "0x60b0b130546885b3a6bec629858eb2a1abada653985ce39ceb85434bd5b45"
+original_class_hash = "0x60b0b130546885b3a6bec629858eb2a1abada653985ce39ceb85434bd5b45"
+abi = "manifests/slot/base/abis/models/zklash-Player-453a6b3b.json"
+tag = "zklash-Player"
+manifest_name = "zklash-Player-453a6b3b"
+
+[[members]]
+name = "id"
+type = "felt252"
+key = true
+
+[[members]]
+name = "name"
+type = "felt252"
+key = false
+
+[[members]]
+name = "team_count"
+type = "u32"
+key = false
+
+[[members]]
+name = "win_count"
+type = "u32"
+key = false

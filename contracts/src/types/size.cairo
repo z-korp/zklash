@@ -13,7 +13,7 @@ mod errors {
     const SIZE_NOT_VALID: felt252 = 'Size: not valid';
 }
 
-#[derive(Copy, Drop, Serde, PartialEq, Introspection)]
+#[derive(Copy, Drop, Serde, PartialEq, Introspect)]
 enum Size {
     None,
     Small,

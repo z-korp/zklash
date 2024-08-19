@@ -1,0 +1,12 @@
+tag = "zklash-market"
+writes = [
+    "zklash-Character",
+    "zklash-Foe",
+    "zklash-League",
+    "zklash-Player",
+    "zklash-Registry",
+    "zklash-Shop",
+    "zklash-Slot",
+    "zklash-Squad",
+    "zklash-Team",
+]

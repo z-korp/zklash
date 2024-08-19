@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Dojo
 {
     public class WorldManager : MonoBehaviour
-    {   
+    {
         public SynchronizationMaster synchronizationMaster;
         public ToriiClient toriiClient;
         public ToriiWasmClient wasmClient;
@@ -18,6 +18,7 @@ namespace Dojo
         async void Awake()
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
+
             wasmClient = new ToriiWasmClient(dojoConfig.toriiUrl, dojoConfig.rpcUrl,
                                                 dojoConfig.relayWebrtcUrl, dojoConfig.worldAddress);
             await wasmClient.CreateClient();
@@ -25,7 +26,7 @@ namespace Dojo
             toriiClient = new ToriiClient(dojoConfig.toriiUrl, dojoConfig.rpcUrl,
                                             dojoConfig.relayUrl, dojoConfig.worldAddress);
 #endif
-            
+
             /*  fetch entities from the world
                 TODO: maybe do in the start function of the SynchronizationMaster?
                 problem is when to start the subscription service
@@ -74,8 +75,16 @@ namespace Dojo
         // Return all children entities.
         public GameObject[] Entities()
         {
+            return transform.Cast<Transform>().Select(t => t.gameObject).ToArray();
+        }
+
+        // Return all children entities.
+        // That have the specified component.
+        public GameObject[] Entities<T>() where T : Component
+        {
             return transform.Cast<Transform>()
                 .Select(t => t.gameObject)
+                .Where(g => g.GetComponent<T>() != null)
                 .ToArray();
         }
 

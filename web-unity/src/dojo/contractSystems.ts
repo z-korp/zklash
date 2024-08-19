@@ -51,17 +51,6 @@ export interface Start extends Signer {
 
 export type IWorld = Awaited<ReturnType<typeof setupWorld>>;
 
-export const getContractByName = (manifest: any, name: string) => {
-  const contract = manifest.contracts.find((contract: any) =>
-    contract.name.includes("::" + name),
-  );
-  if (contract) {
-    return contract.address;
-  } else {
-    return "";
-  }
-};
-
 export async function setupWorld(provider: DojoProvider, config: Config) {
   const details: UniversalDetails | undefined = undefined; // { maxFee: 1e15 };
 

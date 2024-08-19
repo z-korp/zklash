@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using zKlash.Game.Items;
+using zklash;
 
 public class ItemDraggable : MonoBehaviour
 {

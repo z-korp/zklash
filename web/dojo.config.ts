@@ -1,5 +1,7 @@
-import local from "../contracts/manifests/dev/manifest.json";
-import slot from "../contracts/manifests/slot/manifest.json";
+import local from "../contracts/manifests/dev/deployment/manifest.json";
+import slot from "../contracts/manifests/slot/deployment/manifest.json";
+import slotdev from "../contracts/manifests/slotdev/deployment/manifest.json";
+import sepolia from "../contracts/manifests/dev/deployment/manifest.json";
 
 const {
   VITE_PUBLIC_NODE_URL,
@@ -8,8 +10,7 @@ const {
   VITE_PUBLIC_MASTER_PRIVATE_KEY,
   VITE_PUBLIC_ACCOUNT_CLASS_HASH,
   VITE_PUBLIC_FEE_TOKEN_ADDRESS,
-  VITE_PUBLIC_SEPOLIA,
-  VITE_PUBLIC_SLOT,
+  VITE_PUBLIC_DEPLOY_TYPE,
 } = import.meta.env;
 
 export type Config = ReturnType<typeof dojoConfig>;
@@ -18,6 +19,7 @@ export function dojoConfig() {
   return {
     rpcUrl: VITE_PUBLIC_NODE_URL || "http://localhost:5050",
     toriiUrl: VITE_PUBLIC_TORII || "http://0.0.0.0:8080",
+    relayUrl: "",
     masterAddress:
       VITE_PUBLIC_MASTER_ADDRESS ||
       "0x6162896d1d7ab204c7ccac6dd5f8e9e7c25ecd5ae4fcb4ad32e57786bb46e03",
@@ -30,6 +32,13 @@ export function dojoConfig() {
     feeTokenAddress:
       VITE_PUBLIC_FEE_TOKEN_ADDRESS ||
       "0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
-    manifest: VITE_PUBLIC_SLOT ? slot : VITE_PUBLIC_SEPOLIA ? local : local,
+    manifest:
+      VITE_PUBLIC_DEPLOY_TYPE === "sepolia"
+        ? sepolia
+        : VITE_PUBLIC_DEPLOY_TYPE === "slot"
+          ? slot
+          : VITE_PUBLIC_DEPLOY_TYPE === "slotdev"
+            ? slotdev
+            : local,
   };
 }

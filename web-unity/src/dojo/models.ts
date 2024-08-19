@@ -1,4 +1,4 @@
-import { ContractComponents } from "./generated/contractModels";
+import { ContractComponents } from "./contractModels";
 import { Character } from "./game/models/character";
 import { Foe } from "./game/models/foe";
 import { League } from "./game/models/league";

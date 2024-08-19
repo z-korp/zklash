@@ -1,6 +1,6 @@
-import type { IWorld } from "./generated/contractSystems";
+import type { IWorld } from "./contractSystems";
 import { toast } from "sonner";
-import * as SystemTypes from "./generated/contractSystems";
+import * as SystemTypes from "./contractSystems";
 import { ClientModels } from "./models";
 import { shortenHex } from "@dojoengine/utils";
 import { Account } from "starknet";
@@ -33,7 +33,7 @@ export function systems({
       label: "View",
       onClick: () =>
         window.open(
-          `https://worlds.dev/networks/slot/worlds/zklash/txs/${transaction_hash}`,
+          `https://worlds.dev/networks/slot/worlds/zklash/txs/${transaction_hash}`
         ),
     };
   };
@@ -70,7 +70,7 @@ export function systems({
   const handleTransaction = async (
     account: Account,
     action: () => Promise<{ transaction_hash: string }>,
-    successMessage: string,
+    successMessage: string
   ) => {
     toast.loading("Transaction in progress...", {
       id: TOAST_ID,
@@ -99,7 +99,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.account.create({ account, ...props }),
-      "Player has been created.",
+      "Player has been created."
     );
   };
 
@@ -107,7 +107,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.account.spawn({ account, ...props }),
-      "Player has been spawned.",
+      "Player has been spawned."
     );
   };
 
@@ -115,7 +115,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.battle.hydrate({ account, ...props }),
-      "Game has been hydrated.",
+      "Game has been hydrated."
     );
   };
 
@@ -123,7 +123,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.battle.start({ account, ...props }),
-      "Battle has started.",
+      "Battle has started."
     );
   };
 
@@ -131,7 +131,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.market.equip({ account, ...props }),
-      "Character has been equiped.",
+      "Character has been equiped."
     );
   };
 
@@ -139,7 +139,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.market.hire({ account, ...props }),
-      "Character has been hired.",
+      "Character has been hired."
     );
   };
 
@@ -147,7 +147,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.market.merge({ account, ...props }),
-      "Characters have been merged.",
+      "Characters have been merged."
     );
   };
 
@@ -155,7 +155,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.market.reroll({ account, ...props }),
-      "Player has rerolled.",
+      "Player has rerolled."
     );
   };
 
@@ -163,7 +163,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.market.sell({ account, ...props }),
-      "Character has been sold.",
+      "Character has been sold."
     );
   };
 
@@ -171,7 +171,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.market.xp({ account, ...props }),
-      "Character gained xp.",
+      "Character gained xp."
     );
   };
 

@@ -34,7 +34,7 @@ mod errors {
     const WAVE_NOT_VALID: felt252 = 'Wave: not valid';
 }
 
-#[derive(Copy, Drop, Serde, PartialEq, Introspection)]
+#[derive(Copy, Drop, Serde, PartialEq, Introspect)]
 enum Wave {
     None,
     One,

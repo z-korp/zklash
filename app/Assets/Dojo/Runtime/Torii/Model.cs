@@ -27,7 +27,8 @@ namespace Dojo.Torii
             }
         }
 
-        public struct Struct {
+        public struct Struct
+        {
             public string name;
             public Dictionary<string, object> members;
 
@@ -54,10 +55,10 @@ namespace Dojo.Torii
             Members = members;
         }
 
-        public Model(dojo.Model model)
+        public Model(dojo.Struct model)
         {
             Name = model.name;
-            Members = new Dictionary<string, object>(model.members.ToArray().Select(m => new KeyValuePair<string, object>(m.name, HandleCValue(m.ty))));
+            Members = new Dictionary<string, object>(model.children.ToArray().Select(m => new KeyValuePair<string, object>(m.name, HandleCValue(m.ty))));
         }
 
         private object HandleCValue(dojo.Ty ty)
@@ -71,6 +72,11 @@ namespace Dojo.Torii
                 dojo.Ty_Tag.Primitive_ => ty.primitive.tag switch
                 {
                     dojo.Primitive_Tag.Bool => Convert.ToBoolean(ty.primitive.bool_.Value),
+                    dojo.Primitive_Tag.I8 => ty.primitive.i8,
+                    dojo.Primitive_Tag.I16 => ty.primitive.i16,
+                    dojo.Primitive_Tag.I32 => ty.primitive.i32,
+                    dojo.Primitive_Tag.I64 => ty.primitive.i64,
+                    dojo.Primitive_Tag.I128 => new BigInteger(ty.primitive.i128.ToArray()),
                     dojo.Primitive_Tag.U8 => ty.primitive.u8,
                     dojo.Primitive_Tag.U16 => ty.primitive.u16,
                     dojo.Primitive_Tag.U32 => ty.primitive.u32,
@@ -108,6 +114,11 @@ namespace Dojo.Torii
                 {
                     // primitives
                     "bool" => value.value.ToObject<bool>(),
+                    "i8" => value.value.ToObject<sbyte>(),
+                    "i16" => value.value.ToObject<short>(),
+                    "i32" => value.value.ToObject<int>(),
+                    "i64" => value.value.ToObject<long>(),
+                    "i128" => new BigInteger(hexStringToByteArray(value.value.ToObject<string>()).Reverse().ToArray()),
                     "u8" => value.value.ToObject<byte>(),
                     "u16" => value.value.ToObject<ushort>(),
                     "u32" => value.value.ToObject<uint>(),

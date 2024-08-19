@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using zKlash.Game.Roles;
 using zKlash.Game.Items;
+using zklash;
 
 public class ClickButtonFight : MonoBehaviour
 {

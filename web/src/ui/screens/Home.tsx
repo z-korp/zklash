@@ -1,4 +1,8 @@
-import { useComponentValue, useEntityQuery } from "@dojoengine/react";
+import {
+  useComponentValue,
+  useEntityQuery,
+  useQuerySync,
+} from "@dojoengine/react";
 import { Entity, Has, HasValue, getComponentValue } from "@dojoengine/recs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getEntityIdFromKeys } from "@dojoengine/utils";
@@ -34,14 +38,20 @@ function Home() {
         },
         classes: { Player, Team, Shop, Character },
       },
+      toriiClient,
+      contractComponents,
     },
     account: { account },
   } = useDojo();
 
-  const dragItem = useRef<typeof CharacterModel | null>(null);
-  const dragOverItem = useRef<typeof CharacterModel | null>(null);
+  type CharacterInstance = InstanceType<typeof Character>;
+
+  useQuerySync(toriiClient, contractComponents as any, []);
+
+  const dragItem = useRef<CharacterInstance | null>(null);
+  const dragOverItem = useRef<CharacterInstance | null>(null);
   const [name, setName] = useState("");
-  const [characters, setCharacters] = useState<(typeof Character)[]>([]);
+  const [characters, setCharacters] = useState<CharacterInstance[]>([]);
 
   // Player
   const playerKey = useMemo(() => {
@@ -112,25 +122,27 @@ function Home() {
     let packed = 0;
     ids.reverse().forEach((id) => {
       packed <<= 8;
-      packed |= id;
+      packed |= Number(id);
     });
     return `0x${packed.toString(16)}`;
   }, [characters]);
 
   const dragStart = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
-      dragItem.current = characters.find(
-        (character) => character.id == e.currentTarget.id,
-      );
+      dragItem.current =
+        characters.find(
+          (character) => character.id == Number(e.currentTarget.id),
+        ) || null;
     },
     [characters],
   );
 
   const dragEnter = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
-      dragOverItem.current = characters.find(
-        (character) => character.id == e.currentTarget.id,
-      );
+      dragOverItem.current =
+        characters.find(
+          (character) => character.id == Number(e.currentTarget.id),
+        ) || null;
     },
     [characters],
   );
@@ -147,7 +159,7 @@ function Home() {
       xp({
         account,
         team_id: team.id,
-        character_id: parseInt(dragOverItem.current.id),
+        character_id: dragOverItem.current.id,
         index,
       });
       dragOverItem.current = null;
@@ -168,7 +180,7 @@ function Home() {
       equip({
         account,
         team_id: team.id,
-        character_id: parseInt(dragOverItem.current.id),
+        character_id: dragOverItem.current.id,
         index,
       });
       dragOverItem.current = null;
@@ -188,8 +200,8 @@ function Home() {
     merge({
       account,
       team_id: team.id,
-      from_id: parseInt(dragItem.current.id),
-      to_id: parseInt(dragOverItem.current.id),
+      from_id: dragItem.current.id,
+      to_id: dragOverItem.current.id,
     });
     dragOverItem.current = null;
     dragItem.current = null;
@@ -317,7 +329,7 @@ function Home() {
             characters.map((character, index) => (
               <div
                 className="flex gap-2"
-                id={character.id}
+                id={character.id.toString()}
                 key={index}
                 onDragStart={(e) => dragStart(e)}
                 onDragEnter={(e) => dragEnter(e)}

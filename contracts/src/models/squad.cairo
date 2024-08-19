@@ -8,7 +8,7 @@ use starknet::ContractAddress;
 
 // External imports
 
-use origami::rating::elo::EloTrait;
+use origami_rating::elo::EloTrait;
 
 // Internal imports
 

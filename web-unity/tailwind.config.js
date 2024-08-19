@@ -20,6 +20,7 @@ module.exports = {
       fontFamily: {
         display: ["PatrickHand", "sans"],
         body: ["PatrickHand", "sans"],
+        vinque: ["Vinque", "sans"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -55,6 +56,10 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+
+        tinyblue: "rgb(71, 170, 168)",
+        //tinyyellow: "rgb(255,255,229)",
+        tinyyellow: "rgb(216,213,166)",
       },
       borderRadius: {
         lg: "var(--radius)",

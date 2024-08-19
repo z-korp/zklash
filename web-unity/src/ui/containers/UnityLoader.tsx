@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
+import mapGrass from "/assets/map_grass.png";
 
 const UnityLoader: React.FC = () => {
   const { unityProvider } = useUnityContext({
@@ -55,22 +56,31 @@ const UnityLoader: React.FC = () => {
 
   return (
     <div
+      className="flex p-8 rounded-lg"
       style={{
-        width: "960px",
-        height: "600px",
-        overflow: "hidden",
-        background: "black",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        backgroundImage: `url('${mapGrass}')`,
+        backgroundSize: "100% 100%",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
-      className="border rounded-lg"
     >
-      <Unity
-        unityProvider={unityProvider}
-        style={{ width: "100%", height: "100%" }}
-        devicePixelRatio={window.devicePixelRatio}
-      />
+      <div
+        style={{
+          width: "960px",
+          height: "600px",
+          overflow: "hidden",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        className="border-4 border-black rounded-lg"
+      >
+        <Unity
+          unityProvider={unityProvider}
+          style={{ width: "100%", height: "100%" }}
+          devicePixelRatio={window.devicePixelRatio}
+        />
+      </div>
     </div>
   );
 };

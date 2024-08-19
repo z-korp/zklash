@@ -350,6 +350,7 @@ MonoBehaviour:
   titleItem: {fileID: 7064723613315579225}
   sizeItem: {fileID: 2112121441624726464}
   descriptionItem: {fileID: 3053257913686068546}
+  previousItem: {fileID: 0}
   itemImage: {fileID: 7941755057653392026}
   orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
   itemOrbiterGO: {fileID: 0}
@@ -399,6 +400,7 @@ MonoBehaviour:
   powerLV3: 
   health: 0
   attack: 0
+  price: 0
 --- !u!114 &2215707457893609956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -931,6 +933,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4119045088184553782}
     m_Modifications:
+    - target: {fileID: 2882689615724375510, guid: bdd858059760d44cba10c85f160d8b86, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6707804836854084844, guid: bdd858059760d44cba10c85f160d8b86, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

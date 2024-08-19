@@ -11,26 +11,35 @@
     src: url(/fonts/PatrickHand-Regular.ttf) format("woff2");
   }
 
+  @font-face {
+    font-family: "Vinque";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/fonts/Vinque-Regular.otf) format("woff2");
+  }
+
   :root {
     font-family: "PatrickHand", sans;
     user-select: none;
-    --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
+    /*--background: 60 100% 95%; Jaune encore plus pâle pour le fond du thème clair */
+    --background: 56 39.1% 74.9%; /* Jaune encore plus pâle pour le fond du thème clair */
+    --foreground: 222.2 47.4% 11.2%; /* Contraste sombre pour le texte */
 
-    --muted: 210 40% 96.1%;
+    --muted: 56 39.1% 74.9%; /* Jaune très pâle pour muted */
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --popover: 0 0% 100%;
+    --popover: 56 39.1% 74.9%; /* Jaune encore plus pâle pour le popover */
     --popover-foreground: 222.2 47.4% 11.2%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
 
-    --card: 0 0% 100%;
+    --card: 56 39.1% 74.9%; /* Jaune encore plus pâle pour les cartes */
     --card-foreground: 222.2 47.4% 11.2%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 56 39.1% 74.9%; /* Jaune encore plus pâle */
+    --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -47,8 +56,8 @@
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
+    --background: 240 100% 20%; /* Bleu nuit pour le fond du thème sombre */
+    --foreground: 210 40% 98%; /* Contraste clair pour le texte */
 
     --muted: 223 47% 11%;
     --muted-foreground: 215.4 16.3% 56.9%;
@@ -56,17 +65,17 @@
     --accent: 216 34% 17%;
     --accent-foreground: 210 40% 98%;
 
-    --popover: 224 71% 4%;
-    --popover-foreground: 215 20.2% 65.1%;
+    --popover: 240 100% 20%; /* Bleu nuit pour le popover */
+    --popover-foreground: 210 40% 98%;
 
     --border: 216 34% 17%;
     --input: 216 34% 17%;
 
-    --card: 224 71% 4%;
-    --card-foreground: 213 31% 91%;
+    --card: 240 100% 20%; /* Bleu nuit pour les cartes */
+    --card-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
+    --primary: 240 100% 20%; /* Bleu nuit */
+    --primary-foreground: 210 40% 98%;
 
     --secondary: 222.2 47.4% 11.2%;
     --secondary-foreground: 210 40% 98%;
@@ -101,4 +110,8 @@ html,
 body {
   touch-action: none; /* Prevents touch-based panning */
   height: 100vh;
+}
+
+h1 {
+  font-family: "Vinque", sans-serif;
 }

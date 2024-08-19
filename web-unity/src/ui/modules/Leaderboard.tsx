@@ -59,7 +59,7 @@ export const Leaderboard = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Leaderboard</Button>
+        <Button variant="red">Leaderboard</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

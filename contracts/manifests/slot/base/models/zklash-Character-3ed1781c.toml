@@ -1,0 +1,61 @@
+kind = "DojoModel"
+class_hash = "0x6c5d82322d3d773ab1f94ea14d76f80131570be0896c7b15c8fb7aee26535a8"
+original_class_hash = "0x6c5d82322d3d773ab1f94ea14d76f80131570be0896c7b15c8fb7aee26535a8"
+abi = "manifests/slot/base/abis/models/zklash-Character-3ed1781c.json"
+tag = "zklash-Character"
+manifest_name = "zklash-Character-3ed1781c"
+
+[[members]]
+name = "player_id"
+type = "felt252"
+key = true
+
+[[members]]
+name = "team_id"
+type = "u32"
+key = true
+
+[[members]]
+name = "id"
+type = "u8"
+key = true
+
+[[members]]
+name = "role"
+type = "u8"
+key = false
+
+[[members]]
+name = "item"
+type = "u8"
+key = false
+
+[[members]]
+name = "xp"
+type = "u8"
+key = false
+
+[[members]]
+name = "level"
+type = "u8"
+key = false
+
+[[members]]
+name = "health"
+type = "u8"
+key = false
+
+[[members]]
+name = "attack"
+type = "u8"
+key = false
+
+[[members]]
+name = "absorb"
+type = "u8"
+key = false
+
+[[members]]
+name = "stun"
+type = "u8"
+key = false

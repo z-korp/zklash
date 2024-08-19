@@ -2,7 +2,15 @@ using System.Collections.Generic;
 using Dojo;
 using Dojo.Starknet;
 using UnityEngine;
+using System.ComponentModel;
+using UnityEngine.SceneManagement;
+using zklash;
 
+namespace System.Runtime.CompilerServices
+{
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal class IsExternalInit { }
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -40,43 +48,43 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("---------------------------------");
         Debug.Log("GameManager Start");
-        provider = new JsonRpcClient(dojoConfig.rpcUrl);
-        var signer = new SigningKey(gameManagerData.masterPrivateKey);
-        masterAccount = new Account(provider, signer, new FieldElement(gameManagerData.masterAddress));
 
-        burnerManager = new BurnerManager(provider, masterAccount);
-
-        var burner = await burnerManager.DeployBurner(new SigningKey());
-
-        worldManager.synchronizationMaster.OnEntitySpawned.AddListener(InitEntity);
-        foreach (var entity in worldManager.Entities())
+        try
         {
-            InitEntity(entity);
+            Debug.Log("dojoConfig.rpcUrl: " + dojoConfig.rpcUrl);
+            Debug.Log("dojoConfig.toriiUrl: " + dojoConfig.toriiUrl);
+            Debug.Log("gameManagerData.masterPrivateKey: " + gameManagerData.masterPrivateKey);
+            Debug.Log("gameManagerData.masterAddress: " + gameManagerData.masterAddress);
+
+            provider = new JsonRpcClient(dojoConfig.rpcUrl);
+            masterAccount = new Account(provider, new SigningKey(gameManagerData.masterPrivateKey), new FieldElement(gameManagerData.masterAddress));
+            burnerManager = new BurnerManager(provider, masterAccount);
+
+            if (burnerManager.Burners.Count == 0)
+            {
+                Debug.Log("No burners found. Deploying a new burner.");
+                await burnerManager.DeployBurner();
+            }
+
+            worldManager.synchronizationMaster.OnEntitySpawned.AddListener(InitEntity);
+            foreach (var entity in worldManager.Entities())
+            {
+                InitEntity(entity);
+            }
         }
-
-
-
-        //worldManager.synchronizationMaster.OnSynchronized.AddListener(InitEntity2);
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error in GameManager Start: " + e.Message);
+        }
     }
 
     void Update()
     {
-
     }
-
-    /*private void InitEntity2(List<GameObject> entities)
-    {
-        Debug.Log($"---------------------------------");
-        foreach (var entity in entities)
-        {
-            Debug.Log($"Entity spawned with id: {entity.name}");
-            //InitEntity(entity);
-        }
-        Debug.Log($"---------------------------------");
-    }*/
 
     private void InitEntity(GameObject entity)
     {
+        Debug.Log("------> InitEntity");
         Account currentBurner = burnerManager.CurrentBurner;
         if (currentBurner == null)
         {
@@ -84,19 +92,24 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log($"---------------------------------");
-        Debug.Log($"currentBurner: {currentBurner.Address.Hex()}");
-        Debug.Log($"Entity spawned with id: {entity.name}");
-
+        Debug.Log($"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         Player playerComponent = entity.GetComponent<Player>();
         if (playerComponent != null)
         {
             Debug.Log($"-> Player entity spawned");
+            Debug.Log($"playerComponent.id: {playerComponent.id.Hex()}");
+            Debug.Log($"currentBurner.Address: {currentBurner.Address.Hex()}");
             if (currentBurner.Address.Hex() == playerComponent.id.Hex())
             {
                 Debug.Log(">>>>>>>>>>>> Current player information stored.");
                 Debug.Log($"Player entity spawned with id: {entity.name}");
                 PlayerData.Instance.playerEntity = entity.name;
+                var player = worldManager.Entity(entity.name).GetComponent<Player>();
+
+                string playerName = ShortString.DecodeShortString(player.name);
+
+                PlayerData.Instance.SetPlayerName(playerName);
+                SceneManager.LoadScene("ProfileScene");
             }
         }
 
@@ -162,33 +175,8 @@ public class GameManager : MonoBehaviour
             }
         }*/
 
-        Debug.Log($"---------------------------------");
+        Debug.Log($"^^^^^^^^^^^^^^^^^^^^^^^^");
     }
-
-    // not working in webgl
-    /*public async void TriggerCreateAndSpawnAsync(string name)
-    {
-        Debug.Log("TriggerCreateAndSpawnAsync");
-        Account currentBurner = burnerManager.CurrentBurner;
-        var nameHex = StringToHexString(name);
-
-        try
-        {
-            var txHash = await accountSystem.Create(currentBurner, dojoConfig.worldAddress, nameHex);
-            Debug.Log($"[Create] Transaction Hash: {txHash.Hex()}");
-            await provider.WaitForTransaction(txHash);
-            //await Task.Delay(500);
-
-            txHash = await accountSystem.Spawn(currentBurner, dojoConfig.worldAddress);
-            Debug.Log($"[Spawn] Transaction Hash: {txHash.Hex()}");
-            await provider.WaitForTransaction(txHash);
-            //await Task.Delay(500);
-        }
-        catch (Exception e)
-        {
-            Debug.Log($"Error: {e.Message}");
-        }
-    }*/
 
     public string GetSquadEntity(uint registryId, uint squadId)
     {

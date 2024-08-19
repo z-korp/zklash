@@ -1,9 +1,9 @@
 import { getSyncEntities } from "@dojoengine/state";
 import { DojoConfig, DojoProvider } from "@dojoengine/core";
 import * as torii from "@dojoengine/torii-client";
-import { defineContractComponents } from "./generated/contractModels";
+import { defineContractComponents } from "./contractModels";
 import { world } from "./world";
-import { setupWorld } from "./generated/contractSystems";
+import { setupWorld } from "./contractSystems";
 import { Account, RpcProvider } from "starknet";
 import { BurnerManager } from "@dojoengine/create-burner";
 import { models } from "./models";
@@ -12,18 +12,15 @@ import { systems } from "./systems";
 export type SetupResult = Awaited<ReturnType<typeof setup>>;
 
 export async function setup({ ...config }: DojoConfig) {
-  // torii client
-  const toriiClient = await torii.createClient([], {
+  const toriiClient = await torii.createClient({
     rpcUrl: config.rpcUrl,
     toriiUrl: config.toriiUrl,
     relayUrl: "",
     worldAddress: config.manifest.world.address || "",
   });
 
-  // create contract components
   const contractModels = defineContractComponents(world);
 
-  // create client components
   const clientModels = models({ contractModels });
 
   // fetch all existing entities from torii
@@ -75,5 +72,6 @@ export async function setup({ ...config }: DojoConfig) {
     burnerManager,
     rpcProvider,
     sync,
+    toriiClient,
   };
 }

@@ -1,0 +1,21 @@
+kind = "DojoModel"
+class_hash = "0x75da053f384cb05bab438e1b712465fc277b59b1d6d9233b5792e5fec4e7f84"
+original_class_hash = "0x75da053f384cb05bab438e1b712465fc277b59b1d6d9233b5792e5fec4e7f84"
+abi = "manifests/slotdev/base/abis/models/zklash-League-6517c3b1.json"
+tag = "zklash-League"
+manifest_name = "zklash-League-6517c3b1"
+
+[[members]]
+name = "registry_id"
+type = "u32"
+key = true
+
+[[members]]
+name = "id"
+type = "u8"
+key = true
+
+[[members]]
+name = "size"
+type = "u32"
+key = false

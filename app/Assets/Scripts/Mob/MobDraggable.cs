@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using zKlash.Game.Roles;
 using GameCharacter = zKlash.Game.Character;
+using zklash;
+
 
 public class MobDraggable : MonoBehaviour
 {

@@ -1,6 +1,6 @@
 #[derive(Copy, Drop, Serde, IntrospectPacked)]
 #[dojo::model]
-struct Character {
+pub struct Character {
     #[key]
     player_id: felt252,
     #[key]
@@ -19,7 +19,7 @@ struct Character {
 
 #[derive(Copy, Drop, Serde, IntrospectPacked)]
 #[dojo::model]
-struct Foe {
+pub struct Foe {
     #[key]
     registry_id: u32,
     #[key]
@@ -37,7 +37,7 @@ struct Foe {
 
 #[derive(Copy, Drop, Serde, IntrospectPacked)]
 #[dojo::model]
-struct League {
+pub struct League {
     #[key]
     registry_id: u32,
     #[key]
@@ -47,7 +47,7 @@ struct League {
 
 #[derive(Copy, Drop, Serde, IntrospectPacked)]
 #[dojo::model]
-struct Player {
+pub struct Player {
     #[key]
     id: felt252,
     name: felt252,
@@ -55,9 +55,9 @@ struct Player {
     win_count: u32,
 }
 
-#[derive(Model, Copy, Drop, Serde, IntrospectPacked)]
+#[derive(Copy, Drop, Serde, IntrospectPacked)]
 #[dojo::model]
-struct Registry {
+pub struct Registry {
     #[key]
     id: u32,
     squad_count: u32,
@@ -68,7 +68,7 @@ struct Registry {
 
 #[derive(Copy, Drop, Serde, IntrospectPacked)]
 #[dojo::model]
-struct Shop {
+pub struct Shop {
     #[key]
     player_id: felt252,
     #[key]
@@ -82,7 +82,7 @@ struct Shop {
 
 #[derive(Copy, Drop, Serde, IntrospectPacked)]
 #[dojo::model]
-struct Slot {
+pub struct Slot {
     #[key]
     registry_id: u32,
     #[key]
@@ -94,7 +94,7 @@ struct Slot {
 
 #[derive(Copy, Drop, Serde, IntrospectPacked)]
 #[dojo::model]
-struct Squad {
+pub struct Squad {
     #[key]
     registry_id: u32,
     #[key]
@@ -108,7 +108,7 @@ struct Squad {
 
 #[derive(Copy, Drop, Serde, IntrospectPacked)]
 #[dojo::model]
-struct Team {
+pub struct Team {
     #[key]
     player_id: felt252,
     #[key]

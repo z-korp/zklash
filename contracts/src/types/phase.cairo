@@ -15,7 +15,7 @@ mod errors {
     const PHASE_NOT_VALID: felt252 = 'Phase: not valid';
 }
 
-#[derive(Copy, Drop, Serde, PartialEq, Introspection)]
+#[derive(Copy, Drop, Serde, PartialEq, Introspect)]
 enum Phase {
     None,
     OnHire,

@@ -51,14 +51,9 @@ public class GameManager : MonoBehaviour
 
         try
         {
-            Debug.Log("dojoConfig.rpcUrl: " + dojoConfig.rpcUrl);
-            Debug.Log("dojoConfig.toriiUrl: " + dojoConfig.toriiUrl);
-            Debug.Log("gameManagerData.masterPrivateKey: " + gameManagerData.masterPrivateKey);
-            Debug.Log("gameManagerData.masterAddress: " + gameManagerData.masterAddress);
-
             provider = new JsonRpcClient(dojoConfig.rpcUrl);
             masterAccount = new Account(provider, new SigningKey(gameManagerData.masterPrivateKey), new FieldElement(gameManagerData.masterAddress));
-            burnerManager = new BurnerManager(provider, masterAccount);
+            burnerManager = new BurnerManager(provider, masterAccount, false);
 
             if (burnerManager.Burners.Count == 0)
             {

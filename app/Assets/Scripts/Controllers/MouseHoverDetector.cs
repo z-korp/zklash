@@ -62,7 +62,15 @@ public class MouseHoverDetector : MonoBehaviour
         if (canvas != null)
         {
             isDragging = false;
-            canvas.SetActive(true);
+            canvas.SetActive(false);
+        }
+    }
+
+    public void HideCanvas()
+    {
+        if (canvas != null)
+        {
+            canvas.SetActive(false);
         }
     }
 

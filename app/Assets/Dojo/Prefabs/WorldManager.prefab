@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   synchronizationMaster: {fileID: 4477060482053654553}
-  dojoConfig: {fileID: 11400000, guid: eb2841e9b4256493c960376eba5460e8, type: 2}
+  dojoConfig: {fileID: 11400000, guid: 7390d32848aae4c3ebdc90b910a996b3, type: 2}
 --- !u!114 &523646376919094798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,8 +66,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldManager: {fileID: 6662594807176178945}
-  dojoConfig: {fileID: 11400000, guid: eb2841e9b4256493c960376eba5460e8, type: 2}
-  gameManagerData: {fileID: 11400000, guid: ba216055d153841f3b0e444d1e10e647, type: 2}
+  dojoConfig: {fileID: 11400000, guid: 7390d32848aae4c3ebdc90b910a996b3, type: 2}
+  gameManagerData: {fileID: 11400000, guid: 50712dc9f935b48acaeeaf90d8b95507, type: 2}
   accountSystem: {fileID: 8682977219314476855}
 --- !u!114 &8682977219314476855
 MonoBehaviour:
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9191964756d504078856d3392fcbb0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: ba216055d153841f3b0e444d1e10e647, type: 2}
+  data: {fileID: 11400000, guid: 50712dc9f935b48acaeeaf90d8b95507, type: 2}
 --- !u!114 &7666302847133420530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39578118dd2dc4b9d96c74aefbe677c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: ba216055d153841f3b0e444d1e10e647, type: 2}
+  data: {fileID: 11400000, guid: 50712dc9f935b48acaeeaf90d8b95507, type: 2}
 --- !u!114 &3234462897198723153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef932abc54f77425b9c404e29d3500f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: ba216055d153841f3b0e444d1e10e647, type: 2}
+  data: {fileID: 11400000, guid: 50712dc9f935b48acaeeaf90d8b95507, type: 2}
 --- !u!114 &4436131147053783947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   accountSystem: {fileID: 8682977219314476855}
   marketSystem: {fileID: 3234462897198723153}
   battleSystem: {fileID: 7666302847133420530}
-  dojoConfig: {fileID: 11400000, guid: eb2841e9b4256493c960376eba5460e8, type: 2}
+  dojoConfig: {fileID: 11400000, guid: 7390d32848aae4c3ebdc90b910a996b3, type: 2}
 --- !u!114 &4477060482053654553
 MonoBehaviour:
   m_ObjectHideFlags: 0

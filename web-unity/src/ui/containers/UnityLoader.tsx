@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import mapGrass from "/assets/map_grass.png";
+import { faExpand } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const UnityLoader: React.FC = () => {
-  const { unityProvider } = useUnityContext({
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const { unityProvider, requestFullscreen } = useUnityContext({
     loaderUrl: "/unity/Build/zKlash_webgl.loader.js",
     dataUrl: "/unity/Build/zKlash_webgl.data",
     frameworkUrl: "/unity/Build/zKlash_webgl.framework.js",
@@ -54,26 +57,39 @@ const UnityLoader: React.FC = () => {
     loadScripts();
   }, []);
 
+  useEffect(() => {
+    const handleFullScreenChange = () => {
+      setIsFullScreen(document.fullscreenElement !== null);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullScreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullScreenChange);
+    };
+  }, []);
+
+  const handleFullScreen = () => {
+    if (!isFullScreen) {
+      requestFullscreen(true);
+    }
+  };
+
   return (
     <div
-      className="flex p-8 rounded-lg"
-      style={{
-        backgroundImage: `url('${mapGrass}')`,
-        backgroundSize: "100% 100%",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
+      className={`${isFullScreen ? "fixed inset-0 z-50" : "flex p-8 rounded-lg"}`}
+      style={isFullScreen ? { backgroundColor: "black" } : {}}
     >
       <div
         style={{
-          width: "960px",
-          height: "600px",
+          width: isFullScreen ? "100vw" : "960px",
+          height: isFullScreen ? "100vh" : "600px",
           overflow: "hidden",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
-        className="border-4 border-black rounded-lg"
+        className={isFullScreen ? "" : "border-4 border-black rounded-lg"}
       >
         <Unity
           unityProvider={unityProvider}
@@ -81,6 +97,14 @@ const UnityLoader: React.FC = () => {
           devicePixelRatio={window.devicePixelRatio}
         />
       </div>
+      {!isFullScreen && (
+        <button
+          onClick={handleFullScreen}
+          className="absolute bottom-6 -right-6 h-fit w-fit -translate-y-1/2 border-2 bg-white bg-opacity-30 hover:scale-110 border-white text-white font-bold px-2 rounded"
+        >
+          <FontAwesomeIcon icon={faExpand} size="xs" />
+        </button>
+      )}
     </div>
   );
 };

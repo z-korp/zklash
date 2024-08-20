@@ -5,9 +5,6 @@ import Rules from "./ui/screens/Rules";
 import Home from "./ui/screens/Home";
 import { Header } from "./ui/containers/Header"; // Adjust the import path if needed
 import background from "/assets/bg-desert.png";
-import banners from "/assets/banners.png";
-import { SpriteAnimator } from "react-sprite-animator";
-import archerBlue from "/assets/Archer_Blue.png";
 
 const App = () => {
   return (
@@ -23,7 +20,6 @@ const App = () => {
           <div className="bg-tinyblue">
             <Header />
           </div>
-          <img src={banners} alt="banners" className="w-full h-20" />
           <div className="relative flex flex-col grow items-center justify-start">
             <Routes>
               <Route path="/" element={<Home />} />

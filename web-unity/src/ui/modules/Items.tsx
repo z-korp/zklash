@@ -50,7 +50,7 @@ export const Items = () => {
               {itemTypes.map((type, index) => (
                 <CarouselItem
                   key={index}
-                  className="sm:basis-1/2 md:basis-1/3 lg:basis-1/5 xl:basis-1/6"
+                  className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
                 >
                   <Canvas itemType={type} />
                 </CarouselItem>
@@ -75,7 +75,7 @@ export const Canvas = ({ itemType }: { itemType: ItemType }) => {
     >
       <div className="flex flex-col items-center justify-center border border-black p-2 rounded-lg bg-primary w-11/12">
         <div className="text-2xl font-vinque">{item.value}</div>
-        <img src={item.getImage(size)} className="w-32 h-32" />
+        <img src={item.getImage(size)} className="w-30 h-30" />
         <div className="h-[48px] text-center">{item.getTalent(size)}</div>
         <div className="mt-1">{`Cost: ${item.getCost(size)} golds`}</div>
       </div>

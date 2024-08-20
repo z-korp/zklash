@@ -50,7 +50,7 @@ export const Mobs = () => {
               {roleTypes.map((role, index) => (
                 <CarouselItem
                   key={index}
-                  className="sm:basis-1/2 md:basis-1/3 lg:basis-1/5 xl:basis-1/6"
+                  className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
                 >
                   <Canvas role={role} />
                 </CarouselItem>
@@ -77,7 +77,7 @@ export const Canvas = ({ role }: { role: RoleType }) => {
         <div className="text-2xl font-vinque">{mob.value}</div>
         <div className="flex items-center">
           <div className="text-center">{`Health ${mob.getHealth()}`}</div>
-          <img src={mob.getImage()} className="w-32 h-32 pixelated" />
+          <img src={mob.getImage()} className="w-30 h-30 pixelated" />
 
           <div className="text-center">{`Attack ${mob.getDamage()}`}</div>
         </div>

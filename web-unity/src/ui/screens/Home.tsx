@@ -1,6 +1,5 @@
 import UnityLoader from "../containers/UnityLoader";
 import { SpriteAnimator } from "react-sprite-animator";
-import archerBlue from "/assets/Archer_Blue.png";
 import towerRed from "/assets/Wood_Tower_Red.png";
 import towerBlue from "/assets/Tower_Blue.png";
 

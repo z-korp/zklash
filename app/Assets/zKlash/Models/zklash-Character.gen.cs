@@ -4,26 +4,31 @@ using Dojo;
 using Dojo.Starknet;
 using System.Reflection;
 using System.Linq;
+using Dojo.Torii;
 using System.Collections.Generic;
 using Enum = Dojo.Starknet.Enum;
+using UnityEngine;
 
 // Type definition for `dojo::model::layout::FieldLayout` struct
 [Serializable]
-public struct FieldLayout {
+public struct FieldLayout
+{
     public FieldElement selector;
     public Layout layout;
 }
 
 // Type definition for `core::byte_array::ByteArray` struct
 [Serializable]
-public struct ByteArray {
+public struct ByteArray
+{
     public string[] data;
     public FieldElement pending_word;
     public uint pending_word_len;
 }
 
 // Type definition for `dojo::model::layout::Layout` enum
-public abstract record Layout() : Enum {
+public abstract record Layout() : Enum
+{
     public record Fixed(byte[] value) : Layout;
     public record Struct(FieldLayout[] value) : Layout;
     public record Tuple(Layout[] value) : Layout;
@@ -33,15 +38,18 @@ public abstract record Layout() : Enum {
 }
 
 // Type definition for `core::option::Option::<core::integer::u32>` enum
-public abstract record Option<A>() : Enum {
+public abstract record Option<A>() : Enum
+{
     public record Some(A value) : Option<A>;
     public record None() : Option<A>;
 }
 
 
-namespace zklash {
+namespace zklash
+{
     // Model definition for `zklash::models::index::Character` model
-    public class Character : ModelInstance {
+    public class Character : ModelInstance
+    {
         [ModelField("player_id")]
         public FieldElement player_id;
 
@@ -76,13 +84,19 @@ namespace zklash {
         public byte stun;
 
         // Start is called before the first frame update
-        void Start() {
+        void Start()
+        {
         }
-    
+
         // Update is called once per frame
-        void Update() {
+        void Update()
+        {
+        }
+
+        public override void OnUpdate(Model model)
+        {
+            base.OnUpdate(model);
         }
     }
 }
 
-        

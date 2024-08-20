@@ -139,6 +139,20 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        /*Foe foeComponent = entity.GetComponent<Foe>();
+        if (foeComponent != null)
+        {
+            Debug.Log($"-> Foe entity spawned");
+            if (foeComponent.player_id.Hex() == currentBurner.Address.Hex())
+            {
+                Debug.Log(">>>>>>>>>>>> Current foe information stored.");
+                PlayerData.Instance.foeEntities.Add(entity.name);
+                var foe = worldManager.Entity(entity.name).GetComponent<Foe>();
+                Debug.Log($"Foe entity spawned with id: {entity.name}");
+                TeamManager.instance.UpdateMissingEntity(entity.name);
+            }
+        }*/
+
         /*Team teamComponent = entity.GetComponent<Team>();
         if (teamComponent != null)
         {
@@ -195,8 +209,11 @@ public class GameManager : MonoBehaviour
     public List<string> GetFoeEntities(uint registryId, uint squadId)
     {
         List<string> foeEntities = new List<string>();
+        Debug.Log($"======= GetFoeEntities: registryId: {registryId}, squadId: {squadId}");
         foreach (var entity in worldManager.Entities())
         {
+
+            Debug.Log($"Entity: {entity}");
             Foe foeComponent = entity.GetComponent<Foe>();
             if (foeComponent != null)
             {
@@ -205,8 +222,6 @@ public class GameManager : MonoBehaviour
                     //foeEntities.Add(entity.name);
                     foeEntities.Insert(0, entity.name);
                 }
-
-
             }
         }
         return foeEntities;

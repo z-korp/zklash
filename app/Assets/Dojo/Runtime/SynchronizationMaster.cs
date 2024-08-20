@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Dojo.Starknet;
 using Dojo.Torii;
@@ -98,16 +99,19 @@ namespace Dojo
                 return;
             }
 
+
             // Update each one of the entity models
             foreach (var entityModel in entityModels)
             {
-                var component = entity.GetComponent(entityModel.Name);
+                Debug.Log($"Model {entityModel.Name}");
+
+                string[] parts = entityModel.Name.Split('-');
+                string @namespace = parts[0];
+                string name = parts[1];
+
+                var component = entity.GetComponent(name);
                 if (component == null)
                 {
-                    string[] parts = entityModel.Name.Split('-');
-                    string @namespace = parts[0];
-                    string name = parts[1];
-
                     // TODO: decouple?
                     var model = models.FirstOrDefault(m => m.GetType().Name == name && m.GetType().Namespace == @namespace);
                     if (model == null)

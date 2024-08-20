@@ -4,13 +4,16 @@ using Dojo;
 using Dojo.Starknet;
 using System.Reflection;
 using System.Linq;
+using Dojo.Torii;
 using System.Collections.Generic;
 using Enum = Dojo.Starknet.Enum;
 
 
-namespace zklash {
+namespace zklash
+{
     // Model definition for `zklash::models::index::Player` model
-    public class Player : ModelInstance {
+    public class Player : ModelInstance
+    {
         [ModelField("id")]
         public FieldElement id;
 
@@ -24,13 +27,20 @@ namespace zklash {
         public uint win_count;
 
         // Start is called before the first frame update
-        void Start() {
+        void Start()
+        {
         }
-    
+
         // Update is called once per frame
-        void Update() {
+        void Update()
+        {
+        }
+
+        public override void OnUpdate(Model model)
+        {
+            //Debug.Log($"Team updated: {model}");
+            base.OnUpdate(model);
         }
     }
 }
 
-        

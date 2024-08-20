@@ -43,16 +43,23 @@ public class ClickButtonFight : MonoBehaviour
 
     private IEnumerator FightSequence()
     {
+        Debug.Log("AAAAAAAA");
         if (!PrepareAllies(out uint order))
             yield break;
+        Debug.Log("BBBBBBBB");
 
         yield return StartCoroutine(StartBattle(order));
+        Debug.Log("CCCCCCCC");
 
         if (!PrepareEnemies(out List<CharacterSetup> foeSetups))
             yield break;
 
+        Debug.Log("DDDDDDDD");
+
         SetupBattlefield(foeSetups);
+        Debug.Log("EEEEEEE");
         FinalizeSetup();
+        Debug.Log("FFFFFFFFF");
     }
 
     private bool PrepareAllies(out uint order)
@@ -89,8 +96,11 @@ public class ClickButtonFight : MonoBehaviour
 
     private bool PrepareEnemies(out List<CharacterSetup> foeSetups)
     {
+        Debug.Log($"----------");
         string teamEntity = PlayerData.Instance.teamEntity;
         var team = GameManager.Instance.worldManager.Entity(teamEntity).GetComponent<Team>();
+        Debug.Log($"Team id: {team.id}, Registry id: {team.registry_id}");
+        Debug.Log($"Team ${team}");
         var foes = GameManager.Instance.GetFoeEntities(team.registry_id, team.foe_squad_id);
 
         if (foes.Count == 0)

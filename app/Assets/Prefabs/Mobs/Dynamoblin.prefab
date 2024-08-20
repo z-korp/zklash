@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 817016773752028206}
   - component: {fileID: 4356105434135922247}
   - component: {fileID: 5119562565659632083}
+  - component: {fileID: 4815358041044173064}
   - component: {fileID: 5535904283382871288}
   - component: {fileID: 4319819171561303866}
   - component: {fileID: 2416784710284706374}
@@ -185,6 +186,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc46230a9917c324881d27b0a5e2bff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4815358041044173064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3616953106443787091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9a0cc452dc94fb683f714408cc1779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initPos: {x: 0, y: 0, z: 0}
+  isFromShop: 1
+  index: 0
+  mobFxPrefab: {fileID: 8427836806556268264, guid: 11c571b4f3e0c43b495c1daccf899b39, type: 3}
+  animator: {fileID: 817016773752028206}
+  mouseHoverDetector: {fileID: 0}
 --- !u!50 &5535904283382871288
 Rigidbody2D:
   serializedVersion: 4
@@ -369,6 +388,7 @@ MonoBehaviour:
   powerLV3: 
   health: 0
   attack: 0
+  price: 0
 --- !u!114 &622144972395861353
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8241610283200433622}
   - component: {fileID: 5287114801269858022}
   - component: {fileID: 2721462313701265905}
+  - component: {fileID: 6252678514099061784}
   - component: {fileID: 4114133524138475952}
   - component: {fileID: 4308000117875194057}
   - component: {fileID: 2034940840436361003}
@@ -175,6 +176,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc46230a9917c324881d27b0a5e2bff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6252678514099061784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565273498285202334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9a0cc452dc94fb683f714408cc1779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initPos: {x: 0, y: 0, z: 0}
+  isFromShop: 1
+  index: 0
+  mobFxPrefab: {fileID: 8427836806556268264, guid: 11c571b4f3e0c43b495c1daccf899b39, type: 3}
+  animator: {fileID: 8241610283200433622}
+  mouseHoverDetector: {fileID: 0}
 --- !u!50 &4114133524138475952
 Rigidbody2D:
   serializedVersion: 4
@@ -309,6 +328,7 @@ MonoBehaviour:
   titleItem: {fileID: 2532762227134065791}
   sizeItem: {fileID: 6657197810756111078}
   descriptionItem: {fileID: 7742677890202852452}
+  previousItem: {fileID: 0}
   itemImage: {fileID: 3394048652584481724}
   orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
   itemOrbiterGO: {fileID: 0}
@@ -358,6 +378,7 @@ MonoBehaviour:
   powerLV3: 
   health: 0
   attack: 0
+  price: 0
 --- !u!114 &7787966755507272248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,11 +747,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1958345953791812209, guid: 76f25ccb9ee3e42ef98fc4e359850fe3, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.611
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1958345953791812209, guid: 76f25ccb9ee3e42ef98fc4e359850fe3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4174653123879183155, guid: 76f25ccb9ee3e42ef98fc4e359850fe3, type: 3}
       propertyPath: m_Pivot.x

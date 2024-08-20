@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8242639359080295230}
   - component: {fileID: 9079720197046210478}
   - component: {fileID: 5536078236386406108}
+  - component: {fileID: -4206830593592116181}
   - component: {fileID: 634524516086548021}
   - component: {fileID: 4150198432033238275}
   - component: {fileID: 908491819400762038}
@@ -185,6 +186,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc46230a9917c324881d27b0a5e2bff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4206830593592116181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971632552838307129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9a0cc452dc94fb683f714408cc1779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initPos: {x: 0, y: 0, z: 0}
+  isFromShop: 1
+  index: 0
+  mobFxPrefab: {fileID: 8427836806556268264, guid: 11c571b4f3e0c43b495c1daccf899b39, type: 3}
+  animator: {fileID: 9079720197046210478}
+  mouseHoverDetector: {fileID: 0}
 --- !u!50 &634524516086548021
 Rigidbody2D:
   serializedVersion: 4
@@ -319,6 +338,7 @@ MonoBehaviour:
   titleItem: {fileID: 2452334196938148785}
   sizeItem: {fileID: 6723103508065725736}
   descriptionItem: {fileID: 7664521434154089386}
+  previousItem: {fileID: 0}
   itemImage: {fileID: 3329365611491890290}
   orbitObjectPrefab: {fileID: 1881542741852187058, guid: 3c0ab02acc6004fbdba80d196e1f6549, type: 3}
   itemOrbiterGO: {fileID: 0}
@@ -368,6 +388,7 @@ MonoBehaviour:
   powerLV3: 
   health: 0
   attack: 0
+  price: 0
 --- !u!114 &4511937055904262526
 MonoBehaviour:
   m_ObjectHideFlags: 0

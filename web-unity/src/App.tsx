@@ -8,7 +8,7 @@ import background from "/assets/bg-desert.png";
 
 const App = () => {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Router>
         <div className="absolute inset-0 overflow-hidden">
           <div

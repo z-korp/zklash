@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
-import mapGrass from "/assets/map_grass.png";
 import { faExpand } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const UnityLoader: React.FC = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const { unityProvider, requestFullscreen } = useUnityContext({
-    loaderUrl: "/unity/Build/zKlash_webgl.loader.js",
-    dataUrl: "/unity/Build/zKlash_webgl.data",
-    frameworkUrl: "/unity/Build/zKlash_webgl.framework.js",
-    codeUrl: "/unity/Build/zKlash_webgl.wasm",
+    loaderUrl: "/zKlash_wegl/Build/zKlash_webgl.loader.js",
+    dataUrl: "/zKlash_wegl/Build/zKlash_webgl.data",
+    frameworkUrl: "/zKlash_wegl/Build/zKlash_webgl.framework.js",
+    codeUrl: "/zKlash_wegl/Build/zKlash_webgl.wasm",
   });
 
   useEffect(() => {
@@ -29,20 +28,23 @@ const UnityLoader: React.FC = () => {
       };
 
       try {
-        await loadScript("/unity/TemplateData/dojo.js/dojo_c.js", async () => {
-          if (typeof wasm_bindgen !== "undefined") {
-            try {
-              await wasm_bindgen();
-              console.log("wasm_bindgen initialized");
-            } catch (error) {
-              console.error("Error initializing wasm_bindgen", error);
+        await loadScript(
+          "/zKlash_wegl/TemplateData/dojo.js/dojo_c.js",
+          async () => {
+            if (typeof wasm_bindgen !== "undefined") {
+              try {
+                await wasm_bindgen();
+                console.log("wasm_bindgen initialized");
+              } catch (error) {
+                console.error("Error initializing wasm_bindgen", error);
+              }
+            } else {
+              console.error("wasm_bindgen is not defined");
             }
-          } else {
-            console.error("wasm_bindgen is not defined");
-          }
-        });
+          },
+        );
 
-        await loadScript("/unity/TemplateData/starknet-5.24.3.js", () => {
+        await loadScript("/zKlash_wegl/TemplateData/starknet-5.24.3.js", () => {
           if (typeof starknetJs !== "undefined") {
             console.log("starknet-5.24.3.js loaded");
           } else {

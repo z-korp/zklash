@@ -30,7 +30,7 @@ GameObject:
   - component: {fileID: -5705849812587389446}
   m_Layer: 0
   m_Name: Torchoblin
-  m_TagString: Enemy
+  m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

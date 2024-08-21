@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using zKlash.Game.Roles;
 using zKlash.Game.Items;
 using zklash;
+using Dojo.Starknet;
+using System;
 
 public class ClickButtonFight : MonoBehaviour
 {
@@ -43,23 +45,17 @@ public class ClickButtonFight : MonoBehaviour
 
     private IEnumerator FightSequence()
     {
-        Debug.Log("AAAAAAAA");
         if (!PrepareAllies(out uint order))
             yield break;
-        Debug.Log("BBBBBBBB");
 
         yield return StartCoroutine(StartBattle(order));
-        Debug.Log("CCCCCCCC");
 
-        if (!PrepareEnemies(out List<CharacterSetup> foeSetups))
+        (bool success, List<CharacterSetup> foeSetups, string foeSquadName, uint foeSquadElo) = PrepareEnemies();
+        if (!success)
             yield break;
 
-        Debug.Log("DDDDDDDD");
-
-        SetupBattlefield(foeSetups);
-        Debug.Log("EEEEEEE");
+        SetupBattlefield(foeSetups, foeSquadName, foeSquadElo);
         FinalizeSetup();
-        Debug.Log("FFFFFFFFF");
     }
 
     private bool PrepareAllies(out uint order)
@@ -94,7 +90,35 @@ public class ClickButtonFight : MonoBehaviour
         Debug.Log($"Foe squad id: {team.foe_squad_id}, Registry id: {team.registry_id}");
     }
 
-    private bool PrepareEnemies(out List<CharacterSetup> foeSetups)
+    unsafe public static FieldElement PoseidonHash(FieldElement[] array)
+    {
+        if (array == null || array.Length == 0)
+        {
+            throw new ArgumentException("Input array cannot be null or empty");
+        }
+
+        // Convert FieldElement array to dojo_bindings.dojo.FieldElement array
+        dojo_bindings.dojo.FieldElement[] dojoArray = new dojo_bindings.dojo.FieldElement[array.Length];
+        for (int i = 0; i < array.Length; i++)
+        {
+            dojoArray[i] = array[i].Inner;
+        }
+
+        // Get the length of the array
+        UIntPtr length = (UIntPtr)dojoArray.Length;
+
+        // Fixed statement to get the pointer to the array
+        fixed (dojo_bindings.dojo.FieldElement* arrayPtr = dojoArray)
+        {
+            // Call the poseidon_hash function
+            dojo_bindings.dojo.FieldElement result = dojo_bindings.dojo.poseidon_hash(arrayPtr, length);
+
+            // Convert the result back to FieldElement and return it
+            return new FieldElement(result);
+        }
+    }
+
+    private (bool success, List<CharacterSetup> foeSetups, string foeSquadName, uint foeSquadElo) PrepareEnemies()
     {
         Debug.Log($"----------");
         string teamEntity = PlayerData.Instance.teamEntity;
@@ -103,27 +127,35 @@ public class ClickButtonFight : MonoBehaviour
         Debug.Log($"Team ${team}");
         var foes = GameManager.Instance.GetFoeEntities(team.registry_id, team.foe_squad_id);
 
+        var squadEntity = PoseidonHash(new FieldElement[] { new FieldElement(team.registry_id), new FieldElement(team.foe_squad_id) });
+        Debug.Log($"----------> hash ${squadEntity.Hex()}");
+        var foeSquadEntity = GameManager.Instance.worldManager.Entity(squadEntity.Hex()).GetComponent<Squad>();
+        string foeSquadName = ShortString.DecodeShortString(foeSquadEntity.name);
+        uint foeSquadElo = foeSquadEntity.rating;
+        Debug.Log($"Foe squad name: {foeSquadName} ELO {foeSquadElo}");
+
+        var foe_squad = GameManager.Instance.worldManager.Entity(teamEntity).GetComponent<Team>();
+
         if (foes.Count == 0)
         {
             Debug.Log("No foeEntities found");
-            foeSetups = null;
-            return false;
+            return (false, null, foeSquadName, foeSquadElo);
         }
 
-        foeSetups = foes.Select(foeEntity => GameManager.Instance.worldManager.Entity(foeEntity).GetComponent<Foe>())
-                        .Select(foe => new CharacterSetup { role = (Role)foe.role, level = foe.level, item = (Item)foe.item })
-                        .ToList();
+        var foeSetups = foes.Select(foeEntity => GameManager.Instance.worldManager.Entity(foeEntity).GetComponent<Foe>())
+                            .Select(foe => new CharacterSetup { role = (Role)foe.role, level = foe.level, item = (Item)foe.item })
+                            .ToList();
 
         foeSetups.ForEach(foe => Debug.Log($"Foe role: {foe.role} Level: {foe.level} Item: {foe.item}"));
-        return true;
+        return (true, foeSetups, foeSquadName, foeSquadElo);
     }
 
-    private void SetupBattlefield(List<CharacterSetup> foeSetups)
+    private void SetupBattlefield(List<CharacterSetup> foeSetups, string foeSquadName, uint foeSquadElo)
     {
         // Enemies
         _battleManager.DestroyGameObjectFromList(_battleManager.enemies);
         _battleManager.InstanciateTeam(_battleManager.enemies, foeSetups, _battleManager.enemySpots, Orientation.Left);
-
+        _battleManager.SetFoeSquadNameAndElo(foeSquadName, foeSquadElo);
         // Allies
         //BattleManager.instance.DestroyGameObjectFromList(BattleManager.instance.allies);
         //var reversedTeamSpots = TeamManager.instance.TeamSpots.Reverse().ToArray();

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasManager : Singleton<CanvasManager>
 {
@@ -8,6 +9,8 @@ public class CanvasManager : Singleton<CanvasManager>
     public GameObject canvasInterStep;
 
     public GameObject canvasWinLoose;
+
+    public GameObject canvasBattle;
 
     private Transform btnReroll;
     private Transform btnSell;
@@ -40,6 +43,29 @@ public class CanvasManager : Singleton<CanvasManager>
     public void ShowUserStatsInfo()
     {
         canvasInfo.transform.Find("PanelRibbon").gameObject.SetActive(true);
+    }
+
+    public void SetFoeSquadNameAndElo(string name, uint elo)
+    {
+        Text textComponent = canvasBattle.transform.Find("TextNameAndElo").GetComponent<Text>();
+        if (textComponent != null)
+        {
+            textComponent.text = name + " - " + elo.ToString();
+        }
+        else
+        {
+            Debug.LogError("Text component not found on TextNameAndElo GameObject");
+        }
+    }
+
+    public void ShowFoeSquadNameAndElo()
+    {
+        canvasBattle.transform.Find("TextNameAndElo").gameObject.SetActive(true);
+    }
+
+    public void HideFoeSquadNameAndElo()
+    {
+        canvasBattle.transform.Find("TextNameAndElo").gameObject.SetActive(false);
     }
 
     public void ToggleCanvasShopInfo()

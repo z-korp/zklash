@@ -46,3 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasInfo: {fileID: 0}
   canvasShopInfo: {fileID: 0}
+  canvasInterStep: {fileID: 0}
+  canvasWinLoose: {fileID: 0}

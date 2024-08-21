@@ -177,6 +177,12 @@ public class BattleManager : Singleton<BattleManager>
         }
     }
 
+    public void SetFoeSquadNameAndElo(string name, uint elo)
+    {
+        _canvasManager.SetFoeSquadNameAndElo(name, elo);
+        _canvasManager.ShowFoeSquadNameAndElo();
+    }
+
     public void DestroyGameObjectFromList(List<GameObject> gameObjectsList)
     {
         // Iterate through the list and destroy each GameObject

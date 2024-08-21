@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const UnityLoader: React.FC = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const { unityProvider, requestFullscreen } = useUnityContext({
-    loaderUrl: "/zKlash_wegl/Build/zKlash_webgl.loader.js",
-    dataUrl: "/zKlash_wegl/Build/zKlash_webgl.data",
-    frameworkUrl: "/zKlash_wegl/Build/zKlash_webgl.framework.js",
-    codeUrl: "/zKlash_wegl/Build/zKlash_webgl.wasm",
+    loaderUrl: "/zKlash_webgl/Build/zKlash_webgl.loader.js",
+    dataUrl: "/zKlash_webgl/Build/zKlash_webgl.data",
+    frameworkUrl: "/zKlash_webgl/Build/zKlash_webgl.framework.js",
+    codeUrl: "/zKlash_webgl/Build/zKlash_webgl.wasm",
   });
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const UnityLoader: React.FC = () => {
 
       try {
         await loadScript(
-          "/zKlash_wegl/TemplateData/dojo.js/dojo_c.js",
+          "/zKlash_webgl/TemplateData/dojo.js/dojo_c.js",
           async () => {
             if (typeof wasm_bindgen !== "undefined") {
               try {
@@ -44,13 +44,16 @@ const UnityLoader: React.FC = () => {
           },
         );
 
-        await loadScript("/zKlash_wegl/TemplateData/starknet-5.24.3.js", () => {
-          if (typeof starknetJs !== "undefined") {
-            console.log("starknet-5.24.3.js loaded");
-          } else {
-            console.error("starknetJs is not defined");
-          }
-        });
+        await loadScript(
+          "/zKlash_webgl/TemplateData/starknet-5.24.3.js",
+          () => {
+            if (typeof starknetJs !== "undefined") {
+              console.log("starknet-5.24.3.js loaded");
+            } else {
+              console.error("starknetJs is not defined");
+            }
+          },
+        );
       } catch (error) {
         console.error("Error loading scripts", error);
       }

@@ -30,7 +30,7 @@ GameObject:
   - component: {fileID: 1321165032734162177}
   m_Layer: 0
   m_Name: Bomboblin
-  m_TagString: Enemy
+  m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

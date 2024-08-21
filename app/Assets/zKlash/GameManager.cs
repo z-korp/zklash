@@ -205,16 +205,15 @@ public class GameManager : MonoBehaviour
     {
         List<string> foeEntities = new List<string>();
         Debug.Log($"======= GetFoeEntities: registryId: {registryId}, squadId: {squadId}");
-        foreach (var entity in worldManager.Entities())
+        foreach (var entity in worldManager.Entities<Foe>())
         {
-
             Debug.Log($"Entity: {entity}");
             Foe foeComponent = entity.GetComponent<Foe>();
             if (foeComponent != null)
             {
+                //Debug.Log($"XXXXX Foe entity: {foeComponent.registry_id}, {foeComponent.squad_id}, {foeComponent.id}");
                 if (foeComponent.registry_id == registryId && foeComponent.squad_id == squadId)
                 {
-                    //foeEntities.Add(entity.name);
                     foeEntities.Insert(0, entity.name);
                 }
             }

@@ -124,18 +124,22 @@ public class ClickButtonFight : MonoBehaviour
         string teamEntity = PlayerData.Instance.teamEntity;
         var team = GameManager.Instance.worldManager.Entity(teamEntity).GetComponent<Team>();
         Debug.Log($"Team id: {team.id}, Registry id: {team.registry_id}");
-        Debug.Log($"Team ${team}");
-        var foes = GameManager.Instance.GetFoeEntities(team.registry_id, team.foe_squad_id);
+        Debug.Log($"Team {team}");
 
-        var squadEntity = PoseidonHash(new FieldElement[] { new FieldElement(team.registry_id), new FieldElement(team.foe_squad_id) });
-        Debug.Log($"----------> hash ${squadEntity.Hex()}");
-        var foeSquadEntity = GameManager.Instance.worldManager.Entity(squadEntity.Hex()).GetComponent<Squad>();
+        string squadEntity;
+#if UNITY_WEBGL && !UNITY_EDITOR
+        squadEntity = StarknetInterop.PoseidonHashHelper(new string[] { team.registry_id.ToString(), team.foe_squad_id.ToString() });
+        squadEntity = new FieldElement(squadEntity).Hex();
+#else
+        squadEntity = PoseidonHash(new FieldElement[] { new FieldElement(team.registry_id), new FieldElement(team.foe_squad_id) }).Hex();
+#endif
+        Debug.Log($"----------> hash ${squadEntity}");
+        var foeSquadEntity = GameManager.Instance.worldManager.Entity(squadEntity).GetComponent<Squad>();
         string foeSquadName = ShortString.DecodeShortString(foeSquadEntity.name);
         uint foeSquadElo = foeSquadEntity.rating;
         Debug.Log($"Foe squad name: {foeSquadName} ELO {foeSquadElo}");
 
-        var foe_squad = GameManager.Instance.worldManager.Entity(teamEntity).GetComponent<Team>();
-
+        var foes = GameManager.Instance.GetFoeEntities(team.registry_id, team.foe_squad_id);
         if (foes.Count == 0)
         {
             Debug.Log("No foeEntities found");

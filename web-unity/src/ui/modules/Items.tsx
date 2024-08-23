@@ -21,10 +21,43 @@ import {
 } from "../elements/pagination";
 import { Item, ItemCategory, ItemSize, ItemType } from "@/dojo/game/types/item";
 
+const itemTypeMap: Record<ItemCategory, Record<ItemSize, ItemType>> = {
+  [ItemCategory.None]: {
+    [ItemSize.None]: ItemType.None,
+    [ItemSize.Small]: ItemType.None,
+    [ItemSize.Medium]: ItemType.None,
+    [ItemSize.Large]: ItemType.None,
+  },
+  [ItemCategory.Mushroom]: {
+    [ItemSize.None]: ItemType.None,
+    [ItemSize.Small]: ItemType.MushroomSmall,
+    [ItemSize.Medium]: ItemType.MushroomMedium,
+    [ItemSize.Large]: ItemType.MushroomLarge,
+  },
+  [ItemCategory.Rock]: {
+    [ItemSize.None]: ItemType.None,
+    [ItemSize.Small]: ItemType.RockSmall,
+    [ItemSize.Medium]: ItemType.RockMedium,
+    [ItemSize.Large]: ItemType.RockLarge,
+  },
+  [ItemCategory.Bush]: {
+    [ItemSize.None]: ItemType.None,
+    [ItemSize.Small]: ItemType.BushSmall,
+    [ItemSize.Medium]: ItemType.BushMedium,
+    [ItemSize.Large]: ItemType.BushLarge,
+  },
+  [ItemCategory.Pumpkin]: {
+    [ItemSize.None]: ItemType.None,
+    [ItemSize.Small]: ItemType.PumpkinSmall,
+    [ItemSize.Medium]: ItemType.PumpkinMedium,
+    [ItemSize.Large]: ItemType.PumpkinLarge,
+  },
+};
+
 export const Items = () => {
   const isMdOrLarger = useMediaQuery({ query: "(min-width: 768px)" });
 
-  const itemTypes: ItemCategory[] = Object.values(ItemCategory).filter(
+  const itemCategories: ItemCategory[] = Object.values(ItemCategory).filter(
     (item) => item !== ItemCategory.None,
   ) as ItemCategory[];
 
@@ -47,12 +80,12 @@ export const Items = () => {
             opts={{ dragFree: isMdOrLarger }}
           >
             <CarouselContent className="flex items-end">
-              {itemTypes.map((type, index) => (
+              {itemCategories.map((category, index) => (
                 <CarouselItem
                   key={index}
                   className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
                 >
-                  <Canvas itemType={type} />
+                  <Canvas itemCategory={category} />
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -63,8 +96,13 @@ export const Items = () => {
   );
 };
 
-export const Canvas = ({ itemType }: { itemType: ItemType }) => {
+export const Canvas = ({ itemCategory }: { itemCategory: ItemCategory }) => {
   const [size, setSize] = useState<ItemSize>(ItemSize.Small);
+
+  const itemType = useMemo(
+    () => itemTypeMap[itemCategory][size],
+    [itemCategory, size],
+  );
 
   const item = useMemo(() => new Item(itemType), [itemType]);
 
@@ -74,7 +112,7 @@ export const Canvas = ({ itemType }: { itemType: ItemType }) => {
       style={{ boxShadow: `0 4px 0px black, 0 6px 0px black` }}
     >
       <div className="flex flex-col items-center justify-center border border-black p-2 rounded-lg bg-primary w-11/12">
-        <div className="text-2xl font-vinque">{item.value}</div>
+        <div className="text-2xl font-vinque">{item.category}</div>
         <img src={item.getImage(size)} className="w-30 h-30" />
         <div className="h-[48px] text-center">{item.getTalent(size)}</div>
         <div className="mt-1">{`Cost: ${item.getCost(size)} golds`}</div>

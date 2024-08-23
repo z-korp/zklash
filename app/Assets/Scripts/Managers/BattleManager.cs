@@ -180,7 +180,7 @@ public class BattleManager : Singleton<BattleManager>
     public void SetFoeSquadNameAndElo(string name, uint elo)
     {
         _canvasManager.SetFoeSquadNameAndElo(name, elo);
-        _canvasManager.ShowFoeSquadNameAndElo();
+        //_canvasManager.ShowFoeSquadNameAndElo();
     }
 
     public void DestroyGameObjectFromList(List<GameObject> gameObjectsList)
@@ -229,6 +229,7 @@ public class BattleManager : Singleton<BattleManager>
             _teamManager.TPTeamToShop();
             _canvasManager.ToggleCanvasInterStep(result);
         }
+        _canvasManager.HideFoeSquadNameAndElo();
     }
 
     private void LaunchProjectile(Vector3 position, Transform target, GameObject projectilePrefab, SoundEffect soundOnHit, char size = '0')

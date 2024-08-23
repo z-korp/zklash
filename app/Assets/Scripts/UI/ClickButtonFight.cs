@@ -175,6 +175,7 @@ public class ClickButtonFight : MonoBehaviour
         _battleManager.DestroyGameObjectFromList(_battleManager.enemies);
         _battleManager.InstanciateTeam(_battleManager.enemies, foeSetups, _battleManager.enemySpots, Orientation.Left);
         _battleManager.SetFoeSquadNameAndElo(foeSquadName, foeSquadElo);
+        _canvasManager.ShowFoeSquadNameAndElo();
         // Allies
         //BattleManager.instance.DestroyGameObjectFromList(BattleManager.instance.allies);
         //var reversedTeamSpots = TeamManager.instance.TeamSpots.Reverse().ToArray();

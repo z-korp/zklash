@@ -47,25 +47,37 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void SetFoeSquadNameAndElo(string name, uint elo)
     {
-        Text textComponent = canvasBattle.transform.Find("TextNameAndElo").GetComponent<Text>();
-        if (textComponent != null)
+        Transform ribbonTransform = canvasBattle.transform.Find("RibbonEnemyInfos");
+
+
+        if (ribbonTransform != null)
         {
-            textComponent.text = name + " - " + elo.ToString();
+
+            Text textComponent = ribbonTransform.Find("TextNameAndElo").GetComponent<Text>();
+
+            if (textComponent != null)
+            {
+                textComponent.text = name + " - " + elo.ToString();
+            }
+            else
+            {
+                Debug.LogError("Text component not found on TextNameAndElo GameObject");
+            }
         }
         else
         {
-            Debug.LogError("Text component not found on TextNameAndElo GameObject");
+            Debug.LogError("Ribbon component not found on CanvasBattle GameObject");
         }
     }
 
     public void ShowFoeSquadNameAndElo()
     {
-        canvasBattle.transform.Find("TextNameAndElo").gameObject.SetActive(true);
+        canvasBattle.transform.Find("RibbonEnemyInfos").gameObject.SetActive(true);
     }
 
     public void HideFoeSquadNameAndElo()
     {
-        canvasBattle.transform.Find("TextNameAndElo").gameObject.SetActive(false);
+        canvasBattle.transform.Find("RibbonEnemyInfos").gameObject.SetActive(false);
     }
 
     public void ToggleCanvasShopInfo()

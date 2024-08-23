@@ -5,6 +5,7 @@ using UnityEngine;
 using System.ComponentModel;
 using UnityEngine.SceneManagement;
 using zklash;
+using System.Linq;
 
 namespace System.Runtime.CompilerServices
 {
@@ -79,7 +80,6 @@ public class GameManager : MonoBehaviour
 
     private void InitEntity(GameObject entity)
     {
-        Debug.Log("------> InitEntity");
         Account currentBurner = burnerManager.CurrentBurner;
         if (currentBurner == null)
         {
@@ -87,7 +87,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log($"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         Player playerComponent = entity.GetComponent<Player>();
         if (playerComponent != null)
         {
@@ -123,7 +122,6 @@ public class GameManager : MonoBehaviour
         Character characterComponent = entity.GetComponent<Character>();
         if (characterComponent != null)
         {
-            Debug.Log($"-> Character entity spawned");
             if (characterComponent.player_id.Hex() == currentBurner.Address.Hex())
             {
                 Debug.Log(">>>>>>>>>>>> Current character information stored.");
@@ -205,6 +203,7 @@ public class GameManager : MonoBehaviour
     {
         List<string> foeEntities = new List<string>();
         Debug.Log($"======= GetFoeEntities: registryId: {registryId}, squadId: {squadId}");
+
         foreach (var entity in worldManager.Entities<Foe>())
         {
             Debug.Log($"Entity: {entity}");

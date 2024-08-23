@@ -31,11 +31,19 @@ namespace Dojo
                 TODO: maybe do in the start function of the SynchronizationMaster?
                 problem is when to start the subscription service
             */
-            await synchronizationMaster.SynchronizeEntities();
+            var number = await synchronizationMaster.SynchronizeEntities();
+            Debug.Log($">>>>>>>>>>>>>>>>>>>>>>>>> Found {number} entities");
 
             // listen for entity updates
             synchronizationMaster.RegisterEntityCallbacks();
             synchronizationMaster.RegisterEventMessageCallbacks();
+
+            /*var foeEntities = await synchronizationMaster.FetchFoeEntities(new FieldElement(1), new FieldElement(31));
+            Debug.Log($"$$$$$$$$$$$$$$$$$$$$$$$$ Found Foe numbers: {foeEntities.Count}");
+            foreach (var entityId in foeEntities)
+            {
+                Debug.Log($"$$$$$$$$$$$$$$$$$$$$$$$$ Found Foe entity: {entityId}");
+            }*/
         }
 
         // #if UNITY_WEBGL && !UNITY_EDITOR

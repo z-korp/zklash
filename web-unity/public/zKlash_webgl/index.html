@@ -111,6 +111,10 @@
       starknetScript.src = "TemplateData/starknet-5.24.3.js";
       document.body.appendChild(starknetScript);
 
+      var starknet6Script = document.createElement("script");
+      starknet6Script.src = "TemplateData/starknet-bundle.js";
+      document.body.appendChild(starknet6Script);
+
       var gameInstance = null;
       var script = document.createElement("script");
       script.src = loaderUrl;

@@ -14,6 +14,8 @@ namespace Dojo
 {
     public class SynchronizationMaster : MonoBehaviour
     {
+        public static SynchronizationMaster Instance { get; private set; }
+
         public WorldManager worldManager;
 
         // Maximum number of entities to synchronize
@@ -31,6 +33,17 @@ namespace Dojo
         // Awake is called when the script instance is being loaded.
         void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             // We don't want our model definitions to be active.
             // Only used as templates for the actual entities to use.
             foreach (var model in models)
@@ -42,11 +55,11 @@ namespace Dojo
         // Fetch all entities from the dojo world and spawn them.
         public async Task<int> SynchronizeEntities()
         {
-#if UNITY_WEBGL && !UNITY_EDITOR
-            var entities = await worldManager.wasmClient.Entities(worldManager.dojoConfig.query);
-#else
-            var entities = await Task.Run(() => worldManager.toriiClient.Entities(worldManager.dojoConfig.query));
-#endif
+            Query query = new Query(
+                limit: worldManager.dojoConfig.query.limit,
+                offset: 0
+            );
+            var entities = await FetchEntitiesByBatch(query);
 
             var entityGameObjects = new List<GameObject>();
             foreach (var entity in entities)
@@ -56,6 +69,63 @@ namespace Dojo
 
             OnSynchronized?.Invoke(entityGameObjects);
             return entities.Count;
+        }
+
+        public static Query CreateFoeModelQuery(FieldElement registryId, FieldElement squadId, uint limit = 1000, uint offset = 0)
+        {
+            var keysClause = new KeysClause(
+                keys: new FieldElement?[]
+                {
+                    registryId,
+                    squadId,
+                },
+                pattern_matching: dojo.PatternMatching.VariableLen,
+                models: new[] { "zklash-Foe" }
+            );
+
+            return new Query(
+                limit: limit,
+                offset: offset,
+                clause: new Clause { Keys = keysClause }
+            );
+        }
+
+        public async Task<List<Entity>> FetchFoeEntities(FieldElement registryId, FieldElement squadId, uint limit = 5, uint offset = 0)
+        {
+            var query = CreateFoeModelQuery(registryId, squadId, limit, offset);
+            return await FetchEntitiesByBatch(query);
+        }
+
+        public async Task<List<Entity>> FetchEntitiesByBatch(Query query)
+        {
+            List<Entity> allEntities = new List<Entity>();
+            uint batchSize = query.limit;
+            bool hasMoreEntities = true;
+
+            while (hasMoreEntities)
+            {
+                Debug.Log($"Fetching entities with offset {query.offset} and limit {query.limit}");
+                List<Entity> entities;
+#if UNITY_WEBGL && !UNITY_EDITOR
+                entities = await worldManager.wasmClient.Entities(query);
+#else
+                entities = await Task.Run(() => worldManager.toriiClient.Entities(query));
+#endif
+
+                Debug.Log($"Fetched {entities.Count} entities");
+                allEntities.AddRange(entities);
+
+                if (entities.Count < batchSize)
+                {
+                    hasMoreEntities = false;
+                }
+                else
+                {
+                    query.offset += batchSize;
+                }
+            }
+
+            return allEntities;
         }
 
         // Spawn an Entity game object from a dojo.Entity

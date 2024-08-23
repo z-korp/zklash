@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using zKlash.Game.Roles;
 using zKlash.Game.Items;
 using zklash;
@@ -50,7 +51,9 @@ public class ClickButtonFight : MonoBehaviour
 
         yield return StartCoroutine(StartBattle(order));
 
-        (bool success, List<CharacterSetup> foeSetups, string foeSquadName, uint foeSquadElo) = PrepareEnemies();
+        Task<(bool success, List<CharacterSetup> foeSetups, string foeSquadName, uint foeSquadElo)> prepareEnemiesTask = PrepareEnemies();
+        yield return new WaitUntil(() => prepareEnemiesTask.IsCompleted);
+        var (success, foeSetups, foeSquadName, foeSquadElo) = prepareEnemiesTask.Result;
         if (!success)
             yield break;
 
@@ -118,7 +121,7 @@ public class ClickButtonFight : MonoBehaviour
         }
     }
 
-    private (bool success, List<CharacterSetup> foeSetups, string foeSquadName, uint foeSquadElo) PrepareEnemies()
+    private async Task<(bool success, List<CharacterSetup> foeSetups, string foeSquadName, uint foeSquadElo)> PrepareEnemies()
     {
         Debug.Log($"----------");
         string teamEntity = PlayerData.Instance.teamEntity;
@@ -142,9 +145,21 @@ public class ClickButtonFight : MonoBehaviour
         var foes = GameManager.Instance.GetFoeEntities(team.registry_id, team.foe_squad_id);
         if (foes.Count == 0)
         {
-            Debug.Log("No foeEntities found");
-            return (false, null, foeSquadName, foeSquadElo);
+            Debug.Log("No foeEntities found, let's try querying torii");
+            var foeEntities = await Dojo.SynchronizationMaster.Instance.FetchFoeEntities(new FieldElement(team.registry_id), new FieldElement(team.foe_squad_id));
+            if (foeEntities.Count == 0)
+            {
+                Debug.Log("No foeEntities found, aborting");
+                return (false, null, foeSquadName, foeSquadElo);
+            }
+
+            foreach (var entityId in foeEntities)
+            {
+                Debug.Log($"Found Foe entity: {entityId}");
+            }
         }
+
+
 
         var foeSetups = foes.Select(foeEntity => GameManager.Instance.worldManager.Entity(foeEntity).GetComponent<Foe>())
                             .Select(foe => new CharacterSetup { role = (Role)foe.role, level = foe.level, item = (Item)foe.item })

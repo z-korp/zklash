@@ -19,14 +19,14 @@ import {
   PaginationItem,
   PaginationLink,
 } from "../elements/pagination";
-import { Item, ItemSize, ItemType } from "@/dojo/game/types/item";
+import { Item, ItemCategory, ItemSize, ItemType } from "@/dojo/game/types/item";
 
 export const Items = () => {
   const isMdOrLarger = useMediaQuery({ query: "(min-width: 768px)" });
 
-  const itemTypes: ItemType[] = Object.values(ItemType).filter(
-    (item) => item !== ItemType.None,
-  ) as ItemType[];
+  const itemTypes: ItemCategory[] = Object.values(ItemCategory).filter(
+    (item) => item !== ItemCategory.None,
+  ) as ItemCategory[];
 
   return (
     <Drawer handleOnly={true}>

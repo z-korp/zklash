@@ -4,7 +4,7 @@ import { ThemeProvider } from "./ui/elements/theme-provider";
 import Rules from "./ui/screens/Rules";
 import Home from "./ui/screens/Home";
 import { Header } from "./ui/containers/Header"; // Adjust the import path if needed
-import background from "/assets/bg-desert.png";
+import background from "/assets/bg-nuage.png";
 
 const App = () => {
   return (
@@ -17,7 +17,7 @@ const App = () => {
           />
         </div>
         <div className="relative flex flex-col w-screen h-screen">
-          <div className="bg-tinyblue">
+          <div className="">
             <Header />
           </div>
           <div className="relative flex flex-col grow items-center justify-start">

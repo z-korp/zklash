@@ -49,11 +49,10 @@ export const Header = () => {
               <DropdownMenuLabel>Account</DropdownMenuLabel>
               <DropdownMenuItem></DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>/*/}
-          <ModeToggle />
+          </DropdownMenu>/
+          <ModeToggle />*/}
         </div>
       </div>
-      <Separator className="bg-black" />
     </div>
   ) : (
     <div>

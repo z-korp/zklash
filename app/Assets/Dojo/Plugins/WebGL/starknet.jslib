@@ -141,32 +141,11 @@ mergeInto(LibraryManager.library, {
     stringToUTF8(byteArray, buffer, bufferSize);
     return buffer;
   },
-  PoseidonHash2: function (str) {
-    const hash = wasm_bindgen.poseidonHash(UTF8ToString(str));
+  PoseidonHash: function (str) {
+    const hash = wasm_bindgen.poseidonHash(JSON.parse(UTF8ToString(str)));
     const bufferSize = lengthBytesUTF8(hash) + 1;
     const buffer = _malloc(bufferSize);
     stringToUTF8(hash, buffer, bufferSize);
-    return buffer;
-  },
-  PoseidonHash: function (feltArrayJsonPtr, length) {
-    var feltArray = new Array(length);
-
-    for (var i = 0; i < length; i++) {
-      feltArray[i] = UTF8ToString(HEAP32[(feltArrayJsonPtr + i * 4) >> 2]);
-    }
-
-    const starkPtr = window.starkAdditional;
-
-    const arrOfFelts = feltArray.map(starkPtr.cairo.felt);
-    const pedersenHash = starkPtr.hash.computePoseidonHashOnElements(
-      arrOfFelts.map(BigInt)
-    );
-    const feltOfPedersenHash = starkPtr.cairo.felt(pedersenHash);
-
-    var bufferSize = lengthBytesUTF8(feltOfPedersenHash) + 1;
-    var buffer = _malloc(bufferSize);
-    stringToUTF8(feltOfPedersenHash, buffer, bufferSize);
-
     return buffer;
   },
 });

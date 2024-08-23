@@ -93,34 +93,6 @@ public class ClickButtonFight : MonoBehaviour
         Debug.Log($"Foe squad id: {team.foe_squad_id}, Registry id: {team.registry_id}");
     }
 
-    unsafe public static FieldElement PoseidonHash(FieldElement[] array)
-    {
-        if (array == null || array.Length == 0)
-        {
-            throw new ArgumentException("Input array cannot be null or empty");
-        }
-
-        // Convert FieldElement array to dojo_bindings.dojo.FieldElement array
-        dojo_bindings.dojo.FieldElement[] dojoArray = new dojo_bindings.dojo.FieldElement[array.Length];
-        for (int i = 0; i < array.Length; i++)
-        {
-            dojoArray[i] = array[i].Inner;
-        }
-
-        // Get the length of the array
-        UIntPtr length = (UIntPtr)dojoArray.Length;
-
-        // Fixed statement to get the pointer to the array
-        fixed (dojo_bindings.dojo.FieldElement* arrayPtr = dojoArray)
-        {
-            // Call the poseidon_hash function
-            dojo_bindings.dojo.FieldElement result = dojo_bindings.dojo.poseidon_hash(arrayPtr, length);
-
-            // Convert the result back to FieldElement and return it
-            return new FieldElement(result);
-        }
-    }
-
     private async Task<(bool success, List<CharacterSetup> foeSetups, string foeSquadName, uint foeSquadElo)> PrepareEnemies()
     {
         Debug.Log($"----------");
@@ -130,12 +102,10 @@ public class ClickButtonFight : MonoBehaviour
         Debug.Log($"Team {team}");
 
         string squadEntity;
-#if UNITY_WEBGL && !UNITY_EDITOR
-        squadEntity = StarknetInterop.PoseidonHashHelper(new string[] { team.registry_id.ToString(), team.foe_squad_id.ToString() });
+        var arr = new FieldElement[] { new FieldElement(team.registry_id), new FieldElement(team.foe_squad_id) };
+        squadEntity = StarknetInterop.PoseidonHash(arr);
         squadEntity = new FieldElement(squadEntity).Hex();
-#else
-        squadEntity = PoseidonHash(new FieldElement[] { new FieldElement(team.registry_id), new FieldElement(team.foe_squad_id) }).Hex();
-#endif
+
         Debug.Log($"----------> hash ${squadEntity}");
         var foeSquadEntity = GameManager.Instance.worldManager.Entity(squadEntity).GetComponent<Squad>();
         string foeSquadName = ShortString.DecodeShortString(foeSquadEntity.name);
@@ -158,8 +128,6 @@ public class ClickButtonFight : MonoBehaviour
                 Debug.Log($"Found Foe entity: {entityId}");
             }
         }
-
-
 
         var foeSetups = foes.Select(foeEntity => GameManager.Instance.worldManager.Entity(foeEntity).GetComponent<Foe>())
                             .Select(foe => new CharacterSetup { role = (Role)foe.role, level = foe.level, item = (Item)foe.item })

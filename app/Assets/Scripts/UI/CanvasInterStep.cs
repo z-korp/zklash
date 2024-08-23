@@ -15,6 +15,7 @@ public class CanvasInterStep : MonoBehaviour
     private AudioManager _audioManager;
     private CameraMovement _cameraMovement;
     private CanvasManager _canvasManager;
+    private BattleManager _battleManager;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class CanvasInterStep : MonoBehaviour
         _audioManager = AudioManager.Instance;
         _cameraMovement = CameraMovement.Instance;
         _canvasManager = CanvasManager.Instance;
+        _battleManager = BattleManager.Instance;
     }
 
     public void ToggleRibbonVictoryDefeat(bool victory)
@@ -77,5 +79,6 @@ public class CanvasInterStep : MonoBehaviour
         _audioManager.SwitchTheme(AudioManager.Theme.Village);
         _cameraMovement.MoveCameraToShop();
         _canvasManager.ToggleCanvases();
+        _battleManager.SetFoeSquadNameAndElo("Finding an opponent...        ", 0);
     }
 }

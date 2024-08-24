@@ -14,6 +14,8 @@ public enum SoundEffect
 public class AudioManager : Singleton<AudioManager>
 {
 
+    private bool isSoundEnabled = true;
+
     // Playlist for village and battle themes
     public AudioClip[] villagePlaylist;
     public AudioClip[] battlePlaylist;
@@ -59,7 +61,7 @@ public class AudioManager : Singleton<AudioManager>
 
     private void Update()
     {
-        if (!musicSource.isPlaying)
+        if (isSoundEnabled && !musicSource.isPlaying)
         {
             PlayNextSong();
         }
@@ -67,6 +69,11 @@ public class AudioManager : Singleton<AudioManager>
 
     private void PlayNextSong()
     {
+        if (!isSoundEnabled)
+        {
+            return;
+        }
+
         // Check if we need to switch themes before playing the next song
         if (currentTheme != desiredTheme)
         {
@@ -113,8 +120,29 @@ public class AudioManager : Singleton<AudioManager>
         return audioSource;
     }
 
+    public void EnableSound()
+    {
+        isSoundEnabled = true;
+        musicSource.volume = 1f;
+        effectSource.volume = 1f;
+        if (!musicSource.isPlaying)
+        {
+            PlayNextSong();
+        }
+    }
+
+    public void DisableSound()
+    {
+        isSoundEnabled = false;
+        musicSource.volume = 0f;
+        effectSource.volume = 0f;
+        musicSource.Stop();
+    }
+
     public void PlaySoundEffect(SoundEffect soundEffect, Vector3 position)
     {
+        if (!isSoundEnabled) return;
+
         if (soundEffects.TryGetValue(soundEffect, out AudioClip clip))
         {
             PlayClipAt(clip, position);
@@ -129,15 +157,19 @@ public class AudioManager : Singleton<AudioManager>
     {
         desiredTheme = newTheme; // Always update the desired theme
 
-        if (musicSource.isPlaying)
+        if (isSoundEnabled && musicSource.isPlaying)
         {
             StartCoroutine(FadeOutAndSwitchTheme());
         }
         else
         {
-            // If music is not playing, update the current theme immediately
+            // If music is not playing or sound is disabled, update the current theme immediately
             currentTheme = desiredTheme;
             musicIndex = -1; // Reset music index to start new theme from the first track
+            if (isSoundEnabled)
+            {
+                PlayNextSong();
+            }
         }
     }
 
@@ -169,5 +201,10 @@ public class AudioManager : Singleton<AudioManager>
         }
 
         musicSource.volume = startVolume;
+    }
+
+    public bool IsSoundEnabled()
+    {
+        return isSoundEnabled;
     }
 }

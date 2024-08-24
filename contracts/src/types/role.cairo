@@ -15,7 +15,7 @@ use zklash::types::phase::Phase;
 
 // Constants
 
-const ROLE_COUNT: u8 = 6;
+const ROLE_COUNT: u8 = 5; // no bomboblin for now
 const NONE: felt252 = 'NONE';
 const KNIGHT: felt252 = 'KNIGHT';
 const BOWMAN: felt252 = 'BOWMAN';

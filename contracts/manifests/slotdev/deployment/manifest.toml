@@ -24,8 +24,8 @@ manifest_name = "dojo-base"
 [[contracts]]
 kind = "DojoContract"
 address = "0x3ef697cfac7ef96f391e7d8ab23f09cb083694d8b62551ed5865db2b59465bb"
-class_hash = "0x51c5bf2831e596a8e45dfd7727dc7b833877dd42179175c7b5ff4e2d04273d3"
-original_class_hash = "0x51c5bf2831e596a8e45dfd7727dc7b833877dd42179175c7b5ff4e2d04273d3"
+class_hash = "0xc0109c78caad1d6b1207a130bcf6bc7d4d5aea43a18025315d710d8e5baad8"
+original_class_hash = "0xc0109c78caad1d6b1207a130bcf6bc7d4d5aea43a18025315d710d8e5baad8"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/slotdev/deployment/abis/contracts/zklash-account-56d04506.json"
 reads = []
@@ -47,8 +47,8 @@ manifest_name = "zklash-account-56d04506"
 [[contracts]]
 kind = "DojoContract"
 address = "0x470766cdf6f5f095dc54c20b51cfa507817ef112a6a723385145a45adcbe952"
-class_hash = "0x2ccddf4d68f2738d0759279d70ab9379de01f589cadb6f89af4027b6c72d6d8"
-original_class_hash = "0x2ccddf4d68f2738d0759279d70ab9379de01f589cadb6f89af4027b6c72d6d8"
+class_hash = "0x7d3baf6e00e5d8e5149541a25411d506c06cba9a6c1cf71c981390e03df98a"
+original_class_hash = "0x7d3baf6e00e5d8e5149541a25411d506c06cba9a6c1cf71c981390e03df98a"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/slotdev/deployment/abis/contracts/zklash-battle-19c01f18.json"
 reads = []
@@ -70,8 +70,8 @@ manifest_name = "zklash-battle-19c01f18"
 [[contracts]]
 kind = "DojoContract"
 address = "0xbb6858ef2f534853ed4b5c81ab1258149da4bba4802fb8387130813a85a5d8"
-class_hash = "0x2cc2fa1f31018a0eee44c55b117ee936e23839853df80aa95b20d17e4c4476a"
-original_class_hash = "0x2cc2fa1f31018a0eee44c55b117ee936e23839853df80aa95b20d17e4c4476a"
+class_hash = "0x74251f03d9767de8858df9483c80c0fe24751765ae6a9eecfdecec615e9d585"
+original_class_hash = "0x74251f03d9767de8858df9483c80c0fe24751765ae6a9eecfdecec615e9d585"
 base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
 abi = "manifests/slotdev/deployment/abis/contracts/zklash-market-aadec017.json"
 reads = []

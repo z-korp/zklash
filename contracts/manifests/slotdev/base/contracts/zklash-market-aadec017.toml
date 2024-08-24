@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0x2cc2fa1f31018a0eee44c55b117ee936e23839853df80aa95b20d17e4c4476a"
-original_class_hash = "0x2cc2fa1f31018a0eee44c55b117ee936e23839853df80aa95b20d17e4c4476a"
+class_hash = "0x74251f03d9767de8858df9483c80c0fe24751765ae6a9eecfdecec615e9d585"
+original_class_hash = "0x74251f03d9767de8858df9483c80c0fe24751765ae6a9eecfdecec615e9d585"
 base_class_hash = "0x0"
 abi = "manifests/slotdev/base/abis/contracts/zklash-market-aadec017.json"
 reads = []

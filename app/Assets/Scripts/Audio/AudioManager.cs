@@ -29,6 +29,7 @@ public class AudioManager : Singleton<AudioManager>
     // Enum to define the current theme
     public enum Theme { Village, Battle }
     public Theme currentTheme = Theme.Village;
+    private Theme desiredTheme = Theme.Village;
 
     // Dictionary to map sound effects to audio clips
     private Dictionary<SoundEffect, AudioClip> soundEffects;
@@ -66,6 +67,13 @@ public class AudioManager : Singleton<AudioManager>
 
     private void PlayNextSong()
     {
+        // Check if we need to switch themes before playing the next song
+        if (currentTheme != desiredTheme)
+        {
+            currentTheme = desiredTheme;
+            musicIndex = -1; // Reset music index to start new theme from the first track
+        }
+
         AudioClip[] playlist = GetCurrentPlaylist();
         if (playlist.Length == 0)
             return;
@@ -119,10 +127,21 @@ public class AudioManager : Singleton<AudioManager>
 
     public void SwitchTheme(Theme newTheme)
     {
-        StartCoroutine(FadeOutAndSwitchTheme(newTheme));
+        desiredTheme = newTheme; // Always update the desired theme
+
+        if (musicSource.isPlaying)
+        {
+            StartCoroutine(FadeOutAndSwitchTheme());
+        }
+        else
+        {
+            // If music is not playing, update the current theme immediately
+            currentTheme = desiredTheme;
+            musicIndex = -1; // Reset music index to start new theme from the first track
+        }
     }
 
-    private IEnumerator FadeOutAndSwitchTheme(Theme newTheme)
+    private IEnumerator FadeOutAndSwitchTheme()
     {
         float startVolume = musicSource.volume;
 
@@ -137,7 +156,7 @@ public class AudioManager : Singleton<AudioManager>
         musicSource.volume = startVolume;
 
         // Switch theme
-        currentTheme = newTheme;
+        currentTheme = desiredTheme;
         musicIndex = -1; // Reset music index to start new theme from the first track
         PlayNextSong();
 

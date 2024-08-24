@@ -166,6 +166,7 @@ namespace zKlash.Game
                 Absorb = 0;
             }
             Health -= Math.Min(damage, Health);
+            Debug.Log($"Character took {damage} damage. Remaining health: {Health}");
             return damage;
         }
 

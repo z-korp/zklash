@@ -194,7 +194,7 @@ public static class BattleSetups
                 new CharacterSetup { role = Role.Torchoblin, level = 1, item = Item.MushroomLarge },
             }
         },
-        new BattleSetup // 14 -> Test Pawn
+        new BattleSetup // 15 -> Test Pawn
         {
             alliesSetup = new List<CharacterSetup>
             {
@@ -204,6 +204,39 @@ public static class BattleSetups
             enemiesSetup = new List<CharacterSetup>
             {
                 new CharacterSetup { role = Role.Torchoblin, level = 1, item = Item.MushroomLarge },
+            }
+        },
+        new BattleSetup // 16 -> Test Torchoblin
+        {
+            alliesSetup = new List<CharacterSetup>
+            {
+                new CharacterSetup { role = Role.Torchoblin, level = 1, item = Item.None },
+            },
+            enemiesSetup = new List<CharacterSetup>
+            {
+                new CharacterSetup { role = Role.Torchoblin, level = 1, item = Item.None },
+            }
+        },
+        new BattleSetup // 17 -> Test Torchoblin against bombolin
+        {
+            alliesSetup = new List<CharacterSetup>
+            {
+                new CharacterSetup { role = Role.Torchoblin, level = 1, item = Item.None },
+            },
+            enemiesSetup = new List<CharacterSetup>
+            {
+                new CharacterSetup { role = Role.Bomboblin, level = 1, item = Item.None },
+            }
+        },
+        new BattleSetup // 18 -> Test Bowman against bombolin
+        {
+            alliesSetup = new List<CharacterSetup>
+            {
+                new CharacterSetup { role = Role.Bomboblin, level = 1, item = Item.None },
+            },
+            enemiesSetup = new List<CharacterSetup>
+            {
+                new CharacterSetup { role = Role.Bomboblin, level = 1, item = Item.None },
             }
         },
     };

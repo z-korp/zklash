@@ -11,8 +11,10 @@ public enum Orientation
 public class MobOrientation : MonoBehaviour
 {
     public Orientation orientation;
+    public float debounceTime = 0.1f; // Adjust this value as needed
 
     private SpriteRenderer spriteRenderer;
+    private float lastOrientationChangeTime;
 
     void Awake()
     {
@@ -39,6 +41,7 @@ public class MobOrientation : MonoBehaviour
             spriteRenderer.flipX = (orientation == Orientation.Left);
 
             Debug.Log($"SpriteRenderer.flipX is now: {spriteRenderer.flipX}", this);
+            lastOrientationChangeTime = Time.time;
         }
         else
         {
@@ -48,8 +51,8 @@ public class MobOrientation : MonoBehaviour
 
     void Update()
     {
-        // Check if the orientation is consistent
-        if (spriteRenderer != null)
+        // Check if the orientation is consistent, but only after the debounce time has passed
+        if (spriteRenderer != null && Time.time - lastOrientationChangeTime > debounceTime)
         {
             bool expectedFlipX = (orientation == Orientation.Left);
             if (spriteRenderer.flipX != expectedFlipX)

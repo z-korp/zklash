@@ -88,7 +88,6 @@ public class CanvasManager : Singleton<CanvasManager>
     public void ToggleCanvasInterStep(bool victory = true)
     {
         canvasInterStep.SetActive(!canvasInterStep.activeSelf);
-        // TBD : Update is good value
         if (canvasInterStep.activeSelf)
         {
             canvasInterStep.GetComponent<CanvasInterStep>().UpdateTrophysDisplay((int)PlayerInfoUI.instance.getTrophies());

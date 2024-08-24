@@ -94,7 +94,9 @@ public class MobHealth : MonoBehaviour
 
             // Animation
             isBlinking = true;
+            Debug.Log($"Before blink");
             StartCoroutine(BlinkDamageFlash());
+            Debug.Log($"After blink");
             yield return StartCoroutine(HandleBlinkDelay());
         }
     }
@@ -146,6 +148,7 @@ public class MobHealth : MonoBehaviour
     {
         while (isBlinking)
         {
+            Debug.Log("Blinking");
             spriteRenderer.color = new Color(1f, 0f, 0f, 1f);
             yield return new WaitForSeconds(blinkDuration);
             spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
@@ -168,5 +171,6 @@ public class MobHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(blinkTimeAfterHit);
         isBlinking = false;
+        Debug.Log("Blinking off");
     }
 }

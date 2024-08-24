@@ -68,11 +68,13 @@ public class PlayerInfoUI : MonoBehaviour
         }
     }
 
-    public void UpdatePlayerStats(uint lives, uint gold, uint trophies)
+    public void UpdatePlayerStats(uint lives, uint gold, uint level)
     {
         targetLife = lives;
         targetGold = gold;
-        targetTrophy = trophies - 1;
+        targetTrophy = level - 1; // Level is 1-based, trophies are 0-based
+
+        Debug.Log("XXXXXXXXXXXXXX Updating player stats: " + lives + " " + gold + " " + targetTrophy);
 
         if (lerpCoroutine != null)
         {
@@ -147,11 +149,11 @@ public class PlayerInfoUI : MonoBehaviour
 
     public uint getLifes()
     {
-        return (uint)currentLife;
+        return (uint)targetLife;
     }
 
     public uint getTrophies()
     {
-        return (uint)currentTrophy;
+        return (uint)targetTrophy;
     }
 }

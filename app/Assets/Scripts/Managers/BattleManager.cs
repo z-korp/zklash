@@ -80,7 +80,9 @@ public class BattleManager : Singleton<BattleManager>
 
         if (battleMode == BattleMode.Test)
         {
-            LoadBattleSetup(14);
+            int testIndex = 18;
+            Debug.Log("BattleMode: Test " + testIndex);
+            LoadBattleSetup(testIndex);
         }
         else
         {
@@ -141,7 +143,14 @@ public class BattleManager : Singleton<BattleManager>
 
         Debug.Log("CreateMob: " + setup.role + " " + setup.level + " " + setup.item + " " + spot.name + " " + orientation.ToString() + " " + prefab.name);
 
+        if (prefab == null)
+            Debug.LogError("Error: null prefab: " + prefab.name);
+
+        if (spot == null)
+            Debug.LogError("Error: null spot: " + spot.name);
+
         GameObject mobObject = Instantiate(prefab, spot.transform.position, Quaternion.identity);
+
         Debug.Log("MobObject: " + mobObject.name);
         mobObject.GetComponent<MobOrientation>().SetOrientation(orientation);
         _timeScaleController.AddAnimator(mobObject.GetComponent<Animator>());
@@ -218,7 +227,8 @@ public class BattleManager : Singleton<BattleManager>
 
     private void ExecuteAfterBattle(bool result)
     {
-        if ((int)PlayerInfoUI.instance.getLifes() == _maxTrophy)
+        Debug.Log("Battle ended: " + result + " --- " + PlayerInfoUI.instance.getLifes() + " " + PlayerInfoUI.instance.getTrophies() + " --- " + _maxTrophy + " --- " + _minLife);
+        if ((int)PlayerInfoUI.instance.getTrophies() == _maxTrophy)
             _canvasManager.ShowCanvasWinOrLoose(result);
         else if ((int)PlayerInfoUI.instance.getLifes() == _minLife)
             _canvasManager.ShowCanvasWinOrLoose(result);
@@ -234,6 +244,11 @@ public class BattleManager : Singleton<BattleManager>
 
     private void LaunchProjectile(Vector3 position, Transform target, GameObject projectilePrefab, SoundEffect soundOnHit, char size = '0')
     {
+        if (projectilePrefab == null)
+        {
+            Debug.LogError("Projectile prefab is null");
+            return;
+        }
         var projectile = Instantiate(projectilePrefab, position, Quaternion.identity);
         // TBD dirty hack to set if stone or not, if set to 0, it will not be a stone
         if (size != '0')
@@ -246,18 +261,33 @@ public class BattleManager : Singleton<BattleManager>
 
     private void PlayPowerUp(Vector3 position)
     {
+        if (powerUpPrefab == null)
+        {
+            Debug.LogError("powerUpPrefab prefab is null");
+            return;
+        }
         var powerUp = Instantiate(powerUpPrefab, position, Quaternion.identity);
         _timeScaleController.AddAnimator(powerUp.GetComponentInChildren<Animator>());
     }
 
     private void PlayAttackUp(Vector3 position)
     {
+        if (attackUpPrefab == null)
+        {
+            Debug.LogError("attackUpPrefab prefab is null");
+            return;
+        }
         var attackUp = Instantiate(attackUpPrefab, position, Quaternion.identity);
         _timeScaleController.AddAnimator(attackUp.GetComponentInChildren<Animator>());
     }
 
     private void PlayHealthUp(Vector3 position)
     {
+        if (healthUpPrefab == null)
+        {
+            Debug.LogError("healthUpPrefab prefab is null");
+            return;
+        }
         var attackUp = Instantiate(healthUpPrefab, position, Quaternion.identity);
         _timeScaleController.AddAnimator(attackUp.GetComponentInChildren<Animator>());
     }
@@ -433,9 +463,13 @@ public class BattleManager : Singleton<BattleManager>
     private IEnumerator PerformAttacks(GameObject char1, GameObject char2, EffectResult effectChar1, EffectResult effectChar2)
     {
         Coroutine attack1 = StartCoroutine(Attack(char1, char2, effectChar1.TalentDamage));
+        Debug.Log("blabla after attack1");
         Coroutine attack2 = StartCoroutine(Attack(char2, char1, effectChar2.TalentDamage));
+        Debug.Log("blabla after attack2");
         yield return attack1;
+        Debug.Log("blabla after yield return attack1");
         yield return attack2;
+        Debug.Log("blabla after yield return attack2");
     }
 
     private IEnumerator CheckDeathAndApplyEffects(GameObject attacker, GameObject defender, List<GameObject> attackerTeam, List<GameObject> defenderTeam)
@@ -502,6 +536,7 @@ public class BattleManager : Singleton<BattleManager>
 
         int stun = attacker.GetComponent<MobController>().Character.Stun;
 
+        Debug.Log("Attack: " + attacker.name + " " + defender.name + " " + totalDamage + " " + stun);
         if (totalDamage <= 0 || stun > 0)
             yield break;
 

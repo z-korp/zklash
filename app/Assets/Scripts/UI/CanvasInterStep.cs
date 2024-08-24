@@ -19,8 +19,8 @@ public class CanvasInterStep : MonoBehaviour
 
     private void Awake()
     {
-        UpdateHeartsDisplay(5);
-        UpdateTrophysDisplay(5);
+        UpdateHeartsDisplay(0);
+        UpdateTrophysDisplay(0);
     }
 
     private void Start()
@@ -57,6 +57,7 @@ public class CanvasInterStep : MonoBehaviour
 
     public void UpdateTrophysDisplay(int trophyCount)
     {
+        Debug.Log("Updating trophies display with count: " + trophyCount);
         foreach (Transform child in trophysContainer)
         {
             Destroy(child.gameObject);

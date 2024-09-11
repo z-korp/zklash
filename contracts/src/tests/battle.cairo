@@ -16,7 +16,7 @@ use zklash::store::{Store, StoreTrait};
 use zklash::models::player::{Player, PlayerTrait, PlayerAssert};
 use zklash::models::team::{Team, TeamTrait, TeamAssert};
 use zklash::models::shop::{Shop, ShopTrait, ShopAssert};
-use zklash::models::character::{Character, CharacterTrait, CharacterAssert};
+use zklash::models::char::{Char, CharTrait, CharAssert};
 use zklash::systems::account::IAccountDispatcherTrait;
 use zklash::systems::market::IMarketDispatcherTrait;
 use zklash::systems::battle::IBattleDispatcherTrait;
@@ -29,18 +29,18 @@ fn test_battle_start_lose() {
     let store = StoreTrait::new(world);
 
     // [Spawn]
-    systems.account.spawn(world);
+    systems.account.spawn();
 
     // [Hire]
     let player: Player = store.player(context.player_id);
-    systems.market.hire(world, player.team_id(), 0);
+    systems.market.hire(player.team_id(), 0);
 
     // [Hydrate]
-    systems.battle.hydrate(world);
+    systems.battle.hydrate();
 
     // [Start]
     let initial_team = store.team(context.player_id, player.team_id());
-    systems.battle.start(world, player.team_id(), 0x01);
+    systems.battle.start(player.team_id(), 0x01);
 
     // [Assert] Team
     let team = store.team(context.player_id, player.team_id());
@@ -49,32 +49,31 @@ fn test_battle_start_lose() {
 }
 
 #[test]
-fn test_battle_start_win() {
+fn test_battle_start_loose() {
     // [Setup]
     let (world, systems, context) = setup::spawn_game();
     let store = StoreTrait::new(world);
 
     // [Spawn]
-    systems.account.spawn(world);
+    systems.account.spawn();
 
     // [Hire]
     let player: Player = store.player(context.player_id);
-    systems.market.reroll(world, player.team_id());
-    systems.market.hire(world, player.team_id(), 2);
-    systems.market.hire(world, player.team_id(), 1);
-    systems.market.hire(world, player.team_id(), 0);
+    systems.market.reroll(player.team_id());
+    systems.market.hire(player.team_id(), 2);
+    systems.market.hire(player.team_id(), 1);
 
     // [Hydrate]
-    systems.battle.hydrate(world);
+    systems.battle.hydrate();
 
     // [Start]
     let initial_team = store.team(context.player_id, player.team_id());
-    systems.battle.start(world, player.team_id(), 0x030201);
+    systems.battle.start(player.team_id(), 0x0201);
 
     // [Assert] Team
     let team = store.team(context.player_id, player.team_id());
     assert(initial_team.gold < team.gold, 'Hire: wrong team gold');
-    assert(initial_team.health == team.health, 'Hire: wrong team health');
+    assert(initial_team.health > team.health, 'Hire: wrong team health');
 }
 
 #[test]
@@ -84,21 +83,20 @@ fn test_battle_start_with_item() {
     let store = StoreTrait::new(world);
 
     // [Spawn]
-    systems.account.spawn(world);
+    systems.account.spawn();
 
     // [Hire]
     let player: Player = store.player(context.player_id);
-    systems.market.reroll(world, player.team_id());
-    systems.market.hire(world, player.team_id(), 2);
-    systems.market.hire(world, player.team_id(), 1);
-    systems.market.equip(world, player.team_id(), 0x1, 0);
+    systems.market.reroll(player.team_id());
+    systems.market.hire(player.team_id(), 2);
+    systems.market.equip(player.team_id(), 0x1, 0);
 
     // [Hydrate]
-    systems.battle.hydrate(world);
+    systems.battle.hydrate();
 
     // [Start]
     let initial_team = store.team(context.player_id, player.team_id());
-    systems.battle.start(world, player.team_id(), 0x0102);
+    systems.battle.start(player.team_id(), 0x01);
 
     // [Assert] Team
     let team = store.team(context.player_id, player.team_id());

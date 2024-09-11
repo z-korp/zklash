@@ -2646,7 +2646,7 @@
         },
         {
           "type": "event",
-          "name": "zklash::models::index::character::Event",
+          "name": "zklash::models::index::char::Event",
           "kind": "enum",
           "variants": []
         }

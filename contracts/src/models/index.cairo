@@ -1,6 +1,6 @@
 #[derive(Copy, Drop, Serde, IntrospectPacked)]
 #[dojo::model]
-pub struct Character {
+pub struct Char {
     #[key]
     player_id: felt252,
     #[key]

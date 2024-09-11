@@ -363,46 +363,62 @@
   },
   {
     "type": "impl",
-    "name": "squadImpl",
-    "interface_name": "zklash::models::index::Isquad"
+    "name": "charImpl",
+    "interface_name": "zklash::models::index::Ichar"
   },
   {
     "type": "struct",
-    "name": "zklash::models::index::Squad",
+    "name": "zklash::models::index::Char",
     "members": [
       {
-        "name": "registry_id",
+        "name": "player_id",
+        "type": "core::felt252"
+      },
+      {
+        "name": "team_id",
         "type": "core::integer::u32"
       },
       {
         "name": "id",
-        "type": "core::integer::u32"
-      },
-      {
-        "name": "league_id",
         "type": "core::integer::u8"
       },
       {
-        "name": "index",
-        "type": "core::integer::u32"
-      },
-      {
-        "name": "rating",
-        "type": "core::integer::u32"
-      },
-      {
-        "name": "size",
+        "name": "role",
         "type": "core::integer::u8"
       },
       {
-        "name": "name",
-        "type": "core::felt252"
+        "name": "item",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "xp",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "level",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "health",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "attack",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "absorb",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "stun",
+        "type": "core::integer::u8"
       }
     ]
   },
   {
     "type": "interface",
-    "name": "zklash::models::index::Isquad",
+    "name": "zklash::models::index::Ichar",
     "items": [
       {
         "type": "function",
@@ -410,7 +426,7 @@
         "inputs": [
           {
             "name": "model",
-            "type": "zklash::models::index::Squad"
+            "type": "zklash::models::index::Char"
           }
         ],
         "outputs": [],
@@ -420,7 +436,7 @@
   },
   {
     "type": "event",
-    "name": "zklash::models::index::squad::Event",
+    "name": "zklash::models::index::char::Event",
     "kind": "enum",
     "variants": []
   }

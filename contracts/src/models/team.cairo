@@ -15,7 +15,7 @@ use zklash::helpers::packer::Packer;
 use zklash::helpers::battler::Battler;
 use zklash::models::squad::{Squad, SquadTrait};
 use zklash::models::shop::{Shop, ShopTrait};
-use zklash::models::character::{Character, CharacterTrait};
+use zklash::models::char::{Char, CharTrait};
 use zklash::types::item::{Item, ItemTrait};
 use zklash::types::role::{Role, RoleTrait};
 use zklash::types::wave::{Wave, WaveTrait};
@@ -59,7 +59,7 @@ impl TeamImpl of TeamTrait {
     }
 
     #[inline(always)]
-    fn equip(ref self: Team, ref shop: Shop, ref character: Character, index: u8) {
+    fn equip(ref self: Team, ref shop: Shop, ref character: Char, index: u8) {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Affordable
@@ -68,12 +68,12 @@ impl TeamImpl of TeamTrait {
         self.assert_is_affordable(cost);
         // [Effect] Update Gold
         self.gold -= cost.into();
-        // [Effect] Update Characters
+        // [Effect] Update Chars
         character.equip(item);
     }
 
     #[inline(always)]
-    fn hire(ref self: Team, ref shop: Shop, index: u8) -> Character {
+    fn hire(ref self: Team, ref shop: Shop, index: u8) -> Char {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Affordable
@@ -82,15 +82,15 @@ impl TeamImpl of TeamTrait {
         self.assert_is_affordable(cost);
         // [Effect] Update Gold
         self.gold -= cost.into();
-        // [Effect] Hire Character
+        // [Effect] Hire Char
         self.character_uuid += 1;
         let character_id = self.character_uuid;
-        let character: Character = CharacterTrait::new(self.player_id, self.id, character_id, role);
+        let character: Char = CharTrait::new(self.player_id, self.id, character_id, role);
         character
     }
 
     #[inline(always)]
-    fn xp(ref self: Team, ref shop: Shop, ref character: Character, index: u8) {
+    fn xp(ref self: Team, ref shop: Shop, ref character: Char, index: u8) {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Affordable
@@ -102,24 +102,24 @@ impl TeamImpl of TeamTrait {
         // [Check] Roles match
         let purchased_role: Role = shop.purchase_role(index);
         assert(role == purchased_role, errors::TEAM_XP_INVALID_ROLE);
-        // [Effect] Update Character
+        // [Effect] Update Char
         character.xp();
     }
 
     #[inline(always)]
-    fn merge(ref self: Team, ref from: Character, ref to: Character) {
+    fn merge(ref self: Team, ref from: Char, ref to: Char) {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Check] Roles match
         let from_role: Role = from.role.into();
         let to_role: Role = to.role.into();
         assert(from_role == to_role, errors::TEAM_XP_INVALID_ROLE);
-        // [Effect] Update Character
+        // [Effect] Update Char
         from.merge(ref to);
     }
 
     #[inline(always)]
-    fn sell(ref self: Team, ref character: Character) {
+    fn sell(ref self: Team, ref character: Char) {
         // [Check] Not defeated
         self.assert_not_defeated();
         // [Effect] Update Gold
@@ -128,7 +128,7 @@ impl TeamImpl of TeamTrait {
         self.gold += 3
             * (item.cost().into() + role.cost(character.level).into())
             / 4; // 75% of the cost
-        // [Effect] Update Character
+        // [Effect] Update Char
         character.nullify();
     }
 
@@ -149,9 +149,9 @@ impl TeamImpl of TeamTrait {
         ref self: Team,
         ref shop: Shop,
         ref team_squad: Squad,
-        ref chars: Array<Character>,
+        ref chars: Array<Char>,
         ref foe_squad: Squad,
-        ref foes: Array<Character>,
+        ref foes: Array<Char>,
         seed: felt252,
     ) -> bool {
         // [Check] Not defeated

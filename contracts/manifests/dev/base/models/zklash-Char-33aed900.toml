@@ -1,9 +1,9 @@
 kind = "DojoModel"
-class_hash = "0x6c5d82322d3d773ab1f94ea14d76f80131570be0896c7b15c8fb7aee26535a8"
-original_class_hash = "0x6c5d82322d3d773ab1f94ea14d76f80131570be0896c7b15c8fb7aee26535a8"
-abi = "manifests/dev/base/abis/models/zklash-Character-3ed1781c.json"
-tag = "zklash-Character"
-manifest_name = "zklash-Character-3ed1781c"
+class_hash = "0x77fb9fa9bd69311b3b78755aa754afa0e729ec83f76d6293a35a795c81005f9"
+original_class_hash = "0x77fb9fa9bd69311b3b78755aa754afa0e729ec83f76d6293a35a795c81005f9"
+abi = "manifests/dev/base/abis/models/zklash-Char-33aed900.json"
+tag = "zklash-Char"
+manifest_name = "zklash-Char-33aed900"
 
 [[members]]
 name = "player_id"

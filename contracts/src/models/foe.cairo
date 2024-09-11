@@ -1,15 +1,15 @@
 // Internal imports
 
 use zklash::models::index::Foe;
-use zklash::models::index::Character;
+use zklash::models::index::Char;
 use zklash::types::item::Item;
 use zklash::types::role::{Role, RoleTrait};
 use zklash::types::phase::Phase;
 
-impl FoeIntoCharacter of Into<Foe, Character> {
+impl FoeIntoChar of Into<Foe, Char> {
     #[inline(always)]
-    fn into(self: Foe) -> Character {
-        Character {
+    fn into(self: Foe) -> Char {
+        Char {
             player_id: core::Zeroable::zero(),
             team_id: self.squad_id,
             id: self.id,
@@ -44,7 +44,7 @@ impl FoeImpl of FoeTrait {
     }
 
     #[inline(always)]
-    fn from(character: Character, registry_id: u32, squad_id: u32, id: u8) -> Foe {
+    fn from(character: Char, registry_id: u32, squad_id: u32, id: u8) -> Foe {
         Foe {
             registry_id,
             squad_id,

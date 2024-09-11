@@ -8,7 +8,7 @@ use starknet::ContractAddress;
 
 // Internal imports
 
-use zklash::models::index::Character;
+use zklash::models::index::Char;
 use zklash::constants;
 use zklash::helpers::math::Math;
 use zklash::types::item::{Item, ItemTrait};
@@ -29,18 +29,18 @@ const MAX_LEVEL: u8 = 3;
 // Errors
 
 mod errors {
-    const CHARACTER_NOT_EXIST: felt252 = 'Character: does not exist';
-    const CHARACTER_ALREADY_EXIST: felt252 = 'Character: already exist';
-    const CHARACTER_INVALID_ROLE: felt252 = 'Character: invalid role';
-    const CHARACTER_NOT_LEVELABLE: felt252 = 'Character: not levelable';
+    const CHARACTER_NOT_EXIST: felt252 = 'Char: does not exist';
+    const CHARACTER_ALREADY_EXIST: felt252 = 'Char: already exist';
+    const CHARACTER_INVALID_ROLE: felt252 = 'Char: invalid role';
+    const CHARACTER_NOT_LEVELABLE: felt252 = 'Char: not levelable';
 }
 
 #[generate_trait]
-impl CharacterImpl of CharacterTrait {
+impl CharImpl of CharTrait {
     #[inline(always)]
-    fn new(player_id: felt252, team_id: u32, id: u8, role: Role) -> Character {
+    fn new(player_id: felt252, team_id: u32, id: u8, role: Role) -> Char {
         let level: u8 = 1;
-        Character {
+        Char {
             player_id,
             team_id,
             id,
@@ -56,8 +56,8 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn from(id: u8, role: Role, level: u8, item: Item) -> Character {
-        Character {
+    fn from(id: u8, role: Role, level: u8, item: Item) -> Char {
+        Char {
             player_id: core::Zeroable::zero(),
             team_id: 0,
             id,
@@ -73,12 +73,12 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn health(ref self: Character) -> u8 {
+    fn health(ref self: Char) -> u8 {
         self.health
     }
 
     #[inline(always)]
-    fn attack(ref self: Character) -> u8 {
+    fn attack(ref self: Char) -> u8 {
         if self.stun > 0 {
             self.stun -= 1;
             return 0;
@@ -87,12 +87,12 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn absorb(ref self: Character) -> u8 {
+    fn absorb(ref self: Char) -> u8 {
         self.absorb
     }
 
     #[inline(always)]
-    fn equip(ref self: Character, item: Item) {
+    fn equip(ref self: Char, item: Item) {
         // [Effect] Remove the previous item's effect
         self.unequip();
         // [Effect] Equip and apply the new item's effect
@@ -106,7 +106,7 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn unequip(ref self: Character) {
+    fn unequip(ref self: Char) {
         // [Effect] Update the item's effect
         let item: Item = self.item.into();
         let buff = Buff {
@@ -119,8 +119,8 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn xp(ref self: Character) {
-        // [Check] Character is levelable
+    fn xp(ref self: Char) {
+        // [Check] Char is levelable
         self.assert_is_levelable();
         // [Effect] Level up the character
         self.xp += 1;
@@ -131,7 +131,7 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn talent(ref self: Character, phase: Phase, tick: u32) -> (u8, u8, Buff) {
+    fn talent(ref self: Char, phase: Phase, tick: u32) -> (u8, u8, Buff) {
         // [Effect] Update the item's effect
         let role: Role = self.role.into();
         let buff = Buff {
@@ -151,7 +151,7 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn usage(ref self: Character, phase: Phase, tick: u32) -> u8 {
+    fn usage(ref self: Char, phase: Phase, tick: u32) -> u8 {
         // [Effect] Update the item's effect
         let item: Item = self.item.into();
         let buff = Buff {
@@ -165,7 +165,7 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn buff(ref self: Character, buff: Buff) {
+    fn buff(ref self: Char, buff: Buff) {
         // [Effect] Apply buff
         self.health += buff.health;
         self.attack += buff.attack;
@@ -173,7 +173,7 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn debuff(ref self: Character, buff: Buff) {
+    fn debuff(ref self: Char, buff: Buff) {
         // [Effect] Apply debuff
         self.health -= buff.health;
         self.attack -= buff.attack;
@@ -181,14 +181,14 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn stun(ref self: Character, stun: u8) -> u8 {
+    fn stun(ref self: Char, stun: u8) -> u8 {
         // [Effect] Apply stun
         self.stun += stun;
         stun
     }
 
     #[inline(always)]
-    fn take_damage(ref self: Character, mut damage: u8) -> u8 {
+    fn take_damage(ref self: Char, mut damage: u8) -> u8 {
         // [Effect] Apply the damage to the character
         if damage > 0 {
             damage -= Math::min(damage, self.absorb);
@@ -200,26 +200,26 @@ impl CharacterImpl of CharacterTrait {
     }
 
     #[inline(always)]
-    fn is_dead(self: Character) -> bool {
+    fn is_dead(self: Char) -> bool {
         self.health == 0
     }
 
     #[inline(always)]
-    fn nullify(ref self: Character) {
+    fn nullify(ref self: Char) {
         self.role = Role::None.into();
     }
 
     #[inline(always)]
-    fn merge(ref self: Character, ref to: Character) {
+    fn merge(ref self: Char, ref to: Char) {
         to.xp();
         self.nullify();
     }
 }
 
-impl ZeroableCharacter of core::Zeroable<Character> {
+impl ZeroableChar of core::Zeroable<Char> {
     #[inline(always)]
-    fn zero() -> Character {
-        Character {
+    fn zero() -> Char {
+        Char {
             player_id: core::Zeroable::zero(),
             team_id: 0,
             id: 0,
@@ -235,12 +235,12 @@ impl ZeroableCharacter of core::Zeroable<Character> {
     }
 
     #[inline(always)]
-    fn is_zero(self: Character) -> bool {
+    fn is_zero(self: Char) -> bool {
         Role::None == self.role.into()
     }
 
     #[inline(always)]
-    fn is_non_zero(self: Character) -> bool {
+    fn is_non_zero(self: Char) -> bool {
         !self.is_zero()
     }
 }
@@ -262,32 +262,32 @@ impl ZeroableBuff of core::Zeroable<Buff> {
     }
 }
 
-impl PartialEqCharacter of PartialEq<Character> {
+impl PartialEqChar of PartialEq<Char> {
     #[inline(always)]
-    fn eq(lhs: @Character, rhs: @Character) -> bool {
+    fn eq(lhs: @Char, rhs: @Char) -> bool {
         lhs.id == rhs.id
     }
 
     #[inline(always)]
-    fn ne(lhs: @Character, rhs: @Character) -> bool {
+    fn ne(lhs: @Char, rhs: @Char) -> bool {
         lhs.id != rhs.id
     }
 }
 
 #[generate_trait]
-impl CharacterAssert of AssertTrait {
+impl CharAssert of AssertTrait {
     #[inline(always)]
-    fn assert_exists(self: Character) {
+    fn assert_exists(self: Char) {
         assert(self.is_non_zero(), errors::CHARACTER_NOT_EXIST);
     }
 
     #[inline(always)]
-    fn assert_not_exists(self: Character) {
+    fn assert_not_exists(self: Char) {
         assert(self.is_zero(), errors::CHARACTER_ALREADY_EXIST);
     }
 
     #[inline(always)]
-    fn assert_is_levelable(self: Character) {
+    fn assert_is_levelable(self: Char) {
         assert(self.level < MAX_LEVEL, errors::CHARACTER_NOT_LEVELABLE);
     }
 }

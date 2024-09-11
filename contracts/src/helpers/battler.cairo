@@ -6,12 +6,12 @@ use core::array::ArrayTrait;
 
 // Internal imports
 
-use zklash::models::character::{Character, CharacterTrait, Buff, ZeroableCharacter};
+use zklash::models::char::{Char, CharTrait, Buff, ZeroableChar};
 use zklash::types::phase::Phase;
 
 #[generate_trait]
 impl Battler of BattlerTrait {
-    fn start(ref team1: Array<Character>, ref team2: Array<Character>) -> bool {
+    fn start(ref team1: Array<Char>, ref team2: Array<Char>) -> bool {
         // [Compute] Start the battle
         let mut tick: u32 = 0;
         Self::battle(
@@ -26,10 +26,10 @@ impl Battler of BattlerTrait {
     }
 
     fn battle(
-        ref team1: Array<Character>,
-        ref team2: Array<Character>,
-        mut char1: Character,
-        mut char2: Character,
+        ref team1: Array<Char>,
+        ref team2: Array<Char>,
+        mut char1: Char,
+        mut char2: Char,
         next_buff1: Buff,
         next_buff2: Buff,
         ref tick: u32,
@@ -66,7 +66,7 @@ impl Battler of BattlerTrait {
         Self::battle(ref team1, ref team2, char1, char2, buff1, buff2, ref tick,)
     }
 
-    fn duel(ref char1: Character, ref char2: Character, ref tick: u32,) -> (Buff, Buff) {
+    fn duel(ref char1: Char, ref char2: Char, ref tick: u32,) -> (Buff, Buff) {
         // [Effect] Apply talent and item buff for char1
         let (damage1, stun1, _) = Self::apply_effects(ref char1, Phase::OnFight, tick);
         let (damage2, stun2, _) = Self::apply_effects(ref char2, Phase::OnFight, tick);
@@ -105,7 +105,7 @@ impl Battler of BattlerTrait {
     }
 
     #[inline(always)]
-    fn post_mortem(ref char: Character, ref foe: Character, tick: u32,) -> Buff {
+    fn post_mortem(ref char: Char, ref foe: Char, tick: u32,) -> Buff {
         // [Compute] On Death effects for char
         if char.is_dead() {
             // [Effect] Apply talent and item buff on death
@@ -119,7 +119,7 @@ impl Battler of BattlerTrait {
     }
 
     #[inline(always)]
-    fn apply_effects(ref char: Character, phase: Phase, tick: u32) -> (u8, u8, Buff) {
+    fn apply_effects(ref char: Char, phase: Phase, tick: u32) -> (u8, u8, Buff) {
         // [Effect] Apply talent and item buff for char
         let (talent_damage, stun, next_buff) = char.talent(phase, tick);
         let item_damage = char.usage(phase, tick);
@@ -142,18 +142,18 @@ mod tests {
 
     // Local imports
 
-    use super::{Battler, Character, CharacterTrait, ZeroableCharacter, Phase};
+    use super::{Battler, Char, CharTrait, ZeroableChar, Phase};
 
     // Constants
 
     #[test]
     fn test_fighter_pumpkin_small() {
-        let mut characters: Array<Character> = array![
-            CharacterTrait::from(1, Role::Pawn, 1, Item::PumpkinSmall),
+        let mut characters: Array<Char> = array![
+            CharTrait::from(1, Role::Pawn, 1, Item::PumpkinSmall),
         ];
-        let mut foes: Array<Character> = array![
-            CharacterTrait::from(201, Role::Bomboblin, 1, Item::None),
-            CharacterTrait::from(202, Role::Bomboblin, 1, Item::None),
+        let mut foes: Array<Char> = array![
+            CharTrait::from(201, Role::Bomboblin, 1, Item::None),
+            CharTrait::from(202, Role::Bomboblin, 1, Item::None),
         ];
         let win = Battler::start(ref characters, ref foes);
         assert(!win, 'Battler: invalid win status');
@@ -161,12 +161,12 @@ mod tests {
 
     #[test]
     fn test_fighter_pumpkin_medium() {
-        let mut characters: Array<Character> = array![
-            CharacterTrait::from(1, Role::Pawn, 1, Item::PumpkinMedium),
+        let mut characters: Array<Char> = array![
+            CharTrait::from(1, Role::Pawn, 1, Item::PumpkinMedium),
         ];
-        let mut foes: Array<Character> = array![
-            CharacterTrait::from(201, Role::Bomboblin, 1, Item::None),
-            CharacterTrait::from(202, Role::Bomboblin, 1, Item::None),
+        let mut foes: Array<Char> = array![
+            CharTrait::from(201, Role::Bomboblin, 1, Item::None),
+            CharTrait::from(202, Role::Bomboblin, 1, Item::None),
         ];
         let win = Battler::start(ref characters, ref foes);
         assert(win, 'Battler: invalid win status');
@@ -174,37 +174,33 @@ mod tests {
 
     #[test]
     fn test_fighter_mushroom_large() {
-        let mut characters: Array<Character> = array![
-            CharacterTrait::from(1, Role::Pawn, 1, Item::MushroomSmall),
+        let mut characters: Array<Char> = array![
+            CharTrait::from(1, Role::Pawn, 1, Item::MushroomSmall),
         ];
-        let mut foes: Array<Character> = array![
-            CharacterTrait::from(201, Role::Bomboblin, 1, Item::None),
-        ];
+        let mut foes: Array<Char> = array![CharTrait::from(201, Role::Bomboblin, 1, Item::None),];
         let win = Battler::start(ref characters, ref foes);
         assert(!win, 'Battler: invalid win status');
     }
 
     #[test]
     fn test_fighter_pawn_talent() {
-        let mut characters: Array<Character> = array![
-            CharacterTrait::from(1, Role::Pawn, 2, Item::None),
-            CharacterTrait::from(2, Role::Knight, 1, Item::None),
+        let mut characters: Array<Char> = array![
+            CharTrait::from(1, Role::Pawn, 2, Item::None),
+            CharTrait::from(2, Role::Knight, 1, Item::None),
         ];
-        let mut foes: Array<Character> = array![
-            CharacterTrait::from(201, Role::Torchoblin, 1, Item::None),
-        ];
+        let mut foes: Array<Char> = array![CharTrait::from(201, Role::Torchoblin, 1, Item::None),];
         let win = Battler::start(ref characters, ref foes);
         assert(win, 'Battler: invalid win status');
     }
 
     #[test]
     fn test_battle_dual_stun() {
-        let mut characters: Array<Character> = array![
-            CharacterTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
-            CharacterTrait::from(2, Role::Pawn, 1, Item::None),
+        let mut characters: Array<Char> = array![
+            CharTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
+            CharTrait::from(2, Role::Pawn, 1, Item::None),
         ];
-        let mut foes: Array<Character> = array![
-            CharacterTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
+        let mut foes: Array<Char> = array![
+            CharTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
         ];
         let mut tick: u32 = 0;
         let win = Battler::battle(
@@ -222,12 +218,12 @@ mod tests {
 
     #[test]
     fn test_battle_dual_stun_reverse() {
-        let mut characters: Array<Character> = array![
-            CharacterTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
+        let mut characters: Array<Char> = array![
+            CharTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
         ];
-        let mut foes: Array<Character> = array![
-            CharacterTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
-            CharacterTrait::from(2, Role::Pawn, 1, Item::None),
+        let mut foes: Array<Char> = array![
+            CharTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
+            CharTrait::from(2, Role::Pawn, 1, Item::None),
         ];
         let mut tick: u32 = 0;
         let win = Battler::battle(
@@ -245,14 +241,14 @@ mod tests {
 
     #[test]
     fn test_battle_knights_with_stone() {
-        let mut characters: Array<Character> = array![
-            CharacterTrait::from(1, Role::Knight, 1, Item::RockLarge),
-            CharacterTrait::from(2, Role::Knight, 1, Item::None),
-            CharacterTrait::from(3, Role::Knight, 1, Item::None),
+        let mut characters: Array<Char> = array![
+            CharTrait::from(1, Role::Knight, 1, Item::RockLarge),
+            CharTrait::from(2, Role::Knight, 1, Item::None),
+            CharTrait::from(3, Role::Knight, 1, Item::None),
         ];
-        let mut foes: Array<Character> = array![
-            CharacterTrait::from(1, Role::Dynamoblin, 1, Item::None),
-            CharacterTrait::from(2, Role::Bomboblin, 1, Item::None),
+        let mut foes: Array<Char> = array![
+            CharTrait::from(1, Role::Dynamoblin, 1, Item::None),
+            CharTrait::from(2, Role::Bomboblin, 1, Item::None),
         ];
 
         let mut tick: u32 = 0;
@@ -270,18 +266,18 @@ mod tests {
 
     #[test]
     fn test_battle_bug_win_loose_1() {
-        let mut characters: Array<Character> = array![
-            CharacterTrait::from(1, Role::Pawn, 3, Item::MushroomLarge),
-            CharacterTrait::from(2, Role::Knight, 3, Item::PumpkinMedium),
-            CharacterTrait::from(3, Role::Pawn, 3, Item::MushroomLarge),
-            CharacterTrait::from(4, Role::Knight, 3, Item::PumpkinMedium),
+        let mut characters: Array<Char> = array![
+            CharTrait::from(1, Role::Pawn, 3, Item::MushroomLarge),
+            CharTrait::from(2, Role::Knight, 3, Item::PumpkinMedium),
+            CharTrait::from(3, Role::Pawn, 3, Item::MushroomLarge),
+            CharTrait::from(4, Role::Knight, 3, Item::PumpkinMedium),
         ];
 
-        let mut foes: Array<Character> = array![
-            CharacterTrait::from(1, Role::Bomboblin, 3, Item::BushLarge),
-            CharacterTrait::from(2, Role::Torchoblin, 3, Item::MushroomMedium),
-            CharacterTrait::from(3, Role::Dynamoblin, 3, Item::RockMedium),
-            CharacterTrait::from(4, Role::Dynamoblin, 3, Item::PumpkinMedium),
+        let mut foes: Array<Char> = array![
+            CharTrait::from(1, Role::Bomboblin, 3, Item::BushLarge),
+            CharTrait::from(2, Role::Torchoblin, 3, Item::MushroomMedium),
+            CharTrait::from(3, Role::Dynamoblin, 3, Item::RockMedium),
+            CharTrait::from(4, Role::Dynamoblin, 3, Item::PumpkinMedium),
         ];
 
         let mut tick: u32 = 0;
@@ -295,5 +291,63 @@ mod tests {
             ref tick,
         );
         assert(!win, 'Battler: invalid win status');
+    }
+
+    #[test]
+    fn test_battle_bug_win_loose_2() {
+        let mut characters: Array<Char> = array![
+            CharTrait::from(1, Role::Pawn, 3, Item::MushroomLarge),
+            CharTrait::from(2, Role::Knight, 3, Item::PumpkinMedium),
+            CharTrait::from(3, Role::Pawn, 3, Item::MushroomLarge),
+            CharTrait::from(4, Role::Knight, 3, Item::PumpkinMedium),
+        ];
+
+        let mut foes: Array<Char> = array![
+            CharTrait::from(1, Role::Bomboblin, 3, Item::BushLarge),
+            CharTrait::from(2, Role::Torchoblin, 3, Item::MushroomMedium),
+            CharTrait::from(3, Role::Dynamoblin, 3, Item::RockMedium),
+            CharTrait::from(4, Role::Dynamoblin, 3, Item::PumpkinMedium),
+        ];
+
+        let mut tick: u32 = 0;
+        let win = Battler::battle(
+            ref characters,
+            ref foes,
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            ref tick,
+        );
+        assert(!win, 'Battler: invalid win status');
+    }
+
+    #[test]
+    fn test_battle_bug_win_loose_3() {
+        let mut characters: Array<Char> = array![
+            CharTrait::from(1, Role::Dynamoblin, 3, Item::RockSmall),
+            CharTrait::from(2, Role::Torchoblin, 3, Item::None),
+            CharTrait::from(3, Role::Pawn, 3, Item::BushMedium),
+            CharTrait::from(4, Role::Knight, 3, Item::MushroomLarge),
+        ];
+
+        let mut foes: Array<Char> = array![
+            CharTrait::from(1, Role::Dynamoblin, 2, Item::RockSmall),
+            CharTrait::from(2, Role::Bomboblin, 2, Item::MushroomMedium),
+            CharTrait::from(3, Role::Dynamoblin, 2, Item::None),
+            CharTrait::from(4, Role::Torchoblin, 2, Item::MushroomSmall),
+        ];
+
+        let mut tick: u32 = 0;
+        let win = Battler::battle(
+            ref characters,
+            ref foes,
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            Zeroable::zero(),
+            ref tick,
+        );
+        assert(win, 'Battler: invalid win status');
     }
 }

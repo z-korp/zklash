@@ -35,7 +35,7 @@ mod market {
     use zklash::models::player::{Player, PlayerTrait, PlayerAssert};
     use zklash::models::team::{Team, TeamTrait, TeamAssert};
     use zklash::models::shop::{Shop, ShopTrait, ShopAssert};
-    use zklash::models::character::{Character, CharacterTrait, CharacterAssert};
+    use zklash::models::char::{Char, CharTrait, CharAssert};
 
     // Local imports
 
@@ -67,7 +67,7 @@ mod market {
             let mut shop = store.shop(player.id, team_id);
             shop.assert_exists();
 
-            // [Check] Character exists
+            // [Check] Char exists
             let mut character = store.character(player.id, team_id, character_id);
             character.assert_exists();
 
@@ -131,7 +131,7 @@ mod market {
             let mut shop = store.shop(player.id, team_id);
             shop.assert_exists();
 
-            // [Check] Character exists
+            // [Check] Char exists
             let mut character = store.character(player.id, team_id, character_id);
             character.assert_exists();
 
@@ -161,11 +161,11 @@ mod market {
             let mut team = store.team(player.id, team_id);
             team.assert_exists();
 
-            // [Check] From Character exists
+            // [Check] From Char exists
             let mut from = store.character(player.id, team_id, from_id);
             from.assert_exists();
 
-            // [Check] To Character exists
+            // [Check] To Char exists
             let mut to = store.character(player.id, team_id, to_id);
             to.assert_exists();
 
@@ -193,7 +193,7 @@ mod market {
             let mut team = store.team(player.id, team_id);
             team.assert_exists();
 
-            // [Check] Character exists
+            // [Check] Char exists
             let mut character = store.character(player.id, team_id, character_id);
             character.assert_exists();
 

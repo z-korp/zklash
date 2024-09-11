@@ -29,7 +29,7 @@ mod battle {
     // Internal imports
 
     use zklash::constants::{DEFAULT_REGISTRY_ID, IDS_SIZE};
-    use zklash::models::index::{League, Player, Team, Shop, Foe, Slot, Squad, Character};
+    use zklash::models::index::{League, Player, Team, Shop, Foe, Slot, Squad, Char};
     use zklash::store::{Store, StoreImpl};
     use zklash::helpers::packer::Packer;
     use zklash::helpers::array::ArrayTraitExt;
@@ -40,7 +40,7 @@ mod battle {
     use zklash::models::player::{PlayerImpl, PlayerAssert};
     use zklash::models::team::{TeamImpl, TeamAssert};
     use zklash::models::shop::{ShopImpl, ShopAssert};
-    use zklash::models::character::{CharacterImpl, CharacterAssert, PartialEqCharacter};
+    use zklash::models::char::{CharImpl, CharAssert, PartialEqChar};
     use zklash::types::wave::{Wave, WaveTrait};
 
     // Local imports
@@ -115,8 +115,8 @@ mod battle {
             let mut shop = store.shop(player.id, team_id);
             shop.assert_exists();
 
-            // [Check] Characters exist
-            let mut characters: Array<Character> = array![];
+            // [Check] Chars exist
+            let mut characters: Array<Char> = array![];
             let mut character_ids = Packer::unpack(order, IDS_SIZE);
             loop {
                 match character_ids.pop_front() {

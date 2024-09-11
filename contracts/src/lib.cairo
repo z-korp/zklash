@@ -58,7 +58,7 @@ mod waves {
 
 mod models {
     mod index;
-    mod character;
+    mod char;
     mod player;
     mod shop;
     mod team;

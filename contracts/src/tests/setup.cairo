@@ -11,14 +11,14 @@ mod setup {
     // Dojo imports
 
     use dojo::world::{IWorldDispatcherTrait, IWorldDispatcher};
-    use dojo::test_utils::{spawn_test_world, deploy_contract};
+    use dojo::utils::test::{spawn_test_world, deploy_contract};
 
     // Internal imports
 
     use zklash::models::player::Player;
     use zklash::models::team::Team;
     use zklash::models::shop::Shop;
-    use zklash::models::character::Character;
+    use zklash::models::char::Char;
     use zklash::models::registry::Registry;
     use zklash::models::league::League;
     use zklash::models::slot::Slot;
@@ -56,18 +56,25 @@ mod setup {
         models.append(zklash::models::index::player::TEST_CLASS_HASH);
         models.append(zklash::models::index::team::TEST_CLASS_HASH);
         models.append(zklash::models::index::shop::TEST_CLASS_HASH);
-        models.append(zklash::models::index::character::TEST_CLASS_HASH);
+        models.append(zklash::models::index::char::TEST_CLASS_HASH);
         models.append(zklash::models::index::registry::TEST_CLASS_HASH);
         models.append(zklash::models::index::league::TEST_CLASS_HASH);
         models.append(zklash::models::index::slot::TEST_CLASS_HASH);
         models.append(zklash::models::index::squad::TEST_CLASS_HASH);
         models.append(zklash::models::index::foe::TEST_CLASS_HASH);
-        let world = spawn_test_world(models);
+        let world = spawn_test_world("zklash", models);
 
         // [Setup] Systems
-        let account_address = deploy_contract(account::TEST_CLASS_HASH, array![].span());
-        let battle_address = deploy_contract(battle::TEST_CLASS_HASH, array![].span());
-        let market_address = deploy_contract(market::TEST_CLASS_HASH, array![].span());
+        let account_address = world
+            .deploy_contract('account', account::TEST_CLASS_HASH.try_into().unwrap());
+        let battle_address = world
+            .deploy_contract('battle', battle::TEST_CLASS_HASH.try_into().unwrap());
+        let market_address = world
+            .deploy_contract('market', market::TEST_CLASS_HASH.try_into().unwrap());
+        world.grant_writer(dojo::utils::bytearray_hash(@"zklash"), account_address);
+        world.grant_writer(dojo::utils::bytearray_hash(@"zklash"), battle_address);
+        world.grant_writer(dojo::utils::bytearray_hash(@"zklash"), market_address);
+
         let systems = Systems {
             account: IAccountDispatcher { contract_address: account_address },
             battle: IBattleDispatcher { contract_address: battle_address },
@@ -76,7 +83,7 @@ mod setup {
 
         // [Setup] Context
         set_contract_address(PLAYER());
-        systems.account.create(world, PLAYER_NAME);
+        systems.account.create(PLAYER_NAME);
         let context = Context { player_id: PLAYER().into(), player_name: PLAYER_NAME, };
 
         // [Return]

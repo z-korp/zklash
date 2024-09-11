@@ -16,7 +16,7 @@ use zklash::models::index::Squad;
 use zklash::constants::{DEFAULT_K_FACTOR, LEAGUE_MIN_THRESHOLD, LEAGUE_SIZE};
 use zklash::helpers::battler::Battler;
 use zklash::models::league::LeagueTrait;
-use zklash::models::character::Character;
+use zklash::models::char::Char;
 
 // Errors
 
@@ -37,10 +37,7 @@ impl SquadImpl of SquadTrait {
 
     #[inline(always)]
     fn fight(
-        ref self: Squad,
-        ref chars: Array<Character>,
-        ref foe_squad: Squad,
-        ref foes: Array<Character>
+        ref self: Squad, ref chars: Array<Char>, ref foe_squad: Squad, ref foes: Array<Char>
     ) -> bool {
         // [Effect] Fight and manage the win status
         let win = Battler::start(ref chars, ref foes);

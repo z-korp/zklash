@@ -14,12 +14,12 @@ use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 
 // Models imports
 
-use zklash::models::index::{Character, Player, Shop, Team, Slot, Squad, League, Foe, Registry};
+use zklash::models::index::{Char, Player, Shop, Team, Slot, Squad, League, Foe, Registry};
 use zklash::models::slot::SlotTrait;
 use zklash::models::league::LeagueTrait;
 use zklash::models::foe::FoeTrait;
-use zklash::models::character::CharacterTrait;
-use zklash::models::foe::FoeIntoCharacter;
+use zklash::models::char::CharTrait;
+use zklash::models::foe::FoeIntoChar;
 
 
 /// Store struct.
@@ -54,8 +54,8 @@ impl StoreImpl of StoreTrait {
     }
 
     #[inline(always)]
-    fn character(self: Store, player_id: felt252, team_id: u32, character_id: u8) -> Character {
-        get!(self.world, (player_id, team_id, character_id), (Character))
+    fn character(self: Store, player_id: felt252, team_id: u32, character_id: u8) -> Char {
+        get!(self.world, (player_id, team_id, character_id), (Char))
     }
 
     #[inline(always)]
@@ -83,8 +83,8 @@ impl StoreImpl of StoreTrait {
         get!(self.world, (registry_id, squad_id, foe_id), (Foe))
     }
 
-    fn characters(self: Store, squad: Squad) -> Array<Character> {
-        let mut foes: Array<Character> = array![];
+    fn characters(self: Store, squad: Squad) -> Array<Char> {
+        let mut foes: Array<Char> = array![];
         let mut index: u8 = 0;
         loop {
             if index == squad.size {
@@ -92,7 +92,7 @@ impl StoreImpl of StoreTrait {
             }
             index += 1;
             let foe: Foe = self.foe(squad.registry_id, squad.id, index);
-            let character: Character = foe.into();
+            let character: Char = foe.into();
             foes.append(character);
         };
         foes
@@ -116,7 +116,7 @@ impl StoreImpl of StoreTrait {
     }
 
     #[inline(always)]
-    fn set_character(self: Store, character: Character) {
+    fn set_character(self: Store, character: Char) {
         set!(self.world, (character))
     }
 
@@ -175,7 +175,7 @@ impl StoreImpl of StoreTrait {
     }
 
     fn set_character_foes(
-        self: Store, registry_id: u32, squad_id: u32, mut characters: Span<Character>
+        self: Store, registry_id: u32, squad_id: u32, mut characters: Span<Char>
     ) {
         let mut index: u8 = 0;
         loop {

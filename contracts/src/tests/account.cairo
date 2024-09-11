@@ -32,7 +32,7 @@ fn test_account_spawn() {
     assert(player.team_count == 0, 'Create: wrong player team_count');
 
     // [Spawn]
-    systems.account.spawn(world);
+    systems.account.spawn();
 
     // [Assert] Player
     let player = store.player(context.player_id);

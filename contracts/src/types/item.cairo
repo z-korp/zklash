@@ -195,6 +195,27 @@ impl ItemIntoFelt252 of core::Into<Item, felt252> {
     }
 }
 
+impl ItemIntoByteArray of core::Into<Item, ByteArray> {
+    #[inline(always)]
+    fn into(self: Item) -> ByteArray {
+        match self {
+            Item::None => "None",
+            Item::MushroomSmall => "MushroomSmall",
+            Item::MushroomMedium => "MushroomMedium",
+            Item::MushroomLarge => "MushroomLarge",
+            Item::RockSmall => "RockSmall",
+            Item::RockMedium => "RockMedium",
+            Item::RockLarge => "RockLarge",
+            Item::BushSmall => "BushSmall",
+            Item::BushMedium => "BushMedium",
+            Item::BushLarge => "BushLarge",
+            Item::PumpkinSmall => "PumpkinSmall",
+            Item::PumpkinMedium => "PumpkinMedium",
+            Item::PumpkinLarge => "PumpkinLarge",
+        }
+    }
+}
+
 impl ItemIntoU8 of core::Into<Item, u8> {
     #[inline(always)]
     fn into(self: Item) -> u8 {

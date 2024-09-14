@@ -1,6 +1,9 @@
 // Core imports
 
 use core::debug::PrintTrait;
+use core::zeroable::Zeroable;
+use core::traits::Add;
+use core::fmt::{Display, Formatter, Error};
 
 // Starknet imports
 
@@ -20,6 +23,14 @@ struct Buff {
     health: u8,
     attack: u8,
     absorb: u8,
+}
+
+#[derive(Drop, Copy)]
+struct EffectResult {
+    talent_dmg: u8,
+    item_dmg: u8,
+    stun: u8,
+    next_buff: Buff,
 }
 
 // Constants
@@ -57,19 +68,23 @@ impl CharImpl of CharTrait {
 
     #[inline(always)]
     fn from(id: u8, role: Role, level: u8, item: Item) -> Char {
-        Char {
+        let mut char = Char {
             player_id: core::Zeroable::zero(),
             team_id: 0,
             id,
             role: role.into(),
-            item: item.into(),
+            item: Item::None.into(),
             xp: 0,
             level,
             health: role.health(Phase::OnHire, level),
             attack: role.attack(Phase::OnHire, level),
             absorb: role.absorb(Phase::OnHire, level),
             stun: 0,
-        }
+        };
+        if item.into() != Item::None {
+            char.equip(item);
+        };
+        char
     }
 
     #[inline(always)]
@@ -95,13 +110,19 @@ impl CharImpl of CharTrait {
     fn equip(ref self: Char, item: Item) {
         // [Effect] Remove the previous item's effect
         self.unequip();
+
         // [Effect] Equip and apply the new item's effect
-        let buff = Buff {
+        let buff_item = Buff {
             health: item.health(Phase::OnEquip),
             attack: item.attack(Phase::OnEquip),
             absorb: item.absorb(Phase::OnEquip),
         };
-        self.buff(buff);
+        self.buff(buff_item);
+
+        // [Effect] Update the item's effect
+        // ex: Knight gain 1 health per level when equipped with an item
+        self.talent(Phase::OnEquip, 0);
+
         self.item = item.into();
     }
 
@@ -196,6 +217,7 @@ impl CharImpl of CharTrait {
         }
         damage = Math::min(damage, self.health);
         self.health -= damage;
+
         damage
     }
 
@@ -262,6 +284,52 @@ impl ZeroableBuff of core::Zeroable<Buff> {
     }
 }
 
+impl BuffAdd of Add<Buff> {
+    fn add(lhs: Buff, rhs: Buff) -> Buff {
+        Buff {
+            health: lhs.health + rhs.health,
+            attack: lhs.attack + rhs.attack,
+            absorb: lhs.absorb + rhs.absorb,
+        }
+    }
+}
+
+impl BuffDisplay of Display<Buff> {
+    fn fmt(self: @Buff, ref f: Formatter) -> Result<(), Error> {
+        write!(f, "Buff: ({}H | {}A | {}Abs)", *self.health, *self.attack, *self.absorb,)
+    }
+}
+
+impl ZeroableEffectResult of core::Zeroable<EffectResult> {
+    #[inline(always)]
+    fn zero() -> EffectResult {
+        EffectResult { talent_dmg: 0, item_dmg: 0, stun: 0, next_buff: Zeroable::zero(), }
+    }
+
+    #[inline(always)]
+    fn is_zero(self: EffectResult) -> bool {
+        self.talent_dmg == 0 && self.item_dmg == 0 && self.stun == 0 && self.next_buff.is_zero()
+    }
+
+    #[inline(always)]
+    fn is_non_zero(self: EffectResult) -> bool {
+        !self.is_zero()
+    }
+}
+
+impl EffectResultDisplay of Display<EffectResult> {
+    fn fmt(self: @EffectResult, ref f: Formatter) -> Result<(), Error> {
+        write!(
+            f,
+            "EffectResult: talent_dmg: {} | item_dmg = {}, stun = {}, next_buff = {}",
+            *self.talent_dmg,
+            *self.item_dmg,
+            *self.stun,
+            *self.next_buff,
+        )
+    }
+}
+
 impl PartialEqChar of PartialEq<Char> {
     #[inline(always)]
     fn eq(lhs: @Char, rhs: @Char) -> bool {
@@ -289,5 +357,39 @@ impl CharAssert of AssertTrait {
     #[inline(always)]
     fn assert_is_levelable(self: Char) {
         assert(self.level < MAX_LEVEL, errors::CHARACTER_NOT_LEVELABLE);
+    }
+}
+
+const NONE: felt252 = 'NONE';
+const KNIGHT: felt252 = 'KNIGHT';
+const BOWMAN: felt252 = 'BOWMAN';
+const PAWN: felt252 = 'PAWN';
+const TORCHOBLIN: felt252 = 'TORCHOBLIN';
+const DYNAMOBLIN: felt252 = 'DYNAMOBLIN';
+const BOMBOBLIN: felt252 = 'BOMBOBLIN';
+
+impl CharDisplay of Display<Char> {
+    fn fmt(self: @Char, ref f: Formatter) -> Result<(), Error> {
+        let health = *self.health;
+        let attack = *self.attack;
+        let level = *self.level;
+        let stun = *self.stun;
+        let absorb = *self.absorb;
+        let role: Role = (*self.role).into();
+        let role_str: ByteArray = role.into();
+        let item: Item = (*self.item).into();
+        let item_str: ByteArray = item.into();
+
+        write!(
+            f,
+            "[{}({}): ({}A / {}H) ({} Abs, {} Stun) ({})]",
+            role_str,
+            level,
+            attack,
+            health,
+            stun,
+            absorb,
+            item_str
+        )
     }
 }

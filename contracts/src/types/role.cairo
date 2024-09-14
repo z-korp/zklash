@@ -197,6 +197,21 @@ impl RoleIntoU8 of core::Into<Role, u8> {
     }
 }
 
+impl RoleIntoByteArray of core::Into<Role, ByteArray> {
+    #[inline(always)]
+    fn into(self: Role) -> ByteArray {
+        match self {
+            Role::None => "None",
+            Role::Knight => "Knight",
+            Role::Bowman => "Bowman",
+            Role::Pawn => "Pawn",
+            Role::Torchoblin => "Torchoblin",
+            Role::Dynamoblin => "Dynamoblin",
+            Role::Bomboblin => "Bomboblin",
+        }
+    }
+}
+
 impl Felt252IntoRole of core::Into<felt252, Role> {
     #[inline(always)]
     fn into(self: felt252) -> Role {

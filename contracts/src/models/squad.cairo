@@ -40,7 +40,7 @@ impl SquadImpl of SquadTrait {
         ref self: Squad, ref chars: Array<Char>, ref foe_squad: Squad, ref foes: Array<Char>
     ) -> bool {
         // [Effect] Fight and manage the win status
-        let win = Battler::start(ref chars, ref foes);
+        let (win, _, _, _) = Battler::start(ref chars, ref foes);
         let score: u16 = match win {
             true => 100, // Win
             false => 0, // Lose

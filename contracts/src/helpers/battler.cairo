@@ -15,7 +15,7 @@ use zklash::types::phase::Phase;
 
 #[generate_trait]
 impl Battler of BattlerTrait {
-    fn start(ref team1: Array<Char>, ref team2: Array<Char>) -> (bool, u32, u32, Char) {
+    fn start(ref team1: Array<Char>, ref team2: Array<Char>) -> (bool, Array<Char>) {
         // [Compute] Start the battle
         let mut tick: u32 = 0;
         Self::battle(
@@ -37,7 +37,7 @@ impl Battler of BattlerTrait {
         next_buff1: Buff,
         next_buff2: Buff,
         ref tick: u32,
-    ) -> (bool, u32, u32, Char) {
+    ) -> (bool, Array<Char>) {
         let char1_dead = char1.is_dead();
         let char2_dead = char2.is_dead();
         // [Compute] If fighter is dead then get the next fighter if available
@@ -46,21 +46,20 @@ impl Battler of BattlerTrait {
             char1 = match team1.pop_front() {
                 Option::Some(char) => char,
                 Option::None => {
-                    let survivors1 = 0;
-                    let survivors2 = team2.len();
-                    // If char2 is also dead, get the next character from team2
-                    let winning_char = if char2_dead {
-                        team2.pop_front().unwrap_or(char2)
-                    } else {
-                        char2
+                    // Team1 is depleted
+                    let mut winning_team = ArrayTrait::new();
+                    if !char2_dead {
+                        winning_team.append(char2);
+                    }
+                    let mut i = 0;
+                    loop {
+                        if i == team2.len() {
+                            break;
+                        }
+                        winning_team.append(*team2.at(i));
+                        i += 1;
                     };
-                    // Count char2 if it's alive
-                    let survivors2 = survivors2 + if !char2_dead {
-                        1
-                    } else {
-                        0
-                    };
-                    return (false, survivors1, survivors2, winning_char);
+                    return (false, winning_team);
                 },
             };
             println!("[char1] new spawn: {}", char1);
@@ -81,15 +80,18 @@ impl Battler of BattlerTrait {
             char2 = match team2.pop_front() {
                 Option::Some(char) => char,
                 Option::None => {
-                    let survivors1 = team1.len();
-                    let survivors2 = 0;
-                    // Count char1 if it's alive
-                    let survivors1 = survivors1 + if !char1_dead {
-                        1
-                    } else {
-                        0
+                    // Team2 is depleted
+                    let mut winning_team = ArrayTrait::new();
+                    winning_team.append(char1);
+                    let mut i = 0;
+                    loop {
+                        if i == team1.len() {
+                            break;
+                        }
+                        winning_team.append(*team1.at(i));
+                        i += 1;
                     };
-                    return (true, survivors1, survivors2, char1);
+                    return (true, winning_team);
                 },
             };
             println!("[char2] new spawn: {}", char2);
@@ -384,7 +386,7 @@ mod tests {
 
     // Local imports
 
-    use super::{Battler, Char, CharTrait, ZeroableChar, Phase};
+    use super::{Battler, Char, CharTrait, ZeroableChar, Phase, CharDisplay};
 
     // Constants
 
@@ -392,7 +394,7 @@ mod tests {
     fn test_fighter_basic() {
         let mut team1: Array<Char> = array![CharTrait::from(1, Role::Knight, 1, Item::None),];
         let mut team2: Array<Char> = array![CharTrait::from(201, Role::Knight, 1, Item::None),];
-        let (win, survivors1, survivors2, _) = Battler::start(ref team1, ref team2);
+        let (win, _) = Battler::start(ref team1, ref team2);
 
         // Assert the battle outcome
         assert(!win, 'Team 1 should loose');
@@ -412,14 +414,13 @@ mod tests {
             CharTrait::from(1, Role::Knight, 1, Item::MushroomLarge),
         ];
         let mut team2: Array<Char> = array![CharTrait::from(201, Role::Dynamoblin, 1, Item::None),];
-        let (win, survivors1, survivors2, _) = Battler::start(ref team1, ref team2);
+        let (win, winning_team) = Battler::start(ref team1, ref team2);
 
         // Assert the battle outcome
         assert(!win, 'Team 1 should loose');
 
         // Check the state of survivors
-        assert(survivors1 == 0, 'Team 1 should have 0 survivor');
-        assert(survivors2 == 0, 'Team 2 should have 0 survivor');
+        assert(winning_team.len() == 0, 'Team 2 should have 0 survivor');
     }
 
     // Test pumpkin does trigger post mortem effect because it does revive the mob
@@ -437,14 +438,13 @@ mod tests {
             CharTrait::from(201, Role::Pawn, 1, Item::None),
             CharTrait::from(202, Role::Dynamoblin, 1, Item::PumpkinSmall),
         ];
-        let (win, survivors1, survivors2, _) = Battler::start(ref team1, ref team2);
+        let (win, winning_team) = Battler::start(ref team1, ref team2);
 
         // Assert the battle outcome
         assert(!win, 'Team 1 should loose');
 
         // Check the state of survivors
-        assert(survivors1 == 0, 'Team 1 should have 0 survivor');
-        assert(survivors2 == 0, 'Team 2 should have 0 survivor');
+        assert(winning_team.len() == 0, 'Team 2 should have 0 survivor');
     }
 
     // Test pumpkin does trigger post mortem effect because it does revive the mob
@@ -465,14 +465,13 @@ mod tests {
         let mut team2: Array<Char> = array![
             CharTrait::from(201, Role::Dynamoblin, 1, Item::PumpkinSmall),
         ];
-        let (win, survivors1, survivors2, _) = Battler::start(ref team1, ref team2);
+        let (win, winning_team) = Battler::start(ref team1, ref team2);
 
         // Assert the battle outcome
         assert(!win, 'Team 1 should loose');
 
         // Check the state of survivors
-        assert(survivors1 == 0, 'Team 1 should have 0 survivor');
-        assert(survivors2 == 0, 'Team 2 should have 0 survivor');
+        assert(winning_team.len() == 0, 'Team 2 should have 0 survivor');
     }
 
     // Test pumpkin trigger post mortem effect because it does revive the mob
@@ -494,14 +493,13 @@ mod tests {
         let mut team2: Array<Char> = array![
             CharTrait::from(201, Role::Dynamoblin, 1, Item::MushroomLarge),
         ];
-        let (win, survivors1, survivors2, _) = Battler::start(ref team1, ref team2);
+        let (win, winning_team) = Battler::start(ref team1, ref team2);
 
         // Assert the battle outcome
         assert(!win, 'Team 1 should loose');
 
         // Check the state of survivors
-        assert(survivors1 == 0, 'Team 1 should have no survivors');
-        assert(survivors2 == 0, 'Team 2 should have no survivors');
+        assert(winning_team.len() == 0, 'Team 2 should have 0 survivor');
     }
 
     // Test stone does trigger post mortem effect
@@ -514,16 +512,27 @@ mod tests {
     fn test_fighter_stone_trigger_postmortem() {
         let mut team1: Array<Char> = array![CharTrait::from(1, Role::Knight, 1, Item::RockLarge),];
         let mut team2: Array<Char> = array![CharTrait::from(201, Role::Dynamoblin, 1, Item::None),];
-        let (win, survivors1, survivors2, char_alive) = Battler::start(ref team1, ref team2);
+        let (win, winning_team) = Battler::start(ref team1, ref team2);
 
         // Assert the battle outcome
         assert(win, 'Team 1 should win');
 
         // Check the state of survivors
-        assert(survivors1 == 1, 'Team 1 should have 1 survivor');
-        assert(survivors2 == 0, 'Team 2 should have 0 survivor');
+        assert(winning_team.len() == 1, 'Team 2 should have 1 survivor');
+
+        println!("\n--------------------------------------------------------------");
+        let mut i = 0;
+        loop {
+            if i == winning_team.len() {
+                break;
+            }
+            println!("Winning Team[{}]: {}", i, *winning_team.at(i));
+            i += 1;
+        };
+        println!("--------------------------------------------------------------");
 
         // Check the state of the survivor
+        let char_alive = *winning_team.at(0);
         assert(char_alive.health == 3, 'Survivor should have 3H');
     }
 
@@ -538,14 +547,13 @@ mod tests {
     fn test_fighter_stone_doesnt_kill() {
         let mut team1: Array<Char> = array![CharTrait::from(1, Role::Knight, 1, Item::RockSmall),];
         let mut team2: Array<Char> = array![CharTrait::from(201, Role::Dynamoblin, 1, Item::None),];
-        let (win, survivors1, survivors2, _) = Battler::start(ref team1, ref team2);
+        let (win, winning_team) = Battler::start(ref team1, ref team2);
 
         // Assert the battle outcome
         assert(!win, 'Team 1 should loose');
 
         // Check the state of survivors
-        assert(survivors1 == 0, 'Team 1 should have 0 survivor');
-        assert(survivors2 == 0, 'Team 2 should have 0 survivor');
+        assert(winning_team.len() == 0, 'Team 2 should have 0 survivor');
     }
 
     #[test]
@@ -555,7 +563,7 @@ mod tests {
             CharTrait::from(2, Role::Knight, 1, Item::None),
         ];
         let mut foes: Array<Char> = array![CharTrait::from(201, Role::Torchoblin, 1, Item::None),];
-        let (win, _, _, _) = Battler::start(ref characters, ref foes);
+        let (win, _) = Battler::start(ref characters, ref foes);
         assert(win, 'Battler: invalid win status');
     }
 
@@ -569,7 +577,7 @@ mod tests {
             CharTrait::from(1, Role::Bowman, 2, Item::PumpkinSmall),
         ];
         let mut tick: u32 = 0;
-        let (win, _, _, _) = Battler::battle(
+        let (win, _) = Battler::battle(
             ref characters,
             ref foes,
             Zeroable::zero(),
@@ -592,7 +600,7 @@ mod tests {
             CharTrait::from(2, Role::Pawn, 1, Item::None),
         ];
         let mut tick: u32 = 0;
-        let (win, _, _, _) = Battler::battle(
+        let (win, _) = Battler::battle(
             ref characters,
             ref foes,
             Zeroable::zero(),
@@ -618,7 +626,7 @@ mod tests {
         ];
 
         let mut tick: u32 = 0;
-        let (win, _, _, _) = Battler::battle(
+        let (win, _) = Battler::battle(
             ref characters,
             ref foes,
             Zeroable::zero(),
@@ -647,7 +655,7 @@ mod tests {
         ];
 
         let mut tick: u32 = 0;
-        let (win, _, _, _) = Battler::battle(
+        let (win, _) = Battler::battle(
             ref characters,
             ref foes,
             Zeroable::zero(),
@@ -676,7 +684,7 @@ mod tests {
         ];
 
         let mut tick: u32 = 0;
-        let (win, _, _, _) = Battler::battle(
+        let (win, _) = Battler::battle(
             ref characters,
             ref foes,
             Zeroable::zero(),
@@ -705,7 +713,7 @@ mod tests {
         ];
 
         let mut tick: u32 = 0;
-        let (win, _, _, _) = Battler::battle(
+        let (win, _) = Battler::battle(
             ref characters,
             ref foes,
             Zeroable::zero(),
